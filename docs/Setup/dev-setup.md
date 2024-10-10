@@ -17,6 +17,14 @@ Before you begin deploying your project to the DIG Network, ensure that you have
 
 Once your DIG Node is fully configured, you're ready to proceed with the following steps in the project directory where your dApp or project is located.
 
+3. **Optional**: If you are publishing a dApp from a machine other than the one that is running your DIG Node, execute these setup steps on that machine. Use the same credentials and seed as you did for your DIG Node.
+
+   ```bash
+   npm install @dignetwork/dig-chia-cli@alpha -g
+   dignode remote set peer <dig node public ip address> --username <generated username> --password <generated password>
+   dignode remote sync seed
+   ```
+
 ---
 
 #### Step 1: Prepare Your Project
