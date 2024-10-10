@@ -19,11 +19,11 @@ Once your DIG Node is fully configured, you're ready to proceed with the followi
 
 3. **Optional**: If you are publishing a dApp from a machine other than the one that is running your DIG Node, execute these setup steps on that machine. Use the same credentials and seed as you did for your DIG Node.
 
-   ```bash
-   npm install @dignetwork/dig-chia-cli@alpha -g
-   dignode remote set peer <dig node public ip address> --username <generated username> --password <generated password>
-   dignode remote sync seed
-   ```
+```bash
+npm install @dignetwork/dig-chia-cli@alpha -g
+dignode remote set peer <dig node public ip address> --username <generated username> --password <generated password>
+dignode remote sync seed
+```
 
 ---
 
@@ -38,10 +38,12 @@ Once your DIG Node is fully configured, you're ready to proceed with the followi
 
 2. **Build Your Project:**
    - Compile your project, directing the output to the `./dist` folder (or any build folder of your choice). By default, the DIG CLI looks for the `./dist` folder:
+
      ```bash
-     npm run build
+     npm run build # example for a nodejs dApp
      ```
-   - Ensure that your compiled files are present in the `./dist` folder before proceeding.
+
+   - Ensure that your compiled files are present in the `./dist` as that is where they will be added to the network from.
 
 ---
 
@@ -60,6 +62,7 @@ Once your DIG Node is fully configured, you're ready to proceed with the followi
 #### Step 3: Commit Your Build to the Data Store
 
 1. **Commit the `dist` Folder:**
+   - Ensure that your compiled app and/or content files are present in the `./dist` folder before proceeding.
    - Use the following command to commit your `dist` folder (or your chosen build directory) to the DIG data store:
      ```bash
      dignode commit
@@ -75,6 +78,7 @@ Once your DIG Node is fully configured, you're ready to proceed with the followi
      ```bash
      dignode push
      ```
+   - Enter the IP address of your dig node when prompted for a peer address.
    - Ensure your DIG Node is set up and running according to the previous setup guide. This command verifies file integrity and permissions during the upload process.
 
 ---
