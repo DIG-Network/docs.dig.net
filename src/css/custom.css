@@ -27,3 +27,6 @@
   --ifm-color-primary-lightest: #674dcc;
   --docusaurus-highlighted-code-line-bg: rgba(63, 27, 140, 0.3); /* Dark purple highlight in dark mode */
 }
+
+@tailwind components;
+@tailwind utilities;
