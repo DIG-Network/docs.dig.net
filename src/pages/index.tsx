@@ -19,13 +19,13 @@ function HomepageHeader() {
       }}
     >
       <div className="container">
-        <Heading as="h1" className="hero__title">
+        <Heading as="h1" className="hero__title text-white">
           {siteConfig.title}
         </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
+        <p className="hero__subtitle text-white">{siteConfig.tagline}</p>
         <div className={styles.buttons}>
           <Link
-            className="button button--secondary button--lg"
+            className="button button--lg rounded-3xl bg-gradient-to-r from-indigo-500 from-0% via-purple-500 via-50% to-pink-500 to-100%"
             to="/docs/Protocol%20Overview/introduction">
             Get Started
           </Link>
