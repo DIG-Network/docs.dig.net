@@ -36,9 +36,9 @@ export default function HomepageFeatures(): JSX.Element {
   const FeatureList = useMemo<FeatureItem[]>(() => [
     {
       title: 'Decentralized and Trustless',
-      image: isDarkMode ?
-        require('@site/static/img/dighub-decentralized-icon.png').default :
-        require('@site/static/img/dighub-decentralized-icon-gradient.png').default,
+      Svg: isDarkMode ?
+        require('@site/static/img/decentralized-icon-glow.svg').default :
+        require('@site/static/img/decentralized-icon-gradient.svg').default,
       description: (
         <>
           The DIG Network operates on a decentralized infrastructure, ensuring
@@ -50,9 +50,9 @@ export default function HomepageFeatures(): JSX.Element {
     },
     {
       title: 'Secure Data Integrity',
-      image: isDarkMode ?
-        require('@site/static/img/dighub-shield.png').default :
-        require('@site/static/img/dighub-security-icon-gradient.png').default,
+      Svg: isDarkMode ?
+        require('@site/static/img/shield-icon-glow.svg').default :
+        require('@site/static/img/shield-icon-gradient.svg').default,
       description: (
         <>
           Data in DIG is stored in Merkle trees, with roots secured on the
@@ -64,9 +64,8 @@ export default function HomepageFeatures(): JSX.Element {
     },
     {
       title: 'Global Content Delivery',
-      image: isDarkMode ?
-        require('@site/static/img/dighub-network-icon.png').default :
-        require('@site/static/img/dighub-lobal-icon-gradient.png').default,
+      Svg: isDarkMode ? require('@site/static/img/globe-icon-glow.svg').default : undefined,
+      image: !isDarkMode ? require('@site/static/img/globe-icon-gradient.webp').default : undefined,
       description: (
         <>
           With peers distributed across the world, the DIG Network forms a
