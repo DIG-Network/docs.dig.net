@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 import { useColorMode} from '@docusaurus/theme-common';
-import React, {useMemo} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 
 type FeatureItem = {
   title: string;
@@ -31,11 +31,14 @@ const Feature: React.FC<FeatureItem> = ({title, Svg, image, description}: Featur
 
 const HomepageFeatures: React.FC = () => {
   const { colorMode } = useColorMode();
-  const isDarkMode = colorMode === 'dark';
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
-  console.log('the theme mode is', colorMode);
+  // prevents SSR related issues with icon resolution
+  useEffect(() => {
+    setIsDarkMode(colorMode === 'dark')
+  }, [colorMode]);
 
-  const FeatureList = useMemo<FeatureItem[]>(() => [
+  const FeatureList: FeatureItem[] = [
     {
       title: 'Decentralized and Trustless',
       image: isDarkMode ?
@@ -78,7 +81,7 @@ const HomepageFeatures: React.FC = () => {
         </>
       ),
     },
-  ], [isDarkMode]);
+  ];
 
   return (
     <section className={styles.features}>
