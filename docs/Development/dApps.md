@@ -4,4 +4,4 @@ sidebar_position: 1
 
 # dApp Considerations
 
-_coming soon_
+_coming soon_ !

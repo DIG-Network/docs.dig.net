@@ -21,8 +21,7 @@ Before starting, ensure you meet the following prerequisites:
 
 ### On the Web Server:
 - **Docker and Docker Compose installed** to run the DIG Node.
-  - [Docker Installation Guide](https://docs.docker.com/get-docker/)
-  - [Docker Compose Installation Guide](https://docs.docker.com/compose/install/)
+  - [Docker Installation Guide](https://wiki.crowncloud.net/?How_to_Install_and_use_Docker_Compose_on_Ubuntu_24_04)
 
 - **Ability to open the necessary ports** (80, 4159, 4160, 4161) for your DIG Node on your web server's firewall.
 
@@ -58,6 +57,12 @@ The DIG CLI and DIG Node Server require a **dedicated mnemonic** to operate. Thi
 
 By creating this wallet on the official Chia UI you are able to monitor the balance of XCH on your DIG Node easily and top it off when needed.
 
+**IMPORTANT: Create a Dedicated Wallet for Your DIG Node**
+
+For optimal security and performance, **it is critical that you create a brand new wallet exclusively for your DIG Node**. Do **not** attempt to use an existing wallet. The DIG Node’s driver code only scans the first puzzle hash when selecting coins. If you reuse an existing seed phrase, the system may fail to locate the necessary coins to operate the node effectively.
+
+Additionally, using a fresh wallet significantly reduces risk. This software is still in its alpha phase, and utilizing a new wallet with minimal funds ensures protection against potential bugs or accidental losses. We strongly recommend this precautionary measure to safeguard your assets.
+
 ---
 
 ## Step 3: Set Up the DIG Node on Your Web Server
@@ -75,6 +80,12 @@ cd chia-dig-node
 
 ### 2. Install the DIG Node on the Web Server
 
+Ensure the install file can be run as an executatble
+
+```bash
+sudo chmod +x ./install.sh
+```
+
 Run the installation script on your **web server**:
 
 ```bash
@@ -84,7 +95,7 @@ sudo ./install.sh
 The installation script will:
 
 - Automatically generate a `docker-compose.yml` file, including the **DIG_USERNAME** and **DIG_PASSWORD**, which will be used to secure your DIG Node.
-- Open the necessary ports (80, 4159, 4160) in the firewall automatically.
+- Open the necessary ports (80, 4159, 4160, 4161) in the firewall automatically.
 - Set up Docker containers for the DIG Node services.
 - Configure the DIG Node to run as a `systemd` service, ensuring it starts on boot and runs in the background.
 
