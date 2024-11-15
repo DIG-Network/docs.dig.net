@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 import { useColorMode} from '@docusaurus/theme-common';
-import {useMemo} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 
 type FeatureItem = {
   title: string;
@@ -11,7 +11,7 @@ type FeatureItem = {
   description: JSX.Element;
 };
 
-function Feature({title, Svg, image, description}: FeatureItem) {
+const Feature: React.FC<FeatureItem> = ({title, Svg, image, description}: FeatureItem)=> {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
@@ -29,11 +29,16 @@ function Feature({title, Svg, image, description}: FeatureItem) {
   );
 }
 
-export default function HomepageFeatures(): JSX.Element {
+const HomepageFeatures: React.FC = () => {
   const { colorMode } = useColorMode();
-  const isDarkMode = colorMode === 'dark';
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
-  const FeatureList = useMemo<FeatureItem[]>(() => [
+  // prevents SSR related issues with icon resolution
+  useEffect(() => {
+    setIsDarkMode(colorMode === 'dark')
+  }, [colorMode]);
+
+  const FeatureList: FeatureItem[] = [
     {
       title: 'Decentralized and Trustless',
       image: isDarkMode ?
@@ -76,7 +81,7 @@ export default function HomepageFeatures(): JSX.Element {
         </>
       ),
     },
-  ], [isDarkMode]);
+  ];
 
   return (
     <section className={styles.features}>
@@ -90,3 +95,5 @@ export default function HomepageFeatures(): JSX.Element {
     </section>
   );
 }
+
+export default HomepageFeatures;
