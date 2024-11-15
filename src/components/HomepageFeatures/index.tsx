@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 import { useColorMode} from '@docusaurus/theme-common';
-import {useMemo} from "react";
+import React, {useMemo} from "react";
 
 type FeatureItem = {
   title: string;
@@ -11,7 +11,7 @@ type FeatureItem = {
   description: JSX.Element;
 };
 
-function Feature({title, Svg, image, description}: FeatureItem) {
+const Feature: React.FC<FeatureItem> = ({title, Svg, image, description}: FeatureItem)=> {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
@@ -29,9 +29,11 @@ function Feature({title, Svg, image, description}: FeatureItem) {
   );
 }
 
-export default function HomepageFeatures(): JSX.Element {
+const HomepageFeatures: React.FC = () => {
   const { colorMode } = useColorMode();
   const isDarkMode = colorMode === 'dark';
+
+  console.log('the theme mode is', colorMode);
 
   const FeatureList = useMemo<FeatureItem[]>(() => [
     {
@@ -90,3 +92,5 @@ export default function HomepageFeatures(): JSX.Element {
     </section>
   );
 }
+
+export default HomepageFeatures;
