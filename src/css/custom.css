@@ -18,15 +18,17 @@
 
 /* Dark mode color palette with darker purples */
 [data-theme='dark'] {
-  --ifm-color-primary: #3f1b8c; /* Darkest purple for dark mode */
   --ifm-color-primary-dark: #371785; /* A shade darker */
   --ifm-color-primary-darker: #30137b;
   --ifm-color-primary-darkest: #2a1071; /* Deepest dark purple */
   --ifm-color-primary-light: #48219b; /* Slightly lighter purple for contrast */
   --ifm-color-primary-lighter: #5734b3;
   --ifm-color-primary-lightest: #674dcc;
+  --ifm-color-primary: #A288FF;
   --docusaurus-highlighted-code-line-bg: rgba(63, 27, 140, 0.3); /* Dark purple highlight in dark mode */
 }
+
+
 
 @tailwind components;
 @tailwind utilities;
