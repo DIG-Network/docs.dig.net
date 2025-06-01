@@ -26,7 +26,7 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--lg rounded-3xl bg-gradient-to-r from-indigo-500 from-0% via-purple-500 via-50% to-pink-500 to-100%"
-            to="/docs/Protocol%20Overview/introduction">
+            to="/docs/intro">
             Get Started
           </Link>
         </div>
