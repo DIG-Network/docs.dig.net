@@ -2,13 +2,13 @@
 sidebar_position: 2
 ---
 
+# DataStore - NFT-Based Data Containers
+
 :::tip 💜 Support the DIG Network
 **Help build the future of decentralized storage!** The DIG Network is an open-source project that needs community support to continue development. 
 
 **[💜 Support the Project →](../../support.md)** - Donate crypto, buy NFTs, or sponsor development
 :::
-
-# DataStore - NFT-Based Data Containers
 
 ## Overview
 

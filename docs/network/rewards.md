@@ -2,13 +2,13 @@
 sidebar_position: 6
 ---
 
+# Reward Distribution System
+
 :::tip 💜 Support the DIG Network
 **Help build the future of decentralized storage!** The DIG Network is an open-source project that needs community support to continue development. 
 
 **[💜 Support the Project →](../support.md)** - Donate crypto, buy NFTs, or sponsor development
 :::
-
-# Reward Distribution System
 
 ## Overview
 

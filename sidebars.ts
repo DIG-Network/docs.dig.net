@@ -20,6 +20,10 @@ const sidebars: SidebarsConfig = {
       label: 'System Overview',
       items: [
         'overview/architecture',
+        'overview/system-components',
+        'overview/network-participants',
+        'overview/content-propagation',
+        'overview/incentive-model',
       ],
     },
     {
