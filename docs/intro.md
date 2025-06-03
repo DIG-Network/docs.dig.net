@@ -179,7 +179,7 @@ Dynamic difficulty adjustment allows validators to tune incentives based on netw
 2. **[Primitives Overview](./primitives/off-chain/plots.md)** - Individual network components and their functions
 
 ### **Technical Deep Dives**
-3. **[Zero-Knowledge Proofs](./zk-proofs/overview.md)** - Complete privacy-preserving verification system
+3. **[Zero-Knowledge Proofs](./proofs/overview.md)** - Complete privacy-preserving verification system
 4. **[Plot Format Specifications](./technical/plot-format.md)** - Binary file structure and 7-table architecture details
 5. **[Economic Model](./economics/token-model.md)** - Token distribution, streaming, and incentive design
 

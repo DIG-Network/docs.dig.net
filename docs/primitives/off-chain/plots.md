@@ -177,7 +177,7 @@ Plots enable several critical network functions:
 - Prove you actually store the data you claim to store
 - Verify storage providers have physical access to data
 - Prevent Sybil attacks through proof-of-work requirements
-- Enable [zero-knowledge verification](../../zk-proofs/overview.md) without revealing sensitive data
+- Enable [zero-knowledge verification](../../proofs/overview.md) without revealing sensitive data
 - Support [PlotCoin creation](../on-chain/plotcoin.md) for network registration
 - Facilitate [reward distribution](../../network/rewards.md) based on verified storage
 

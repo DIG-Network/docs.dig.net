@@ -18,7 +18,7 @@ PlotCoin serves as the cornerstone of the DIG Network's on-chain coordination sy
 
 ### Decentralized Registry
 
-PlotCoins function as registry entries that map blobIds to their storage providers, containing both [zero-knowledge proof packages](../../zk-proofs/overview.md) and network location information. This creates a trustless, queryable registry where validators can discover who is storing specific blobs and verify their proofs without direct communication.
+PlotCoins function as registry entries that map blobIds to their storage providers, containing both [zero-knowledge proof packages](../../proofs/overview.md) and network location information. This creates a trustless, queryable registry where validators can discover who is storing specific blobs and verify their proofs without direct communication.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────┐

@@ -48,11 +48,11 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Zero-Knowledge Proofs',
       items: [
-        'zk-proofs/overview',
-        'zk-proofs/plot-ownership',
-        'zk-proofs/data-inclusion',
-        'zk-proofs/computational-work',
-        'zk-proofs/physical-access',
+        'proofs/overview',
+        'proofs/plot-ownership',
+        'proofs/data-inclusion',
+        'proofs/computational-work',
+        'proofs/physical-access',
       ],
     },
     {

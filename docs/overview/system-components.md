@@ -142,12 +142,12 @@ sidebar_position: 2
 
 ### **Zero-Knowledge Proof System**
 
-The DIG Network implements a comprehensive [zero-knowledge proof system](../zk-proofs/overview.md) with five core proof types:
+The DIG Network implements a comprehensive [zero-knowledge proof system](../proofs/overview.md) with five core proof types:
 
-1. **[Plot Ownership Proof](../zk-proofs/plot-ownership.md)** - Proves plot ownership and computational work
-2. **[Data Inclusion Proof](../zk-proofs/data-inclusion.md)** - Proves specific data exists in the plot
-3. **[Computational Work Proof](../zk-proofs/computational-work.md)** - Proves work is bound to plot and data
-4. **[Physical Access Proof](../zk-proofs/physical-access.md)** - Proves current access to stored data
+1. **[Plot Ownership Proof](../proofs/plot-ownership.md)** - Proves plot ownership and computational work
+2. **[Data Inclusion Proof](../proofs/data-inclusion.md)** - Proves specific data exists in the plot
+3. **[Computational Work Proof](../proofs/computational-work.md)** - Proves work is bound to plot and data
+4. **[Physical Access Proof](../proofs/physical-access.md)** - Proves current access to stored data
 
 ### **Integration Properties**
 
