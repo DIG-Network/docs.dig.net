@@ -64,7 +64,7 @@ const config: Config = {
           type: "docSidebar",
           sidebarId: "tutorialSidebar",
           position: "left",
-          label: "Tutorial",
+          label: "White Paper",
         },
         {
           href: "https://github.com/DIG-Network",
@@ -81,7 +81,7 @@ const config: Config = {
           title: "Docs",
           items: [
             {
-              label: "Tutorial",
+              label: "White Paper",
               to: "/docs/intro",
             },
           ],
