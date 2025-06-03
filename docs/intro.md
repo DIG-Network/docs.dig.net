@@ -129,7 +129,6 @@ The protocol consists of two primary layers of primitives working together:
 
 ### **Off-Chain Primitives**
 - **[Plots](./primitives/off-chain/plots.md)**: Cryptographically secured storage containers with embedded proof-of-work and 7-table blockchain architecture
-- **[Quarry](./primitives/off-chain/quarry.md)**: Collections of related Plots *(future implementation)*
 - **[Cart](./primitives/off-chain/cart.md)**: Data transport packages *(future implementation)*
 
 ### **On-Chain Primitives**  

@@ -275,7 +275,6 @@ Niche Content (low domain costs):
 ### **Planned Improvements**
 
 **Advanced Storage Primitives:**
-- **[Quarry Collections](../primitives/off-chain/quarry.md)**: Grouped plot management for related content
 - **[Cart Transport](../primitives/off-chain/cart.md)**: Optimized data movement between nodes
 - **Adaptive Compression**: Dynamic compression based on content type and access patterns
 - **Predictive Caching**: AI-driven content placement optimization

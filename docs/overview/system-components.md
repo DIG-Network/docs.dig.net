@@ -138,18 +138,16 @@ sidebar_position: 2
 
 ### **Off-Chain Primitives**
 - **[Plot](../primitives/off-chain/plots.md)** - Cryptographically secured storage containers with embedded proof-of-work
-- **[Quarry](../primitives/off-chain/quarry.md)** - Collections of related Plots (future implementation)
 - **[Cart](../primitives/off-chain/cart.md)** - Lightweight transport packages for data transfer (future implementation)
 
 ### **Zero-Knowledge Proof System**
 
 The DIG Network implements a comprehensive [zero-knowledge proof system](../zk-proofs/overview.md) with five core proof types:
 
-1. **[Plot Creation Proof](../zk-proofs/plot-creation.md)** - Proves plot ownership and computational work
+1. **[Plot Ownership Proof](../zk-proofs/plot-ownership.md)** - Proves plot ownership and computational work
 2. **[Data Inclusion Proof](../zk-proofs/data-inclusion.md)** - Proves specific data exists in the plot
-3. **[Ownership Verification](../zk-proofs/ownership.md)** - Proves legitimate ownership of data
-4. **[Computational Work Proof](../zk-proofs/computational-work.md)** - Proves work is bound to plot and data
-5. **[Physical Access Proof](../zk-proofs/physical-access.md)** - Proves current access to stored data
+3. **[Computational Work Proof](../zk-proofs/computational-work.md)** - Proves work is bound to plot and data
+4. **[Physical Access Proof](../zk-proofs/physical-access.md)** - Proves current access to stored data
 
 ### **Integration Properties**
 

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 4
 ---
 
 # Computational Work Proof
@@ -12,534 +12,631 @@ sidebar_position: 5
 
 ## Overview
 
-The **Computational Work Proof** is the most critical component of the DIG Network's incentive system, preventing "storage credit theft" by cryptographically binding computational work to specific plotId AND blobId combinations. This proof ensures that only DIG Nodes that have genuinely invested computational effort can earn rewards, making it **impossible for malicious actors to claim credit for storage work they haven't performed**.
+The **Computational Work Proof** is the final piece of the verification puzzle, proving that actual computational effort was invested for **each specific blob** within a specific plot. This proof prevents "work theft" and ensures that storage providers cannot claim rewards without genuinely performing the required computational work for every blob they store.
 
-## Critical Role in Network Integrity
+### Why Per-Blob Computational Proof?
 
-This proof system is **absolutely foundational** to the DIG Network's economic security and serves as the backbone for the entire incentive mechanism:
+After establishing plot ownership and data inclusion, we still need to prove:
 
-### Preventing Storage Credit Theft
+1. **Individual Work Performance**: Real computational effort was expended for this specific blob
+2. **Difficulty Achievement**: The work meets the difficulty claimed in the plot
+3. **Dual Binding**: The work is permanently bound to BOTH the specific blobHash AND plotId
 
-**The Core Problem:**
-Without computational commitment, malicious actors could:
-- Copy existing plots and claim rewards without doing the work
-- Create fake PlotCoins pointing to data they don't actually store
-- Steal storage credits by claiming ownership of others' storage work
-- Undermine the entire incentive system through fraudulent claims
+### Per-Blob Work Architecture
 
-**The Solution:**
-Computational Work Proof makes storage credit theft **cryptographically impossible** by:
-- Binding computational work to specific plot/blob combinations
-- Requiring fresh computational proof for each PlotCoin creation
-- Making proof generation impossible without actual plot ownership
-- Ensuring validators can verify genuine storage commitment
+**Each blob gets its own proof of work:**
+- ✅ Separate work proof for every blob stored
+- ✅ True dual binding to plotId + blobHash  
+- ✅ Prevents blob-level work theft
+- ✅ Granular security at individual blob level
 
-### Foundation of Economic Security
+Without this per-blob approach, malicious actors could:
+- Reuse work from different plots or blobs
+- Claim higher difficulty than actually achieved  
+- Steal computational proofs from other providers
+- Perform work once but claim storage for multiple blobs
 
-The proof system ensures that:
-- **Rewards flow only to genuine storage providers** who have invested computational resources
-- **Economic incentives align with actual storage provision** rather than gaming attempts
-- **Network security scales with computational commitment** rather than just token staking
-- **Validator authority over difficulty enables dynamic incentive tuning**
+### Key Design: Dual Cryptographic Binding
 
-## What It Proves
+The Computational Work Proof creates an unbreakable cryptographic bond between:
+- **plotId**: The specific plot containing the data
+- **blobHash**: The specific blob being stored
 
-The Computational Work Proof establishes:
+This dual binding ensures that:
+1. Work cannot be reused across different plots
+2. Work cannot be applied to different blobs
+3. Work cannot be stolen or faked
 
-1. **Work-to-Data Binding**: Computational work is cryptographically bound to specific plotId AND blobId
-2. **Genuine Effort**: Significant computational resources were expended for this specific combination
-3. **Fresh Computation**: Work was performed recently, not cached from previous computations
-4. **Difficulty Achievement**: Minimum network-required difficulty threshold was met or exceeded
-5. **Work Uniqueness**: Computational work cannot be reused across different plots or blobs
+## Proof Structure
 
-## Cryptographic Architecture
+The computational work proof reveals the actual work data (but that's secure):
 
-### Proof-of-Work Construction
-
-The computational work system builds on proven blockchain proof-of-work concepts while adapting them for the specific requirements of decentralized storage:
-
-```
-Computational Work Binding:
-workChallenge = SHA256(plotId + blobId + networkEpoch + "DIG_WORK_CHALLENGE")
-workTarget = CalculateDifficultyTarget(requiredDifficulty)
-
-FOR nonce in range(0, MAX_NONCE):
-    workProof = SHA256(workChallenge + nonce + plotMetadata + blobMetadata)
-    IF workProof < workTarget:
-        RETURN ValidWorkProof{
-            nonce: nonce,
-            workProof: workProof,
-            difficulty: CalculateDifficulty(workProof),
-            boundData: (plotId, blobId, networkEpoch)
-        }
-
-RETURN FAILURE ("No valid work proof found within nonce range")
+```typescript
+interface ComputationalWorkProof {
+  nonce: Buffer;                    // The actual nonce found (4-32 bytes)
+  plotId: Buffer;                   // PlotId for dual binding (32 bytes)  
+  blobHash: Buffer;                 // BlobHash for dual binding (32 bytes)
+  tableDataHash: Buffer;            // Table data hash (32 bytes)
+  difficulty: number;               // Required difficulty achieved (4 bytes)
+  // Total: ~100 bytes
+}
 ```
 
-### Work Verification Algorithm
+### Core Security: Work Hash with Dual Binding
 
-```
-Verification Algorithm:
-INPUT: workProof, nonce, plotId, blobId, networkEpoch, claimedDifficulty
+The core of the proof is the work hash that binds everything together:
 
-STEPS:
-1. RECONSTRUCT_CHALLENGE:
-   workChallenge = SHA256(plotId + blobId + networkEpoch + "DIG_WORK_CHALLENGE")
-
-2. VERIFY_WORK_PROOF:
-   expectedWorkProof = SHA256(workChallenge + nonce + plotMetadata + blobMetadata)
-   IF expectedWorkProof != workProof:
-       RETURN FALSE
-
-3. VERIFY_DIFFICULTY:
-   actualDifficulty = CalculateDifficulty(workProof)
-   IF actualDifficulty < requiredDifficulty:
-       RETURN FALSE
-
-4. VERIFY_BINDING:
-   // Ensure work is bound to this specific plot/blob combination
-   IF NOT VerifyWorkBinding(workProof, plotId, blobId):
-       RETURN FALSE
-
-RETURN TRUE
+```typescript
+workHash = SHA-256(
+  tableDataHash +    // Table data being worked on
+  nonce +           // The proof-of-work solution
+  plotId +          // ★ Binds work to specific plot
+  blobHash          // ★ Binds work to specific blob
+)
 ```
 
-## ZK-SNARK Circuit Design
+This construction ensures work cannot be separated from its context.
 
-### Circuit Architecture
+## Step-by-Step: How Computational Work Proof Works
 
-```
-Circuit: ComputationalWorkProof
-Purpose: Prove computational work binding without revealing sensitive work details
+Let's walk through exactly how the proof system works, from generating work to verifying it.
 
-Inputs:
-  Private:
-    - plotId: Plot identifier work is bound to (32 bytes)
-    - blobId: Blob identifier work is bound to (32 bytes)
-    - workNonce: Nonce that produces valid work proof (32 bytes)
-    - plotMetadata: Additional plot context for work binding (variable size)
-    - blobMetadata: Additional blob context for work binding (variable size)
-    - networkEpoch: Network epoch when work was performed (8 bytes)
-    - actualDifficulty: Actual difficulty achieved (8 bytes)
-    - randomBlindingFactor: For commitment privacy (32 bytes)
-    
-  Public:
-    - workCommitment: Commitment to computational work achievement (32 bytes)
-    - bindingCommitment: Commitment to work-data binding (32 bytes)
-    - difficultyCommitment: Commitment to difficulty achievement (32 bytes)
-    - epochCommitment: Commitment to temporal validity (32 bytes)
+### Step 1: Setting Up the Work Challenge
 
-Constraints:
-  1. WORK_CHALLENGE_RECONSTRUCTION:
-     workChallenge = SHA256(plotId + blobId + networkEpoch + "DIG_WORK_CHALLENGE")
-     
-  2. WORK_PROOF_COMPUTATION:
-     workProof = SHA256(workChallenge + workNonce + plotMetadata + blobMetadata)
-     
-  3. DIFFICULTY_VERIFICATION:
-     computedDifficulty = CalculateDifficulty(workProof)
-     ASSERT computedDifficulty >= requiredDifficulty
-     ASSERT computedDifficulty == actualDifficulty
-     
-  4. WORK_BINDING_VERIFICATION:
-     bindingHash = Poseidon(workProof + plotId + blobId)
-     ASSERT VerifyWorkBinding(bindingHash)
-     
-  5. TEMPORAL_VALIDITY:
-     ASSERT networkEpoch >= (currentEpoch - WORK_VALIDITY_WINDOW)
-     ASSERT networkEpoch <= currentEpoch
-     
-  6. COMMITMENT_GENERATION:
-     workCommitment = Poseidon(workProof + actualDifficulty + randomBlindingFactor)
-     bindingCommitment = Poseidon(plotId + blobId + workProof + randomBlindingFactor)
-     difficultyCommitment = Poseidon(actualDifficulty + requiredDifficulty + randomBlindingFactor)
-     epochCommitment = Poseidon(networkEpoch + currentEpoch + randomBlindingFactor)
+When a storage provider needs to prove computational work for a specific blob:
+
+```typescript
+// The challenge parameters are established
+const plotId = "0x1234...5678";           // From plot ownership proof
+const blobHash = "0xaaaa...bbbb";         // From data inclusion proof  
+const tableData = getBlobTableData();     // The actual table containing the blob
+const requiredDifficulty = 20;           // From plot ownership proof
+
+// Hash the table data for the proof
+const tableDataHash = SHA-256(tableData);
 ```
 
-### Privacy-Preserving Work Verification
+### Step 2: Performing the Computational Work
 
-The circuit enables work verification while protecting sensitive information:
+The storage provider must now find a nonce that produces a valid proof-of-work:
 
-**Hidden from Validators:**
-- Actual work nonce values
-- Specific difficulty achieved (only proves ≥ threshold)
-- Plot and blob identifiers
-- Work computation details
-- Timing of work computation
+```typescript
+let nonce = 0;
+let attempts = 0;
+let workHash: Buffer;
+let actualDifficulty: number;
 
-**Proven to Validators:**
-- Work was performed and bound to specific data
-- Minimum difficulty threshold was achieved
-- Work is temporally valid (recent enough)
-- Work cannot be reused for different data
+console.log(`🎯 Target: Find hash with ${requiredDifficulty} leading zero bits`);
+console.log(`📊 Expected attempts: ~${Math.pow(2, requiredDifficulty).toLocaleString()}`);
 
-## Dynamic Difficulty System
-
-### Validator-Controlled Difficulty
-
-**Validators have complete authority over difficulty requirements**, enabling dynamic network optimization:
-
-```
-Difficulty Management Algorithm:
-PURPOSE: Allow validators to dynamically adjust incentives
-
-VALIDATOR_ACTIONS:
-1. SET_MINIMUM_DIFFICULTY(blobId, difficulty):
-   - Set minimum work requirement for specific blob rewards
-   - Higher difficulty = higher barrier but higher rewards
-   - Lower difficulty = easier access but lower rewards
-
-2. ADJUST_NETWORK_DIFFICULTY(globalDifficultyMultiplier):
-   - Adjust overall network work requirements
-   - Response to network capacity changes
-   - Economic tuning based on token values
-
-3. PRIORITY_DIFFICULTY_BONUSES(blobId, bonusDifficulty):
-   - Set higher difficulty for premium content
-   - Incentivize storage of high-value data
-   - Create performance tiers within network
-
-4. GEOGRAPHIC_DIFFICULTY_ADJUSTMENTS(region, difficultyModifier):
-   - Adjust difficulty based on geographic needs
-   - Incentivize storage in underserved regions
-   - Balance global content distribution
-```
-
-### Economic Difficulty Tuning
-
-Validators can adjust difficulty based on multiple economic factors:
-
-```
-Economic Difficulty Factors:
-1. TOKEN_VALUE_CORRELATION:
-   - Higher token values → Can require higher difficulty
-   - Lower token values → May reduce difficulty to maintain participation
-   - Market-responsive incentive adjustment
-
-2. NETWORK_CAPACITY_MANAGEMENT:
-   - High network usage → Increase difficulty to filter participants  
-   - Low network usage → Decrease difficulty to encourage participation
-   - Capacity-responsive scaling
-
-3. CONTENT_VALUE_SIGNALING:
-   - DIG Handle registered content → Higher difficulty requirements
-   - Community-valued content → Adjusted difficulty for priority
-   - Market-driven content prioritization
-
-4. GEOGRAPHIC_DISTRIBUTION:
-   - Underserved regions → Lower difficulty to encourage storage
-   - Oversaturated regions → Higher difficulty to balance distribution
-   - Global optimization through localized incentives
-```
-
-## Proof Generation Process
-
-### Standard Work Proof Generation
-
-```
-ALGORITHM: Generate Computational Work Proof
-PURPOSE: Create ZK proof of computational work binding
-
-INPUT:
-  - plotId: Plot identifier
-  - blobId: Blob identifier  
-  - plotMetadata: Plot structure and context
-  - blobMetadata: Blob structure and context
-  - requiredDifficulty: Minimum difficulty threshold
-
-OUTPUT: Zero-knowledge computational work proof
-
-STEPS:
-  1. DETERMINE_CURRENT_NETWORK_EPOCH:
-     networkEpoch = GetCurrentNetworkEpoch()
-     
-  2. GENERATE_WORK_CHALLENGE:
-     workChallenge = SHA256(plotId + blobId + networkEpoch + "DIG_WORK_CHALLENGE")
-     difficultyTarget = CalculateDifficultyTarget(requiredDifficulty)
-     
-  3. PERFORM_COMPUTATIONAL_WORK:
-     foundValidWork = FALSE
-     attempts = 0
-     WHILE NOT foundValidWork AND attempts < MAX_WORK_ATTEMPTS:
-         workNonce = GenerateRandomNonce(32 bytes)
-         workProof = SHA256(workChallenge + workNonce + plotMetadata + blobMetadata)
-         
-         IF workProof < difficultyTarget:
-             foundValidWork = TRUE
-             actualDifficulty = CalculateDifficulty(workProof)
-         ELSE:
-             attempts += 1
-             
-     IF NOT foundValidWork:
-         RETURN ERROR("Unable to generate valid work proof within attempt limit")
+// Keep trying nonces until we find one that meets the difficulty
+do {
+  // Convert nonce to buffer (can be 4-32 bytes)
+  const nonceBuffer = Buffer.alloc(4);
+  nonceBuffer.writeUInt32BE(nonce, 0);
   
-  4. VERIFY_WORK_BINDING:
-     bindingValid = VerifyWorkBinding(workProof, plotId, blobId)
-     IF NOT bindingValid:
-         RETURN ERROR("Work proof failed binding verification")
+  // ★ CRITICAL: Compute work hash with dual binding
+  const input = Buffer.concat([
+    tableDataHash,    // What we're working on
+    nonceBuffer,      // Our attempt
+    plotId,          // ★ Binds to specific plot
+    blobHash         // ★ Binds to specific blob
+  ]);
   
-  5. GENERATE_PRIVACY_NONCES:
-     blindingFactor = GenerateRandomNonce(32 bytes)
-     
-  6. CREATE_COMMITMENTS:
-     workCommitment = Poseidon(workProof + actualDifficulty + blindingFactor)
-     bindingCommitment = Poseidon(plotId + blobId + workProof + blindingFactor)
-     difficultyCommitment = Poseidon(actualDifficulty + requiredDifficulty + blindingFactor)
-     epochCommitment = Poseidon(networkEpoch + GetCurrentEpoch() + blindingFactor)
+  workHash = SHA-256(input);
+  actualDifficulty = countLeadingZeroBits(workHash);
+  attempts++;
   
-  7. PREPARE_CIRCUIT_INPUTS:
-     privateInputs = [
-         plotId, blobId, workNonce, plotMetadata, blobMetadata,
-         networkEpoch, actualDifficulty, blindingFactor
-     ]
-     publicInputs = [
-         workCommitment, bindingCommitment, difficultyCommitment, epochCommitment
-     ]
+  // Progress reporting
+  if (attempts % 100000 === 0) {
+    console.log(`💪 Tried ${attempts.toLocaleString()} nonces...`);
+  }
   
-  8. GENERATE_SNARK_PROOF:
-     snarkProof = GenerateGroth16Proof(ComputationalWorkCircuit, privateInputs, publicInputs)
+  nonce++;
+} while (actualDifficulty < requiredDifficulty);
+
+console.log(`✅ Found valid nonce: ${nonce - 1}`);
+console.log(`🔥 Achieved difficulty: ${actualDifficulty} (required: ${requiredDifficulty})`);
+console.log(`⚡ Total attempts: ${attempts.toLocaleString()}`);
+console.log(`🎯 Work hash: ${workHash.toString('hex').substring(0, 32)}...`);
+```
+
+### Step 3: Understanding Difficulty
+
+**Difficulty** measures how many leading zero bits the work hash must have:
+
+| Difficulty | Leading Zeros | Average Attempts | Time (3GH/s) |
+|------------|---------------|------------------|---------------|
+| 10 | 10 bits | 1,024 | 0.3 ms |
+| 15 | 15 bits | 32,768 | 11 ms |
+| 20 | 20 bits | 1,048,576 | 0.35 seconds |
+| 25 | 25 bits | 33,554,432 | 11 seconds |
+| 30 | 30 bits | 1,073,741,824 | 6 minutes |
+
+```typescript
+function countLeadingZeroBits(hash: Buffer): number {
+  let count = 0;
   
-  9. CREATE_NULLIFIER:
-     nullifier = Poseidon(plotId + blobId + workNonce + networkEpoch + "WORK_V1")
-  
-  10. RETURN_PROOF_PACKAGE:
-      Return WorkProofPackage{
-          commitments: [workCommitment, bindingCommitment, difficultyCommitment, epochCommitment],
-          snarkProof: snarkProof,
-          nullifier: nullifier,
-          proofType: "COMPUTATIONAL_WORK",
-          version: 1,
-          workMetadata: {
-              epochGenerated: networkEpoch,
-              difficultyAchieved: actualDifficulty, // May be revealed for reward calculation
-              generationTime: timestamp
-          }
+  for (let i = 0; i < hash.length; i++) {
+    const byte = hash[i];
+    if (byte === 0) {
+      count += 8;  // All 8 bits are zero
+    } else {
+      // Count leading zeros in this byte
+      let mask = 0x80;  // 10000000
+      while (mask > 0 && (byte & mask) === 0) {
+        count++;
+        mask >>= 1;  // Shift right: 01000000, 00100000, etc.
       }
+      break;  // Found a 1 bit, stop counting
+    }
+  }
+  
+  return count;
+}
+
+// Examples:
+// 0x00000123... → 14 leading zero bits
+// 0x00012345... → 11 leading zero bits  
+// 0x01234567... → 7 leading zero bits
+// 0x12345678... → 0 leading zero bits
 ```
 
-### High-Difficulty Work Generation
+### Step 4: Creating the Proof Package
 
-For high-value content requiring enhanced computational commitment:
+Once valid work is found, create the proof:
 
-```
-High-Difficulty Work Algorithm:
-- Extended nonce search space for higher difficulty targets
-- Progressive difficulty ramping for computational efficiency
-- Parallel work generation for improved performance
-- Optimized SHA-256 implementations for speed
+```typescript
+const proof: ComputationalWorkProof = {
+  nonce: nonceBuffer,
+  plotId: plotId,
+  blobHash: blobHash,
+  tableDataHash: tableDataHash,
+  difficulty: actualDifficulty
+};
+
+console.log(`📦 Proof size: ${calculateProofSize(proof)} bytes`);
+console.log(`🚀 Ready for verification!`);
 ```
 
 ## Verification Process
 
-### Validator Verification Workflow
+Validators verify the proof without needing to redo the work:
 
-```
-ALGORITHM: Verify Computational Work Proof
-PURPOSE: Validate work binding without learning sensitive details
+### Step 1: Validate Proof Structure
 
-INPUT:
-  - workProof: Complete computational work proof package
-  - plotId: Plot identifier (for binding verification)
-  - blobId: Blob identifier (for binding verification)
-  - requiredDifficulty: Minimum difficulty threshold
-
-OUTPUT: Boolean indicating proof validity + difficulty achievement level
-
-STEPS:
-  1. EXTRACT_PROOF_COMPONENTS:
-     commitments = workProof.commitments
-     snarkProof = workProof.snarkProof
-     nullifier = workProof.nullifier
-     epochGenerated = workProof.workMetadata.epochGenerated
-     
-  2. CHECK_NULLIFIER_UNIQUENESS:
-     IF nullifier exists in WorkNullifierDatabase:
-         RETURN FALSE (work proof reuse detected)
+```typescript
+function validateProofStructure(proof: ComputationalWorkProof): string[] {
+  const errors: string[] = [];
   
-  3. VERIFY_TEMPORAL_VALIDITY:
-     currentEpoch = GetCurrentNetworkEpoch()
-     IF epochGenerated < (currentEpoch - WORK_VALIDITY_WINDOW):
-         RETURN FALSE (work proof too old)
-     IF epochGenerated > currentEpoch:
-         RETURN FALSE (work proof from future)
+  if (!proof.nonce || proof.nonce.length < 4) {
+    errors.push('Invalid nonce structure');
+  }
+  if (!proof.plotId || proof.plotId.length !== 32) {
+    errors.push('Invalid plotId structure');
+  }
+  if (!proof.blobHash || proof.blobHash.length !== 32) {
+    errors.push('Invalid blobHash structure'); 
+  }
+  if (!proof.tableDataHash || proof.tableDataHash.length !== 32) {
+    errors.push('Invalid tableDataHash structure');
+  }
+  if (typeof proof.difficulty !== 'number' || proof.difficulty < 0) {
+    errors.push('Invalid difficulty value');
+  }
+  return errors;
+}
+```
+
+### Step 2: Verify Work Hash
+
+```typescript
+function verifyWorkHash(
+  proof: ComputationalWorkProof,
+  minDifficulty: number
+): { isValid: boolean; errors: string[] } {
+  const errors: string[] = [];
   
-  4. VERIFY_SNARK_PROOF:
-     publicInputs = commitments
-     isValid = VerifyGroth16Proof(ComputationalWorkVerificationKey, snarkProof, publicInputs)
-     IF NOT isValid:
-         RETURN FALSE
+  // Compute work hash using the prover's claimed nonce (single computation)
+  const input = Buffer.concat([
+    proof.tableDataHash,    // Table data being worked on
+    proof.nonce,           // The claimed solution nonce
+    proof.plotId,          // ★ Must match expected plotId
+    proof.blobHash         // ★ Must match expected blobHash
+  ]);
   
-  5. VERIFY_DIFFICULTY_THRESHOLD:
-     // Circuit guarantees difficulty >= requiredDifficulty
-     // But may reveal achieved difficulty for reward calculation
-     IF workProof.workMetadata.difficultyAchieved < requiredDifficulty:
-         RETURN FALSE
+  const workHash = SHA-256(input);
+  const achievedDifficulty = countLeadingZeroBits(workHash);
   
-  6. CROSS_VERIFY_WITH_OTHER_PROOFS:
-     // Ensure work proof is consistent with plot creation and data inclusion proofs
-     isConsistent = VerifyProofConsistency(workProof, otherProofs)
-     IF NOT isConsistent:
-         RETURN FALSE
+  console.log(`🔍 Computing work hash with provided nonce: ${workHash.toString('hex').substring(0, 32)}...`);
+  console.log(`📊 Claimed difficulty: ${proof.difficulty}`);
+  console.log(`✅ Actual difficulty achieved: ${achievedDifficulty}`);
+  console.log(`🎯 Required minimum difficulty: ${minDifficulty}`);
   
-  7. RECORD_VERIFICATION:
-     WorkNullifierDatabase.Add(nullifier)
-     LogWorkVerification(plotId, blobId, requiredDifficulty, timestamp)
+  // Verify difficulty claims (this is why verification is so fast!)
+  if (achievedDifficulty < proof.difficulty) {
+    errors.push(`Work verification failed: claimed ${proof.difficulty}, actual ${achievedDifficulty}`);
+  }
   
-  8. RETURN_VERIFICATION_RESULT:
-     RETURN WorkVerificationResult{
-         isValid: TRUE,
-         plotId: plotId,
-         blobId: blobId,
-         difficultyAchieved: workProof.workMetadata.difficultyAchieved,
-         verificationTimestamp: now(),
-         proofVersion: workProof.version
-     }
+  if (proof.difficulty < minDifficulty) {
+    errors.push(`Insufficient difficulty: ${proof.difficulty} < ${minDifficulty}`);
+  }
+  
+  return { isValid: errors.length === 0, errors };
+}
 ```
 
-### Batch Work Verification
+### Step 3: Complete Verification
 
-For efficiency, validators can verify multiple work proofs simultaneously:
-
-```
-Batch Verification Benefits:
-- Amortized verification costs across multiple proofs
-- Parallel SNARK verification for improved throughput
-- Reduced overhead for large-scale validation
-- Optimized resource utilization
-```
-
-## Attack Resistance
-
-### Work Stealing Prevention
-
-**Attack Vector**: Copying someone else's computational work to claim rewards
-**Defense**: Work is cryptographically bound to specific plotId/blobId combinations
-**Security**: Cannot reuse work across different plots or blobs
-
-### Precomputation Prevention
-
-**Attack Vector**: Pre-computing work proofs and caching them for later use
-**Defense**: Work challenges incorporate current network epoch and fresh plot/blob metadata
-**Security**: Cached work becomes invalid as network state changes
-
-### Proof Replay Prevention
-
-**Attack Vector**: Reusing the same work proof multiple times
-**Defense**: Nullifier system prevents any work proof from being used more than once
-**Security**: Each work proof can only be submitted once across entire network
-
-### Difficulty Manipulation Prevention
-
-**Attack Vector**: Claiming higher difficulty than actually achieved
-**Defense**: ZK circuit verifies actual difficulty meets or exceeds claimed level
-**Security**: Cannot fake difficulty achievement within cryptographic proof
-
-## Performance Characteristics
-
-### Work Generation Performance
-
-**Computational Requirements:**
-- Base difficulty: ~1-10 seconds on consumer hardware
-- High difficulty: ~1-60 minutes depending on target
-- Memory usage: ~100-500 MB during generation
-- Parallelizable: Yes, across multiple CPU cores
-
-**Difficulty Scaling:**
-```
-Difficulty Level → Approximate Generation Time:
-- Level 1 (Low): ~1-5 seconds
-- Level 2 (Medium): ~10-30 seconds  
-- Level 3 (High): ~1-5 minutes
-- Level 4 (Premium): ~5-30 minutes
-- Level 5 (Ultra): ~30-120 minutes
+```typescript
+async function verifyComputationalWorkProof(
+  proof: ComputationalWorkProof,
+  expectedPlotId: Buffer,
+  expectedBlobHash: Buffer, 
+  minDifficulty: number
+): Promise<{ isValid: boolean; errors: string[] }> {
+  const errors: string[] = [];
+  
+  console.log(`🔍 Verifying computational work proof...`);
+  console.log(`📊 Expected difficulty: ≥${minDifficulty}`);
+  console.log(`🎯 Expected plotId: ${expectedPlotId.toString('hex').substring(0, 16)}...`);
+  console.log(`📝 Expected blobHash: ${expectedBlobHash.toString('hex').substring(0, 16)}...`);
+  
+  // 1. Validate structure
+  errors.push(...validateProofStructure(proof));
+  
+  // 2. Verify dual binding
+  if (!proof.plotId.equals(expectedPlotId)) {
+    errors.push('Plot binding verification failed - wrong plotId');
+  }
+  if (!proof.blobHash.equals(expectedBlobHash)) {
+    errors.push('Blob binding verification failed - wrong blobHash');
+  }
+  
+  // 3. Verify work was actually performed
+  const workResult = verifyWorkHash(proof, minDifficulty);
+  errors.push(...workResult.errors);
+  
+  const isValid = errors.length === 0;
+  
+  if (isValid) {
+    console.log('✅ Computational work proof verified successfully!');
+    console.log(`⚡ Proof validated in ~1ms (vs ${Math.pow(2, proof.difficulty)} attempts to generate)`);
+  } else {
+    console.log('❌ Computational work proof verification failed:');
+    errors.forEach(error => console.log(`   • ${error}`));
+  }
+  
+  return { isValid, errors };
+}
 ```
 
-### Verification Performance
+## Security Properties
 
-**Verification Metrics:**
-- Standard verification: 5-12 milliseconds
-- Batch verification: 2-6 milliseconds per proof (amortized)
-- Memory usage: &lt;200 MB during verification
-- Parallelizable: Fully parallelizable verification
+### What's Proven
 
-### Network Scalability
+The computational work proof establishes:
+1. **Work Performance**: Computational cycles were actually spent
+2. **Difficulty Achievement**: Work meets the required difficulty level  
+3. **Plot Binding**: Work is cryptographically bound to the specific plotId
+4. **Blob Binding**: Work is cryptographically bound to the specific blobHash
 
-**System Scalability:**
-- Concurrent work generation: Limited by hardware
-- Concurrent verification: 500+ proofs per second per validator
-- Network scale: Millions of work proofs per epoch
-- Storage requirements: ~5-10 KB per work proof
+### Attack Resistance
 
-## Integration with Incentive System
+**Work Theft Prevention**
+```typescript
+// Attacker tries to use Bob's work for their own plot
+// Alice's plot: plotId = 0x1111...
+// Bob's work: nonce = 12345, plotId = 0x2222...
 
-### Reward Calculation Integration
+// Alice tries to reuse Bob's nonce
+const stolenWorkHash = SHA-256(
+  tableDataHash + 
+  bobsNonce +        // ← Bob's nonce
+  alicesPlotId +     // ← Alice's plotId (different!)
+  blobHash
+);
 
-Computational Work Proofs directly influence reward calculations:
-
-```
-Reward Calculation Formula:
-baseReward = GetBaseRewardForBlob(blobId)
-workMultiplier = CalculateWorkMultiplier(difficultyAchieved, requiredDifficulty)
-finalReward = baseReward * workMultiplier
-
-Where:
-- Higher difficulty achievement = Higher reward multiplier
-- Difficulty requirements set by validators
-- Market-driven optimization through difficulty adjustments
+// This produces a completely different hash!
+// Bob's work won't meet difficulty for Alice's plot
+// Attack fails automatically due to dual binding
 ```
 
-### PlotCoin Integration
+**Blob Substitution Prevention**
+```typescript
+// Attacker tries to apply work to different blob
+// Original: work for blobHash = 0xaaaa...
+// Attack: try to use same work for blobHash = 0xbbbb...
 
-Work proofs are embedded in PlotCoin registry entries:
+const originalWorkHash = SHA-256(tableData + nonce + plotId + 0xaaaa...);
+const substitutedHash = SHA-256(tableData + nonce + plotId + 0xbbbb...);
 
+// These hashes are completely different!
+// The work won't meet difficulty for the different blob
+// Attack fails due to blob binding
 ```
-PlotCoin.ZKProofPackage.computationalWorkProof: {
-  commitments: [Hash32, Hash32, Hash32, Hash32],
-  snarkProof: Groth16Proof,
-  nullifier: Hash32,
-  workMetadata: {
-    epochGenerated: Number,
-    difficultyAchieved: Number,
-    requiredDifficulty: Number,
-    generationTime: Timestamp,
-    circuitVersion: Number
+
+**Difficulty Forgery Prevention**
+```typescript
+// Attacker claims higher difficulty than achieved
+// Real hash: 0x00012345... (11 leading zeros)
+// Claimed: 20 bits difficulty
+
+const actualDifficulty = countLeadingZeroBits(workHash); // Returns 11
+const claimedDifficulty = 20;
+
+if (actualDifficulty < claimedDifficulty) {
+  // Attack detected and rejected
+  throw new Error(`Difficulty forgery: claimed ${claimedDifficulty}, actual ${actualDifficulty}`);
+}
+```
+
+## Integration with Complete Proof Chain
+
+### Three-Proof Verification Flow
+
+The Computational Work Proof completes the verification chain:
+
+```typescript
+// 1. Plot Ownership Proof establishes:
+//    - Plot X owned by key K
+//    - Merkle root R  
+//    - Difficulty D
+
+// 2. Data Inclusion Proof establishes:
+//    - Blob B exists in merkle tree with root R
+
+// 3. Computational Work Proof establishes:
+//    - Work meeting difficulty D was performed
+//    - Work is bound to plot X
+//    - Work is bound to blob B
+
+// Together they prove:
+// "The owner of key K stores blob B in plot X and performed 
+//  computational work of difficulty D specifically for that 
+//  blob in that plot"
+```
+
+### Complete Proof Package
+
+```typescript
+const completeProofPackage = {
+  // Identity
+  plotId: "0x1234...5678",
+  blobHash: "0xaaaa...bbbb",
+  
+  // Plot ownership (signature)
+  plotOwnershipProof: {
+    publicKey: "0xabcd...",
+    merkleRoot: "0x5678...", 
+    difficulty: 20,          // ← Used by work proof
+    signature: "0x9876...",
+    // ...
+  },
+  
+  // Data inclusion (merkle proof)
+  dataInclusionProof: {
+    merklePath: [...],
+    pathDirections: Buffer.from('101011', 'binary'),
+    leafIndex: 42,
+
+  },
+  
+  // Computational work proof
+  computationalWorkProof: {
+    nonce: Buffer.from([0x00, 0x12, 0x34, 0x56]),
+    plotId: "0x1234...5678",     // ← Binds to plotId
+    blobHash: "0xaaaa...bbbb",   // ← Binds to blobHash  
+    tableDataHash: "0xcdef...",
+    difficulty: 22               // ← Achieved difficulty ≥ 20
+  }
+};
+```
+
+## Practical Example
+
+### Charlie Proves Work for Each Blob Individually
+
+Let's walk through how Charlie generates separate proof of work for each blob:
+
+```typescript
+// Charlie's plot information
+const plotId = Buffer.from('1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef', 'hex');
+const requiredDifficulty = 20;
+
+// Charlie stores multiple blobs, each getting individual proof of work
+const blobs = [
+  { id: 'blob_001', data: Buffer.from('First blob data...') },
+  { id: 'blob_002', data: Buffer.from('Second blob data...') },
+  { id: 'blob_003', data: Buffer.from('Third blob data...') }
+];
+
+console.log('🚀 Charlie starts per-blob computational work proof generation...');
+console.log(`📊 Target difficulty: ${requiredDifficulty} bits`);
+console.log(`📋 Plot ID: ${plotId.toString('hex').substring(0, 16)}...`);
+console.log(`📦 Processing ${blobs.length} blobs individually...`);
+
+const blobWorkProofs = [];
+
+// Process each blob individually with its own proof of work
+for (const blob of blobs) {
+  const blobHash = crypto.createHash('sha256').update(blob.data).digest();
+  
+  console.log(`\n🔨 Generating proof of work for blob: ${blob.id}`);
+  console.log(`📄 Blob hash: ${blobHash.toString('hex').substring(0, 16)}...`);
+
+  // Create table data for this specific blob
+  const tableData = Buffer.concat([
+    Buffer.from(`table_for_${blob.id}`, 'utf8'),
+    blob.data
+  ]);
+  const tableDataHash = crypto.createHash('sha256').update(tableData).digest();
+
+  // Perform individual proof of work for this blob
+  let nonce = 0;
+  let attempts = 0;
+  let workHash: Buffer;
+  let actualDifficulty: number;
+
+  const startTime = Date.now();
+
+  do {
+    const nonceBuffer = Buffer.alloc(4);
+    nonceBuffer.writeUInt32BE(nonce, 0);
+    
+    // DUAL BINDING: Work hash includes both plotId and THIS blobHash
+    const input = Buffer.concat([
+      tableDataHash,    // Table data for THIS specific blob
+      nonceBuffer,      // Our proof-of-work attempt  
+      plotId,          // ★ Binds to Charlie's plot
+      blobHash         // ★ Binds to THIS specific blob
+    ]);
+    
+    workHash = crypto.createHash('sha256').update(input).digest();
+    actualDifficulty = countLeadingZeroBits(workHash);
+    attempts++;
+    
+    if (attempts % 50000 === 0) {
+      const elapsed = Date.now() - startTime;
+      const rate = attempts / (elapsed / 1000);
+      console.log(`   💪 ${attempts.toLocaleString()} attempts in ${elapsed}ms (${rate.toFixed(0)} H/s)`);
+    }
+    
+    nonce++;
+  } while (actualDifficulty < requiredDifficulty);
+
+  const workTime = Date.now() - startTime;
+
+  console.log(`   ✅ Found valid proof of work for ${blob.id}!`);
+  console.log(`   🎯 Final nonce: ${nonce - 1}`);
+  console.log(`   🔥 Achieved difficulty: ${actualDifficulty} bits`);
+  console.log(`   ⚡ Total attempts: ${attempts.toLocaleString()}`);
+  console.log(`   ⏱️  Work time: ${workTime}ms`);
+
+  // Create the proof for this specific blob
+  const finalNonce = Buffer.alloc(4);
+  finalNonce.writeUInt32BE(nonce - 1, 0);
+
+  const blobProof: ComputationalWorkProof = {
+    nonce: finalNonce,
+    plotId: plotId,
+    blobHash: blobHash,
+    tableDataHash: tableDataHash,
+    difficulty: actualDifficulty
+  };
+
+  blobWorkProofs.push(blobProof);
+  console.log(`   📦 Proof created for ${blob.id} (${calculateProofSize(blobProof)} bytes)`);
+}
+
+console.log(`\n🎉 All ${blobs.length} blobs processed with individual proof of work!`);
+console.log(`📊 Total proofs generated: ${blobWorkProofs.length}`);
+console.log(`💾 Total proof storage: ${blobWorkProofs.reduce((sum, p) => sum + calculateProofSize(p), 0)} bytes`);
+
+// Each blob now has its own computational work proof
+// Validators can verify each proof individually
+for (const proof of blobWorkProofs) {
+  const verification = await verifyComputationalWorkProof(
+    proof,
+    plotId,           // Expected plotId (same for all)
+    proof.blobHash,   // Expected blobHash (unique per blob)
+    requiredDifficulty
+  );
+
+  if (verification.isValid) {
+    console.log(`✅ Proof verified for blob with hash ${proof.blobHash.toString('hex').substring(0, 16)}...`);
+  } else {
+    console.log(`❌ Proof verification failed for blob:`, verification.errors);
   }
 }
 ```
 
-### Validator Authority Integration
+This example shows the complete per-blob flow from individual work generation to verification, demonstrating how:
 
-Validators exercise authority over computational work requirements:
+1. **Each blob gets separate proof of work** - no shared work between blobs
+2. **Dual binding prevents work theft** - work cannot be reused across plots or blobs  
+3. **Fast verification** - each proof verifies in ~1ms regardless of generation time
+4. **Granular security** - compromise of one blob's proof doesn't affect others
 
-- **Set minimum difficulty** for blob reward eligibility
-- **Adjust difficulty dynamically** based on network conditions
-- **Create premium tiers** with higher difficulty requirements
-- **Geographic optimization** through location-based difficulty adjustments
+## Performance Characteristics
 
-## Future Enhancements
+### Work Generation Time
 
-### Advanced Work Mechanisms
+Time to find valid proof depends on difficulty:
 
-**Research Areas:**
-- Variable-time proof of work for consistent generation times
-- Memory-hard functions to prevent ASIC optimization
-- Verifiable delay functions for temporal guarantees
-- Quantum-resistant work functions for future security
+| Difficulty | Expected Attempts | Time (1 GH/s) | Time (10 GH/s) |
+|------------|------------------|---------------|----------------|
+| 16 | 65,536 | 66 ms | 6.6 ms |
+| 20 | 1,048,576 | 1.0 second | 105 ms |
+| 24 | 16,777,216 | 17 seconds | 1.7 seconds |
+| 28 | 268,435,456 | 4.5 minutes | 27 seconds |
+| 32 | 4,294,967,296 | 1.2 hours | 7 minutes |
 
-### Performance Optimizations
+### Verification Speed
 
-**Development Priorities:**
-- Hardware-accelerated work generation
-- Advanced parallel algorithms for multi-core systems
-- GPU optimization for high-difficulty work
-- Distributed work generation across multiple machines
+- Proof verification: ~1ms (just hash computation)
+- Structure validation: ~0.1ms  
+- **Total verification: ~1.1ms**
 
-### Enhanced Security Features
+### Proof Size
 
-**Future Features:**
-- Multi-factor work binding for enhanced security
-- Conditional work requirements based on content sensitivity
-- Dynamic work adjustment based on real-time threat assessment
-- Cross-chain work verification for expanded interoperability
+**Computational Work Proof**: ~100 bytes
 
-The Computational Work Proof represents the critical security foundation that ensures the DIG Network's incentive system rewards genuine storage commitment while preventing various forms of gaming and fraud through rigorous cryptographic and computational requirements. 
+This compact size enables efficient storage and network transmission of proofs.
+
+## Summary
+
+The Per-Blob Computational Work Proof provides granular security:
+
+1. **Proves Individual Work**: Computational effort was actually expended for each specific blob
+2. **Dual Binding**: Each proof is cryptographically bound to both plotId and specific blobHash  
+3. **Fast Verification**: Each proof verifies in ~1ms regardless of generation time
+4. **Small Size**: Only ~100 bytes per blob
+5. **Simple Implementation**: No circuits, trusted setup, or complex cryptography
+6. **Granular Attack Prevention**: Work cannot be stolen, reused, or faked at blob level
+
+### Per-Blob Security Architecture
+
+**Each blob is independently secured:**
+- ✅ Individual proof of work for every blob
+- ✅ Cannot reuse work across blobs
+- ✅ Granular verification and rewards
+- ✅ Compromise-resistant (one blob doesn't affect others)
+
+Combined with Plot Ownership and Data Inclusion proofs, this creates a strong chain of evidence:
+- **Ownership**: "I own this plot" (signature)
+- **Inclusion**: "This specific blob is in my plot" (merkle proof)
+- **Work**: "I did computational work specifically for this individual blob in this plot" (per-blob work proof)
+
+However, there is still one critical requirement remaining. We need to prove that the storage provider actually has physical access to their plot data at the time they create the PlotCoin, preventing "precomputation attacks" where providers delete their plots but continue serving cached proofs.
+
+## Next: Proving Physical Access
+
+With the first three proofs complete, we've established:
+
+1. **Plot Ownership**: The plot with ID X is owned by the holder of the private key
+2. **Valid Plot Structure**: The plotId is correctly constructed with merkle root Y and difficulty Z  
+3. **Data Inclusion**: The blob with hash B exists in the merkle tree with root Y
+4. **Computational Work**: Work of difficulty Z was performed specifically for blob B in plot X
+
+However, we still need to prove that the storage provider has current physical access to their stored data. This is critical because:
+
+- **Without access proof**: Providers could delete plot data after generating the above proofs
+- **Without freshness**: Old proofs could be replayed indefinitely  
+- **Without temporal binding**: Providers could precompute proofs and serve them while not actually storing data
+
+The [Physical Access Proof](./physical-access.md) completes the verification chain by proving:
+
+1. **Current Access**: The provider has physical access to the plot data right now
+2. **Freshness**: The proof was generated recently using current blockchain state
+3. **Temporal Binding**: The proof is cryptographically bound to recent Chia blockchain data
+
+This ensures that storage providers must maintain actual, current access to their plot data to claim rewards, creating a complete four-proof system that prevents all known attack vectors while maintaining privacy and efficiency.
+
+**The Complete Four-Proof System:**
+1. **Plot Ownership Proof** (signature): Proves ownership and plot validity
+2. **Data Inclusion Proof** (merkle): Proves blob exists in the plot  
+3. **Computational Work Proof** (per-blob work): Proves work was done specifically for each blob
+4. **Physical Access Proof** (blockchain-anchored): Proves current physical access to plot data
+
+Together, these four proofs provide complete verification of storage commitment with cryptographic certainty. 

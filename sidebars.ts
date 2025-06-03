@@ -31,7 +31,6 @@ const sidebars: SidebarsConfig = {
       label: 'Off-Chain Primitives',
       items: [
         'primitives/off-chain/plots',
-        'primitives/off-chain/quarry',
         'primitives/off-chain/cart',
       ],
     },
@@ -50,9 +49,8 @@ const sidebars: SidebarsConfig = {
       label: 'Zero-Knowledge Proofs',
       items: [
         'zk-proofs/overview',
-        'zk-proofs/plot-creation',
+        'zk-proofs/plot-ownership',
         'zk-proofs/data-inclusion',
-        'zk-proofs/ownership',
         'zk-proofs/computational-work',
         'zk-proofs/physical-access',
       ],
