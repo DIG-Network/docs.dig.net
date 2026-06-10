@@ -1,115 +1,396 @@
-/* DigStore homepage — branded hero. */
+/* ============================================================
+   DIG Network landing — cosmic marketing page.
+   Forced-dark regardless of theme so the flow stays cohesive.
+   ============================================================ */
 
-.heroBanner {
+.page {
+  background: #06061a;
+  color: #ffffff;
+}
+
+/* shared section rhythm */
+.section {
   position: relative;
-  overflow: hidden;
-  padding: 6rem 0 5rem;
-  text-align: center;
+  padding: 6rem 0;
+  background: #0a0a20;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.sectionAlt {
   background:
-    radial-gradient(900px 520px at 50% -20%, rgba(88, 0, 214, 0.35), transparent 62%),
-    radial-gradient(700px 420px at 85% 120%, rgba(255, 0, 222, 0.18), transparent 60%),
-    #0a0a20;
-  color: #fff;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    radial-gradient(800px 500px at 50% 0%, rgba(88, 0, 214, 0.16), transparent 60%),
+    #08081c;
 }
 
-.heroGlow {
-  position: absolute;
-  inset: -40% -10% auto -10%;
-  height: 70%;
-  pointer-events: none;
-  background: radial-gradient(closest-side, rgba(255, 0, 222, 0.18), transparent 70%);
-  filter: blur(20px);
+.head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 3rem;
 }
-
-.heroMark {
-  width: 88px;
-  height: 88px;
-  position: relative;
-  filter: drop-shadow(0 0 26px rgba(255, 61, 245, 0.55));
-  animation: float 6s ease-in-out infinite;
-}
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
-.eyebrow {
-  position: relative;
-  margin-top: 18px;
-  font-family: "Space Grotesk", system-ui, sans-serif;
-  font-weight: 600;
-  font-size: 0.78rem;
-  letter-spacing: 0.22em;
-  color: #ff3df5;
-}
-
-.heroTitle {
-  position: relative;
+.kicker {
   font-family: "Space Grotesk", system-ui, sans-serif;
   font-weight: 700;
-  font-size: clamp(3rem, 9vw, 5.5rem);
-  line-height: 1.02;
-  letter-spacing: -0.03em;
-  margin: 6px 0 0;
+  font-size: 0.74rem;
+  letter-spacing: 0.24em;
+  color: #ff3df5;
+}
+.head h2 {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  letter-spacing: -0.02em;
+  margin: 0.6rem 0 0.5rem;
+  color: #fff;
+}
+.head p {
+  color: #c5c1e0;
+  font-size: 1.1rem;
+  margin: 0;
 }
 
-.heroSubtitle {
+/* ---------------- HERO ---------------- */
+.hero {
   position: relative;
-  max-width: 720px;
-  margin: 1rem auto 0;
-  font-size: 1.2rem;
+  overflow: hidden;
+  padding: 7rem 0 6rem;
+  background:
+    radial-gradient(1100px 620px at 22% -10%, rgba(88, 0, 214, 0.42), transparent 60%),
+    radial-gradient(900px 560px at 100% 10%, rgba(255, 0, 222, 0.22), transparent 58%),
+    #06061a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.heroBg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.dotGrid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 34px 34px;
+  -webkit-mask-image: radial-gradient(60% 60% at 50% 30%, #000, transparent 75%);
+  mask-image: radial-gradient(60% 60% at 50% 30%, #000, transparent 75%);
+  opacity: 0.6;
+}
+.orbits {
+  position: absolute;
+  inset: -6% -4% auto -4%;
+  width: 108%;
+  height: 120%;
+  opacity: 0.8;
+}
+.glowCore {
+  position: absolute;
+  top: -160px;
+  left: 14%;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(closest-side, rgba(255, 0, 222, 0.25), transparent 70%);
+  filter: blur(30px);
+}
+
+.heroInner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 3rem;
+  align-items: center;
+}
+.heroCopy { max-width: 620px; }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: #d8d4f0;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(138, 110, 255, 0.3);
+  padding: 7px 14px;
+  border-radius: 999px;
+}
+.pillDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #38e1b0;
+  box-shadow: 0 0 10px #38e1b0;
+}
+.h1 {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.6rem, 6vw, 4.2rem);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  margin: 1.1rem 0 0;
+  color: #fff;
+}
+.lead {
+  margin: 1.2rem 0 0;
+  font-size: 1.18rem;
   line-height: 1.6;
   color: #c5c1e0;
 }
+.lead strong { color: #fff; }
 
-.buttons {
-  position: relative;
+.ctaRow {
   display: flex;
   gap: 14px;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2rem;
   flex-wrap: wrap;
+  margin-top: 2rem;
 }
-
-.ghostBtn {
+.ghost {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(138, 110, 255, 0.35);
   color: #fff;
 }
-.ghostBtn:hover {
+.ghost:hover {
   background: rgba(255, 255, 255, 0.1);
-  color: #fff;
   border-color: rgba(255, 0, 222, 0.5);
+  color: #fff;
+}
+.trust {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 1.8rem;
+  font-family: "Space Mono", ui-monospace, monospace;
+  font-size: 0.8rem;
+  color: #9a95c0;
+}
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #6e6a99;
 }
 
-.heroCode {
+/* hero art: glow-D + terminal */
+.heroArt {
   position: relative;
-  max-width: 680px;
-  margin: 2.6rem auto 0;
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.heroCode pre {
+.heroMark {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 18px;
+  filter: drop-shadow(0 0 26px rgba(255, 61, 245, 0.55));
+  animation: float 6s ease-in-out infinite;
+}
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+
+.terminal {
+  width: 100%;
+  max-width: 460px;
+  border-radius: 16px;
+  background: rgba(10, 8, 30, 0.82);
+  border: 1px solid rgba(138, 110, 255, 0.25);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55), 0 0 40px rgba(88, 0, 214, 0.22);
+  overflow: hidden;
+  backdrop-filter: blur(6px);
+}
+.termBar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.tdot { width: 11px; height: 11px; border-radius: 50%; background: rgba(255,255,255,0.18); }
+.tdot:first-child { background: linear-gradient(135deg, #5800d6, #ff00de); }
+.termBar em {
+  margin-left: auto;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-style: normal;
+  font-size: 0.78rem;
+  color: #9a95c0;
+}
+.termBody {
   margin: 0;
-  padding: 18px 20px;
-  border-radius: 14px;
-  background: rgba(10, 8, 30, 0.72);
-  border: 1px solid rgba(138, 110, 255, 0.22);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45), 0 0 30px rgba(88, 0, 214, 0.18);
-  overflow-x: auto;
-}
-.heroCode code {
+  padding: 16px 18px;
+  background: none;
   font-family: "Space Mono", ui-monospace, monospace;
-  font-size: 0.86rem;
+  font-size: 0.82rem;
   line-height: 1.85;
   color: #d8d4f0;
-  background: none;
-  border: 0;
   white-space: pre;
+  overflow-x: auto;
+}
+.termBody code { background: none; border: 0; color: inherit; }
+.ok { color: #38e1b0; }
+
+/* ---------------- PRIMITIVES ---------------- */
+.featureCard {
+  max-width: 1040px;
+  margin: 0 auto;
+  border-radius: 22px;
+  padding: 2.4rem;
+  background:
+    linear-gradient(180deg, rgba(25, 18, 72, 0.6), rgba(16, 17, 50, 0.6));
+  border: 1px solid rgba(138, 110, 255, 0.22);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+}
+.featureCardHead { margin-bottom: 1.8rem; }
+.badge {
+  display: inline-block;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #38e1b0;
+  border: 1px solid rgba(56, 225, 176, 0.45);
+  border-radius: 999px;
+  padding: 3px 11px;
+}
+.featureTitle {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 2rem;
+  letter-spacing: -0.02em;
+  margin: 12px 0 6px;
+}
+.featureLead {
+  color: #c5c1e0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  max-width: 640px;
+  margin: 0 0 10px;
+}
+.textLink {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 600;
+  color: #d6bdff;
+}
+.textLink:hover { color: #ff6bee; text-decoration: none; }
+
+.pillarGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.pillar {
+  padding: 22px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.22s ease;
+}
+.pillar:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 0, 222, 0.32);
+  box-shadow: 0 16px 40px rgba(88, 0, 214, 0.2);
+}
+.pillarIcon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, rgba(120, 30, 235, 0.32), rgba(255, 0, 222, 0.18));
+  border: 1px solid rgba(138, 110, 255, 0.3);
+  color: #e4c7ff;
+  margin-bottom: 14px;
+}
+.pillarIcon svg { width: 23px; height: 23px; }
+.pillar h4 {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 1.15rem;
+  margin: 0 0 6px;
+  color: #fff;
+}
+.pillar p { color: #b8b3d8; font-size: 0.95rem; line-height: 1.55; margin: 0; }
+.pillar code { background: rgba(255,255,255,0.08); border: 0; }
+
+/* ---------------- HOW IT WORKS ---------------- */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+.step {
+  position: relative;
+  padding: 26px 24px;
+  border-radius: 18px;
+  background: rgba(22, 21, 58, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.stepNum {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.step h4 {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 1.2rem;
+  margin: 8px 0 6px;
+  color: #fff;
+}
+.step p { color: #b8b3d8; margin: 0 0 14px; font-size: 0.96rem; }
+.stepCode {
+  display: block;
+  font-family: "Space Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  color: #d8d4f0;
+  background: rgba(10, 8, 30, 0.7);
+  border: 1px solid rgba(138, 110, 255, 0.2);
+  border-radius: 10px;
+  padding: 10px 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
+/* ---------------- CTA BAND ---------------- */
+.ctaBand {
+  position: relative;
+  overflow: hidden;
+  padding: 6rem 0;
+  background:
+    radial-gradient(700px 400px at 50% 120%, rgba(255, 0, 222, 0.2), transparent 60%),
+    #0a0a20;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.ctaInner { position: relative; text-align: center; }
+.ctaGlow {
+  position: absolute;
+  inset: auto 0 -60% 0;
+  height: 100%;
+  background: radial-gradient(closest-side, rgba(88, 0, 214, 0.3), transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+.ctaInner h2 {
+  position: relative;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: #fff;
+}
+.ctaInner p {
+  position: relative;
+  color: #c5c1e0;
+  font-size: 1.1rem;
+  margin: 0.8rem 0 0;
+}
+.ctaInner .ctaRow { justify-content: center; }
+
+/* ---------------- responsive ---------------- */
 @media screen and (max-width: 996px) {
-  .heroBanner { padding: 3.5rem 1rem; }
-  .heroSubtitle { font-size: 1.05rem; }
+  .hero { padding: 4.5rem 0 3.5rem; }
+  .heroInner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .heroArt { order: 2; }
+  .pillarGrid, .steps { grid-template-columns: 1fr; }
+  .section { padding: 4rem 0; }
 }
