@@ -1,11 +1,64 @@
 .features {
-  display: flex;
-  align-items: center;
-  padding: 2rem 0;
+  padding: 4.5rem 0 5rem;
   width: 100%;
 }
 
-.featureSvg {
-  height: 200px;
-  width: 200px;
+.sectionHead {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+.sectionHead h2 {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
+}
+.sectionHead p {
+  color: var(--ifm-color-content-secondary);
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.card {
+  height: 100%;
+  padding: 28px 26px;
+  border-radius: 18px;
+  background: var(--ifm-card-background-color, #f3f1fb);
+  border: 1px solid var(--ifm-toc-border-color);
+  transition: transform 0.18s ease, box-shadow 0.22s ease, border-color 0.18s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 0, 222, 0.32);
+  box-shadow: 0 18px 44px rgba(88, 0, 214, 0.18), 0 0 24px rgba(255, 0, 222, 0.1);
+}
+
+.iconTile {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, rgba(120, 30, 235, 0.32), rgba(255, 0, 222, 0.18));
+  border: 1px solid rgba(138, 110, 255, 0.3);
+  color: #e4c7ff;
+  margin-bottom: 16px;
+}
+.iconTile svg {
+  width: 26px;
+  height: 26px;
+}
+
+.cardTitle {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+}
+.cardBody {
+  color: var(--ifm-color-content-secondary);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin: 0;
 }

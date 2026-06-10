@@ -1,23 +1,115 @@
-/**
- * CSS files with the .module.css suffix will be treated as CSS modules
- * and scoped locally.
- */
+/* DigStore homepage — branded hero. */
 
 .heroBanner {
-  padding: 4rem 0;
-  text-align: center;
   position: relative;
   overflow: hidden;
+  padding: 6rem 0 5rem;
+  text-align: center;
+  background:
+    radial-gradient(900px 520px at 50% -20%, rgba(88, 0, 214, 0.35), transparent 62%),
+    radial-gradient(700px 420px at 85% 120%, rgba(255, 0, 222, 0.18), transparent 60%),
+    #0a0a20;
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
+.heroGlow {
+  position: absolute;
+  inset: -40% -10% auto -10%;
+  height: 70%;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(255, 0, 222, 0.18), transparent 70%);
+  filter: blur(20px);
+}
+
+.heroMark {
+  width: 88px;
+  height: 88px;
+  position: relative;
+  filter: drop-shadow(0 0 26px rgba(255, 61, 245, 0.55));
+  animation: float 6s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.eyebrow {
+  position: relative;
+  margin-top: 18px;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  color: #ff3df5;
+}
+
+.heroTitle {
+  position: relative;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(3rem, 9vw, 5.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  margin: 6px 0 0;
+}
+
+.heroSubtitle {
+  position: relative;
+  max-width: 720px;
+  margin: 1rem auto 0;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #c5c1e0;
 }
 
 .buttons {
+  position: relative;
   display: flex;
+  gap: 14px;
   align-items: center;
   justify-content: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.ghostBtn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(138, 110, 255, 0.35);
+  color: #fff;
+}
+.ghostBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 0, 222, 0.5);
+}
+
+.heroCode {
+  position: relative;
+  max-width: 680px;
+  margin: 2.6rem auto 0;
+  text-align: left;
+}
+.heroCode pre {
+  margin: 0;
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: rgba(10, 8, 30, 0.72);
+  border: 1px solid rgba(138, 110, 255, 0.22);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45), 0 0 30px rgba(88, 0, 214, 0.18);
+  overflow-x: auto;
+}
+.heroCode code {
+  font-family: "Space Mono", ui-monospace, monospace;
+  font-size: 0.86rem;
+  line-height: 1.85;
+  color: #d8d4f0;
+  background: none;
+  border: 0;
+  white-space: pre;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner { padding: 3.5rem 1rem; }
+  .heroSubtitle { font-size: 1.05rem; }
 }
