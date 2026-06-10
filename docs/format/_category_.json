@@ -1,0 +1,9 @@
+{
+  "label": "The DigStore Format",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "title": "The DigStore Format",
+    "description": "The concepts behind DigStore: content-addressable stores, generations, the self-serving WebAssembly module, URNs, encryption, and Merkle proofs."
+  }
+}

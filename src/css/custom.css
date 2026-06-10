@@ -1,34 +1,179 @@
-/**
- * Global CSS for customizing the purple theme based on a darker purple from the logo.
- * Infima default variables are overridden here for both light and dark modes.
- */
+/* ============================================================
+   DigStore docs — brand theme (DIG Network official kit).
+   Cosmic navy surfaces, violet→magenta gradient, Space Grotesk
+   (display/UI) + Open Sans (body) + Space Mono (code).
+   ============================================================ */
 
-/* Override the default Infima variables with darker purple shades */
+/* ---------- Brand fonts ---------- */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap");
+
+@font-face { font-family: "Space Grotesk"; font-weight: 400; font-style: normal; font-display: swap; src: url("/fonts/space-grotesk-400.ttf") format("truetype"); }
+@font-face { font-family: "Space Grotesk"; font-weight: 500; font-style: normal; font-display: swap; src: url("/fonts/space-grotesk-500.ttf") format("truetype"); }
+@font-face { font-family: "Space Grotesk"; font-weight: 600; font-style: normal; font-display: swap; src: url("/fonts/space-grotesk-600.ttf") format("truetype"); }
+@font-face { font-family: "Space Grotesk"; font-weight: 700; font-style: normal; font-display: swap; src: url("/fonts/space-grotesk-700.ttf") format("truetype"); }
+
 :root {
-  --ifm-color-primary: #652edc; /* Darker purple from the logo */
-  --ifm-color-primary-dark: #5521c6; /* Slightly darker purple */
-  --ifm-color-primary-darker: #4a1ea9; /* Even darker purple */
-  --ifm-color-primary-darkest: #3f1b8c; /* Deep purple */
-  --ifm-color-primary-light: #7640e2; /* Lighter shade of the dark purple */
-  --ifm-color-primary-lighter: #8856e7; /* Soft lighter purple */
-  --ifm-color-primary-lightest: #996cee; /* Very light purple */
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(101, 46, 220, 0.1); /* Light purple for highlighted code lines */
+  /* ---- brand core ---- */
+  --dig-violet: #5800d6;
+  --dig-magenta: #ff00de;
+  --dig-pink-glow: #ff3df5;
+  --grad-brand: linear-gradient(115deg, #5800d6 0%, #ff00de 100%);
+  --grad-text: linear-gradient(100deg, #b98cff 0%, #ff6bee 100%);
+
+  /* ---- Infima: primary = brand violet ---- */
+  --ifm-color-primary: #5800d6;
+  --ifm-color-primary-dark: #4f00c1;
+  --ifm-color-primary-darker: #4a00b6;
+  --ifm-color-primary-darkest: #3d0096;
+  --ifm-color-primary-light: #6712e6;
+  --ifm-color-primary-lighter: #7424e8;
+  --ifm-color-primary-lightest: #8c49ec;
+
+  /* ---- type ---- */
+  --ifm-font-family-base: "Open Sans", system-ui, -apple-system, sans-serif;
+  --ifm-heading-font-family: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --ifm-font-family-monospace: "Space Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --ifm-heading-font-weight: 700;
+  --ifm-code-font-size: 90%;
+  --ifm-navbar-title-font-family: "Space Grotesk", system-ui, sans-serif;
+
+  /* light surfaces */
+  --ifm-background-color: #ffffff;
+  --ifm-background-surface-color: #f3f1fb;
+  --ifm-color-content: #101132;
+  --ifm-color-content-secondary: #45417a;
+  --ifm-link-color: #5800d6;
+  --ifm-menu-color-active: #5800d6;
+  --ifm-toc-border-color: #e4e0f5;
+  --docusaurus-highlighted-code-line-bg: rgba(88, 0, 214, 0.1);
 }
 
-/* Dark mode color palette with darker purples */
-[data-theme='dark'] {
-  --ifm-color-primary-dark: #371785; /* A shade darker */
-  --ifm-color-primary-darker: #30137b;
-  --ifm-color-primary-darkest: #2a1071; /* Deepest dark purple */
-  --ifm-color-primary-light: #48219b; /* Slightly lighter purple for contrast */
-  --ifm-color-primary-lighter: #5734b3;
-  --ifm-color-primary-lightest: #674dcc;
-  --ifm-color-primary: #A288FF;
-  --docusaurus-highlighted-code-line-bg: rgba(63, 27, 140, 0.3); /* Dark purple highlight in dark mode */
+/* ============================================================
+   DARK MODE — the brand's primary surface (cosmic navy).
+   ============================================================ */
+[data-theme="dark"] {
+  --ifm-color-primary: #b98cff;
+  --ifm-color-primary-dark: #a06bff;
+  --ifm-color-primary-darker: #925aff;
+  --ifm-color-primary-darkest: #6f2cff;
+  --ifm-color-primary-light: #cbabff;
+  --ifm-color-primary-lighter: #d6bdff;
+  --ifm-color-primary-lightest: #ecdcff;
+
+  --ifm-background-color: #0a0a20;          /* deepest canvas */
+  --ifm-background-surface-color: #101132;  /* brand navy */
+  --ifm-color-content: #e9e7f6;
+  --ifm-color-content-secondary: #c5c1e0;
+  --ifm-link-color: #d6bdff;
+
+  --ifm-navbar-background-color: rgba(10, 10, 32, 0.82);
+  --ifm-footer-background-color: #0a0a20;
+  --ifm-card-background-color: #16153a;
+  --ifm-toc-border-color: rgba(255, 255, 255, 0.08);
+  --ifm-hr-background-color: rgba(255, 255, 255, 0.08);
+  --docusaurus-highlighted-code-line-bg: rgba(255, 0, 222, 0.14);
 }
 
+/* page base + ambient brand glow in dark mode */
+[data-theme="dark"] html,
+[data-theme="dark"] body {
+  background:
+    radial-gradient(1200px 800px at 12% -8%, rgba(88, 0, 214, 0.22), transparent 60%),
+    radial-gradient(1000px 720px at 108% 0%, rgba(255, 0, 222, 0.12), transparent 55%),
+    #0a0a20;
+}
 
+/* ---- navbar ---- */
+.navbar {
+  backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+}
+.navbar__title {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.navbar__logo { height: 1.7rem; }
+
+/* GitHub icon in navbar */
+.navbar-github-link::before {
+  content: "";
+  width: 22px;
+  height: 22px;
+  display: flex;
+  background: currentColor;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 .3a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.3-1.8-1.3-1.8-1-.7.1-.7.1-.7 1.2 0 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 016 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8 0 3.2.9.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1 .9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0012 .3'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 .3a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.3-1.8-1.3-1.8-1-.7.1-.7.1-.7 1.2 0 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 016 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8 0 3.2.9.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1 .9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0012 .3'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* ---- headings: brand display face ---- */
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4 {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+.markdown h1:first-child { font-size: 2.6rem; }
+
+/* divider rule under H2 */
+.markdown h2 {
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+  padding-bottom: 0.3rem;
+}
+
+/* ---- buttons ---- */
+.button--brand,
+.button.button--primary {
+  background-image: var(--grad-brand);
+  border: 0;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(120, 0, 200, 0.35), 0 0 22px rgba(255, 0, 222, 0.22);
+  transition: transform 0.16s ease, filter 0.16s ease, box-shadow 0.22s ease;
+}
+.button--brand:hover,
+.button.button--primary:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  color: #fff;
+}
+
+/* ---- code ---- */
+code {
+  font-family: "Space Mono", ui-monospace, monospace;
+}
+[data-theme="dark"] code {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ---- tables ---- */
+.markdown table thead tr {
+  background: rgba(88, 0, 214, 0.06);
+}
+[data-theme="dark"] .markdown table thead tr {
+  background: rgba(185, 140, 255, 0.08);
+}
+
+/* ---- sidebar active item ---- */
+.menu__link--active:not(.menu__link--sublist) {
+  background: linear-gradient(90deg, rgba(88, 0, 214, 0.14), transparent);
+  font-weight: 600;
+}
+
+/* ---- admonitions ---- */
+[data-theme="dark"] .theme-admonition {
+  background: var(--ifm-card-background-color);
+  border-color: var(--ifm-toc-border-color);
+}
+
+/* gradient text helper (homepage) */
+.gt {
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
 @tailwind components;
 @tailwind utilities;

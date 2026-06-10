@@ -3,27 +3,20 @@ import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 
 const config: Config = {
-  title: "DIG Network",
-  tagline: "The new standard for decentralized content delivery",
-  favicon: "img/favicon.ico",
+  title: "DigStore",
+  tagline:
+    "A Git-shaped, encrypted, content-addressable store that compiles to a single self-defending WebAssembly module.",
+  favicon: "img/favicon.png",
 
-  // Set the production url of your site here
   url: "https://docs.dig.net",
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: process.env.BASE_URL || '/',
+  baseUrl: process.env.BASE_URL || "/",
 
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: "DIG-Network", // Usually your GitHub org/user name.
-  projectName: "dig-network", // Usually your repo name.
+  organizationName: "DIG-Network",
+  projectName: "docs.dig.net",
 
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
 
-  // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang. For example, if your site is Chinese, you
-  // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: "en",
     locales: ["en"],
@@ -35,10 +28,8 @@ const config: Config = {
       {
         docs: {
           sidebarPath: "./sidebars.ts",
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
+          routeBasePath: "docs",
+          editUrl: "https://github.com/DIG-Network/docs.dig.net/tree/main/",
         },
         theme: {
           customCss: "./src/css/custom.css",
@@ -48,65 +39,70 @@ const config: Config = {
   ],
 
   themeConfig: {
-    // Replace with your project's social card
     colorMode: {
-      defaultMode: 'dark'
+      defaultMode: "dark",
+      respectPrefersColorScheme: true,
     },
-    image: "img/dig-network-social-card.png",
+    image: "img/brand/Wordmark-Stacked-Glow.png",
     navbar: {
-      title: "DIG Network",
+      title: "DigStore",
       logo: {
-        alt: "My Site Logo",
-        src: "img/logo.svg",
+        alt: "DigStore — by DIG Network",
+        src: "img/brand/Wordmark-Black.svg",
+        srcDark: "img/brand/Wordmark-white.svg",
+        href: "/",
       },
       items: [
         {
           type: "docSidebar",
           sidebarId: "tutorialSidebar",
           position: "left",
-          label: "Tutorial",
+          label: "Docs",
         },
+        { to: "/docs/format/overview", label: "Format", position: "left" },
+        { to: "/docs/cli/quickstart", label: "CLI", position: "left" },
         {
-          href: "https://github.com/DIG-Network",
-          label: "GitHub",
+          href: "https://github.com/DIG-Network/digstore",
           position: "right",
+          className: "navbar-github-link",
+          "aria-label": "GitHub repository",
         },
       ],
     },
-    
     footer: {
       style: "dark",
+      logo: {
+        alt: "DigStore — by DIG Network",
+        src: "img/brand/wordmark-with-slogan-white.svg",
+        href: "https://dig.net",
+        width: 200,
+      },
       links: [
         {
-          title: "Docs",
+          title: "Documentation",
           items: [
-            {
-              label: "Tutorial",
-              to: "/docs/Protocol%20Overview/introduction",
-            },
+            { label: "What is DigStore?", to: "/docs/" },
+            { label: "Format Overview", to: "/docs/format/overview" },
+            { label: "Quick start", to: "/docs/cli/quickstart" },
+            { label: "Command reference", to: "/docs/cli/command-reference" },
           ],
         },
         {
-          title: "Community",
-          items: [],
-        },
-        {
-          title: "More",
+          title: "Project",
           items: [
-            {
-              label: "GitHub",
-              href: "https://github.com/facebook/docusaurus",
-            },
+            { label: "digstore on GitHub", href: "https://github.com/DIG-Network/digstore" },
+            { label: "Releases", href: "https://github.com/DIG-Network/digstore/releases" },
+            { label: "DIG Network", href: "https://dig.net" },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} DIG Network (dig.net). Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} DIG Network. DigStore is open source under GPL-2.0.`,
     },
     prism: {
-      theme: prismThemes.github,
+      theme: prismThemes.oneLight,
       darkTheme: prismThemes.dracula,
+      additionalLanguages: ["bash", "rust", "json", "toml"],
     },
-    customCss: require.resolve('./src/css/custom.css'),
   } satisfies Preset.ThemeConfig,
 };
 
