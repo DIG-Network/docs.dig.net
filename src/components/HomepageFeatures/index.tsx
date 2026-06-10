@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 import React from 'react';
@@ -22,8 +23,8 @@ const FeatureList: FeatureItem[] = [
     description: (
       <>
         Content is sealed with a key <em>derived from its URN</em> (AES-256-GCM-SIV).
-        The URN both locates and decrypts — there's no separate password or key
-        stored anywhere. Lose the URN, lose the read.
+        The URN both locates and decrypts — no separate password or key stored
+        anywhere. Lose the URN, lose the read.
       </>
     ),
   },
@@ -78,14 +79,41 @@ const HomepageFeatures: React.FC = () => {
     <section className={styles.features}>
       <div className="container">
         <div className={styles.sectionHead}>
-          <Heading as="h2">Why DigStore</Heading>
-          <p>Three guarantees, baked into the format — not bolted on.</p>
+          <Heading as="h2">Primitives</Heading>
+          <p>
+            Composable building blocks for the DIG Network. DigStore is available
+            now — more primitives are on the way.
+          </p>
         </div>
+
+        <div className={styles.primitiveHead}>
+          <span className={styles.badge}>AVAILABLE</span>
+          <Heading as="h3" className={styles.primitiveTitle}>
+            <span className="gt">DigStore</span> — the content-addressable store
+          </Heading>
+          <p className={styles.primitiveLead}>
+            A Git-shaped, encrypted store that compiles to a single self-defending
+            WebAssembly module. Point it at a build directory, commit generations,
+            and address everything by URN.
+          </p>
+        </div>
+
         <div className="row">
           {FeatureList.map((props, id) => (
             <Feature key={id} {...props} />
           ))}
         </div>
+
+        <div className={styles.cta}>
+          <Link className="button button--primary button--lg" to="/docs/digstore/what-is-digstore">
+            Read the DigStore docs →
+          </Link>
+        </div>
+
+        <p className={styles.comingNote}>
+          More DIG Network primitives — networking, settlement, and node operation
+          — will get their own sections as they land.
+        </p>
       </div>
     </section>
   );

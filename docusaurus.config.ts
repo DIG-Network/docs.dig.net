@@ -3,9 +3,9 @@ import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 
 const config: Config = {
-  title: "DigStore",
+  title: "DIG Network",
   tagline:
-    "A Git-shaped, encrypted, content-addressable store that compiles to a single self-defending WebAssembly module.",
+    "A Proof-of-Stake Layer 2 on Chia — developer docs for the network and its primitives.",
   favicon: "img/favicon.png",
 
   url: "https://docs.dig.net",
@@ -45,9 +45,9 @@ const config: Config = {
     },
     image: "img/brand/Wordmark-Stacked-Glow.png",
     navbar: {
-      title: "DigStore",
+      title: "Docs",
       logo: {
-        alt: "DigStore — by DIG Network",
+        alt: "DIG Network",
         src: "img/brand/Wordmark-Black.svg",
         srcDark: "img/brand/Wordmark-white.svg",
         href: "/",
@@ -57,10 +57,13 @@ const config: Config = {
           type: "docSidebar",
           sidebarId: "tutorialSidebar",
           position: "left",
-          label: "Docs",
+          label: "Documentation",
         },
-        { to: "/docs/format/overview", label: "Format", position: "left" },
-        { to: "/docs/cli/quickstart", label: "CLI", position: "left" },
+        {
+          to: "/docs/digstore/what-is-digstore",
+          label: "DigStore",
+          position: "left",
+        },
         {
           href: "https://github.com/DIG-Network/digstore",
           position: "right",
@@ -81,10 +84,16 @@ const config: Config = {
         {
           title: "Documentation",
           items: [
-            { label: "What is DigStore?", to: "/docs/" },
-            { label: "Format Overview", to: "/docs/format/overview" },
-            { label: "Quick start", to: "/docs/cli/quickstart" },
-            { label: "Command reference", to: "/docs/cli/command-reference" },
+            { label: "DIG Network", to: "/docs/" },
+            { label: "DigStore", to: "/docs/digstore/what-is-digstore" },
+          ],
+        },
+        {
+          title: "DigStore",
+          items: [
+            { label: "The Format", to: "/docs/digstore/format/overview" },
+            { label: "CLI Quick start", to: "/docs/digstore/cli/quickstart" },
+            { label: "Command reference", to: "/docs/digstore/cli/command-reference" },
           ],
         },
         {

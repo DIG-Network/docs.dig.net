@@ -19,28 +19,23 @@ function HomepageHeader() {
           className={styles.heroMark}
           aria-hidden="true"
         />
-        <div className={styles.eyebrow}>BY DIG NETWORK</div>
+        <div className={styles.eyebrow}>PROOF-OF-STAKE LAYER 2 ON CHIA</div>
         <Heading as="h1" className={styles.heroTitle}>
-          <span className="gt">DigStore</span>
+          <span className="gt">DIG Network</span>
         </Heading>
-        <p className={styles.heroSubtitle}>{siteConfig.tagline}</p>
+        <p className={styles.heroSubtitle}>
+          Developer documentation for the DIG Network and its primitives —
+          decentralized publishing where the host never sees your content.
+        </p>
         <div className={styles.buttons}>
-          <Link className="button button--primary button--lg" to="/docs/cli/quickstart">
-            Get started →
+          <Link className="button button--primary button--lg" to="/docs/">
+            Explore the docs →
           </Link>
           <Link
             className={clsx('button button--lg', styles.ghostBtn)}
-            to="/docs/format/overview">
-            Learn the format
+            to="/docs/digstore/what-is-digstore">
+            DigStore primitive
           </Link>
-        </div>
-        <div className={styles.heroCode}>
-          <pre>
-            <code>{`digstore init site --dir dist     # capture your build output
-digstore add -A                   # stage everything under dist/
-digstore commit -m "v1"           # seal a generation → one .wasm
-digstore cat urn:dig:chia:<storeID>/index.html`}</code>
-          </pre>
         </div>
       </div>
     </header>
