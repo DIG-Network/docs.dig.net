@@ -75,12 +75,12 @@
 }
 
 /* page base + ambient brand glow in dark mode.
-   The glow is a FIXED background layer (pinned to the viewport) over a solid
-   base color, so scrolling never reveals an unpainted (gray) area. */
-[data-theme="dark"] html {
-  background-color: #0a0a20;
-}
-[data-theme="dark"] body {
+   NOTE: `data-theme="dark"` lives ON the <html> element, so the base + glow
+   must be set with `html[data-theme="dark"]` (a descendant selector matches
+   nothing). It goes on <html> — which spans the full document height — with a
+   FIXED gradient over a solid base, so scrolling never reveals a gray area.
+   Everything above it (body + app shell) is transparent so the glow shows. */
+html[data-theme="dark"] {
   background-color: #0a0a20;
   background-image:
     radial-gradient(1200px 800px at 12% -8%, rgba(88, 0, 214, 0.22), transparent 60%),
@@ -88,11 +88,17 @@
   background-attachment: fixed;
   background-repeat: no-repeat;
 }
-/* Let the body glow show through the app shell + main content wrappers. */
+[data-theme="dark"] body,
 [data-theme="dark"] #__docusaurus,
 [data-theme="dark"] .main-wrapper,
 [data-theme="dark"] .main-wrapper > * {
   background-color: transparent;
+}
+/* footer ships as .footer--dark, which redefines its own bg var to a gray-blue;
+   pin it to the brand base. */
+[data-theme="dark"] .footer--dark {
+  --ifm-footer-background-color: #0a0a20;
+  background-color: #0a0a20;
 }
 
 /* ---- navbar ---- */
