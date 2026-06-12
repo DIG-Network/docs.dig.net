@@ -47,9 +47,23 @@ DIGSTORE_PASSPHRASE=hunter2 digstore commit -m "release"
 digstore seed status    # shows whether a seed exists and is currently unlocked
 ```
 
+## Costs
+
+| Operation | DIG | XCH |
+|---|---|---|
+| `digstore init` (mint a store) | **100 DIG** | small mainnet fee |
+| `digstore commit` (anchor a root) | **10 DIG** | small mainnet fee |
+
+DIG is the DIG Network token (a Chia CAT). The DIG payment is included **atomically in the same spend bundle** as the mint or root update — there is no separate transaction. The memo on the DIG output is the store id. Before submitting, each command prints the cost and your current balance; if the wallet is short on XCH **or** DIG the command blocks with a clear message rather than broadcasting a partial spend. Use `digstore balance` to check your spendable XCH and DIG at any time:
+
+```sh
+digstore balance          # shows XCH (mojos), DIG (3-decimal), and receive address
+digstore balance --json
+```
+
 ## Funding the wallet
 
-`init` and `commit` spend XCH. On `init`, if the wallet has insufficient funds digstore prints the **receive address** — fund that address on mainnet, then retry. Transactions go out via coinset.org over HTTPS; the `coinset_url` key in `~/.dig/config.toml` overrides the default endpoint.
+`init` and `commit` spend both **XCH** (the transaction fee) and **DIG** (the DIG token). The wallet derived from your seed needs **both**. If either is short, the command blocks and prints the **receive address** — fund that address on mainnet, then retry. Both XCH and DIG are received at the same `xch1…` address (DIG arrives as a CAT). Transactions go out via coinset.org over HTTPS; the `coinset_url` key in `~/.dig/config.toml` overrides the default endpoint.
 
 ## `digstore init` — mint the store singleton
 
@@ -129,7 +143,7 @@ If the chain is unreachable, or the served root does not match the on-chain root
 
 ## Cost and safety
 
-- **`init` costs XCH** — one transaction to mint the singleton.
-- **`commit` costs XCH** — one transaction per anchored generation.
-- Both are on **Chia mainnet**. There is no testnet mode; use a wallet with only as much XCH as you intend to spend.
+- **`init` costs 100 DIG + an XCH fee** — one spend bundle to mint the singleton.
+- **`commit` costs 10 DIG + an XCH fee** — one spend bundle per anchored generation.
+- Both are on **Chia mainnet**. There is no testnet mode; use a wallet with only as much XCH and DIG as you intend to spend.
 - Lost seed = lost ability to update the store. The singleton stays on-chain and existing content remains readable, but no new commits are possible. Back up `~/.dig/seed.enc` and your mnemonic.
