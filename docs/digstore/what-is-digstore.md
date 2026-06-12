@@ -19,7 +19,7 @@ Unlike Git, DigStore is built for **build output**, not repository source. You p
 |---|---|
 | Hosts can read / scan what you publish | Content is encrypted at rest; the host holds only ciphertext keyed by hashes |
 | Access control means passwords and ACLs | The URN *is* the capability — share it to grant read, withhold it to deny |
-| You have to trust the server to serve genuine bytes | `clone`/`pull` verify the module's store id and the publisher's signed root before installing |
+| You have to trust the server to serve genuine bytes | `clone`/`pull` verify the module's store id, the publisher's signed root, and the **on-chain singleton root** before installing — fails closed |
 | "How big is this payload?" leaks from file size | Every store is one `.wasm`, padded to a uniform size that reveals nothing about its contents |
 | Serving logic lives separately from the data | The data and the code that gates it compile into the *same* module |
 

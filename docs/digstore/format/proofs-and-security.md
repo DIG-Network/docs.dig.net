@@ -23,14 +23,15 @@ digstore cat <urn> --verify-proof
 
 When you `clone` or `pull`, the CLI verifies what it receives **before** installing it:
 
-- the module must embed a public key whose hash equals the **store id** you asked for (self-certifying identity);
-- the served root must carry the **publisher's signature**.
+- the module's embedded **store id** must equal the one you asked for;
+- the served root must carry the **publisher's signature** (verified against the module's embedded key);
+- the served root must match the store's **current on-chain singleton root** — the chain is the authority for the latest root, so a stale or fabricated root is rejected.
 
-A malicious or broken server cannot feed you fabricated content — the command fails instead. Remotes must be `https://` (plain `http://` is allowed only for `localhost`).
+A malicious or broken server cannot feed you fabricated content — the command **fails closed** (also if the chain can't be read). Remotes must be `https://` (plain `http://` is allowed only for `localhost`).
 
 ## Signed roots and revocation
 
-A store's roots are signed by the key whose hash is the store id. Publishers can also **revoke** a published root — or the whole store — with a signed tombstone:
+A store's roots are signed by the publisher's **BLS key** (embedded in the module); the store id itself is the on-chain singleton. Publishers can also **revoke** a published root — or the whole store — with a signed tombstone:
 
 ```sh
 digstore revoke --root <hex> --reason compromise
@@ -47,6 +48,6 @@ This is why a generic file host can store and relay a store's `.wasm` (it's just
 
 ## Threat model in one paragraph
 
-DigStore assumes the **host is untrusted for confidentiality**: it holds only ciphertext keyed by hashes, performs no decryption, and never sees a URN or key. It assumes the **host is untrusted for integrity**: clients verify the store id, the signed root, and per-resource Merkle proofs, so tampered or fabricated bytes are rejected. What DigStore does **not** defend against is a host that simply *withholds* data (availability), or a reader who legitimately holds a URN choosing to redistribute what they read — the URN is a read capability, and sharing it shares the read.
+DigStore assumes the **host is untrusted for confidentiality**: it holds only ciphertext keyed by hashes, performs no decryption, and never sees a URN or key. It assumes the **host is untrusted for integrity**: clients verify the store id, the signed root, the store's current on-chain singleton root, and per-resource Merkle proofs, so tampered or fabricated bytes are rejected. What DigStore does **not** defend against is a host that simply *withholds* data (availability), or a reader who legitimately holds a URN choosing to redistribute what they read — the URN is a read capability, and sharing it shares the read.
 
 Back to: [Format Overview](./overview.md) · Next up: [CLI Tutorial →](../cli/install.md)

@@ -9,13 +9,9 @@ A store has an **identity**, a **history of generations**, and a compiled **modu
 
 ## Store identity
 
-A store is identified by a 64-hex **store id**:
+A store is identified by a 64-hex **store id**, which is the store's **on-chain Chia singleton launcher id** — minted on mainnet by `digstore init` (see [On-chain anchoring](../cli/onchain-anchoring.md)). The id is the store's permanent on-chain identity: the singleton's current root *is* the store's authoritative latest root, and every `commit` advances it on-chain.
 
-```
-store_id = SHA-256(store's BLS public key)
-```
-
-This makes the id **self-certifying**: anyone who learns a store id can later check that a module claiming that id embeds a public key whose hash equals it. The id is curried into every URN that references the store and is the only mandatory addressing component. The matching private key is what signs the store's published roots.
+The id is curried into every URN that references the store and is the only mandatory addressing component. A separate publisher **BLS signing key** (embedded in the module) signs the store's published roots and push heads — but the store id is the chain singleton, not a hash of that key.
 
 ## Generations and root hashes
 

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 title: Using DigStore in your project
 ---
 
@@ -24,7 +24,7 @@ digstore add -A          # stage everything under the content root (dist/)
 digstore commit -m "v1"
 ```
 
-`commit` seals a new generation, compiles the module, and writes a local **URN manifest** (`urns.json` / `urns.txt`) — your index of every shareable URN for that generation.
+`commit` anchors the new root on Chia mainnet (blocks until confirmed, spends XCH), then seals the generation, compiles the module, and writes a local **URN manifest** (`urns.json` / `urns.txt`) — your index of every shareable URN for that generation. See [On-chain anchoring](./onchain-anchoring.md).
 
 Change or override the content root anytime:
 

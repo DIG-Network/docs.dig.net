@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 title: Sharing over a remote
 ---
 
@@ -37,9 +37,10 @@ digstore pull  origin            # later: fetch the publisher's newer generation
 `clone` and `pull` verify what they download **before** installing it:
 
 - the module must embed a public key whose hash equals the **store id** you asked for;
-- the served root must carry the **publisher's signature**.
+- the served root must carry the **publisher's signature**;
+- the served root must match the store's **current on-chain singleton root** (queried live from Chia mainnet — fails closed if the chain is unreachable or the roots differ).
 
-A malicious or broken server can't feed you fabricated content — the command fails instead. See [Proofs & Security](../format/proofs-and-security.md).
+A malicious or broken server can't feed you fabricated content — the command fails instead. See [Proofs & Security](../format/proofs-and-security.md) and [On-chain anchoring](./onchain-anchoring.md).
 
 :::caution HTTPS required
 Remotes must be `https://`. Plain `http://` is allowed only for `localhost` (local testing).
