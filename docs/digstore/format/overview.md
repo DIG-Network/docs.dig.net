@@ -36,7 +36,7 @@ Copy the file to back it up. Run it (in a host) to serve it. Hand someone a URN 
 
 ## The four concepts
 
-1. **Store** — an identity plus its content and history. A store's identity is a 64-hex **store id** derived from a public key, so the id is self-certifying: it *is* a commitment to the key that signs the store's roots.
+1. **Store** — an identity plus its content and history. A store's identity is a 64-hex **store id** that is its **on-chain Chia singleton launcher id** (minted on mainnet at `init`); the chain singleton is the authority for the store's current root. See [On-chain anchoring](../cli/onchain-anchoring.md).
 
 2. **Generation** — a commit. Each `commit` seals the current content into a new generation identified by a **root hash** (a Merkle root). Generations are append-only, like Git history.
 
@@ -48,7 +48,7 @@ Copy the file to back it up. Run it (in a host) to serve it. Hand someone a URN 
 
 - **Encrypted at rest.** Content is encrypted with a key *derived from its URN*. There is no key stored anywhere to recover — lose the URN, lose the read.
 - **Provider-blind hosting.** Whoever hosts your store holds only ciphertext keyed by hashes. They can't scan it or read requests.
-- **Verified downloads.** `clone`/`pull` reject anything that isn't the genuine, publisher-signed store.
+- **Verified downloads.** `clone`/`pull` reject anything that isn't the genuine, publisher-signed store whose served root matches its current on-chain singleton root (fails closed).
 - **Uniform & self-contained.** A store is a single `.wasm`, padded to a uniform size so its bytes reveal nothing about how much content it holds.
 
 ## Where DigStore fits
