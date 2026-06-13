@@ -24,7 +24,20 @@ The first and most fundamental primitive: a **content-addressable, encrypted WAS
 | **[The Format](./digstore/format/overview.md)** | Stores, generations, URNs, encryption, proofs |
 | **[CLI Tutorial](./digstore/cli/quickstart.md)** | Install and use `digstore` in your project |
 
-*More primitives — networking, settlement, and node operation — will get their own sections as they land.*
+### 🛰️ dig RPC
+
+The networking primitive: a **standard interface for reading content from hosted DigStore capsules**. JSON-RPC 2.0 over HTTPS `POST` — every hosting node speaks it identically, so content is portable and clients are node-agnostic. It serves ciphertext + inclusion proofs by retrieval key, whole capsules by `(store_id, root)`, and the public discovery manifest — streamed in chunks, blind by construction, verified and decrypted entirely client-side.
+
+→ **[Explore the dig RPC](./rpc/what-is-the-dig-rpc.md)**
+
+| | |
+|---|---|
+| **[What is the dig RPC?](./rpc/what-is-the-dig-rpc.md)** | One endpoint for the whole network's read path |
+| **[Methods](./rpc/methods.md)** | `dig.getContent`, `dig.getCapsule`, `dig.getManifest`, `dig.listCapsules`, … |
+| **[Streaming](./rpc/streaming.md)** | The chunk model, reassembly, and proof verification |
+| **[Conformance & Security](./rpc/conformance.md)** | The blind model, CORS, and what a node must implement |
+
+*More primitives — settlement and node operation — will get their own sections as they land.*
 
 ## Where to start
 

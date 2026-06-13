@@ -1,0 +1,10 @@
+{
+  "label": "dig RPC",
+  "position": 3,
+  "collapsible": true,
+  "collapsed": false,
+  "link": {
+    "type": "doc",
+    "id": "rpc/what-is-the-dig-rpc"
+  }
+}
