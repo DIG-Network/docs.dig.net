@@ -1,0 +1,210 @@
+---
+sidebar_position: 2
+title: Methods
+---
+
+# Methods
+
+The dig RPC is a single `POST` endpoint speaking [JSON-RPC 2.0](https://www.jsonrpc.org/specification). A request is a request object or a batch (a non-empty array of request objects); `params` is always a by-name object.
+
+```
+POST https://rpc.dig.net
+Content-Type: application/json
+{ "jsonrpc": "2.0", "id": <id>, "method": "<name>", "params": { … } }
+```
+
+For any well-formed JSON body the HTTP status is `200`; success or a JSON-RPC `error` is carried in the envelope. Every method is a pure, idempotent read.
+
+## Identifiers
+
+All identifiers are lower-case hex on the wire.
+
+| Identifier | Form | Meaning |
+|---|---|---|
+| `store_id` | 64 hex (32 bytes) | The store's identity — the launcher id of its CHIP-0035 DataLayer singleton. The same value appears in the URN and every RPC call. |
+| `root` | 64 hex, or `"latest"` | A **generation root** — the on-chain content root of one capsule in the store's lineage. `"latest"` (or an absent `root`) resolves to the newest confirmed generation. |
+| `retrieval_key` | 64 hex (32 bytes) | The address of one resource: `retrieval_key = sha256(urn)`. A one-way hash of the URN, so it locates a resource without revealing its path. |
+
+The **URN** is `urn:dig:chia:<store_id>/<path>` (optionally `?salt=<hex>`). The client derives the retrieval key (`sha256` of the URN) and the AES-256-GCM-SIV decryption key (URN-derived, HKDF). **Only the retrieval key is ever sent to a node.**
+
+---
+
+## dig.getContent
+
+Stream one resource's ciphertext by retrieval key. This is the method behind every content view and public store link.
+
+**Params**
+
+| Field | Type | Required | Meaning |
+|---|---|---|---|
+| `store_id` | hex(32) | yes | The store. |
+| `retrieval_key` | hex(32) | yes | `sha256(urn)` of the target resource. |
+| `root` | hex(32) or `"latest"` | no | Generation to read. Absent ≡ `"latest"`. |
+| `offset` | uint | no | Byte offset for this chunk (default `0`). See [Streaming](./streaming.md). |
+| `length` | uint | no | Requested chunk length; clamped to the node's max chunk. |
+
+**Result** — a [chunk object](./streaming.md#the-chunk-object): `ciphertext` (base64), `total_length`, `offset`, `length`, `complete`, `next_offset`, `inclusion_proof` (base64 or `null`), `decoy`, `root` (the resolved generation, hex), and `program_hash` (the served `.dig`'s `sha256`, hex). Reassemble until `complete`, verify the proof over the whole ciphertext against `root`, then decrypt.
+
+---
+
+## dig.getProof
+
+Both proofs for a resource read by retrieval key:
+
+- **Inclusion proof** (merkle) — REAL and SYNCHRONOUS: proves the served ciphertext is committed under the generation root. Returned immediately.
+- **Execution proof** (ZK / risc0) — proves a node faithfully *executed* the serving computation. A real ZK proof takes far longer than a request, so it is produced **asynchronously** by the prover on Fargate; a forgeable mock is **never** served. This public method is **read-only**: it returns a real execution receipt when you pass a `proof_id` you already requested, and otherwise points you at the gated control plane that produces them.
+
+**Params**
+
+| Field | Type | Required | Meaning |
+|---|---|---|---|
+| `store_id` | hex(32) | yes | The store. |
+| `retrieval_key` | hex(32) | yes | `sha256(urn)` of the resource. |
+| `root` | hex(32) or `"latest"` | no | Generation to prove. |
+| `proof_id` | string | no | An execution-proof job id (from the control plane) to return the real receipt for. |
+
+**Result**
+
+```json
+{ "inclusion_proof": "<base64 merkle proof>",
+  "program_hash": "23b491…",
+  "root": "a07c…4d",
+  "decoy": false,
+  "execution_proof": "<risc0 receipt | null>",
+  "execution_proof_status": "succeeded | running | queued | not_found | request_via_control_plane",
+  "node_pubkey": "…", "block_header": "…" }
+```
+
+The client verifies the inclusion proof over the reassembled ciphertext against the chain root (see [Streaming](./streaming.md#reassembly-and-proof-verification)). To obtain an execution proof, request one via the gated control plane (`POST https://hub.dig.net/v1/stores/<store_id>/proof` with `kind=execution`, which budgets/PoW-gates the expensive proving and drives the prover), then poll it here or via `dig.getProofStatus`.
+
+---
+
+## dig.getProofStatus
+
+Poll a REAL execution-proof job by id. Returns the job status and, when terminal, the real risc0 `receipt` + `node_pubkey` + `block_header`. Never a mock receipt.
+
+**Params**
+
+| Field | Type | Required | Meaning |
+|---|---|---|---|
+| `store_id` | hex(32) | yes | The store. |
+| `proof_id` | string | yes | The job id returned when the proof was requested. |
+
+**Result** — `{ "proof_id", "status": "queued|running|succeeded|failed", "receipt", "node_pubkey", "block_header", "root" }`.
+
+---
+
+## dig.getCapsule
+
+Stream an **entire compiled capsule** — the whole `.dig` module for one generation — by `(store_id, root)`. This is how a client or peer node mirrors, verifies, or installs a generation in full. The alias `dig.getModule` is accepted for identical behavior.
+
+**Params**
+
+| Field | Type | Required | Meaning |
+|---|---|---|---|
+| `store_id` | hex(32) | yes | The store. |
+| `root` | hex(32) or `"latest"` | no | The generation (capsule) to download. Absent ≡ `"latest"`. |
+| `offset`, `length` | uint | no | Chunk window. See [Streaming](./streaming.md). |
+
+**Result** — a chunk object carrying capsule bytes. The capsule is the public, self-verifying module (its own store id and signed root are checked on install per DigStore), so `inclusion_proof` is `null` here; integrity comes from the capsule's structure and the on-chain root. A miss is a `decoy`.
+
+---
+
+## dig.getManifest
+
+A convenience over `dig.getContent` for the store's **public discovery manifest**. The node derives the canonical retrieval key for `.well-known/dig/manifest.json` itself.
+
+**Params**
+
+| Field | Type | Required | Meaning |
+|---|---|---|---|
+| `store_id` | hex(32) | yes | The store. |
+| `root` | hex(32) or `"latest"` | no | Generation to read the manifest from. |
+| `offset`, `length` | uint | no | Chunk window. |
+
+**Result** — a chunk object for the manifest resource, plus the derived `retrieval_key` (hex) it was served under. The manifest body is itself ciphertext — verify and decrypt it exactly as any resource. A store with no public manifest yields a `decoy` (nothing to browse).
+
+---
+
+## dig.getMetadata
+
+Read the store's **metadata manifest** (name, version, description, authors, license, links, …) directly from the `.dig`. Unlike content, the metadata manifest is **plaintext, ungated public discovery info** embedded in the compiled module's data section (Digstore §8.4) — it is *not* a content resource, carries *no* inclusion proof, and is never encrypted. Its on-chain binding is the module's **`program_hash`** (= `sha256` of the `.dig` bytes), which the node returns so the caller can verify the served capsule against the chain.
+
+**Params**
+
+| Field | Type | Required | Meaning |
+|---|---|---|---|
+| `store_id` | hex(32) | yes | The store. |
+| `root` | hex(32) or `"latest"` | no | Generation to read metadata from. Absent ≡ `"latest"`. |
+
+**Result**
+
+```json
+{ "manifest": {
+    "schema_version": 1, "name": "…", "version": "…", "description": "…",
+    "authors": [ { "name": "…", "handle": "…", "contact": "…" } ],
+    "license": "…", "homepage": "…", "repository": "…",
+    "keywords": [], "categories": [], "icon": "…", "content_type": "…",
+    "links": {}, "custom": {} },
+  "program_hash": "23b491…dddf72",
+  "root": "a07c…4d",
+  "decoy": false }
+```
+
+`manifest` is `null` when the module embeds no metadata; `decoy` is `true` (with a null manifest) when no capsule is hosted at the root. **Verification:** a client compares the returned `program_hash` and `root` against the values it reads from the on-chain singleton (e.g. via its own lineage walk, or [`dig.listCapsules`](#diglistcapsules)). A mismatch means the served `.dig` is not the on-chain-anchored generation — the metadata must not be trusted.
+
+---
+
+## dig.listCapsules
+
+Return the store's **confirmed capsules** — one entry per anchored generation. This is discovery metadata, not content: it reveals only the public on-chain generation list.
+
+**Params**
+
+| Field | Type | Required | Meaning |
+|---|---|---|---|
+| `store_id` | hex(32) | yes | The store. |
+
+**Result**
+
+```json
+{ "store_id": "5b1f…e9",
+  "capsules": [
+    { "seq": 0, "root": "11aa…", "program_hash": "…", "coin_id": "…", "anchored_at": 1750000000 },
+    { "seq": 1, "root": "a07c…4d", "program_hash": "…", "coin_id": "…", "anchored_at": 1750500000 }
+  ] }
+```
+
+Entries are ordered by `seq` (the monotonic generation number). `root` is the value passed to the byte methods; `coin_id` is the anchoring spend. This list is the source of truth for which roots a node can serve.
+
+---
+
+## dig.health and dig.methods
+
+Service discovery. Neither takes parameters.
+
+```json
+// dig.health
+{ "ok": true, "service": "dig-rpc",
+  "methods": ["dig.getContent","dig.getProof","dig.getProofStatus","dig.getCapsule",
+              "dig.getManifest","dig.getMetadata","dig.listCapsules","dig.health","dig.methods"] }
+
+// dig.methods
+{ "methods": [ … ] }
+```
+
+A client should use `dig.methods` to confirm a third-party node implements the methods it needs before relying on it.
+
+---
+
+## Errors
+
+A malformed or unroutable **call** uses the standard JSON-RPC codes. A content **miss** is never an error — it is a `decoy` result (see [the blind model](./conformance.md#the-blind-serving-model)).
+
+| Code | Meaning | When |
+|---|---|---|
+| `-32700` | Parse error | The body is not valid JSON (`id` is `null`). |
+| `-32600` | Invalid request | Not a request object/array, an empty batch, or a missing `method`. |
+| `-32601` | Method not found | The method is not implemented by this node. |
+| `-32602` | Invalid params | Missing/malformed `store_id`, `root`, or `retrieval_key`; or `"latest"` on a store with no confirmed generation. |
+| `-32603` | Internal error | The node failed to satisfy a well-formed call. Distinct from a miss (which is a decoy). |
