@@ -1,0 +1,50 @@
+name: deploy
+
+# Build the Docusaurus site (npm run build -> ./dist), replace the contents of the S3 website
+# bucket, and invalidate the CloudFront cache. Bucket + distribution discovered from the live
+# CloudFront config:
+#   docs.dig.net -> CloudFront E1G7CFG1FDYG9Y -> origin docs-dig-net.s3-website-us-east-1.amazonaws.com
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+# Serialize deploys so two runs never race on `s3 sync --delete`. Let an in-flight sync finish.
+concurrency:
+  group: docs-dignet-deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  id-token: write # OIDC (assume the deploy role; no stored keys)
+
+env:
+  AWS_REGION: us-east-1
+  S3_BUCKET: docs-dig-net
+  CLOUDFRONT_DISTRIBUTION_ID: E1G7CFG1FDYG9Y
+
+jobs:
+  deploy:
+    name: build + sync + invalidate
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+      - run: npm run build # docusaurus build --out-dir dist
+      - name: configure aws (oidc)
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
+        with:
+          role-to-assume: ${{ vars.CI_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: sync to S3 + invalidate CloudFront
+        run: |
+          set -euo pipefail
+          aws s3 sync dist "s3://${S3_BUCKET}" --delete
+          aws cloudfront create-invalidation \
+            --distribution-id "${CLOUDFRONT_DISTRIBUTION_ID}" --paths '/*'
