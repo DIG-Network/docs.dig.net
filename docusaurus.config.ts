@@ -34,8 +34,79 @@ const config: Config = {
         theme: {
           customCss: "./src/css/custom.css",
         },
+        // preset-classic bundles @docusaurus/plugin-sitemap and enables it by
+        // default. Configure it explicitly so it is clearly NOT disabled — this
+        // emits /sitemap.xml at the site root listing every public route.
+        sitemap: {
+          changefreq: "weekly",
+          priority: 0.5,
+          filename: "sitemap.xml",
+        },
       } satisfies Preset.Options,
     ],
+  ],
+
+  // headTags only carries metadata Docusaurus does NOT already auto-emit.
+  // Docusaurus (theme-classic) auto-emits, from `title` + the description in
+  // `themeConfig.metadata` + `themeConfig.image`: <link rel="canonical">,
+  // og:title, og:description, og:url, og:image, twitter:title,
+  // twitter:description and twitter:image — all as absolute https URLs on
+  // `url`. The tags below complete the Open Graph / Twitter / robots surface.
+  headTags: [
+    // Brand color (cosmic-navy canvas / DIG violet accent — see custom.css).
+    {
+      tagName: "meta",
+      attributes: { name: "theme-color", content: "#0a0a20" },
+    },
+    // Public, unauthenticated docs — explicitly invite indexing.
+    {
+      tagName: "meta",
+      attributes: { name: "robots", content: "index, follow" },
+    },
+    // ---- Open Graph (fields Docusaurus does not emit on its own) ----
+    {
+      tagName: "meta",
+      attributes: { property: "og:type", content: "website" },
+    },
+    {
+      tagName: "meta",
+      attributes: { property: "og:site_name", content: "DIG Network Docs" },
+    },
+    {
+      tagName: "meta",
+      attributes: { property: "og:locale", content: "en_US" },
+    },
+    {
+      tagName: "meta",
+      attributes: { property: "og:image:width", content: "1560" },
+    },
+    {
+      tagName: "meta",
+      attributes: { property: "og:image:height", content: "795" },
+    },
+    {
+      tagName: "meta",
+      attributes: {
+        property: "og:image:alt",
+        content: "DIG Network — a Proof-of-Stake Layer 2 on Chia",
+      },
+    },
+    // ---- Twitter (image alt + verified network handle) ----
+    {
+      tagName: "meta",
+      attributes: {
+        name: "twitter:image:alt",
+        content: "DIG Network — a Proof-of-Stake Layer 2 on Chia",
+      },
+    },
+    {
+      tagName: "meta",
+      attributes: { name: "twitter:site", content: "@digdotnet" },
+    },
+    {
+      tagName: "meta",
+      attributes: { name: "twitter:creator", content: "@digdotnet" },
+    },
   ],
 
   themeConfig: {
@@ -43,7 +114,20 @@ const config: Config = {
       defaultMode: "dark",
       respectPrefersColorScheme: true,
     },
+    // Default social-card image. Docusaurus resolves this against `url` into an
+    // absolute https URL and emits it as og:image + twitter:image.
     image: "img/brand/Wordmark-Stacked-Glow.png",
+    // Site-wide default metadata. Docusaurus emits <meta name="description">
+    // and the matching og:description / twitter:description from the
+    // `description` entry, and the twitter:card type from the other entry.
+    metadata: [
+      {
+        name: "description",
+        content:
+          "Developer docs for DIG Network — a Proof-of-Stake Layer 2 on Chia for publishing, addressing, and serving content without trusting the host.",
+      },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
     navbar: {
       title: "Docs",
       logo: {
