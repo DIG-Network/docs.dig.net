@@ -7,7 +7,7 @@ title: Command reference
 
 Every `digstore` command. Run `digstore <command> --help` for full flags and examples.
 
-> **On-chain by default.** `init` mints the store's singleton on **Chia mainnet** and `commit` anchors each new root on-chain (both block until confirmed and spend real XCH). Starting in v0.5.4, `init` also costs **100 DIG** and `commit` costs **10 DIG** — paid to the DIG treasury in the same spend bundle (memo = store id). Both commands disclose the cost and check your balance before submitting; they block if the wallet is short on XCH **or** DIG. You need an unlocked wallet seed and a funded wallet first — see [On-chain anchoring](./onchain-anchoring.md).
+> **On-chain by default.** `init` mints the project's singleton on **Chia mainnet** and `commit` anchors each new deployment root on-chain (both block until confirmed and spend real XCH). Starting in v0.5.4, `init` also costs **100 DIG** and `commit` costs **10 DIG** — paid to the DIG treasury in the same spend bundle (memo = store id). Both commands disclose the cost and check your balance before submitting; they block if the wallet is short on XCH **or** DIG. You need an unlocked wallet seed and a funded wallet first — see [On-chain anchoring](./onchain-anchoring.md).
 
 ## Wallet & on-chain anchoring
 
@@ -18,20 +18,22 @@ Every `digstore` command. Run `digstore <command> --help` for full flags and exa
 | `digstore seed status` | Show whether a seed exists and is currently unlocked |
 | `digstore lock` | Lock the seed (clear the cached-unlock session) |
 | `digstore balance [--json]` | Show spendable XCH (mojos) and DIG (3-decimal display) + the wallet receive address (read-only) |
-| `digstore anchor [--wait-timeout <secs>]` | Resume a pending anchor: poll the chain and flip the store to confirmed |
-| `digstore anchor status [--json]` | Show the store's anchor state (network, launcher/store id, current coin, height) + the pointer embedded in the module |
+| `digstore anchor [--wait-timeout <secs>]` | Resume a pending anchor: poll the chain and flip the project to confirmed |
+| `digstore anchor status [--json]` | Show the project's anchor state (network, launcher/store id, current coin, height) + the pointer embedded in the module |
 | `digstore anchor inspect <module.dig> [--json]` | Decode and print the on-chain pointer embedded in any compiled module file |
 
 Set the wallet passphrase non-interactively with `DIGSTORE_PASSPHRASE`. Global config lives in `~/.dig/config.toml` (`coinset_url`, `unlock_ttl`, `fee`).
 
-## Stores & workspace
+## Projects & workspace
+
+A single workspace (`.dig/`) can hold many projects. The commands below create and switch between the projects in your workspace.
 
 | Command | What it does |
 |---|---|
-| `digstore init [name] [--dir <path>] [--private] [--wait-timeout <secs>]` | Initialize a store (default name `default`); `--dir` sets its content root. **Mints the store singleton on Chia mainnet — the launcher id becomes the store id** — and blocks until confirmed (`--wait-timeout`, default 300s). Costs **100 DIG + an XCH fee** (paid atomically in the same bundle; cost is disclosed before submission). Requires an unlocked seed, XCH, and DIG; on a confirmation timeout the store is kept `pending` and resumable with `digstore anchor`. Interactive when flags are omitted. |
-| `digstore stores` | List stores with the active marker, root, content root, and capacity |
-| `digstore use <name>` | Set the active store |
-| `digstore dir [<path>]` | Show or set the active store's content root |
+| `digstore init [name] [--dir <path>] [--private] [--wait-timeout <secs>]` | Initialize a project (default name `default`); `--dir` sets its content root. **Mints the project singleton on Chia mainnet — the launcher id becomes the store id** — and blocks until confirmed (`--wait-timeout`, default 300s). Costs **100 DIG + an XCH fee** (paid atomically in the same bundle; cost is disclosed before submission). Requires an unlocked seed, XCH, and DIG; on a confirmation timeout the project is kept `pending` and resumable with `digstore anchor`. Interactive when flags are omitted. |
+| `digstore stores` (alias: `projects`) | List projects with the active marker, root, content root, and capacity |
+| `digstore use <name>` | Set the active project |
+| `digstore dir [<path>]` | Show or set the active project's content root |
 
 ## Staging & commits
 
@@ -40,15 +42,15 @@ Set the wallet passphrase non-interactively with `DIGSTORE_PASSPHRASE`. Global c
 | `digstore add <path…> [-A] [--key <name>]` | Stage files (`-A` = the whole content root) |
 | `digstore staged` | List the staging area |
 | `digstore unstage` | Clear the staging area |
-| `digstore commit [-m <msg>] [--wait-timeout <secs>]` | Seal a new generation: **anchor the new root on Chia mainnet and block until confirmed** (`--wait-timeout`, default 300s), then compile the module + write the URN manifest. Costs **10 DIG + an XCH fee** (paid atomically in the same bundle; cost is disclosed before submission). On failure/timeout the local generation is not finalized (re-run to resume). |
+| `digstore commit [-m <msg>] [--wait-timeout <secs>]` | Seal a new deployment: **anchor the new deployment root on Chia mainnet and block until confirmed** (`--wait-timeout`, default 300s), then compile the module + write the URN manifest. Costs **10 DIG + an XCH fee** (paid atomically in the same bundle; cost is disclosed before submission). On failure/timeout the local deployment is not finalized (re-run to resume). |
 | `digstore status` | Show staged / modified / untracked + remaining capacity |
 
 ## History
 
 | Command | What it does |
 |---|---|
-| `digstore log [--limit N]` | List generations (each root hash is a commit) |
-| `digstore diff <a> <b>` | Compare two generations |
+| `digstore log [--limit N]` | List deployments (each root hash is a commit) |
+| `digstore diff <a> <b>` | Compare two deployments |
 
 ## Reading content
 
@@ -57,17 +59,17 @@ Set the wallet passphrase non-interactively with `DIGSTORE_PASSPHRASE`. Global c
 | `digstore urn [PATHS…] [--root <hex>]` | Preview the URN(s) and retrieval key(s) files will have |
 | `digstore keys [--root <hex>]` | List the retrieval key + URN for every committed resource |
 | `digstore cat <urn-or-retrieval-key> [--out <file>] [--salt <hex>] [--verify-proof]` | Stream a resource out — by URN (decrypted) or retrieval key (encrypted) |
-| `digstore checkout <root> --out <dir> [--salt <hex>]` | Write a whole generation to a directory |
+| `digstore checkout <root> --out <dir> [--salt <hex>]` | Write a whole deployment to a directory |
 
 ## Remotes & sharing
 
 | Command | What it does |
 |---|---|
 | `digstore remote add\|list\|remove …` | Manage remotes |
-| `digstore clone <url>` | Clone a store from a remote. Verified: module identity + signed head + **the served root is checked against the store's current on-chain singleton root** (fails closed) |
-| `digstore push [remote]` | Push the local store's content + signed head |
+| `digstore clone <url>` | Clone a project from a remote. Verified: module identity + signed head + **the served root is checked against the project's current on-chain singleton root** (fails closed) |
+| `digstore push [remote]` | Push the local project's content + signed head |
 | `digstore pull [remote]` | Pull the latest content + signed head. Verified, including the **on-chain root check** |
-| `digstore revoke [--root <hex>\|--all] [--reason <r>]` | Revoke a published root or the whole store with a signed tombstone |
+| `digstore revoke [--root <hex>\|--all] [--reason <r>]` | Revoke a published root or the whole project with a signed tombstone |
 
 ## Maintenance
 
@@ -79,7 +81,7 @@ Set the wallet passphrase non-interactively with `DIGSTORE_PASSPHRASE`. Global c
 
 | Flag | Effect |
 |---|---|
-| `--store <name>` | Operate on a specific store (overrides the active store) |
+| `--store <name>` (alias: `--project`) | Operate on a specific project (overrides the active project) |
 | `-C, --cwd <path>` | Operating directory for this command (overrides the content root) |
 | `--dig-dir <path>` | Workspace location |
 | `--json` | Machine-readable output |
