@@ -15,7 +15,7 @@ digstore remote add origin https://example.com/stores/<storeID>
 digstore push origin
 ```
 
-`push` uploads the compiled module and the signed root for the current generation.
+`push` uploads the compiled module and the signed root for the current deployment.
 
 ```sh
 digstore remote list             # show configured remotes
@@ -29,7 +29,7 @@ From a fresh directory:
 ```sh
 digstore clone https://example.com/stores/<storeID>
 digstore cat   urn:dig:chia:<storeID>:<rootHash>/readme
-digstore pull  origin            # later: fetch the publisher's newer generation
+digstore pull  origin            # later: fetch the publisher's newer deployment
 ```
 
 ## Downloads are verified
@@ -38,7 +38,7 @@ digstore pull  origin            # later: fetch the publisher's newer generation
 
 - the module must embed a public key whose hash equals the **store id** you asked for;
 - the served root must carry the **publisher's signature**;
-- the served root must match the store's **current on-chain singleton root** (queried live from Chia mainnet — fails closed if the chain is unreachable or the roots differ).
+- the served root must match the project's **current on-chain singleton root** (queried live from Chia mainnet — fails closed if the chain is unreachable or the roots differ).
 
 A malicious or broken server can't feed you fabricated content — the command fails instead. See [Proofs & Security](../format/proofs-and-security.md) and [On-chain anchoring](./onchain-anchoring.md).
 
@@ -48,8 +48,8 @@ Remotes must be `https://`. Plain `http://` is allowed only for `localhost` (loc
 
 ## Public vs private when sharing
 
-- **Public store** — hand someone the URN and they can read it. The URN is the whole capability.
-- **Private store** — also give them the secret salt (out-of-band). They locate with the URN but decrypt with `--salt <hex>`:
+- **Public project** — hand someone the URN and they can read it. The URN is the whole capability.
+- **Private project** — also give them the secret salt (out-of-band). They locate with the URN but decrypt with `--salt <hex>`:
 
   ```sh
   digstore cat urn:dig:chia:<storeID>/secret --salt <hex>
@@ -57,11 +57,11 @@ Remotes must be `https://`. Plain `http://` is allowed only for `localhost` (loc
 
 ## Revoking a published root
 
-If a generation must be retracted (e.g. a leaked or bad build), publish a signed tombstone:
+If a deployment must be retracted (e.g. a leaked or bad build), publish a signed tombstone:
 
 ```sh
-digstore revoke --root <hex> --reason superseded     # retract one generation
-digstore revoke --all --reason takedown              # retract the whole store
+digstore revoke --root <hex> --reason superseded     # retract one deployment
+digstore revoke --all --reason takedown              # retract the whole project
 ```
 
 Remotes persist tombstones and clients honor them fail-closed — a revoked root is refused.

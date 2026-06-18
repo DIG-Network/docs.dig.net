@@ -14,19 +14,19 @@ These docs cover the network and its **primitives**: the composable building blo
 
 ### 🗄️ DigStore
 
-The first and most fundamental primitive: a **content-addressable, encrypted WASM store format**. You point it at a build directory, commit generations like Git, and get a single self-defending `.wasm` file that is both your data and the server that gates access to it. The URN *is* the key — it both locates and decrypts.
+The first and most fundamental primitive: a **content-addressable, encrypted WASM project format**. You point it at a build directory, commit deployments like Git, and get a single self-defending `.wasm` file that is both your data and the server that gates access to it. The URN *is* the key — it both locates and decrypts.
 
 → **[Explore DigStore](./digstore/what-is-digstore.md)**
 
 | | |
 |---|---|
 | **[What is DigStore?](./digstore/what-is-digstore.md)** | The one-file idea, in a nutshell |
-| **[The Format](./digstore/format/overview.md)** | Stores, generations, URNs, encryption, proofs |
+| **[The Format](./digstore/format/overview.md)** | Projects, deployments, URNs, encryption, proofs |
 | **[CLI Tutorial](./digstore/cli/quickstart.md)** | Install and use `digstore` in your project |
 
 ### 🛰️ dig RPC
 
-The networking primitive: a **standard interface for reading content from hosted DigStore capsules**. JSON-RPC 2.0 over HTTPS `POST` — every hosting node speaks it identically, so content is portable and clients are node-agnostic. It serves ciphertext + inclusion proofs by retrieval key, whole capsules by `(store_id, root)`, and the public discovery manifest — streamed in chunks, blind by construction, verified and decrypted entirely client-side.
+The networking primitive: a **standard interface for reading content from hosted DigStore deployments**. JSON-RPC 2.0 over HTTPS `POST` — every hosting node speaks it identically, so content is portable and clients are node-agnostic. It serves ciphertext + inclusion proofs by retrieval key, whole deployments by `(store_id, root)`, and the public discovery manifest — streamed in chunks, blind by construction, verified and decrypted entirely client-side.
 
 → **[Explore the dig RPC](./rpc/what-is-the-dig-rpc.md)**
 

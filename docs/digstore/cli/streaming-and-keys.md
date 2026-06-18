@@ -5,7 +5,7 @@ title: Streaming & retrieval keys
 
 # Streaming & retrieval keys
 
-DigStore lets you stream a resource out **by URN** (decrypted) or **by retrieval key** (encrypted), optionally to a file — plus list every resource's retrieval key and check out a whole generation.
+DigStore lets you stream a resource out **by URN** (decrypted) or **by retrieval key** (encrypted), optionally to a file — plus list every resource's retrieval key and check out a whole deployment.
 
 ## `cat` — stream one resource
 
@@ -20,21 +20,21 @@ DigStore lets you stream a resource out **by URN** (decrypted) or **by retrieval
 # By URN → decrypted
 digstore cat urn:dig:chia:<storeID>/logo.png --out logo.png
 
-# By retrieval key → encrypted bytes only (resolved within the active store)
+# By retrieval key → encrypted bytes only (resolved within the active project)
 digstore cat 34e4d485…b111 --out logo.png.enc
 ```
 
-Both forms support `--out <file>` to write to a file instead of stdout, and the URN form supports `--verify-proof` (check the Merkle proof against the trusted root) and `--salt <hex>` (private stores).
+Both forms support `--out <file>` to write to a file instead of stdout, and the URN form supports `--verify-proof` (check the Merkle proof against the trusted root) and `--salt <hex>` (private projects).
 
 Why two modes? The URN and the retrieval key are **different values** (see [URNs & Encryption](../format/urns-and-encryption.md)). The retrieval key only *locates* ciphertext; it cannot decrypt. So passing a retrieval key gives you the encrypted bytes — useful for a host or mirror that should move data without being able to read it.
 
 ## `keys` — list retrieval keys
 
-`digstore keys` lists every committed resource in a generation with its URN and retrieval key:
+`digstore keys` lists every committed resource in a deployment with its URN and retrieval key:
 
 ```sh
-digstore keys                  # current generation
-digstore keys --root <hex>     # a specific generation
+digstore keys                  # current deployment
+digstore keys --root <hex>     # a specific deployment
 digstore keys --json           # machine-readable
 ```
 
@@ -50,17 +50,17 @@ Example (`--json`):
 ]
 ```
 
-The retrieval key is **root-independent** — derived from the store id and resource key, not the generation — so it's stable across commits.
+The retrieval key is **root-independent** — derived from the store id and resource key, not the deployment — so it's stable across commits.
 
-## `checkout` — materialize a whole generation
+## `checkout` — materialize a whole deployment
 
-To write an entire generation's content to a directory (decrypted):
+To write an entire deployment's content to a directory (decrypted):
 
 ```sh
 digstore checkout <rootHash> --out ./restored
-digstore checkout <rootHash> --out ./restored --salt <hex>   # private store
+digstore checkout <rootHash> --out ./restored --salt <hex>   # private project
 ```
 
-This is the bulk counterpart to `cat`: instead of one resource, it reconstructs every file in that generation under `--out`.
+This is the bulk counterpart to `cat`: instead of one resource, it reconstructs every file in that deployment under `--out`.
 
 Back to the tutorial index, or see the full [Command reference →](./command-reference.md)
