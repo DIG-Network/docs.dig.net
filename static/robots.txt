@@ -1,0 +1,6 @@
+# DIG Network Docs — https://docs.dig.net
+# Public, unauthenticated documentation: allow full crawling.
+User-agent: *
+Allow: /
+
+Sitemap: https://docs.dig.net/sitemap.xml
