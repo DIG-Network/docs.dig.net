@@ -37,6 +37,16 @@ The networking primitive: a **standard interface for reading content from hosted
 | **[Streaming](./rpc/streaming.md)** | The chunk model, reassembly, and proof verification |
 | **[Conformance & Security](./rpc/conformance.md)** | The blind model, CORS, and what a node must implement |
 
+### 🌐 DIG Browser
+
+The client primitive: a **browser with a built-in Chia wallet**. It injects a `window.chia` provider on every page, so any web app can request the user's address, signatures, and spends with no WalletConnect setup — a drop-in alternative for apps that already speak CHIP-0002. It also resolves `chia://` content addresses directly.
+
+→ **[Build against the DIG Browser](./browser/using-window-chia.md)**
+
+| | |
+|---|---|
+| **[Using `window.chia` in your app](./browser/using-window-chia.md)** | Detect the injected wallet, connect, and call CHIP-0002 methods |
+
 *More primitives — settlement and node operation — will get their own sections as they land.*
 
 ## Where to start
