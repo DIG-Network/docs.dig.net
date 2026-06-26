@@ -25,6 +25,8 @@ Every `commit` seals the current content into a new **generation**, identified b
 
 Each commit produces exactly **one** new generation, **one** new module file, and **one** new root hash. History grows monotonically — like Git. Any past root hash can be quoted in a URN to address the store *at that generation*; omit it to address the current one.
 
+Each `commit` creates a new generation — an immutable `(storeId, root_hash)` pair anchored on-chain as a CHIP-0035 singleton update. That pair is a **capsule**: the network's unit of retrieval, caching, and pricing (100 DIG per capsule). So a **store is a sequence of capsules**, one per commit. (See [the capsule](../../intro.md#the-capsule) for the ecosystem-wide definition.)
+
 ```sh
 digstore log            # list generations (each root hash is a commit)
 digstore diff <a> <b>   # what changed between two roots
@@ -44,7 +46,7 @@ Resource keys are always **relative to the content root**, so a URN is stable no
 
 A project lives in a `.dig/` directory, the way a Git repo lives in `.git/`. It holds the store configuration, the append-only root history, the per-generation chunk pools and manifests, and the compiled module(s). Commands discover the `.dig/` workspace by walking up from wherever you run them.
 
-A single `.dig/` workspace can hold **many stores** ("capsules"), each with its own content, keys, and history. See [Project Workflow](../cli/project-workflow.md).
+A single `.dig/` workspace can hold **many stores**, each with its own content, keys, and history — and each store is itself a sequence of capsules (one per commit). See [Project Workflow](../cli/project-workflow.md).
 
 ## The compiled module
 
