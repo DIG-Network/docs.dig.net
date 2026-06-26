@@ -24,6 +24,7 @@ All identifiers are lower-case hex on the wire.
 | `store_id` | 64 hex (32 bytes) | The store's identity — the launcher id of its CHIP-0035 DataLayer singleton. The same value appears in the URN and every RPC call. |
 | `root` | 64 hex, or `"latest"` | A **generation root** — the on-chain content root of one capsule in the store's lineage. `"latest"` (or an absent `root`) resolves to the newest confirmed generation. |
 | `retrieval_key` | 64 hex (32 bytes) | The address of one resource: `retrieval_key = sha256(urn)`. A one-way hash of the URN, so it locates a resource without revealing its path. |
+| capsule identity | `<store_id>:<root>` | The canonical identity of one immutable store generation — the pair `(store_id, root)`, written `store_id:root`. The byte methods address a capsule by this pair. |
 
 The **URN** is `urn:dig:chia:<store_id>/<path>` (optionally `?salt=<hex>`). The client derives the retrieval key (`sha256` of the URN) and the AES-256-GCM-SIV decryption key (URN-derived, HKDF). **Only the retrieval key is ever sent to a node.**
 
@@ -96,7 +97,7 @@ Poll a REAL execution-proof job by id. Returns the job status and, when terminal
 
 ## dig.getCapsule
 
-Stream an **entire compiled capsule** — the whole `.dig` module for one generation — by `(store_id, root)`. This is how a client or peer node mirrors, verifies, or installs a generation in full. The alias `dig.getModule` is accepted for identical behavior.
+Stream an **entire compiled capsule** — the whole `.dig` module for one generation — by `(store_id, root)`. A capsule *is* that `(store_id, root)` pair: one immutable generation. This is how a client or peer node mirrors, verifies, or installs a capsule in full. The alias `dig.getModule` is accepted for identical behavior.
 
 **Params**
 
@@ -128,7 +129,7 @@ A convenience over `dig.getContent` for the store's **public discovery manifest*
 
 ## dig.getMetadata
 
-Read the store's **metadata manifest** (name, version, description, authors, license, links, …) directly from the `.dig`. Unlike content, the metadata manifest is **plaintext, ungated public discovery info** embedded in the compiled module's data section (Digstore §8.4) — it is *not* a content resource, carries *no* inclusion proof, and is never encrypted. Its on-chain binding is the module's **`program_hash`** (= `sha256` of the `.dig` bytes), which the node returns so the caller can verify the served capsule against the chain.
+Read the store's **metadata manifest** (name, version, description, authors, license, links, …) directly from the `.dig`. Unlike content, the metadata manifest is **plaintext, ungated public discovery info** embedded in the compiled module's data section (Digstore §8.4) — it is *not* a content resource, carries *no* inclusion proof, and is never encrypted. Its on-chain binding is the module's **`program_hash`** (= `sha256` of the `.dig` bytes), which the node returns so the caller can verify the served capsule against the chain. `program_hash` is **capsule-bound** — one program per capsule, since each `(store_id, root)` compiles to exactly one module.
 
 **Params**
 
@@ -157,7 +158,7 @@ Read the store's **metadata manifest** (name, version, description, authors, lic
 
 ## dig.listCapsules
 
-Return the store's **confirmed capsules** — one entry per anchored generation. This is discovery metadata, not content: it reveals only the public on-chain generation list.
+Return the store's **confirmed capsules** — one entry per anchored generation, i.e. one per `(store_id, root)` pair. A store is a sequence of these capsules. This is discovery metadata, not content: it reveals only the public on-chain generation list.
 
 **Params**
 

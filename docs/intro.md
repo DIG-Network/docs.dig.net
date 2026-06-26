@@ -10,6 +10,20 @@ title: DIG Network Docs
 
 These docs cover the network and its **primitives**: the composable building blocks developers use to build on DIG. The network is still expanding, and more primitives will be documented here over time.
 
+## The capsule
+
+One concept runs through every primitive. A **capsule** is a single immutable store generation — the pair `(storeId, rootHash)`, written canonically as `storeId:rootHash`. A **store is a sequence of capsules**, one per commit (each commit advances the on-chain root and produces a new capsule).
+
+The capsule is the network's unit of:
+
+- **Compilation** — each capsule compiles to one fixed-size WASM module (padded so its length leaks nothing about content size).
+- **Pricing** — a flat **100 DIG per capsule** (mint or commit); a store's lifetime cost is `100 DIG × number of capsules`.
+- **Retrieval** — a URN names one capsule (plus an optional resource within it).
+- **Caching** — a host or browser caches a capsule keyed by `storeId:rootHash`; the local cache is a set of capsules.
+- **Provenance** — each capsule's root carries the publisher's BLS signature and a Merkle root.
+
+This is the ecosystem-wide definition: "capsule = `(storeId, rootHash)`" means the same thing in DigStore, the dig RPC, and the DIG Browser.
+
 ## Primitives
 
 ### 🗄️ DigStore
