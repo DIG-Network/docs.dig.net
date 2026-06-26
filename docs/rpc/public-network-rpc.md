@@ -45,7 +45,7 @@ In JavaScript, the DIG read-crypto client derives the retrieval + decryption key
 Content is addressed by chain-anchored identifiers (`store_id`, `root`, `retrieval_key`), not by host. A URN resolves to the **same bytes at any node that hosts the capsule**, and every byte is verified against the on-chain root client-side — so the node is never trusted and you can switch nodes freely. Use [`dig.methods`](./methods.md#dighealth-and-digmethods) to confirm a third-party node implements what you need before relying on it.
 
 :::tip
-To `clone`, `pull`, or `push` a whole store (not just read resources), use the git-style **[`dig://` remote](./dig-remote.md)** — the same nodes, addressed as `dig://[<user>@]<host>/<storeId>`, with per-request identity-key auth. You can also self-host an origin with `digstore serve`.
+To `clone`, `pull`, or `push` a whole store (not just read resources), use the git-style **[`chia://` remote](./dig-remote.md)** — the same nodes, addressed as `chia://[<user>@]<host>/<storeId>`, with per-request identity-key auth. You can also self-host an origin with `digstore serve`.
 :::
 
 ## Operating your own node
