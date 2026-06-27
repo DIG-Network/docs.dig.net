@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 title: Streaming
+description: "Streaming chunk model for byte methods: chunk object structure, 64 KiB alignment, reassembly, proof verification, and reference client loop."
 ---
 
 # Streaming

@@ -1,6 +1,7 @@
 ---
 sidebar_position: 4
 title: Conformance & Security
+description: "Blind serving model, decoy streams, CORS, caching, rate limiting, and conformance checklist for dig RPC endpoints."
 ---
 
 # Conformance & Security

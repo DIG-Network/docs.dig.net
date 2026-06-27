@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 title: Quick start
+description: "Five-minute walkthrough to initialize a project, commit files, and read content back via DigStore CLI."
 ---
 
 # Quick start
@@ -76,20 +77,20 @@ digstore urn readme.txt    # preview the exact URN this file has
 A URN locates *and* decrypts. With the store id and root from `digstore log --json`:
 
 ```sh
-digstore cat urn:dig:chia:<storeID>:<rootHash>/readme
+digstore cat urn:dig:chia:<storeId>:<rootHash>/readme
 # → hello digstore
 ```
 
 Omit the `<rootHash>` to read from the current deployment:
 
 ```sh
-digstore cat urn:dig:chia:<storeID>/readme
+digstore cat urn:dig:chia:<storeId>/readme
 ```
 
 Write the output to a file instead of stdout:
 
 ```sh
-digstore cat urn:dig:chia:<storeID>/readme --out readme.copy.txt
+digstore cat urn:dig:chia:<storeId>/readme --out readme.copy.txt
 ```
 
 ## Where to go next

@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: What is the dig RPC?
+description: "Network-wide read interface for DigStore capsules via JSON-RPC 2.0; blind by construction, verifiable without trust, and streamable at any size."
 ---
 
 # What is the dig RPC?

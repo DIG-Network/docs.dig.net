@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 title: Store Structure
+description: "Store identity via on-chain singleton launcher id, generations as capsules, content root, on-disk layout, and compiled module structure."
 ---
 
 # Store Structure
@@ -25,7 +26,7 @@ Every `commit` seals the current content into a new **generation**, identified b
 
 Each commit produces exactly **one** new generation, **one** new module file, and **one** new root hash. History grows monotonically — like Git. Any past root hash can be quoted in a URN to address the store *at that generation*; omit it to address the current one.
 
-Each `commit` creates a new generation — an immutable `(storeId, root_hash)` pair anchored on-chain as a CHIP-0035 singleton update. That pair is a **capsule**: the network's unit of retrieval, caching, and pricing (100 DIG per capsule). So a **store is a sequence of capsules**, one per commit. (See [the capsule](../../intro.md#the-capsule) for the ecosystem-wide definition.)
+Each `commit` creates a new generation — an immutable `(storeId, rootHash)` pair anchored on-chain as a CHIP-0035 singleton update. That pair is a **capsule**: the network's unit of retrieval, caching, and pricing (100 DIG per capsule). So a **store is a sequence of capsules**, one per commit. (See [the capsule](../../intro.md#the-capsule) for the ecosystem-wide definition.)
 
 ```sh
 digstore log            # list generations (each root hash is a commit)

@@ -1,6 +1,7 @@
 ---
 sidebar_position: 6
 title: Streaming & retrieval keys
+description: "Streaming resources by URN or retrieval key, listing keys per deployment, and checking out entire generations."
 ---
 
 # Streaming & retrieval keys
@@ -18,7 +19,7 @@ DigStore lets you stream a resource out **by URN** (decrypted) or **by retrieval
 
 ```sh
 # By URN → decrypted
-digstore cat urn:dig:chia:<storeID>/logo.png --out logo.png
+digstore cat urn:dig:chia:<storeId>/logo.png --out logo.png
 
 # By retrieval key → encrypted bytes only (resolved within the active project)
 digstore cat 34e4d485…b111 --out logo.png.enc
@@ -57,10 +58,10 @@ The retrieval key is **root-independent** — derived from the store id and reso
 To write an entire deployment's content to a directory (decrypted):
 
 ```sh
-digstore checkout <rootHash> --out ./restored
-digstore checkout <rootHash> --out ./restored --salt <hex>   # private project
+digstore checkout <root> --out ./restored
+digstore checkout <root> --out ./restored --salt <hex>   # private project
 ```
 
 This is the bulk counterpart to `cat`: instead of one resource, it reconstructs every file in that deployment under `--out`.
 
-Back to the tutorial index, or see the full [Command reference →](./command-reference.md)
+Back to: [Quick start](./quickstart.md), or see the full [Command reference →](./command-reference.md)

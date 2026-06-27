@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 title: URNs & Encryption
+description: "URN format and semantics, derivation of retrieval and decryption keys, AES-256-GCM-SIV encryption, and public vs. private store differences."
 ---
 
 # URNs & Encryption
@@ -10,14 +11,14 @@ The URN is the heart of DigStore. It is **both** the address that locates a reso
 ## URN format
 
 ```
-urn:dig:<chain>:<storeID>[:<rootHash>][/<resourceKey>]
+urn:dig:<chain>:<storeId>[:<rootHash>][/<resourceKey>]
 ```
 
 | Part | Role | Required |
 |---|---|---|
 | `urn:dig:` | Scheme + namespace | Required (literal) |
 | `<chain>` | Chain identifier, e.g. `chia` | Required |
-| `<storeID>` | 64-hex store id | Required |
+| `<storeId>` | 64-hex store id | Required |
 | `<rootHash>` | Pin a specific generation; omit for the current one | Optional |
 | `<resourceKey>` | Which resource (content-root-relative path); omit for store-level | Optional |
 

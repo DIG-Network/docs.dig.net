@@ -1,6 +1,7 @@
 ---
 sidebar_position: 6
 title: The chia:// remote (clone/pull/push)
+description: "Git-style remote protocol via chia:// URLs, per-request BLS signing, clone/pull/push operations, and self-hosted node setup."
 ---
 
 # The chia:// remote (clone/pull/push)

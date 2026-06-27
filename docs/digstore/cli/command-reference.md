@@ -1,6 +1,7 @@
 ---
 sidebar_position: 7
 title: Command reference
+description: "Complete command reference for the digstore CLI, including wallet, project, staging, history, content, remote, and maintenance commands."
 ---
 
 # Command reference

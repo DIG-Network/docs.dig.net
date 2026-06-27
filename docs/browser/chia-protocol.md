@@ -1,11 +1,12 @@
 ---
 sidebar_position: 1
 title: The chia:// protocol & URN scheme
+description: "A content-addressed protocol for opening stores and resources directly from the DIG Network, with URN and shorthand forms."
 ---
 
 # The `chia://` protocol
 
-**`chia://` is the DIG Browser's native address scheme.** Paste a `chia://` link into the address bar and the browser fetches the content straight from the DIG Network — content-addressed and cryptographically verified — with no web server in the middle. It is the browser-facing front end of DigStore's [`urn:dig:` URN scheme](../digstore/format/urns-and-encryption.md): the same identity, in a form you can type and link.
+**`chia://` is the DIG Browser's native address scheme.** Paste a `chia://` link into the address bar and the browser fetches the content straight from the DIG Network — content-addressed and cryptographically verified — with no web server in the middle. It is the browser-facing front end of DigStore's [`urn:dig:` URN scheme](../digstore/format/urns-and-encryption.md): the same identity, in a form you can type and link. The browser also provides [`window.chia` wallet integration](./using-window-chia.md) for apps running in the DIG Browser.
 
 :::note Renamed from `dig://`
 The scheme value is `chia` (it was previously `dig`); it is otherwise **functionally identical**. The underlying `urn:dig:` URN namespace is **unchanged** — it derives retrieval keys and must stay byte-exact — so only the typed/linked address changed, not the protocol.

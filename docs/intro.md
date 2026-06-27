@@ -1,7 +1,8 @@
 ---
 sidebar_position: 1
 slug: /
-title: DIG Network Docs
+title: DIG Network
+description: "Overview of the DIG Network primitives: DigStore for content-addressable publishing, dig RPC for blind hosting and retrieval, and the DIG Browser for content access."
 ---
 
 # DIG Network
