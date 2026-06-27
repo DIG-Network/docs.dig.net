@@ -186,7 +186,7 @@ const config: Config = {
             { label: "digstore on GitHub", href: "https://github.com/DIG-Network/digstore" },
             { label: "Releases", href: "https://github.com/DIG-Network/digstore/releases" },
             { label: "DIG Network", href: "https://dig.net" },
-            { label: "Whitepapers", href: "https://dig.net/whitepapers" },
+            { label: "Whitepapers", to: "/docs/whitepapers" },
           ],
         },
       ],
