@@ -32,6 +32,10 @@ A few addresses are special, handled by the browser itself:
 
 Everything else after `chia://` is a **store id** — that is the difference between a special page and on-chain content.
 
+:::tip Try it
+[**Get the DIG Browser →**](https://github.com/DIG-Network/DIG_Browser/releases) and open `chia://home` in the address bar to see these built-in pages live.
+:::
+
 ## Addressing content
 
 A DIG address has up to three parts: **which store**, **which version of it**, and **which file inside it**.

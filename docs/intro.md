@@ -25,6 +25,10 @@ The capsule is the network's unit of:
 
 This is the ecosystem-wide definition: "capsule = `(storeId, rootHash)`" means the same thing in DigStore, the dig RPC, and the DIG Browser.
 
+:::tip Try it
+[**Create your first capsule in the Hub →**](https://hub.dig.net/new) — publish a site in the browser, no CLI required. Each capsule (mint or commit) costs **100 DIG**.
+:::
+
 ## Primitives
 
 ### 🗄️ DigStore
@@ -61,6 +65,10 @@ The client primitive: a **browser with a built-in Chia wallet**. It injects a `w
 | | |
 |---|---|
 | **[Using `window.chia` in your app](./browser/using-window-chia.md)** | Detect the injected wallet, connect, and call CHIP-0002 methods |
+
+:::tip Try it
+[**Get the DIG Browser →**](https://github.com/DIG-Network/DIG_Browser/releases) — download the browser to open `chia://` content and use the built-in wallet.
+:::
 
 *More primitives — settlement and node operation — will get their own sections as they land.*
 

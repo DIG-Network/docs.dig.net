@@ -52,6 +52,11 @@ function Hero() {
             <Link className={clsx('button button--lg', styles.ghost)} to="/docs/digstore/cli/quickstart">
               Quick start
             </Link>
+            <Link
+              className={clsx('button button--lg', styles.ghost)}
+              to="https://github.com/DIG-Network/DIG_Browser/releases">
+              Get the DIG Browser →
+            </Link>
           </div>
           <div className={styles.trust}>
             <span>Open source · GPL-2.0</span>
