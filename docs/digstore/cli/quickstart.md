@@ -99,3 +99,8 @@ digstore cat urn:dig:chia:<storeId>/readme --out readme.copy.txt
 - **[Project workflow](./project-workflow.md)** — capture a real build directory, run multiple projects per workspace, manage staging. List them with `digstore stores` (alias: `projects`).
 - **[Sharing over a remote](./sharing.md)** — publish a project and let others `clone`/`pull` it.
 - **[Streaming & keys](./streaming-and-keys.md)** — fetch encrypted vs decrypted, list retrieval keys, checkout a whole deployment.
+
+:::tip Try it
+- [**View & manage your stores in the Hub →**](https://hub.dig.net) — see your published stores in the browser.
+- [**Ready to ship? Publish on DIGHub →**](https://hub.dig.net/new) — deploy a new capsule from the web, no CLI required.
+:::

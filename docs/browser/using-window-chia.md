@@ -135,3 +135,7 @@ That's the whole integration: a one-line detection, a `connect()`, and CHIP-0002
 :::tip
 Pages served from a `chia://` store run inside the DIG Browser too, so `window.chia` is available there as well — a store you publish can ship a fully wallet-aware front end with no external wallet setup.
 :::
+
+:::tip Try it
+[**Download the DIG Browser to test `window.chia` →**](https://github.com/DIG-Network/DIG_Browser/releases) — run your app inside the browser to detect the injected provider and call CHIP-0002 methods for real.
+:::

@@ -66,6 +66,10 @@ digstore balance --json
 
 `init` and `commit` spend both **XCH** (the transaction fee) and **DIG** (the DIG token). The wallet derived from your seed needs **both**. If either is short, the command blocks and prints the **receive address** — fund that address on mainnet, then retry. Both XCH and DIG are received at the same `xch1…` address (DIG arrives as a CAT). Transactions go out via coinset.org over HTTPS; the `coinset_url` key in `~/.dig/config.toml` overrides the default endpoint.
 
+:::tip Need DIG?
+[**Buy $DIG on TibetSwap →**](https://v2.tibetswap.io/) — swap XCH for DIG on the AMM, then send it to your `digstore balance` receive address.
+:::
+
 ## `digstore init` — mint the project singleton
 
 ```sh
