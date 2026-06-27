@@ -75,7 +75,7 @@ The client primitive: a **browser with a built-in Chia wallet**. It injects a `w
 ## Where to start
 
 - **Building with content today?** Go straight to [DigStore](./digstore/what-is-digstore.md) — it's production-ready and has a full [CLI tutorial](./digstore/cli/quickstart.md).
-- **Want the deep design?** Each primitive links to its specification and whitepaper.
+- **Want the deep design?** Read the [DIG Network whitepapers](https://dig.net/whitepapers) — the full protocol specification.
 
 :::note
 DIG Network and its primitives are open source. DigStore is licensed under GPL-2.0; see the [digstore repository](https://github.com/DIG-Network/digstore).
