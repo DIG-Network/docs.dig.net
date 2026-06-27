@@ -6,6 +6,6 @@
   "link": {
     "type": "generated-index",
     "title": "DIG Browser",
-    "description": "Build against the DIG Browser: the injected window.chia wallet provider that lets any web app request keys, signatures, and spends from the browser's built-in Chia wallet — a drop-in WalletConnect alternative, with no QR pairing and no relay."
+    "description": "The DIG Browser: open content with the native chia:// protocol (content-addressed, chain-verified), and build against the injected window.chia wallet provider that lets any web app request keys, signatures, and spends from the browser's built-in Chia wallet — a drop-in WalletConnect alternative, with no QR pairing and no relay."
   }
 }
