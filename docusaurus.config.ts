@@ -78,11 +78,11 @@ const config: Config = {
     },
     {
       tagName: "meta",
-      attributes: { property: "og:image:width", content: "1560" },
+      attributes: { property: "og:image:width", content: "1200" },
     },
     {
       tagName: "meta",
-      attributes: { property: "og:image:height", content: "795" },
+      attributes: { property: "og:image:height", content: "630" },
     },
     {
       tagName: "meta",
@@ -137,6 +137,14 @@ const config: Config = {
         href: "/",
       },
       items: [
+        // Subtle pre-release marker — mirrors hub's lowercase "alpha" pill so the
+        // ecosystem reads as one product. Styled by `.navbar-alpha-badge` in custom.css.
+        {
+          type: "html",
+          position: "left",
+          value:
+            '<span class="navbar-alpha-badge" title="Pre-release — expect rough edges">alpha</span>',
+        },
         {
           type: "docSidebar",
           sidebarId: "tutorialSidebar",
