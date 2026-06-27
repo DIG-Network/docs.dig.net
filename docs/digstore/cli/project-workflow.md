@@ -1,6 +1,7 @@
 ---
 sidebar_position: 4
 title: Using DigStore in your project
+description: "Workflow for initializing projects, managing staging areas, running multiple stores in one workspace, and typical release loops."
 ---
 
 # Using DigStore in your project
@@ -76,7 +77,7 @@ The `--store` flag is also accepted as `--project`.
 ```sh
 # once
 digstore init site --dir dist
-digstore remote add origin https://example.com/stores/<storeID>
+digstore remote add origin https://example.com/stores/<storeId>
 
 # every release
 npm run build

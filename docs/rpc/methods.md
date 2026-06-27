@@ -1,9 +1,12 @@
 ---
 sidebar_position: 2
 title: Methods
+description: "Complete dig RPC method set: dig.getContent, dig.getProof, dig.getCapsule, dig.getManifest, dig.listCapsules, and service discovery methods."
 ---
 
 # Methods
+
+See [What is the dig RPC?](./what-is-the-dig-rpc.md) for an overview.
 
 The dig RPC is a single `POST` endpoint speaking [JSON-RPC 2.0](https://www.jsonrpc.org/specification). A request is a request object or a batch (a non-empty array of request objects); `params` is always a by-name object.
 

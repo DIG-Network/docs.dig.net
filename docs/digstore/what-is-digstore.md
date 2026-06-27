@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: What is DigStore?
+description: "Git-shaped, content-addressable project format with built-in encryption and URN-based addressing; compiles to a single self-defending WebAssembly module."
 ---
 
 # What is DigStore?

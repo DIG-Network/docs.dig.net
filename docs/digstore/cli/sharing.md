@@ -1,6 +1,7 @@
 ---
 sidebar_position: 5
 title: Sharing over a remote
+description: "Publishing stores to remotes, downloading with verification, revoking roots, and understanding public vs. private access models."
 ---
 
 # Sharing over a remote
@@ -11,7 +12,7 @@ A **remote** is an HTTPS endpoint that stores and serves your `.wasm` module. Be
 
 ```sh
 # publisher
-digstore remote add origin https://example.com/stores/<storeID>
+digstore remote add origin https://example.com/stores/<storeId>
 digstore push origin
 ```
 
@@ -27,8 +28,8 @@ digstore remote remove origin    # drop one
 From a fresh directory:
 
 ```sh
-digstore clone https://example.com/stores/<storeID>
-digstore cat   urn:dig:chia:<storeID>:<rootHash>/readme
+digstore clone https://example.com/stores/<storeId>
+digstore cat   urn:dig:chia:<storeId>:<rootHash>/readme
 digstore pull  origin            # later: fetch the publisher's newer deployment
 ```
 
@@ -52,7 +53,7 @@ Remotes must be `https://`. Plain `http://` is allowed only for `localhost` (loc
 - **Private project** — also give them the secret salt (out-of-band). They locate with the URN but decrypt with `--salt <hex>`:
 
   ```sh
-  digstore cat urn:dig:chia:<storeID>/secret --salt <hex>
+  digstore cat urn:dig:chia:<storeId>/secret --salt <hex>
   ```
 
 ## Revoking a published root

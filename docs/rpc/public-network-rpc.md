@@ -1,6 +1,7 @@
 ---
 sidebar_position: 5
 title: Using the public network RPC
+description: "Public RPC endpoint usage, portability across nodes, operating your own node, and rate limiting policies."
 ---
 
 # Using the public network RPC

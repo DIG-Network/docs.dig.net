@@ -1,6 +1,7 @@
 ---
 sidebar_position: 4
 title: Proofs & Security
+description: "Merkle proofs, verified downloads, signed roots, revocation, and host attestation for DigStore security."
 ---
 
 # Proofs & Security

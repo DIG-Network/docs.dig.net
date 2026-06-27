@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
-title: Format Overview
+title: The DigStore WASM Store Format
+description: "Architecture of the content-addressable, encrypted WebAssembly store format: identity, generations, URNs, and compiled modules."
 ---
 
 # The DigStore WASM Store Format
@@ -38,9 +39,9 @@ Copy the file to back it up. Run it (in a host) to serve it. Hand someone a URN 
 
 1. **Store** — an identity plus its content and history. A store's identity is a 64-hex **store id** that is its **on-chain Chia singleton launcher id** (minted on mainnet at `init`); the chain singleton is the authority for the store's current root. See [On-chain anchoring](../cli/onchain-anchoring.md).
 
-2. **Generation (capsule)** — a commit. Each `commit` seals the current content into a new generation: an immutable `(storeId, root_hash)` pair anchored on-chain as a CHIP-0035 singleton update, identified by a **root hash** (a Merkle root). That pair is a **capsule** — the unit of retrieval, caching, and pricing (100 DIG per capsule) — so a store is a *sequence of capsules*, one per commit. Generations are append-only, like Git history. (See [the capsule](../../intro.md#the-capsule) for the ecosystem-wide definition.)
+2. **Generation (capsule)** — a commit. Each `commit` seals the current content into a new generation: an immutable `(storeId, rootHash)` pair anchored on-chain as a CHIP-0035 singleton update, identified by a **root hash** (a Merkle root). That pair is a **capsule** — the unit of retrieval, caching, and pricing (100 DIG per capsule) — so a store is a *sequence of capsules*, one per commit. Generations are append-only, like Git history. (See [the capsule](../../intro.md#the-capsule) for the ecosystem-wide definition.)
 
-3. **URN** — the address *and* the key. `urn:dig:chia:<storeID>[:<rootHash>][/<resourceKey>]` both locates a resource and derives the key that decrypts it. See [URNs & Encryption](./urns-and-encryption.md).
+3. **URN** — the address *and* the key. `urn:dig:chia:<storeId>[:<rootHash>][/<resourceKey>]` both locates a resource and derives the key that decrypts it. See [URNs & Encryption](./urns-and-encryption.md).
 
 4. **Module** — the compiled `.wasm`. It embeds the encrypted content, a key table, the Merkle tree, and the serving program. See [Store Structure](./store-structure.md).
 

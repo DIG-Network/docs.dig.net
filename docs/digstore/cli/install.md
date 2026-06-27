@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: Installing the CLI
+description: "Download and run the self-contained DigStore CLI installer for Windows, macOS, or Linux; also build from source with Rust."
 ---
 
 # Installing the CLI

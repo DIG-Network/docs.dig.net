@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
-title: Using window.chia in your app
+title: Using `window.chia` in your app
+description: "Detect and use the DIG Browser's injected Chia wallet provider for permission-gated key and signing operations."
 ---
 
 # Using `window.chia` in your app
