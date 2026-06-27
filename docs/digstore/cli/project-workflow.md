@@ -110,6 +110,7 @@ digstore push origin
 ## Related
 
 - [Sharing over a remote](./sharing.md) — publish a store and let others clone/pull it
+- [Deploy from GitHub Actions](./deploy-from-github-actions.md) — auto-publish this build on every push
 - [Streaming & retrieval keys](./streaming-and-keys.md) — read content back out
 - [On-chain anchoring](./onchain-anchoring.md) — what `commit` spends and confirms
 - [Command reference](./command-reference.md) — every `digstore` command and flag

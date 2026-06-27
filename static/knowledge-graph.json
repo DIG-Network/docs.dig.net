@@ -200,6 +200,19 @@
       ]
     },
     {
+      "id": "/docs/digstore/cli/deploy-from-github-actions",
+      "type": "doc",
+      "title": "Deploy from GitHub Actions",
+      "url": "https://docs.dig.net/docs/digstore/cli/deploy-from-github-actions",
+      "tags": [
+        "digstore-cli",
+        "store",
+        "anchoring",
+        "dig-payment",
+        "capsule"
+      ]
+    },
+    {
       "id": "/docs/digstore/cli/install",
       "type": "doc",
       "title": "Installing the CLI",
@@ -745,6 +758,31 @@
     {
       "from": "/docs/digstore/cli/command-reference",
       "to": "concept:urn",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/digstore/cli/deploy-from-github-actions",
+      "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/digstore/cli/deploy-from-github-actions",
+      "to": "concept:store",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/digstore/cli/deploy-from-github-actions",
+      "to": "concept:anchoring",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/digstore/cli/deploy-from-github-actions",
+      "to": "concept:dig-payment",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/digstore/cli/deploy-from-github-actions",
+      "to": "concept:capsule",
       "type": "part-of"
     },
     {
@@ -1414,7 +1452,42 @@
     },
     {
       "from": "/docs/digstore/cli/command-reference",
+      "to": "/docs/digstore/cli/deploy-from-github-actions",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/digstore/cli/command-reference",
       "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/digstore/cli/deploy-from-github-actions",
+      "to": "/docs/digstore/cli/onchain-anchoring",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/digstore/cli/deploy-from-github-actions",
+      "to": "/docs/digstore/cli/project-workflow",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/digstore/cli/deploy-from-github-actions",
+      "to": "/docs/digstore/cli/sharing",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/digstore/cli/deploy-from-github-actions",
+      "to": "/docs/digstore/cli/command-reference",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/digstore/cli/deploy-from-github-actions",
+      "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/digstore/cli/deploy-from-github-actions",
+      "to": "/docs/digstore/cli/command-reference",
       "type": "see-also"
     },
     {
@@ -1475,6 +1548,11 @@
     {
       "from": "/docs/digstore/cli/project-workflow",
       "to": "/docs/digstore/cli/sharing",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/digstore/cli/project-workflow",
+      "to": "/docs/digstore/cli/deploy-from-github-actions",
       "type": "see-also"
     },
     {
@@ -1584,7 +1662,7 @@
     },
     {
       "from": "/docs/digstore/cli/streaming-and-keys",
-      "to": "/docs/digstore/cli/quickstart",
+      "to": "/docs/digstore/cli/deploy-from-github-actions",
       "type": "see-also"
     },
     {
