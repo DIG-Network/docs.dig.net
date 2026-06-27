@@ -4,3 +4,7 @@ User-agent: *
 Allow: /
 
 Sitemap: https://docs.dig.net/sitemap.xml
+
+# Agent/LLM aids (see also /llms.txt and /knowledge-graph.json):
+#   /llms.txt            — curated, link-rich map of these docs for LLMs/agents
+#   /knowledge-graph.json — entities + typed edges (defines, part-of, requires, see-also)

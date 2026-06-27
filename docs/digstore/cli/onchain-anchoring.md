@@ -2,6 +2,20 @@
 sidebar_position: 2
 title: On-chain anchoring
 description: "Wallet seed setup, on-chain costs, funding, anchor status, and chain-verified downloads for DigStore projects."
+keywords:
+  - on-chain anchoring
+  - Chia singleton
+  - wallet seed
+  - DIG payment
+  - XCH fee
+  - chain-verified download
+tags:
+  - anchoring
+  - dig-payment
+  - digstore-cli
+  - store
+  - chip-0035
+  - capsule
 ---
 
 # On-chain anchoring
@@ -152,5 +166,13 @@ If the chain is unreachable, or the served root does not match the on-chain root
 - **`commit` costs 10 DIG + an XCH fee** — one spend bundle per anchored deployment.
 - Both are on **Chia mainnet**. There is no testnet mode; use a wallet with only as much XCH and DIG as you intend to spend.
 - Lost seed = lost ability to update the project. The singleton stays on-chain and existing content remains readable, but no new commits are possible. Back up `~/.dig/seed.enc` and your mnemonic.
+
+## Related
+
+- [Quick start](./quickstart.md) — the wallet-then-init flow end to end
+- [Store structure](../format/store-structure.md) — why the store id *is* the singleton launcher id
+- [Proofs & Security](../format/proofs-and-security.md) — the on-chain root check that verifies downloads
+- [Command reference](./command-reference.md) — every wallet and anchoring command
+- [Concepts & glossary](../../concepts.md) — anchoring and DIG payment defined
 
 Next: [Using DigStore in your project →](./project-workflow.md)

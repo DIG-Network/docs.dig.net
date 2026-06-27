@@ -2,6 +2,20 @@
 sidebar_position: 6
 title: The chia:// remote (clone/pull/push)
 description: "Git-style remote protocol via chia:// URLs, per-request BLS signing, clone/pull/push operations, and self-hosted node setup."
+keywords:
+  - chia:// remote
+  - clone
+  - pull
+  - push
+  - identity key
+  - self-hosted node
+tags:
+  - dig-rpc
+  - chia-protocol
+  - digstore-cli
+  - store
+  - anchoring
+  - dighub
 ---
 
 # The chia:// remote (clone/pull/push)
@@ -103,6 +117,14 @@ A self-hosted node speaks the identical routes and the identical per-request aut
 | `digstore pull` | Sync new generations from the origin. |
 | `digstore push` | Publish a new generation (the Hub `/v1` or self-hosted `PUT`). |
 | `digstore serve --bind 0.0.0.0:8443` | Serve the remote protocol for a local store. |
+
+## Related
+
+- [Using the public network RPC](./public-network-rpc.md) — the read interface these routes sit on
+- [Sharing over a remote](../digstore/cli/sharing.md) — the CLI publish/consume flow
+- [The chia:// protocol](../browser/chia-protocol.md) — the same scheme, for opening content in the browser
+- [Proofs & Security](../digstore/format/proofs-and-security.md) — what clone/pull verify before installing
+- [Concepts & glossary](../concepts.md) — the chia:// protocol and dig RPC defined
 
 :::note
 The `chia://` remote and the [public read RPC](./public-network-rpc.md) speak the same routes against the same nodes. The full normative specification is Part 5 (§22) of the *dig RPC: Network Content Interface* document.

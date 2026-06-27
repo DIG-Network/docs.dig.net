@@ -2,6 +2,19 @@
 sidebar_position: 3
 title: Quick start
 description: "Five-minute walkthrough to initialize a project, commit files, and read content back via DigStore CLI."
+keywords:
+  - digstore quickstart
+  - digstore init
+  - digstore commit
+  - digstore cat
+  - URN
+tags:
+  - digstore-cli
+  - store
+  - urn
+  - anchoring
+  - dig-payment
+  - capsule
 ---
 
 # Quick start
@@ -104,3 +117,11 @@ digstore cat urn:dig:chia:<storeId>/readme --out readme.copy.txt
 - [**View & manage your stores in the Hub ↗**](https://hub.dig.net) — see your published stores in the browser.
 - [**Ready to ship? Publish on DIGHUb ↗**](https://hub.dig.net/new) — deploy a new capsule from the web, no CLI required.
 :::
+
+## Related
+
+- [Installing the CLI](./install.md) — get `digstore` on your machine first
+- [On-chain anchoring](./onchain-anchoring.md) — wallet setup, funding, and costs
+- [URNs & Encryption](../format/urns-and-encryption.md) — what a URN locates *and* decrypts
+- [Using DigStore in your project](./project-workflow.md) — the day-to-day release loop
+- [Concepts & glossary](../../concepts.md) — store, capsule, and URN defined

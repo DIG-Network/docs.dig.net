@@ -2,6 +2,18 @@
 sidebar_position: 5
 title: Using the public network RPC
 description: "Public RPC endpoint usage, portability across nodes, operating your own node, and rate limiting policies."
+keywords:
+  - rpc.dig.net
+  - public RPC
+  - node portability
+  - run your own node
+  - rate limits
+tags:
+  - dig-rpc
+  - retrieval-key
+  - capsule
+  - merkle-proof
+  - dighub
 ---
 
 # Using the public network RPC
@@ -67,3 +79,11 @@ Reads are cheap and uncached at the RPC layer; a node operator may throttle abus
 :::note
 `rpc.dig.net` is operated by DIG Network as the reference node. The protocol is open: the same client works against any conformant node.
 :::
+
+## Related
+
+- [Methods](./methods.md) — what to POST and what comes back
+- [The chia:// remote](./dig-remote.md) — git-style clone/pull/push over the same nodes
+- [Conformance & Security](./conformance.md) — the contract a node must meet
+- [What is the dig RPC?](./what-is-the-dig-rpc.md) — the read interface in overview
+- [Concepts & glossary](../concepts.md) — the dig RPC and capsule defined

@@ -2,6 +2,21 @@
 sidebar_position: 1
 title: What is the dig RPC?
 description: "Network-wide read interface for DigStore capsules via JSON-RPC 2.0; blind by construction, verifiable without trust, and streamable at any size."
+keywords:
+  - dig RPC
+  - JSON-RPC 2.0
+  - blind serving
+  - capsule
+  - retrieval key
+  - inclusion proof
+tags:
+  - dig-rpc
+  - capsule
+  - retrieval-key
+  - merkle-proof
+  - streaming
+  - store
+  - chip-0035
 ---
 
 # What is the dig RPC?
@@ -69,5 +84,13 @@ The client loops on `next_offset` until `complete`, verifies `inclusion_proof` o
 - **[Conformance](./conformance.md)** — what a node MUST implement to be a member of the network read path, plus CORS, errors, and the blind model in full.
 
 :::note
-The dig RPC is part of the [DIG Network](https://dig.net). The full normative specification is the *dig RPC: Network Content Interface* document, a companion to the DigStore whitepaper.
+The dig RPC is part of the [DIG Network](https://dig.net). The full normative specification is the *dig RPC: Network Content Interface* document, a companion to the [DigStore whitepaper](../whitepapers/digstore.md).
 :::
+
+## Related
+
+- [Methods](./methods.md) — every dig RPC method, its params, and results
+- [Streaming](./streaming.md) — the chunk model, reassembly, and proof verification
+- [Conformance & Security](./conformance.md) — the blind model and what a node must implement
+- [URNs & Encryption](../digstore/format/urns-and-encryption.md) — the URN behind every retrieval key
+- [Concepts & glossary](../concepts.md) — the dig RPC, capsule, and retrieval key defined

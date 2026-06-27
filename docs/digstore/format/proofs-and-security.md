@@ -2,6 +2,20 @@
 sidebar_position: 4
 title: Proofs & Security
 description: "Merkle proofs, verified downloads, signed roots, revocation, and host attestation for DigStore security."
+keywords:
+  - Merkle proof
+  - inclusion proof
+  - signed root
+  - revocation
+  - host attestation
+  - verified download
+tags:
+  - merkle-proof
+  - store
+  - generation
+  - anchoring
+  - encryption
+  - digstore-cli
 ---
 
 # Proofs & Security
@@ -50,5 +64,13 @@ This is why a generic file host can store and relay a store's `.wasm` (it's just
 ## Threat model in one paragraph
 
 DigStore assumes the **host is untrusted for confidentiality**: it holds only ciphertext keyed by hashes, performs no decryption, and never sees a URN or key. It assumes the **host is untrusted for integrity**: clients verify the store id, the signed root, the store's current on-chain singleton root, and per-resource Merkle proofs, so tampered or fabricated bytes are rejected. What DigStore does **not** defend against is a host that simply *withholds* data (availability), or a reader who legitimately holds a URN choosing to redistribute what they read — the URN is a read capability, and sharing it shares the read.
+
+## Related
+
+- [URNs & Encryption](./urns-and-encryption.md) — why leaves commit to deterministic ciphertext
+- [On-chain anchoring](../cli/onchain-anchoring.md) — the on-chain root the proofs verify against
+- [Conformance & Security](../../rpc/conformance.md) — how nodes serve proofs blindly over the RPC
+- [Store structure](./store-structure.md) — the Merkle tree inside the compiled module
+- [Concepts & glossary](../../concepts.md) — Merkle proof and anchoring defined
 
 Back to: [Format Overview](./overview.md) · Next up: [CLI Tutorial →](../cli/install.md)

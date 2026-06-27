@@ -2,6 +2,19 @@
 sidebar_position: 4
 title: Conformance & Security
 description: "Blind serving model, decoy streams, CORS, caching, rate limiting, and conformance checklist for dig RPC endpoints."
+keywords:
+  - dig RPC conformance
+  - blind serving model
+  - decoy stream
+  - CORS
+  - existence oracle
+  - node conformance
+tags:
+  - dig-rpc
+  - merkle-proof
+  - capsule
+  - streaming
+  - retrieval-key
 ---
 
 # Conformance & Security
@@ -57,5 +70,13 @@ A node is a conformant dig RPC endpoint if and only if it:
 - uses the JSON-RPC error codes only for malformed or unroutable calls.
 
 :::note
-The full normative text is the *dig RPC: Network Content Interface* specification, a companion to the DigStore whitepaper and the DIGHUb API Interface.
+The full normative text is the *dig RPC: Network Content Interface* specification, a companion to the [DigStore whitepaper](../whitepapers/digstore.md) and the DIGHUb API Interface.
 :::
+
+## Related
+
+- [Methods](./methods.md) — the method set a conformant node must implement
+- [Streaming](./streaming.md) — the chunk object, alignment, and bounds
+- [Using the public network RPC](./public-network-rpc.md) — operating your own node
+- [Proofs & Security](../digstore/format/proofs-and-security.md) — the proofs nodes serve blindly
+- [Concepts & glossary](../concepts.md) — the dig RPC and capsule defined

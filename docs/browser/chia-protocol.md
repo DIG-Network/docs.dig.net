@@ -2,6 +2,22 @@
 sidebar_position: 1
 title: The chia:// protocol & URN scheme
 description: "A content-addressed protocol for opening stores and resources directly from the DIG Network, with URN and shorthand forms."
+keywords:
+  - chia protocol
+  - chia:// scheme
+  - URN
+  - store id
+  - root hash
+  - retrieval key
+  - DIG Browser
+tags:
+  - chia-protocol
+  - browser
+  - urn
+  - store
+  - capsule
+  - retrieval-key
+  - window-chia
 ---
 
 # The `chia://` protocol
@@ -129,3 +145,11 @@ Two details matter for getting the same key everywhere:
 - The retrieval key is derived from the **root-dropped** URN — the `rootHash` is **not** part of the key. The key is therefore root-independent, so the same key locates a resource across versions; the served bytes are then Merkle-verified against the correct root.
 
 Getting the canonical string wrong yields a silent cache miss, never corruption — every response is Merkle-verified against the store's on-chain root before it renders. For the full retrieval-key + decryption-key derivation, see [URNs & Encryption](../digstore/format/urns-and-encryption.md).
+
+## Related
+
+- [Using window.chia](./using-window-chia.md) — the injected wallet provider on every page
+- [URNs & Encryption](../digstore/format/urns-and-encryption.md) — the canonical URN the scheme shortens
+- [What is the dig RPC?](../rpc/what-is-the-dig-rpc.md) — how the browser fetches content over the network
+- [Store structure](../digstore/format/store-structure.md) — store id, root hash, and generations
+- [Concepts & glossary](../concepts.md) — the chia:// protocol, URN, and capsule defined

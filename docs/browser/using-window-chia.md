@@ -2,6 +2,19 @@
 sidebar_position: 2
 title: Using `window.chia` in your app
 description: "Detect and use the DIG Browser's injected Chia wallet provider for permission-gated key and signing operations."
+keywords:
+  - window.chia
+  - CHIP-0002
+  - injected wallet
+  - WalletConnect alternative
+  - DIG Browser
+  - Sage
+tags:
+  - window-chia
+  - browser
+  - chip-0002
+  - chia-protocol
+  - dighub
 ---
 
 # Using `window.chia` in your app
@@ -139,3 +152,10 @@ Pages served from a `chia://` store run inside the DIG Browser too, so `window.c
 :::tip Try it
 [**Download the DIG Browser to test `window.chia` ↗**](https://github.com/DIG-Network/DIG_Browser/releases) — run your app inside the browser to detect the injected provider and call CHIP-0002 methods for real.
 :::
+
+## Related
+
+- [The chia:// protocol](./chia-protocol.md) — the browser's native content-address scheme
+- [What is the dig RPC?](../rpc/what-is-the-dig-rpc.md) — how the browser reads content from the network
+- [What is DigStore?](../digstore/what-is-digstore.md) — the store format a `chia://` page is served from
+- [Concepts & glossary](../concepts.md) — window.chia and the chia:// protocol defined
