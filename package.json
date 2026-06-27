@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
+    "knowledge-graph": "node scripts/gen-knowledge-graph.mjs",
+    "prestart": "node scripts/gen-knowledge-graph.mjs",
     "start": "docusaurus start",
+    "prebuild": "node scripts/gen-knowledge-graph.mjs",
     "build": "docusaurus build --out-dir dist",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",

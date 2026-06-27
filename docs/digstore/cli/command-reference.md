@@ -2,6 +2,21 @@
 sidebar_position: 7
 title: Command reference
 description: "Complete command reference for the digstore CLI, including wallet, project, staging, history, content, remote, and maintenance commands."
+keywords:
+  - digstore command reference
+  - digstore CLI commands
+  - init
+  - commit
+  - clone
+  - push
+  - pull
+tags:
+  - digstore-cli
+  - store
+  - anchoring
+  - dig-payment
+  - retrieval-key
+  - urn
 ---
 
 # Command reference
@@ -89,3 +104,11 @@ A single workspace (`.dig/`) can hold many projects. The commands below create a
 | `--quiet` | Suppress progress and hints |
 | `--verbose` | Verbose (debug-level) logging |
 | `--color <auto\|always\|never>` | Color output mode |
+
+## Related
+
+- [Quick start](./quickstart.md) — the most common commands in order
+- [On-chain anchoring](./onchain-anchoring.md) — wallet, costs, and the `init`/`commit` flow
+- [Sharing over a remote](./sharing.md) — `remote`, `clone`, `push`, `pull`, `revoke`
+- [Streaming & retrieval keys](./streaming-and-keys.md) — `cat`, `keys`, `checkout`
+- [Concepts & glossary](../../concepts.md) — the entities these commands operate on

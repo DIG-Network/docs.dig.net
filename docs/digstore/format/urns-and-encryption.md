@@ -2,6 +2,20 @@
 sidebar_position: 3
 title: URNs & Encryption
 description: "URN format and semantics, derivation of retrieval and decryption keys, AES-256-GCM-SIV encryption, and public vs. private store differences."
+keywords:
+  - URN
+  - retrieval key
+  - decryption key
+  - AES-256-GCM-SIV
+  - encryption
+  - public vs private store
+tags:
+  - urn
+  - retrieval-key
+  - encryption
+  - store
+  - digstore-cli
+  - chia-protocol
 ---
 
 # URNs & Encryption
@@ -80,5 +94,13 @@ Because the retrieval key and the decryption key are different values, the CLI l
 - **By retrieval key** → the bytes come back **encrypted** (raw ciphertext), with no decryption.
 
 See [Streaming & Keys](../cli/streaming-and-keys.md).
+
+## Related
+
+- [Streaming & retrieval keys](../cli/streaming-and-keys.md) — fetch by URN (decrypted) or key (encrypted)
+- [Proofs & Security](./proofs-and-security.md) — why the leaf commits to ciphertext
+- [The chia:// protocol](../../browser/chia-protocol.md) — the typeable shorthand for a URN
+- [Store structure](./store-structure.md) — where the key table and Merkle tree live
+- [Concepts & glossary](../../concepts.md) — URN and retrieval key defined
 
 Next: [Proofs & Security →](./proofs-and-security.md)

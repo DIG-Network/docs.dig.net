@@ -2,6 +2,17 @@
 sidebar_position: 4
 title: Using DigStore in your project
 description: "Workflow for initializing projects, managing staging areas, running multiple stores in one workspace, and typical release loops."
+keywords:
+  - digstore workflow
+  - build output
+  - staging area
+  - multiple stores
+  - release loop
+tags:
+  - digstore-cli
+  - store
+  - capsule
+  - anchoring
 ---
 
 # Using DigStore in your project
@@ -95,5 +106,13 @@ digstore push origin
 | `--dig-dir <path>` | Use a specific workspace location |
 | `--json` | Machine-readable output (great for scripts/CI) |
 | `--quiet` / `--verbose` | Less / more output |
+
+## Related
+
+- [Sharing over a remote](./sharing.md) — publish a store and let others clone/pull it
+- [Streaming & retrieval keys](./streaming-and-keys.md) — read content back out
+- [On-chain anchoring](./onchain-anchoring.md) — what `commit` spends and confirms
+- [Command reference](./command-reference.md) — every `digstore` command and flag
+- [Concepts & glossary](../../concepts.md) — store, capsule, and generation defined
 
 Next: [Sharing over a remote →](./sharing.md)

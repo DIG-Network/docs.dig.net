@@ -2,6 +2,22 @@
 sidebar_position: 1
 title: The DigStore WASM Store Format
 description: "Architecture of the content-addressable, encrypted WebAssembly store format: identity, generations, URNs, and compiled modules."
+keywords:
+  - DigStore format
+  - WASM store
+  - store
+  - generation
+  - capsule
+  - URN
+  - Merkle proof
+tags:
+  - store
+  - generation
+  - capsule
+  - urn
+  - encryption
+  - merkle-proof
+  - anchoring
 ---
 
 # The DigStore WASM Store Format
@@ -55,5 +71,13 @@ Copy the file to back it up. Run it (in a host) to serve it. Hand someone a URN 
 ## Where DigStore fits
 
 DigStore is **not** a replacement for Git on your source tree. It is for **published build output** — the `dist/` of a web app, a documentation site, a dataset, a release bundle — anything you want to address by URN, encrypt at rest, and hand to an untrusted host or peer.
+
+## Related
+
+- [Store structure](./store-structure.md) — identity, generations, and the compiled module
+- [URNs & Encryption](./urns-and-encryption.md) — the URN that addresses *and* decrypts
+- [Proofs & Security](./proofs-and-security.md) — Merkle proofs, signed roots, host attestation
+- [What is DigStore?](../what-is-digstore.md) — the one-file idea in a nutshell
+- [Concepts & glossary](../../concepts.md) — the core DIG entities at a glance
 
 Next: [Store Structure →](./store-structure.md)

@@ -2,6 +2,20 @@
 sidebar_position: 1
 title: What is DigStore?
 description: "Git-shaped, content-addressable project format with built-in encryption and URN-based addressing; compiles to a single self-defending WebAssembly module."
+keywords:
+  - DigStore
+  - content-addressable
+  - WebAssembly store
+  - URN
+  - encryption
+  - capsule
+tags:
+  - store
+  - capsule
+  - urn
+  - encryption
+  - digstore-cli
+  - anchoring
 ---
 
 # What is DigStore?
@@ -10,7 +24,7 @@ description: "Git-shaped, content-addressable project format with built-in encry
 
 You get Git-style commands — `init`, `add`, `commit`, `log`, `clone`, `push`, `pull` — for a project that is **encrypted at rest** and compiles into **one `.wasm` file**. That single file is *both your data and the server that gates access to it*. A host that stores or relays it sees only ciphertext addressed by hashes; it cannot read what it carries.
 
-You address content with a **URN**, and the URN *is* the key: it both locates and decrypts. Hand someone a URN and they can read that resource; without it they can't — there is no separate password or access list to manage.
+You address content with a **[URN](./format/urns-and-encryption.md)**, and the URN *is* the key: it both locates and decrypts. Hand someone a URN and they can read that resource; without it they can't — there is no separate password or access list to manage.
 
 Unlike Git, DigStore is built for **build output**, not repository source. You point a project at a directory like `dist/` and it captures what's there.
 
@@ -32,5 +46,13 @@ Unlike Git, DigStore is built for **build output**, not repository source. You p
 If you just want to try it, jump straight to the **[Quick start](./cli/quickstart.md)**.
 
 :::note
-DigStore is part of the [DIG Network](https://dig.net). The full technical design lives in the DigStore whitepaper, *The Content-Addressable WASM Store Format*.
+DigStore is part of the [DIG Network](https://dig.net). The full technical design lives in the [DigStore whitepaper](../whitepapers/digstore.md), *The Content-Addressable WASM Store Format*.
 :::
+
+## Related
+
+- [The DigStore Format](./format/overview.md) — projects, the WASM module, URNs, encryption, proofs
+- [Store structure](./format/store-structure.md) — store identity, generations, and the compiled module
+- [URNs & Encryption](./format/urns-and-encryption.md) — the URN that both addresses *and* decrypts
+- [CLI quick start](./cli/quickstart.md) — create, commit, and read a store in minutes
+- [Concepts & glossary](../concepts.md) — the core DIG entities at a glance

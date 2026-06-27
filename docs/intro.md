@@ -3,6 +3,22 @@ sidebar_position: 1
 slug: /
 title: DIG Network
 description: "Overview of the DIG Network primitives: DigStore for content-addressable publishing, dig RPC for blind hosting and retrieval, and the DIG Browser for content access."
+keywords:
+  - DIG Network
+  - Proof-of-Stake Layer 2
+  - Chia
+  - capsule
+  - DigStore
+  - dig RPC
+  - DIG Browser
+tags:
+  - capsule
+  - store
+  - dig-rpc
+  - chia-protocol
+  - digstore-cli
+  - dighub
+  - browser
 ---
 
 # DIG Network
@@ -74,9 +90,18 @@ The client primitive: a **browser with a built-in Chia wallet**. It injects a `w
 
 ## Where to start
 
+- **New to the vocabulary?** Skim [Concepts & glossary](./concepts.md) — every core entity defined once, with links into the deep docs.
 - **Building with content today?** Go straight to [DigStore](./digstore/what-is-digstore.md) — it's production-ready and has a full [CLI tutorial](./digstore/cli/quickstart.md).
-- **Want the deep design?** Read the [DIG Network whitepapers](https://dig.net/whitepapers) — the full protocol specification.
+- **Want the deep design?** Read the [DIG Network whitepapers](./whitepapers/index.md) — the full protocol specification.
 
 :::note
 DIG Network and its primitives are open source. DigStore is licensed under GPL-2.0; see the [digstore repository](https://github.com/DIG-Network/digstore).
 :::
+
+## Related
+
+- [Concepts & glossary](./concepts.md) — the core DIG entities, defined and linked
+- [What is DigStore?](./digstore/what-is-digstore.md) — the content-addressable store format
+- [What is the dig RPC?](./rpc/what-is-the-dig-rpc.md) — the network-wide read interface
+- [The chia:// protocol](./browser/chia-protocol.md) — opening content in the DIG Browser
+- [Whitepapers](./whitepapers/index.md) — the full protocol specifications

@@ -2,6 +2,18 @@
 sidebar_position: 6
 title: Streaming & retrieval keys
 description: "Streaming resources by URN or retrieval key, listing keys per deployment, and checking out entire generations."
+keywords:
+  - digstore cat
+  - retrieval key
+  - URN
+  - checkout
+  - streaming
+tags:
+  - digstore-cli
+  - retrieval-key
+  - urn
+  - encryption
+  - generation
 ---
 
 # Streaming & retrieval keys
@@ -63,5 +75,13 @@ digstore checkout <root> --out ./restored --salt <hex>   # private project
 ```
 
 This is the bulk counterpart to `cat`: instead of one resource, it reconstructs every file in that deployment under `--out`.
+
+## Related
+
+- [URNs & Encryption](../format/urns-and-encryption.md) — why the URN and retrieval key are different values
+- [Command reference](./command-reference.md) — full flags for `cat`, `keys`, and `checkout`
+- [The dig RPC: Streaming](../../rpc/streaming.md) — the same fetch, over the network in chunks
+- [Quick start](./quickstart.md) — read a resource back end to end
+- [Concepts & glossary](../../concepts.md) — URN and retrieval key defined
 
 Back to: [Quick start](./quickstart.md), or see the full [Command reference →](./command-reference.md)

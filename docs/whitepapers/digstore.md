@@ -2,6 +2,19 @@
 sidebar_position: 4
 title: "Part 3 · Digstore"
 description: "DIG Network Part 3 — the content-addressable WASM store format: immutable capsules, URN-derived keys, ZK execution proofs, and a Git workflow."
+keywords:
+  - Digstore specification
+  - content-addressable WASM
+  - immutable capsule
+  - URN-derived keys
+  - ZK execution proof
+  - Git workflow
+tags:
+  - whitepaper
+  - capsule
+  - store
+  - urn
+  - encryption
 ---
 
 # The Content-Addressable WASM Store Format
@@ -22,3 +35,11 @@ workflow is Git — init, add, commit, push.
 The [DigStore docs](/docs/digstore/what-is-digstore) cover the practical CLI workflow and format
 details — start there to actually publish a store.
 :::
+
+## Related
+
+- [What is DigStore?](../digstore/what-is-digstore.md) — the practical store format docs
+- [URNs & Encryption](../digstore/format/urns-and-encryption.md) — the URN-derived keys in practice
+- [Consensus](./consensus.md) — Part 1: the Proof-of-Stake Layer 2 on Chia
+- [DFSP](./dfsp.md) — Part 2: availability-audited capsule hosting
+- [Concepts & glossary](../concepts.md) — the capsule, store, and URN defined

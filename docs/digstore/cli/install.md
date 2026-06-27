@@ -2,6 +2,13 @@
 sidebar_position: 1
 title: Installing the CLI
 description: "Download and run the self-contained DigStore CLI installer for Windows, macOS, or Linux; also build from source with Rust."
+keywords:
+  - digstore install
+  - DigStore CLI installer
+  - build from source
+  - Rust
+tags:
+  - digstore-cli
 ---
 
 # Installing the CLI
@@ -46,5 +53,12 @@ The binary lands at `target/release/digstore` (`digstore.exe` on Windows). Copy 
 digstore update            # download + run the latest installer
 digstore update --check    # just report whether a newer release exists
 ```
+
+## Related
+
+- [Quick start](./quickstart.md) — create, commit, and read a store in minutes
+- [On-chain anchoring](./onchain-anchoring.md) — wallet setup and funding before `init`
+- [Command reference](./command-reference.md) — every `digstore` command
+- [What is DigStore?](../what-is-digstore.md) — what the CLI operates on
 
 Next: [Quick start →](./quickstart.md)

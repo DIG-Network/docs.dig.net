@@ -2,6 +2,22 @@
 sidebar_position: 2
 title: Store Structure
 description: "Store identity via on-chain singleton launcher id, generations as capsules, content root, on-disk layout, and compiled module structure."
+keywords:
+  - store structure
+  - store id
+  - singleton launcher id
+  - generation
+  - root hash
+  - capsule
+  - compiled module
+tags:
+  - store
+  - generation
+  - capsule
+  - anchoring
+  - chip-0035
+  - encryption
+  - merkle-proof
 ---
 
 # Store Structure
@@ -60,5 +76,13 @@ When you commit, the content and a small serving program compile into a single `
 - **Trusted host keys** — the module refuses to serve content to a host that can't attest to one of these keys; an un-attested host receives only decoys.
 
 The whole module is padded to a **uniform size** so its byte length reveals nothing about how much content it actually holds. Each store is capped at **128 MB** of staged content, enforced at `add` (and defensively at `commit`).
+
+## Related
+
+- [URNs & Encryption](./urns-and-encryption.md) — how a resource is addressed and decrypted
+- [Proofs & Security](./proofs-and-security.md) — the Merkle tree rooting at each generation
+- [On-chain anchoring](../cli/onchain-anchoring.md) — minting the store id and anchoring roots
+- [Format overview](./overview.md) — the whole format in one read
+- [Concepts & glossary](../../concepts.md) — store, generation, and capsule defined
 
 Next: [URNs & Encryption →](./urns-and-encryption.md)

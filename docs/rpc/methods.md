@@ -2,6 +2,20 @@
 sidebar_position: 2
 title: Methods
 description: "Complete dig RPC method set: dig.getContent, dig.getProof, dig.getCapsule, dig.getManifest, dig.listCapsules, and service discovery methods."
+keywords:
+  - dig RPC methods
+  - dig.getContent
+  - dig.getCapsule
+  - dig.getProof
+  - dig.listCapsules
+  - JSON-RPC
+tags:
+  - dig-rpc
+  - capsule
+  - retrieval-key
+  - merkle-proof
+  - streaming
+  - chip-0035
 ---
 
 # Methods
@@ -212,3 +226,11 @@ A malformed or unroutable **call** uses the standard JSON-RPC codes. A content *
 | `-32601` | Method not found | The method is not implemented by this node. |
 | `-32602` | Invalid params | Missing/malformed `store_id`, `root`, or `retrieval_key`; or `"latest"` on a store with no confirmed generation. |
 | `-32603` | Internal error | The node failed to satisfy a well-formed call. Distinct from a miss (which is a decoy). |
+
+## Related
+
+- [Streaming](./streaming.md) — the chunk object every byte method returns
+- [Conformance & Security](./conformance.md) — the blind model, decoys, and CORS
+- [Using the public network RPC](./public-network-rpc.md) — call `rpc.dig.net` from any client
+- [URNs & Encryption](../digstore/format/urns-and-encryption.md) — how the retrieval key is derived
+- [Concepts & glossary](../concepts.md) — the dig RPC, capsule, and retrieval key defined

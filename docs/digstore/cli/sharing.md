@@ -2,6 +2,20 @@
 sidebar_position: 5
 title: Sharing over a remote
 description: "Publishing stores to remotes, downloading with verification, revoking roots, and understanding public vs. private access models."
+keywords:
+  - digstore remote
+  - push
+  - clone
+  - pull
+  - revoke
+  - public vs private store
+tags:
+  - digstore-cli
+  - store
+  - dig-rpc
+  - merkle-proof
+  - anchoring
+  - urn
 ---
 
 # Sharing over a remote
@@ -66,5 +80,19 @@ digstore revoke --all --reason takedown              # retract the whole project
 ```
 
 Remotes persist tombstones and clients honor them fail-closed — a revoked root is refused.
+
+:::note Reading over the network
+A remote serves the **whole module** for `clone`/`pull`/`push`. To read individual resources from a
+published store over the network, see the [dig RPC](../../rpc/what-is-the-dig-rpc.md) and its
+git-style [`chia://` remote](../../rpc/dig-remote.md) — the same nodes, addressed as `chia://…`.
+:::
+
+## Related
+
+- [The chia:// remote](../../rpc/dig-remote.md) — clone/pull/push over `chia://` with per-request auth
+- [What is the dig RPC?](../../rpc/what-is-the-dig-rpc.md) — the network-wide read interface
+- [Proofs & Security](../format/proofs-and-security.md) — what `clone`/`pull` verify before installing
+- [Streaming & retrieval keys](./streaming-and-keys.md) — fetch resources by URN or key
+- [Concepts & glossary](../../concepts.md) — store, capsule, and anchoring defined
 
 Next: [Streaming & keys →](./streaming-and-keys.md)

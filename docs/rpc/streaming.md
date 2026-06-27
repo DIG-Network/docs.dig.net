@@ -2,6 +2,18 @@
 sidebar_position: 3
 title: Streaming
 description: "Streaming chunk model for byte methods: chunk object structure, 64 KiB alignment, reassembly, proof verification, and reference client loop."
+keywords:
+  - dig RPC streaming
+  - chunk object
+  - 64 KiB blocks
+  - inclusion proof
+  - reassembly
+tags:
+  - streaming
+  - dig-rpc
+  - merkle-proof
+  - retrieval-key
+  - capsule
 ---
 
 # Streaming
@@ -78,3 +90,11 @@ async function readByUrn(urn, root) {
 ```
 
 Downloading a whole capsule is the same loop against `dig.getCapsule` with no proof step.
+
+## Related
+
+- [Methods](./methods.md) — the byte methods that return the chunk object
+- [Conformance & Security](./conformance.md) — alignment, decoys, and root resolution rules
+- [Proofs & Security](../digstore/format/proofs-and-security.md) — what the inclusion proof verifies
+- [Using the public network RPC](./public-network-rpc.md) — point a client at a node
+- [Concepts & glossary](../concepts.md) — the dig RPC, capsule, and Merkle proof defined
