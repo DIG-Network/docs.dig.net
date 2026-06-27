@@ -84,4 +84,4 @@ This is the bulk counterpart to `cat`: instead of one resource, it reconstructs 
 - [Quick start](./quickstart.md) — read a resource back end to end
 - [Concepts & glossary](../../concepts.md) — URN and retrieval key defined
 
-Back to: [Quick start](./quickstart.md), or see the full [Command reference →](./command-reference.md)
+Next: [Deploy from GitHub Actions →](./deploy-from-github-actions.md), or see the full [Command reference](./command-reference.md)

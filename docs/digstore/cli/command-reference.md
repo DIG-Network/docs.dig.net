@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 8
 title: Command reference
 description: "Complete command reference for the digstore CLI, including wallet, project, staging, history, content, remote, and maintenance commands."
 keywords:
@@ -87,6 +87,15 @@ A single workspace (`.dig/`) can hold many projects. The commands below create a
 | `digstore pull [remote]` | Pull the latest content + signed head. Verified, including the **on-chain root check** |
 | `digstore revoke [--root <hex>\|--all] [--reason <r>]` | Revoke a published root or the whole project with a signed tombstone |
 
+## CI deploy
+
+| Command | What it does |
+|---|---|
+| `digstore deploy [--store-id <hex>] [--output-dir <dir>] [--build-command <cmd>] [-m <msg>] [--remote <url>]` | Advance an **existing** store from a fresh checkout (CI): reconstruct it locally, stage the output dir, commit + push a new capsule. Reads `dig.toml`. Never mints. |
+| `digstore deploy-key export [--out <file>]` | Export the store's publisher deploy key (64-hex) to store as a CI secret |
+
+See [Deploy from GitHub Actions](./deploy-from-github-actions.md) for the full workflow.
+
 ## Maintenance
 
 | Command | What it does |
@@ -111,4 +120,5 @@ A single workspace (`.dig/`) can hold many projects. The commands below create a
 - [On-chain anchoring](./onchain-anchoring.md) — wallet, costs, and the `init`/`commit` flow
 - [Sharing over a remote](./sharing.md) — `remote`, `clone`, `push`, `pull`, `revoke`
 - [Streaming & retrieval keys](./streaming-and-keys.md) — `cat`, `keys`, `checkout`
+- [Deploy from GitHub Actions](./deploy-from-github-actions.md) — `deploy`, `deploy-key`
 - [Concepts & glossary](../../concepts.md) — the entities these commands operate on
