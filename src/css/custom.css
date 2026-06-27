@@ -1,11 +1,11 @@
 /* ============================================================
    DigStore docs — brand theme (DIG Network official kit).
    Cosmic navy surfaces, violet→magenta gradient, Space Grotesk
-   (display/UI) + Open Sans (body) + Space Mono (code).
+   (display/UI/body) + Space Mono (code).
    ============================================================ */
 
 /* ---------- Brand fonts ---------- */
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
 
 @font-face { font-family: "Space Grotesk"; font-weight: 400; font-style: normal; font-display: swap; src: url("/fonts/space-grotesk-400.ttf") format("truetype"); }
 @font-face { font-family: "Space Grotesk"; font-weight: 500; font-style: normal; font-display: swap; src: url("/fonts/space-grotesk-500.ttf") format("truetype"); }
@@ -30,7 +30,7 @@
   --ifm-color-primary-lightest: #8c49ec;
 
   /* ---- type ---- */
-  --ifm-font-family-base: "Open Sans", system-ui, -apple-system, sans-serif;
+  --ifm-font-family-base: "Space Grotesk", system-ui, -apple-system, sans-serif;
   --ifm-heading-font-family: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
   --ifm-font-family-monospace: "Space Mono", ui-monospace, "SF Mono", Menlo, monospace;
   --ifm-heading-font-weight: 700;
@@ -115,6 +115,23 @@ html[data-theme="dark"] {
   border-left: 1px solid var(--ifm-toc-border-color);
 }
 .navbar__logo { height: 1.7rem; }
+
+/* Pre-release "alpha" pill in the navbar — mirrors hub's badge (lowercase,
+   muted, low-prominence) so the ecosystem reads as one product. */
+.navbar-alpha-badge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: var(--ifm-color-primary);
+  background: color-mix(in srgb, var(--ifm-color-primary) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ifm-color-primary) 35%, transparent);
+  border-radius: 999px;
+  padding: 0.18em 0.55em;
+  line-height: 1;
+  align-self: center;
+  margin-left: 0.1rem;
+}
 
 /* GitHub icon in navbar — mask a real SVG file (data-URI masks are fragile). */
 .navbar-github-link {

@@ -55,7 +55,7 @@ function Hero() {
             <Link
               className={clsx('button button--lg', styles.ghost)}
               to="https://github.com/DIG-Network/DIG_Browser/releases">
-              Get the DIG Browser →
+              Get the DIG Browser ↗
             </Link>
           </div>
           <div className={styles.trust}>

@@ -137,5 +137,5 @@ Pages served from a `chia://` store run inside the DIG Browser too, so `window.c
 :::
 
 :::tip Try it
-[**Download the DIG Browser to test `window.chia` →**](https://github.com/DIG-Network/DIG_Browser/releases) — run your app inside the browser to detect the injected provider and call CHIP-0002 methods for real.
+[**Download the DIG Browser to test `window.chia` ↗**](https://github.com/DIG-Network/DIG_Browser/releases) — run your app inside the browser to detect the injected provider and call CHIP-0002 methods for real.
 :::

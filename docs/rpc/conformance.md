@@ -57,5 +57,5 @@ A node is a conformant dig RPC endpoint if and only if it:
 - uses the JSON-RPC error codes only for malformed or unroutable calls.
 
 :::note
-The full normative text is the *dig RPC: Network Content Interface* specification, a companion to the DigStore whitepaper and the dighub API Interface.
+The full normative text is the *dig RPC: Network Content Interface* specification, a companion to the DigStore whitepaper and the DIGHUb API Interface.
 :::
