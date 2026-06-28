@@ -142,6 +142,7 @@ Per-PR preview deployments (a temporary capsule per pull request, the kind of ma
 
 ## Related
 
+- [Project config & build-time values](./configuration.md) — the `dig.toml` keys and the no-secrets rule
 - [On-chain anchoring](./onchain-anchoring.md) — what a deploy spends and confirms on Chia mainnet
 - [Project workflow](./project-workflow.md) — capture a build directory and commit it locally
 - [Sharing over a remote](./sharing.md) — the `push`/`clone`/`pull` the Action builds on

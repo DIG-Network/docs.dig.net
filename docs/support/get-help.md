@@ -57,4 +57,6 @@ Don't share your mnemonic, your `~/.dig/seed.enc`, a deploy key, or a private st
 - [Troubleshooting](./troubleshooting.md) — fixes for the common failures
 - [FAQ](./faq.md) — frequently asked questions
 - [Error codes](./error-codes.md) — every error code in one table
+- [Changelog](./changelog.md) — what changed across the CLI, RPC, and window.chia
+- [Status](./status.md) — health of the DIG services
 - [Concepts & glossary](../concepts.md) — the vocabulary, defined once

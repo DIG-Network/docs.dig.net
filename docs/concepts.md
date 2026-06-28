@@ -23,6 +23,8 @@ tags:
   - chia-protocol
   - window-chia
   - digstore-cli
+  - dig-toml
+  - dig-sdk
   - anchoring
   - dig-payment
   - merkle-proof
@@ -101,6 +103,20 @@ no separate transaction, and the memo carries the store id. → [Costs](./digsto
 workflow (`init`, `add`, `commit`, `log`, `clone`, `push`, `pull`) over the encrypted, on-chain
 store format. → [Command reference](./digstore/cli/command-reference.md) · [Quick start](./digstore/cli/quickstart.md)
 
+## dig.toml {#dig-toml}
+
+`dig.toml` is the **committable project manifest** at a project's root — `store-id`, `output-dir`,
+`build-command`, and other project config, shared by `digstore dev`, `digstore deploy`, and the
+scaffolding templates. It holds **no secrets** (those come from the environment), so it's safe to
+commit. → [Project config & build-time values](./digstore/cli/configuration.md)
+
+## DIG SDK {#dig-sdk}
+
+The **DIG SDK** (`@dignetwork/dig-sdk`) is the typed npm package for integrating developers: a
+`ChiaProvider` (prefers injected [`window.chia`](#window-chia), falls back to WalletConnect → Sage),
+a `DigClient` (reads verified, encrypted content over the [dig RPC](#dig-rpc)), and the canonical
+CHIP-0035 spend builder re-exported at the `/spend` subpath. → [Build a dapp on Chia](./build-a-dapp/tutorial.md)
+
 ## The dig RPC {#dig-rpc}
 
 The **dig RPC** is the network-wide read interface: a JSON-RPC 2.0 service over HTTPS `POST` that
@@ -137,6 +153,7 @@ for protocol developers who want the full design. Most builders won't need them 
 
 - [DIG Network overview](./intro.md) — the primitives at a glance
 - [Quickstart](./quickstart.md) — build and preview free, publish a capsule at the end
+- [Build a dapp on Chia](./build-a-dapp/tutorial.md) — every primitive stitched into one shipped dapp
 - [What is DigStore?](./digstore/what-is-digstore.md) — the one-file store format
 - [What is the dig RPC?](./rpc/what-is-the-dig-rpc.md) — the network read path
 - [The chia:// protocol](./browser/chia-protocol.md) — addressing content in the browser

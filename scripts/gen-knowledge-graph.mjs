@@ -35,6 +35,8 @@ const CONCEPT_TITLES = {
   anchoring: 'On-chain anchoring',
   'dig-payment': 'DIG payment',
   'digstore-cli': 'DigStore CLI',
+  'dig-toml': 'dig.toml',
+  'dig-sdk': 'DIG SDK',
   'dig-rpc': 'The dig RPC',
   streaming: 'Streaming',
   'chia-protocol': 'The chia:// protocol',
