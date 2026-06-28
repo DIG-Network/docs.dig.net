@@ -24,7 +24,7 @@ tags:
 
 Every DIG primitive is documented on its own — scaffolding, the in-page wallet, the read path, spends, deploy. **This page is the single thread that ties them together into one shipped dapp.** You'll start from an empty folder and finish with a wallet-aware React app, live on-chain at your own domain.
 
-The whole loop up to publishing is **free** — scaffold, develop, and preview cost nothing. You spend a flat **100 DIG** only at the deploy step.
+The whole loop up to publishing is **free** — scaffold, develop, and preview cost nothing. You spend a flat **100 $DIG** only at the deploy step.
 
 ```
 new ──▶ dev ──▶ wire wallet (dig-sdk) ──▶ build a spend (chip35) ──▶ deploy ──▶ custom domain
@@ -183,9 +183,9 @@ Each `deploy` publishes a new immutable capsule for 100 DIG. The moment it confi
 
 ## 6. Put it on your own domain
 
-Your store is already reachable by its URN / `dig://` address — but for a friendly web URL you register a name. A store gets a `*.on.dig.net` subdomain when you **register a handle** for it in DIGHub: a separate, paid registration that pins the store to that name (no registration → no `*.on.dig.net` address). To serve it from a domain you own instead, add a **custom domain with TLS in [DIGHub ↗](https://hub.dig.net)** — point your domain at the store and DIGHub handles the certificate. Either way your dapp loads from a human-friendly URL while staying fully decentralized underneath.
+Your store is already reachable by its URN / `dig://` address — but for a friendly web URL you register a name. A store gets a `*.on.dig.net` subdomain when you **register a handle** for it in DIGHUb: a separate, paid registration that pins the store to that name (no registration → no `*.on.dig.net` address). To serve it from a domain you own instead, add a **custom domain with TLS in [DIGHUb ↗](https://hub.dig.net)** — point your domain at the store and DIGHUb handles the certificate. Either way your dapp loads from a human-friendly URL while staying fully decentralized underneath.
 
-When CHIP-54 `.dig` handles land, a store will also be addressable by a human-readable `.dig` name; until then, custom domains via DIGHub are the way to brand a deployment.
+When CHIP-54 `.dig` handles land, a store will also be addressable by a human-readable `.dig` name; until then, custom domains via DIGHUb are the way to brand a deployment.
 
 ---
 

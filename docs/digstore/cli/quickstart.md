@@ -27,7 +27,7 @@ The [**Quickstart**](../../quickstart.md) leads with the free, web-first path (b
 
 ## 0. Set up your wallet
 
-`digstore init` mints a singleton on **Chia mainnet** and costs **100 DIG + a small XCH fee**, so you need a seed and a funded wallet first. (Building and previewing locally are free — you only spend when you publish a capsule.)
+`digstore init` mints a singleton on **Chia mainnet** and costs **100 $DIG + a small XCH fee**, so you need a seed and a funded wallet first. (Building and previewing locally are free — you only spend when you publish a capsule.)
 
 ```sh
 digstore seed import        # import an existing BIP-39 mnemonic (prompted)
@@ -118,8 +118,8 @@ digstore cat urn:dig:chia:<storeId>/readme --out readme.copy.txt
 - **[Streaming & keys](./streaming-and-keys.md)** — fetch encrypted vs decrypted, list retrieval keys, checkout a whole deployment.
 
 :::tip Try it
-- [**View & manage your stores in DIGHub ↗**](https://hub.dig.net) — see your published stores in the browser.
-- [**Ready to ship? Publish on DIGHub ↗**](https://hub.dig.net/new) — deploy a new capsule from the web, no CLI required.
+- [**View & manage your stores in DIGHUb ↗**](https://hub.dig.net) — see your published stores in the browser.
+- [**Ready to ship? Publish on DIGHUb ↗**](https://hub.dig.net/new) — deploy a new capsule from the web, no CLI required.
 :::
 
 ## Related
