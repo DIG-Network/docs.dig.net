@@ -29,7 +29,7 @@ A live status dashboard for the DIG services is planned. Until it's published, u
 |---|---|---|
 | **dig RPC** (`rpc.dig.net`) | The blind read path: serves ciphertext + inclusion proofs by retrieval key. | Send a JSON-RPC `dig.methods` (or any read call) and confirm a `200` with a JSON-RPC envelope. See [Methods](../rpc/methods.md). |
 | **DIGHub** (`hub.dig.net`) | The web app + `/v1` control plane for publishing and managing capsules. | Load [hub.dig.net ↗](https://hub.dig.net). |
-| **Resolver** (`on.dig.net`) | Serves published stores at `*.on.dig.net` (and custom domains). | Load a known `*.on.dig.net` deployment. |
+| **Resolver** (`on.dig.net`) | The optional human-friendly front door: serves stores whose owners have **registered a handle** at `*.on.dig.net` (and custom domains). Stores without a registered handle are still readable over the dig RPC. | Load a known `*.on.dig.net` deployment. |
 
 A read served by the dig RPC is **verified client-side** against the on-chain root, so even when a node misbehaves, a tampered or wrong byte **fails closed** — it is never silently accepted. A degraded node can slow or fail a read, but cannot serve you content that doesn't match the chain.
 

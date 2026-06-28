@@ -142,7 +142,11 @@ CHIP-0035 spend builder re-exported at the `/spend` subpath. → [Build a dapp o
 The **dig RPC** is the network-wide read interface: a JSON-RPC 2.0 service over HTTPS `POST` that
 every hosting node speaks identically. It serves ciphertext + [inclusion proofs](#merkle-proof) by
 [retrieval key](#retrieval-key), whole [capsules](#capsule) by `(storeId, root)`, and discovery
-metadata — blind by construction, verified and decrypted client-side. → [What is the dig RPC?](./rpc/what-is-the-dig-rpc.md)
+metadata — blind by construction, verified and decrypted client-side. **It is the universal read
+path**: every published capsule is readable here by its [URN](#urn) / `dig://` address the moment it
+confirms on-chain — no registration and no payment beyond publishing the capsule. The optional,
+human-friendly [`*.on.dig.net` handle](#on-dig-net) is a front door *on top of* this; the dig RPC
+itself is always available. → [What is the dig RPC?](./rpc/what-is-the-dig-rpc.md)
 
 ## The chia:// protocol {#chia-protocol}
 
@@ -163,6 +167,16 @@ alternative for apps that already speak CHIP-0002. → [Using window.chia](./bro
 **DIGHub** ([hub.dig.net](https://hub.dig.net)) is the web app for publishing and managing
 [capsules](#capsule) without the CLI — create a capsule, deploy a frontend, and view your stores in
 the browser. It is also the gated control plane that budgets expensive ZK execution-proof jobs.
+
+## on.dig.net handle {#on-dig-net}
+
+An **on.dig.net handle** is an *optional, paid* human-friendly web address for a [store](#store):
+`<your-name>.on.dig.net`. A store does **not** get one automatically — you register the handle (a
+paid CHIP-54 / `on.dig.net` registration in [DIGHub](#dighub)) and that registration pins the store
+to the name. No registration means no `*.on.dig.net` address. It is purely a convenience front door:
+the store is already readable over the [dig RPC](#dig-rpc) by its [URN](#urn) / `dig://` address
+whether or not a handle exists. (Account handles and store slugs are separate namespaces and do not
+auto-expose a subdomain.) → [Can I get a `*.on.dig.net` address?](./support/faq.md#can-i-use-my-own-domain)
 
 ## Whitepapers {#whitepaper}
 

@@ -56,7 +56,9 @@ Short on DIG? The publish screen shows your balance and where to top up. See [Fu
 
 ### 4. You're live
 
-Your site is now served at its `*.on.dig.net` address — immutable, encrypted, and impossible to take down. Share the URL; it's also the key.
+Your capsule is now anchored on-chain and **immediately readable over the [dig RPC](./concepts.md#dig-rpc)** — anyone can fetch and verify it by its [`urn:dig:` URN](./concepts.md#urn) or `dig://` address, no registration and nothing more to pay. The URN is both the address *and* the key; share it to share the content. The read path is universal and free; it's live the moment the capsule confirms.
+
+**Want a human-friendly `*.on.dig.net` address?** That's optional. A store gets a `*.on.dig.net` subdomain only when you **register a handle** for it in DIGHub — a separate, paid registration that pins the store to that name. Until you register one, there's no `*.on.dig.net` URL (the URN / `dig://` address above is always the canonical way to reach it). See [Can I use my own domain?](./support/faq.md#can-i-use-my-own-domain).
 
 **To ship an update later:** edit, preview the new draft for free, and Publish again. Each published update is a new capsule and costs another **100 DIG** — you only pay when you promote a draft to a permanent on-chain version.
 
