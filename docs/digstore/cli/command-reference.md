@@ -25,6 +25,19 @@ Every `digstore` command. Run `digstore <command> --help` for full flags and exa
 
 > **On-chain by default.** `init` mints the project's singleton on **Chia mainnet** and `commit` anchors each new deployment root on-chain (both block until confirmed and spend real XCH). Each publishes one **capsule** and costs a flat **100 DIG** (mint or commit) — paid to the DIG treasury in the same spend bundle (memo = store id). Both commands disclose the cost and check your balance before submitting; they block if the wallet is short on XCH **or** DIG. You need an unlocked wallet seed and a funded wallet first — see [On-chain anchoring](./onchain-anchoring.md).
 
+## Start a project & preview — free, no spend
+
+**Try it before you pay.** Scaffolding, previewing, and cost-previews cost nothing — DIG is spent only when you publish (`commit`/`deploy`). Start here:
+
+| Command | What it does |
+|---|---|
+| `digstore new <template> [dir] [--force] [--list]` | Scaffold a working project locally from a template — **no wallet, no chain, no spend**. Templates: `static-site`, `vite-react`, `next-static`, `nft-drop`, `dapp-window-chia`. Writes a `dig.toml`, a starter app, and (for the dapp/NFT templates) a `window.chia` usage example. `--list` prints the catalog. |
+| `digstore dev [--dir <path>] [--build <cmd>] [--port <n>] [--open]` | Local preview loop: builds on save and serves your project over the **real `dig://` read path** (compile → verify → decrypt, exactly as a visitor's browser does) on `http://127.0.0.1:<port>`, with live reload and an injected dev `window.chia` shim. **Free — no chain, no spend.** Reads `output-dir`/`build-command` from `dig.toml` (flags override). |
+| `digstore doctor [--json]` | Pre-publish preflight: checks seed present/unlocked, wallet funds vs the 100 DIG + XCH cost, dighub login, default remote reachable, and content dir present — printed pass/fail. Exits non-zero if a hard check fails. Reads only; never spends. |
+| `digstore commit --dry-run [--json]` | Preview the resulting version (root) **and the exact DIG/XCH cost** without spending, anchoring, or publishing anything. |
+
+The intended flow: `digstore new <template>` → edit → `digstore dev` (free preview) → `digstore doctor` → `digstore commit` / `digstore deploy` (the only step that spends DIG).
+
 ## Wallet & on-chain anchoring
 
 | Command | What it does |
@@ -59,6 +72,7 @@ A single workspace (`.dig/`) can hold many projects. The commands below create a
 | `digstore staged` | List the staging area |
 | `digstore unstage` | Clear the staging area |
 | `digstore commit [-m <msg>] [--wait-timeout <secs>]` | Seal a new deployment: **anchor the new deployment root on Chia mainnet and block until confirmed** (`--wait-timeout`, default 300s), then compile the module + write the URN manifest. Publishes a new capsule for **100 DIG + an XCH fee** (paid atomically in the same bundle; cost is disclosed before submission). On failure/timeout the local deployment is not finalized (re-run to resume). |
+| `digstore commit --dry-run [--json]` | Preview the resulting version (root) + the exact DIG/XCH cost **without spending or publishing** anything. |
 | `digstore status` | Show staged / modified / untracked + remaining capacity |
 
 ## History
