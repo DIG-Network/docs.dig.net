@@ -44,12 +44,12 @@ This is the starting point the changelog tracks forward from.
 
 - **Free pre-publish loop:** `digstore new <template>` (scaffold), `digstore dev` (local preview on the real `dig://` read path with an injected `window.chia` shim), and `digstore doctor` (preflight) — all free, no chain, no spend. Also scaffold from npm with [`npm create dig-app`](../build-a-dapp/scaffold.md).
 - **Single-shot deploy:** `digstore deploy` (build → stage → advance the on-chain root → publish), non-interactive and CI-safe; `commit --dry-run` previews cost without spending.
-- **CI deploy:** the [GitHub Action](../digstore/cli/deploy-from-github-actions.md) (`uses: DIG-Network/deploy-action@v1`) — git-push-to-deploy with a PR comment + GitHub deployment status, driven by `deploy-key` / `passphrase` / `mnemonic` and a committable [`dig.toml`](../digstore/cli/configuration.md).
+- **CI deploy:** the [GitHub Action](../digstore/cli/deploy-from-github-actions.md) (`uses: DIG-Network/deploy-action@v1`, requires digstore ≥ `v0.6.0`) — git-push-to-deploy with **free per-PR previews** and a PR comment + GitHub deployment status. **Keyless** by default (GitHub OIDC → a store-scoped session, no long-lived hub secret); a revocable `writer-key` advances the on-chain root and a dedicated funding wallet pays the fee, all driven from a committable [`dig.toml`](../digstore/cli/configuration.md).
 - **Distinct exit codes** per error kind for scripting/CI — see [Error codes](./error-codes.md#digstore-cli-exit-codes).
 
 ### dig RPC
 
-- JSON-RPC 2.0 read methods: `dig.getContent`, `dig.getCapsule`, `dig.getManifest`, `dig.listCapsules`, `dig.getProof`, `dig.getProofStatus`. See [Methods](../rpc/methods.md).
+- JSON-RPC 2.0 read methods — the core set is `dig.getContent`, `dig.getCapsule`, `dig.getManifest`, `dig.listCapsules`, `dig.getProof`, `dig.getProofStatus`, plus discovery/metadata helpers (`dig.getMetadata`, `dig.health`, `dig.methods`). A node advertises exactly what it implements via `dig.methods`. See [Methods](../rpc/methods.md) for the full reference.
 - **Blind/oblivious model:** a content miss is **not an error** — it returns a `decoy` result, never a `-32xxx`. See [the blind serving model](../rpc/conformance.md).
 - Standard JSON-RPC error codes for malformed calls — see [Error codes](./error-codes.md#dig-rpc-json-rpc).
 

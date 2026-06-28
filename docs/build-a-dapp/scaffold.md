@@ -49,7 +49,7 @@ Scaffolding, building, and previewing cost **nothing** — `create-dig-app` neve
 | `nft-drop` | A wallet-connected NFT mint page (`ChiaProvider` + the canonical CHIP-0035 spend builder). | `dist` | yes |
 | `dapp-window-chia` | A dapp wired to the injected Chia wallet via `ChiaProvider` (`window.chia` → WalletConnect). | `dist` | yes |
 
-The two **wallet templates** (`nft-drop`, `dapp-window-chia`) wire in [`@dignetwork/dig-sdk`](../concepts.md#dig-sdk): `ChiaProvider` **prefers the injected [DIG Browser](../browser/using-window-chia.md) wallet** (`window.chia`) and **falls back to WalletConnect → Sage**, so you write the wallet flow once and it works everywhere. NFT minting uses the SDK's `/spend` builder — spends are never hand-rolled. **Nothing is minted, signed, or spent at scaffold time**; minting is an explicit, wallet-signed action a user triggers later.
+The two **wallet templates** (`nft-drop`, `dapp-window-chia`) wire in [`@dignetwork/dig-sdk`](../concepts.md#dig-sdk): `ChiaProvider` **prefers the injected [DIG Browser](../browser/using-window-chia.md) wallet** (`window.chia`) and **falls back to WalletConnect → Sage**, so you write the wallet flow once and it works everywhere. NFT minting uses the SDK's `/spend` builder — spends are never hand-rolled. To charge for access or gate it on an NFT, the SDK's [`Paywall`](./tutorial.md#4-build-and-sign-a-spend--the-chip35-wasm-via-the-sdk) helper composes the same provider with the spend builder. **Nothing is minted, signed, or spent at scaffold time**; minting is an explicit, wallet-signed action a user triggers later.
 
 ## Options
 
