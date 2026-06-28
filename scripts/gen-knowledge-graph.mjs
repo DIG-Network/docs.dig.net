@@ -47,7 +47,7 @@ const CONCEPT_TITLES = {
   browser: 'DIG Browser',
   'chip-0002': 'CHIP-0002',
   'chip-0035': 'CHIP-0035',
-  dighub: 'DIGHub',
+  dighub: 'DIGHUb',
   whitepaper: 'Whitepapers',
 };
 

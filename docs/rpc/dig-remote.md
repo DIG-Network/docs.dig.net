@@ -41,7 +41,7 @@ A `dig://` URL names the store's **owner** (an informational namespace, like Git
 | `dig://<user>@<storeId>` | `https://rpc.dig.net/stores/<storeId>` | `<user>` is the owner handle — display only. |
 | `dig://[<user>@]<host>[:port]/<storeId>` | `https://<host>[:port]/stores/<storeId>` | Any node: the reference node, a third party, or one you run. |
 
-The owner segment never changes which bytes you fetch — content is addressed by the chain-anchored `storeId` and verified against the on-chain root, so **any origin returns the same store**. DIGHub shows a store's canonical origin in a GitHub-style clone box as `dig://<handle>@rpc.dig.net/<storeId>`.
+The owner segment never changes which bytes you fetch — content is addressed by the chain-anchored `storeId` and verified against the on-chain root, so **any origin returns the same store**. DIGHUb shows a store's canonical origin in a GitHub-style clone box as `dig://<handle>@rpc.dig.net/<storeId>`.
 
 ## Every request is signed (per-request auth)
 
@@ -86,11 +86,11 @@ A `PUT` push also carries the store-write headers: `X-Dig-Parent` (the root it e
 
 A `clone` is a sequence of authenticated reads of **public ciphertext** and metadata: the descriptor (`GET /stores/{id}`), the generation history (`GET /stores/{id}/roots`), and the module bytes for each wanted generation (`GET /stores/{id}/module?root=<hex>`). A `pull` re-reads descriptor + roots and downloads only the modules you lack; an unchanged head answers `304`. Each module is verified against its on-chain `root` client-side, so the node is never trusted to have returned genuine bytes.
 
-## push: DIGHub vs. self-hosted
+## push: DIGHUb vs. self-hosted
 
 Publishing a generation is an on-chain event with a fee, so where it lands depends on the origin:
 
-- **Push to DIGHub (`rpc.dig.net`)** does **not** use the `PUT` route. DIGHub anchors every generation on-chain and each generation pays an on-chain DIG fee; DIGHub holds no keys, so the push goes through its authenticated, **wallet-signed `/v1` flow**, where you sign the on-chain spend. DIGHub accepts only stores already **registered on-chain with the 100 DIG launch fee paid** — that registration is the launch gate.
+- **Push to DIGHUb (`rpc.dig.net`)** does **not** use the `PUT` route. DIGHUb anchors every generation on-chain and each generation pays an on-chain DIG fee; DIGHUb holds no keys, so the push goes through its authenticated, **wallet-signed `/v1` flow**, where you sign the on-chain spend. DIGHUb accepts only stores already **registered on-chain with the 100 DIG launch fee paid** — that registration is the launch gate.
 - **Push to a self-hosted node** uses `PUT /stores/{id}/module` directly: the node accepts the module on a valid store-key signature and advances (or stages) its head.
 
 In both cases the store-key signature over `SHA-256(root || store_id)` authorizes the write; only the on-chain settlement differs.
@@ -118,7 +118,7 @@ A self-hosted node speaks the identical routes and the identical per-request aut
 | `digstore remote add origin dig://…` | Register a remote origin for the local store. |
 | `digstore clone dig://…` | Fetch descriptor, roots, and module(s) into a new local store. |
 | `digstore pull` | Sync new generations from the origin. |
-| `digstore push` | Publish a new generation (DIGHub `/v1` or self-hosted `PUT`). |
+| `digstore push` | Publish a new generation (DIGHUb `/v1` or self-hosted `PUT`). |
 | `digstore serve --bind 0.0.0.0:8443` | Serve the remote protocol for a local store. |
 
 ## Related

@@ -34,7 +34,7 @@ One concept runs through every primitive. A **capsule** is a single immutable st
 The capsule is the network's unit of:
 
 - **Compilation** — each capsule compiles to one fixed-size WASM module (padded so its length leaks nothing about content size).
-- **Pricing** — a flat **100 DIG per capsule** (mint or commit); a store's lifetime cost is `100 DIG × number of capsules`.
+- **Pricing** — a flat **100 $DIG per capsule** (mint or commit); a store's lifetime cost is `100 DIG × number of capsules`.
 - **Retrieval** — a URN names one capsule (plus an optional resource within it).
 - **Caching** — a host or browser caches a capsule keyed by `storeId:rootHash`; the local cache is a set of capsules.
 - **Provenance** — each capsule's root carries the publisher's BLS signature and a Merkle root.
@@ -42,7 +42,7 @@ The capsule is the network's unit of:
 This is the ecosystem-wide definition: "capsule = `(storeId, rootHash)`" means the same thing in DigStore, the dig RPC, and the DIG Browser.
 
 :::tip Try it
-[**Create your first capsule in DIGHub ↗**](https://hub.dig.net/new) — publish a site in the browser, no CLI required. Each capsule (mint or commit) costs **100 DIG**.
+[**Create your first capsule in DIGHUb ↗**](https://hub.dig.net/new) — publish a site in the browser, no CLI required. Each capsule (mint or commit) costs **100 DIG**.
 :::
 
 ## Primitives
