@@ -73,6 +73,20 @@
       "tag": "digstore-cli"
     },
     {
+      "id": "concept:dig-toml",
+      "type": "concept",
+      "title": "dig.toml",
+      "url": "https://docs.dig.net/docs/tags/dig-toml",
+      "tag": "dig-toml"
+    },
+    {
+      "id": "concept:dig-sdk",
+      "type": "concept",
+      "title": "DIG SDK",
+      "url": "https://docs.dig.net/docs/tags/dig-sdk",
+      "tag": "dig-sdk"
+    },
+    {
       "id": "concept:dig-rpc",
       "type": "concept",
       "title": "The dig RPC",
@@ -164,6 +178,33 @@
       ]
     },
     {
+      "id": "/docs/build-a-dapp/example-gallery",
+      "type": "doc",
+      "title": "Example gallery",
+      "url": "https://docs.dig.net/docs/build-a-dapp/example-gallery",
+      "tags": [
+        "digstore-cli",
+        "window-chia",
+        "capsule",
+        "dighub"
+      ]
+    },
+    {
+      "id": "/docs/build-a-dapp/tutorial",
+      "type": "doc",
+      "title": "Build a dapp on Chia",
+      "url": "https://docs.dig.net/docs/build-a-dapp/tutorial",
+      "tags": [
+        "digstore-cli",
+        "window-chia",
+        "dig-rpc",
+        "chip-0035",
+        "dighub",
+        "capsule",
+        "anchoring"
+      ]
+    },
+    {
       "id": "/docs/concepts",
       "type": "doc",
       "title": "Concepts & glossary",
@@ -178,6 +219,8 @@
         "chia-protocol",
         "window-chia",
         "digstore-cli",
+        "dig-toml",
+        "dig-sdk",
         "anchoring",
         "dig-payment",
         "merkle-proof",
@@ -197,6 +240,19 @@
         "dig-payment",
         "retrieval-key",
         "urn"
+      ]
+    },
+    {
+      "id": "/docs/digstore/cli/configuration",
+      "type": "doc",
+      "title": "Project config & build-time values",
+      "url": "https://docs.dig.net/docs/digstore/cli/configuration",
+      "tags": [
+        "digstore-cli",
+        "dig-toml",
+        "store",
+        "capsule",
+        "anchoring"
       ]
     },
     {
@@ -471,6 +527,18 @@
       ]
     },
     {
+      "id": "/docs/support/changelog",
+      "type": "doc",
+      "title": "Changelog",
+      "url": "https://docs.dig.net/docs/support/changelog",
+      "tags": [
+        "digstore-cli",
+        "dig-rpc",
+        "window-chia",
+        "dighub"
+      ]
+    },
+    {
       "id": "/docs/support/error-codes",
       "type": "doc",
       "title": "Error codes",
@@ -503,6 +571,17 @@
         "dighub",
         "digstore-cli",
         "dig-rpc"
+      ]
+    },
+    {
+      "id": "/docs/support/status",
+      "type": "doc",
+      "title": "Status",
+      "url": "https://docs.dig.net/docs/support/status",
+      "tags": [
+        "dig-rpc",
+        "dighub",
+        "window-chia"
       ]
     },
     {
@@ -617,6 +696,16 @@
     },
     {
       "from": "/docs/concepts",
+      "to": "concept:dig-toml",
+      "type": "defines"
+    },
+    {
+      "from": "/docs/concepts",
+      "to": "concept:dig-sdk",
+      "type": "defines"
+    },
+    {
+      "from": "/docs/concepts",
       "to": "concept:dig-rpc",
       "type": "defines"
     },
@@ -721,6 +810,61 @@
       "type": "part-of"
     },
     {
+      "from": "/docs/build-a-dapp/example-gallery",
+      "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/example-gallery",
+      "to": "concept:window-chia",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/example-gallery",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/example-gallery",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/tutorial",
+      "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/tutorial",
+      "to": "concept:window-chia",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/tutorial",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/tutorial",
+      "to": "concept:chip-0035",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/tutorial",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/tutorial",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/tutorial",
+      "to": "concept:anchoring",
+      "type": "part-of"
+    },
+    {
       "from": "/docs/concepts",
       "to": "concept:capsule",
       "type": "part-of"
@@ -763,6 +907,16 @@
     {
       "from": "/docs/concepts",
       "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/concepts",
+      "to": "concept:dig-toml",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/concepts",
+      "to": "concept:dig-sdk",
       "type": "part-of"
     },
     {
@@ -818,6 +972,31 @@
     {
       "from": "/docs/digstore/cli/command-reference",
       "to": "concept:urn",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/digstore/cli/configuration",
+      "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/digstore/cli/configuration",
+      "to": "concept:dig-toml",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/digstore/cli/configuration",
+      "to": "concept:store",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/digstore/cli/configuration",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/digstore/cli/configuration",
+      "to": "concept:anchoring",
       "type": "part-of"
     },
     {
@@ -1376,6 +1555,26 @@
       "type": "part-of"
     },
     {
+      "from": "/docs/support/changelog",
+      "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/support/changelog",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/support/changelog",
+      "to": "concept:window-chia",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/support/changelog",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
       "from": "/docs/support/error-codes",
       "to": "concept:dig-rpc",
       "type": "part-of"
@@ -1428,6 +1627,21 @@
     {
       "from": "/docs/support/get-help",
       "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/support/status",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/support/status",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/support/status",
+      "to": "concept:window-chia",
       "type": "part-of"
     },
     {
@@ -1566,6 +1780,66 @@
       "type": "see-also"
     },
     {
+      "from": "/docs/build-a-dapp/example-gallery",
+      "to": "/docs/build-a-dapp/tutorial",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/example-gallery",
+      "to": "/docs/browser/using-window-chia",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/example-gallery",
+      "to": "/docs/quickstart",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/example-gallery",
+      "to": "/docs/digstore/cli/configuration",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/example-gallery",
+      "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/tutorial",
+      "to": "/docs/build-a-dapp/example-gallery",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/tutorial",
+      "to": "/docs/browser/using-window-chia",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/tutorial",
+      "to": "/docs/digstore/cli/configuration",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/tutorial",
+      "to": "/docs/digstore/cli/deploy-from-github-actions",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/tutorial",
+      "to": "/docs/rpc/what-is-the-dig-rpc",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/tutorial",
+      "to": "/docs/quickstart",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/tutorial",
+      "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
       "from": "/docs/concepts",
       "to": "/docs",
       "type": "see-also"
@@ -1577,6 +1851,11 @@
     },
     {
       "from": "/docs/concepts",
+      "to": "/docs/build-a-dapp/tutorial",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/concepts",
       "to": "/docs/digstore/what-is-digstore",
       "type": "see-also"
     },
@@ -1628,6 +1907,41 @@
     {
       "from": "/docs/digstore/cli/command-reference",
       "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/digstore/cli/configuration",
+      "to": "/docs/digstore/cli/deploy-from-github-actions",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/digstore/cli/configuration",
+      "to": "/docs/digstore/cli/project-workflow",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/digstore/cli/configuration",
+      "to": "/docs/build-a-dapp/tutorial",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/digstore/cli/configuration",
+      "to": "/docs/browser/using-window-chia",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/digstore/cli/configuration",
+      "to": "/docs/digstore/cli/onchain-anchoring",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/digstore/cli/configuration",
+      "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/digstore/cli/deploy-from-github-actions",
+      "to": "/docs/digstore/cli/configuration",
       "type": "see-also"
     },
     {
@@ -1713,6 +2027,11 @@
     {
       "from": "/docs/digstore/cli/onchain-anchoring",
       "to": "/docs/digstore/cli/project-workflow",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/digstore/cli/project-workflow",
+      "to": "/docs/digstore/cli/configuration",
       "type": "see-also"
     },
     {
@@ -2002,6 +2321,11 @@
     },
     {
       "from": "/docs",
+      "to": "/docs/build-a-dapp/tutorial",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs",
       "to": "/docs/concepts",
       "type": "see-also"
     },
@@ -2211,6 +2535,26 @@
       "type": "see-also"
     },
     {
+      "from": "/docs/support/changelog",
+      "to": "/docs/support/status",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/changelog",
+      "to": "/docs/rpc/methods",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/changelog",
+      "to": "/docs/browser/using-window-chia",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/changelog",
+      "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
       "from": "/docs/support/error-codes",
       "to": "/docs/support/troubleshooting",
       "type": "see-also"
@@ -2277,7 +2621,42 @@
     },
     {
       "from": "/docs/support/get-help",
+      "to": "/docs/support/changelog",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/get-help",
+      "to": "/docs/support/status",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/get-help",
       "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/status",
+      "to": "/docs/support/changelog",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/status",
+      "to": "/docs/support/error-codes",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/status",
+      "to": "/docs/support/troubleshooting",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/status",
+      "to": "/docs/support/get-help",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/status",
+      "to": "/docs/rpc/methods",
       "type": "see-also"
     },
     {

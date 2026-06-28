@@ -205,6 +205,8 @@ const config: Config = {
             { label: "Get help", to: "/docs/support/get-help" },
             { label: "Troubleshooting", to: "/docs/support/troubleshooting" },
             { label: "FAQ", to: "/docs/support/faq" },
+            { label: "Changelog", to: "/docs/support/changelog" },
+            { label: "Status", to: "/docs/support/status" },
             { label: "Discord", href: "https://discord.gg/dignetwork" },
           ],
         },

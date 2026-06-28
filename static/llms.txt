@@ -28,10 +28,16 @@ Audiences, simple to deep: (1) Hub users / frontend deployers, (2) integrating d
 - [Using DigStore in your project](https://docs.dig.net/docs/digstore/cli/project-workflow): capture a build directory, manage staging, run multiple stores in one workspace, the release loop.
 - [Publish from the web (DIGHub)](https://hub.dig.net/new): deploy a capsule with no CLI.
 
+## Build a dapp (integrating developers)
+
+- [Build a dapp on Chia](https://docs.dig.net/docs/build-a-dapp/tutorial): the end-to-end thread — scaffold a React app (digstore new), develop free (digstore dev), wire the in-page wallet (window.chia + WalletConnect fallback via @dignetwork/dig-sdk), build and sign a spend (chip35 wasm via the SDK /spend subpath), deploy on-chain (100 DIG), and add a custom domain.
+- [Example gallery](https://docs.dig.net/docs/build-a-dapp/example-gallery): example projects mapped to digstore new templates — static-site, vite-react, nft-drop, next-static, dapp-window-chia (example repo links are placeholders during pre-release).
+
 ## DigStore CLI (integrating developers)
 
 - [Installing the CLI](https://docs.dig.net/docs/digstore/cli/install): self-contained installer per OS, or build from source with Rust.
 - [Command reference](https://docs.dig.net/docs/digstore/cli/command-reference): every digstore command — wallet, project, staging, history, content, remote, maintenance.
+- [Project config & build-time values](https://docs.dig.net/docs/digstore/cli/configuration): the committable dig.toml manifest (store-id, output-dir, build-command, …; flags > env > dig.toml > defaults) and how to inject PUBLIC build-time config; the rule that a blind static capsule holds no server secrets.
 - [Sharing over a remote](https://docs.dig.net/docs/digstore/cli/sharing): publish, clone/pull with verification, revoke, public vs private sharing.
 - [Streaming & retrieval keys](https://docs.dig.net/docs/digstore/cli/streaming-and-keys): cat by URN (decrypted) or retrieval key (encrypted); list keys; checkout a whole generation.
 
@@ -62,6 +68,8 @@ Audiences, simple to deep: (1) Hub users / frontend deployers, (2) integrating d
 - [Troubleshooting](https://docs.dig.net/docs/support/troubleshooting): fixes for the common failures — insufficient DIG, confirmation timeout, non-fast-forward, verification failed, wallet/session.
 - [FAQ](https://docs.dig.net/docs/support/faq): what it costs (flat 100 DIG/capsule), iterate-for-free, blind hosting, custom domains, updates, public vs private.
 - [Error codes](https://docs.dig.net/docs/support/error-codes): one table for every code — dig RPC JSON-RPC (-32xxx), digstore CLI exit codes (0–16), and DIGHub user-facing codes (DIG_INSUFFICIENT, SLUG_TAKEN, WALLET_DECLINED, …).
+- [Changelog](https://docs.dig.net/docs/support/changelog): what changed across the developer surfaces — digstore CLI (semver), dig RPC (method set + chunk wire format), window.chia provider, dig-sdk and chip35-dl-coin-wasm (npm) — plus how each is versioned and any breaking changes.
+- [Status](https://docs.dig.net/docs/support/status): health of the DIG services (rpc.dig.net, hub.dig.net, on.dig.net) and the RPC + provider versioning notes (a live dashboard is planned).
 
 ## Machine-readable
 

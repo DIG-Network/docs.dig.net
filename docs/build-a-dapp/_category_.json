@@ -1,0 +1,11 @@
+{
+  "label": "Build a dapp",
+  "position": 1,
+  "collapsible": true,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "title": "Build a dapp on Chia",
+    "description": "The end-to-end thread that stitches every primitive into one shipped dapp: scaffold a React app, wire the in-page Chia wallet, build and sign a spend with the SDK, then deploy on-chain and put it on your own domain. Plus a gallery of example projects you can clone."
+  }
+}

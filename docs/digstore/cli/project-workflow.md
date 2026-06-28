@@ -109,6 +109,7 @@ digstore push origin
 
 ## Related
 
+- [Project config & build-time values](./configuration.md) — the `dig.toml` manifest and PUBLIC build config
 - [Sharing over a remote](./sharing.md) — publish a store and let others clone/pull it
 - [Deploy from GitHub Actions](./deploy-from-github-actions.md) — auto-publish this build on every push
 - [Streaming & retrieval keys](./streaming-and-keys.md) — read content back out
