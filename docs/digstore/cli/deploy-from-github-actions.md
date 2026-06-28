@@ -202,8 +202,8 @@ All credentials should be passed from **repo secrets**, never inline.
 | `spent` | `true` when the deploy spent DIG (a real publish). |
 | `pushed` | `true` when the capsule was published to the hub. |
 
-:::note Your `*.on.dig.net` domain isn't a deploy output
-A `*.on.dig.net` human domain is an **optional, user-chosen** name you register for a store — it isn't derivable from a deploy, so the Action surfaces the always-available `hub-url` and `dig://` URL instead. If you've registered a domain, your site is also live at `<your-name>.on.dig.net`.
+:::note Your `*.on.dig.net` address isn't a deploy output
+A `*.on.dig.net` address is an **optional, paid** handle you register for a store — it isn't derivable from a deploy (and a store has none until you register one), so the Action surfaces the always-available `dig-url` (`dig://`), `urn`, and `hub-url` instead. The capsule is readable over the dig RPC by those the moment it confirms; if you've registered a handle, your site is *also* served at `<your-name>.on.dig.net`.
 :::
 
 ## Using the CLI directly

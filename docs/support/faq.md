@@ -49,9 +49,13 @@ The host only ever stores **ciphertext keyed by hashes**. Encryption and decrypt
 
 Publish again. Edit, preview the new draft for free, then Publish (web) or `digstore commit` (CLI) to ship a new capsule for 100 DIG. Each capsule is immutable; an update is a new one, and your store points at the latest.
 
-## Can I use my own domain?
+## Is my store reachable as soon as I publish?
 
-Every store is served at a `*.on.dig.net` address out of the box, and DIGHub supports custom domains with TLS. See [DIGHub ↗](https://hub.dig.net).
+Yes — over the **read path**. The moment a capsule confirms on-chain it's readable through the [dig RPC](../concepts.md#dig-rpc) by its [URN](../concepts.md#urn) / `dig://` address: universal, verified client-side, no registration and nothing more to pay. A friendly `*.on.dig.net` web address is a separate, optional step (next question).
+
+## Can I get a `*.on.dig.net` address or use my own domain? {#can-i-use-my-own-domain}
+
+A store does **not** get a `*.on.dig.net` subdomain automatically. You get one by **registering a handle** for the store in DIGHub — a paid registration that pins the store to that name. (Your account handle and a store's slug are separate namespaces; they don't auto-expose a subdomain.) DIGHub also supports custom domains with TLS. Either way, the store is already readable by its URN / `dig://` address without any of this. See [DIGHub ↗](https://hub.dig.net).
 
 ## What happens if I lose my seed?
 

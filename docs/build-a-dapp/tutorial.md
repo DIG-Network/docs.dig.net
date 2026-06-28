@@ -166,11 +166,11 @@ digstore init my-dapp --dir dist      # mint the store's first capsule (100 DIG 
 digstore deploy --json                # runs build-command, stages dist/, advances the root
 ```
 
-Each `deploy` publishes a new immutable capsule for 100 DIG. Your dapp is now served at its `*.on.dig.net` address — encrypted, verified, and impossible to take down. For push-to-deploy on every commit, wire up [Deploy from GitHub Actions](../digstore/cli/deploy-from-github-actions.md).
+Each `deploy` publishes a new immutable capsule for 100 DIG. The moment it confirms, your dapp is **readable over the [dig RPC](../rpc/what-is-the-dig-rpc.md)** by its [URN](../concepts.md#urn) / `dig://` address — encrypted, verified, and impossible to take down, with no registration and nothing more to pay. (A friendly `*.on.dig.net` web address is a separate, optional step — see [the next section](#6-put-it-on-your-own-domain).) For push-to-deploy on every commit, wire up [Deploy from GitHub Actions](../digstore/cli/deploy-from-github-actions.md).
 
 ## 6. Put it on your own domain
 
-Every store is reachable at `*.on.dig.net` out of the box. To serve it from a domain you own, add a **custom domain with TLS in [DIGHub ↗](https://hub.dig.net)** — point your domain at the store and DIGHub handles the certificate. Your dapp now loads from your own URL while staying fully decentralized underneath.
+Your store is already reachable by its URN / `dig://` address — but for a friendly web URL you register a name. A store gets a `*.on.dig.net` subdomain when you **register a handle** for it in DIGHub: a separate, paid registration that pins the store to that name (no registration → no `*.on.dig.net` address). To serve it from a domain you own instead, add a **custom domain with TLS in [DIGHub ↗](https://hub.dig.net)** — point your domain at the store and DIGHub handles the certificate. Either way your dapp loads from a human-friendly URL while staying fully decentralized underneath.
 
 When CHIP-54 `.dig` handles land, a store will also be addressable by a human-readable `.dig` name; until then, custom domains via DIGHub are the way to brand a deployment.
 
