@@ -24,6 +24,10 @@ digstore new <template> my-project    # free, no chain, no spend
 cd my-project && digstore dev          # preview on the real read path
 ```
 
+:::tip Two front doors, same templates
+You can scaffold these from the `digstore` CLI (`digstore new`) **or** straight from npm with `npm create dig-app@latest my-project -- --template <template>`. See [Scaffold an app](./scaffold.md) for the full template list and how the two front doors compare.
+:::
+
 :::note Repo links are placeholders during pre-release
 The `digstore new <template>` commands are live today. The **example repository links are placeholders** while the gallery is being assembled — they're marked _(coming soon)_ below. The templates themselves ship with the CLI, so you can scaffold and run every one of these now.
 :::
@@ -79,6 +83,7 @@ digstore new dapp-window-chia my-wallet-dapp
 
 ## Related
 
+- [Scaffold an app (create-dig-app)](./scaffold.md) — the five templates and the npm vs CLI front doors
 - [Build a dapp on Chia](./tutorial.md) — the end-to-end thread that uses the `vite-react` template
 - [Using window.chia](../browser/using-window-chia.md) — the in-page wallet these dapps target
 - [Quickstart](../quickstart.md) — scaffold, preview, and publish

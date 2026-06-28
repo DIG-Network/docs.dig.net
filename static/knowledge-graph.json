@@ -80,6 +80,20 @@
       "tag": "dig-toml"
     },
     {
+      "id": "concept:create-dig-app",
+      "type": "concept",
+      "title": "create-dig-app",
+      "url": "https://docs.dig.net/docs/tags/create-dig-app",
+      "tag": "create-dig-app"
+    },
+    {
+      "id": "concept:deploy-action",
+      "type": "concept",
+      "title": "The GitHub deploy Action",
+      "url": "https://docs.dig.net/docs/tags/deploy-action",
+      "tag": "deploy-action"
+    },
+    {
       "id": "concept:dig-sdk",
       "type": "concept",
       "title": "DIG SDK",
@@ -197,6 +211,21 @@
       ]
     },
     {
+      "id": "/docs/build-a-dapp/scaffold",
+      "type": "doc",
+      "title": "Scaffold an app (create-dig-app)",
+      "url": "https://docs.dig.net/docs/build-a-dapp/scaffold",
+      "tags": [
+        "create-dig-app",
+        "digstore-cli",
+        "dig-toml",
+        "dig-sdk",
+        "window-chia",
+        "capsule",
+        "dig-payment"
+      ]
+    },
+    {
       "id": "/docs/build-a-dapp/tutorial",
       "type": "doc",
       "title": "Build a dapp on Chia",
@@ -228,6 +257,8 @@
         "provider-spec",
         "digstore-cli",
         "dig-toml",
+        "create-dig-app",
+        "deploy-action",
         "dig-sdk",
         "anchoring",
         "dig-payment",
@@ -269,6 +300,7 @@
       "title": "Deploy from GitHub Actions",
       "url": "https://docs.dig.net/docs/digstore/cli/deploy-from-github-actions",
       "tags": [
+        "deploy-action",
         "digstore-cli",
         "store",
         "anchoring",
@@ -723,6 +755,16 @@
     },
     {
       "from": "/docs/concepts",
+      "to": "concept:create-dig-app",
+      "type": "defines"
+    },
+    {
+      "from": "/docs/concepts",
+      "to": "concept:deploy-action",
+      "type": "defines"
+    },
+    {
+      "from": "/docs/concepts",
       "to": "concept:dig-sdk",
       "type": "defines"
     },
@@ -857,6 +899,41 @@
       "type": "part-of"
     },
     {
+      "from": "/docs/build-a-dapp/scaffold",
+      "to": "concept:create-dig-app",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/scaffold",
+      "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/scaffold",
+      "to": "concept:dig-toml",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/scaffold",
+      "to": "concept:dig-sdk",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/scaffold",
+      "to": "concept:window-chia",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/scaffold",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/scaffold",
+      "to": "concept:dig-payment",
+      "type": "part-of"
+    },
+    {
       "from": "/docs/build-a-dapp/tutorial",
       "to": "concept:digstore-cli",
       "type": "part-of"
@@ -948,6 +1025,16 @@
     },
     {
       "from": "/docs/concepts",
+      "to": "concept:create-dig-app",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/concepts",
+      "to": "concept:deploy-action",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/concepts",
       "to": "concept:dig-sdk",
       "type": "part-of"
     },
@@ -1029,6 +1116,11 @@
     {
       "from": "/docs/digstore/cli/configuration",
       "to": "concept:anchoring",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/digstore/cli/deploy-from-github-actions",
+      "to": "concept:deploy-action",
       "type": "part-of"
     },
     {
@@ -1848,6 +1940,11 @@
     },
     {
       "from": "/docs/build-a-dapp/example-gallery",
+      "to": "/docs/build-a-dapp/scaffold",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/example-gallery",
       "to": "/docs/build-a-dapp/tutorial",
       "type": "see-also"
     },
@@ -1869,6 +1966,46 @@
     {
       "from": "/docs/build-a-dapp/example-gallery",
       "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/scaffold",
+      "to": "/docs/build-a-dapp/tutorial",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/scaffold",
+      "to": "/docs/build-a-dapp/example-gallery",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/scaffold",
+      "to": "/docs/quickstart",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/scaffold",
+      "to": "/docs/digstore/cli/deploy-from-github-actions",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/scaffold",
+      "to": "/docs/browser/using-window-chia",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/scaffold",
+      "to": "/docs/digstore/cli/configuration",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/scaffold",
+      "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/tutorial",
+      "to": "/docs/build-a-dapp/scaffold",
       "type": "see-also"
     },
     {
@@ -2009,6 +2146,11 @@
     {
       "from": "/docs/digstore/cli/configuration",
       "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/digstore/cli/deploy-from-github-actions",
+      "to": "/docs/build-a-dapp/scaffold",
       "type": "see-also"
     },
     {
@@ -2454,6 +2596,11 @@
     {
       "from": "/docs/quickstart",
       "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/quickstart",
+      "to": "/docs/build-a-dapp/scaffold",
       "type": "see-also"
     },
     {

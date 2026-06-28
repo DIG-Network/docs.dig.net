@@ -84,11 +84,15 @@ See [Installing the CLI](./digstore/cli/install.md) for per-OS installers and bu
 Scaffold a project and preview it locally — **free, no mint, no chain** — before you ever spend:
 
 ```sh
-digstore new <template>   # scaffold a wallet-wired project (static-site · vite-react · next-static · nft-drop · dapp-window-chia) — free, no mint
+digstore new <template>   # scaffold a wallet-wired project (static · vite-react · next-static · nft-drop · dapp-window-chia) — free, no mint
 digstore dev              # watch + compile-on-save + serve the real dig:// read path, with an injected window.chia — free, live-reload
 ```
 
 `new` writes a runnable project (a `dig.toml` + a starter app); `dev` serves it over the genuine DIG read path (compile → verify → decrypt) with live reload. You spend the 100 DIG only when you publish (next steps). Or build with your usual toolchain (`npm run build` → `dist/`) and publish that output.
+
+:::tip Prefer npm? Use `create-dig-app`
+If you live in the Node world, `npm create dig-app@latest my-app -- --template vite-react` scaffolds the same templates straight from npm — no `digstore` install needed to start. See [Scaffold an app](./build-a-dapp/scaffold.md).
+:::
 
 ### 3. Set up a wallet (only needed to publish)
 
@@ -152,6 +156,7 @@ The price is a flat **100 DIG per capsule** everywhere — see [why the price is
 ## Related
 
 - [Concepts & glossary](./concepts.md) — capsule, store, URN, and DIG payment defined
+- [Scaffold an app (create-dig-app)](./build-a-dapp/scaffold.md) — start a deployable project in one command (npm or CLI)
 - [Installing the CLI](./digstore/cli/install.md) — get `digstore` on your machine
 - [On-chain anchoring](./digstore/cli/onchain-anchoring.md) — wallet setup, funding, and costs
 - [Deploy from GitHub Actions](./digstore/cli/deploy-from-github-actions.md) — push-to-publish in CI
