@@ -46,7 +46,7 @@ vocabulary. Skim it to orient; follow a link to go deep.
 
 A **capsule** is one immutable store generation: the pair `(storeId, rootHash)`, written canonically
 as `storeId:rootHash`. It is the network's atomic unit — of compilation (one fixed-size WASM module),
-[pricing](./digstore/cli/onchain-anchoring.md) (a flat 100 DIG to mint or commit), retrieval (a
+[pricing](./digstore/cli/onchain-anchoring.md) (a flat 100 $DIG to mint or commit), retrieval (a
 [URN](#urn) names one capsule), caching, and provenance. A [store](#store) is a *sequence of
 capsules*, one per commit. This definition is identical across DigStore, the dig RPC, and the DIG
 Browser. → [The capsule, in full](./intro.md#the-capsule)
@@ -96,8 +96,8 @@ authority for a store's latest root. → [On-chain anchoring](./digstore/cli/onc
 
 ## DIG payment {#dig-payment}
 
-DIG is the DIG Network token (a Chia CAT). Minting a [capsule](#capsule) (`init`) or committing one
-costs a flat **DIG fee**, included **atomically in the same on-chain spend** as the anchor — there is
+**$DIG** is the DIG Network token (a Chia CAT). Minting a [capsule](#capsule) (`init`) or committing one
+costs a flat **$DIG fee**, included **atomically in the same on-chain spend** as the anchor — there is
 no separate transaction, and the memo carries the store id. → [Costs](./digstore/cli/onchain-anchoring.md#costs)
 
 ## DigStore CLI {#digstore-cli}
@@ -145,7 +145,7 @@ The **dig RPC** is the network-wide read interface: a JSON-RPC 2.0 service over 
 every hosting node speaks identically. It serves ciphertext + [inclusion proofs](#merkle-proof) by
 [retrieval key](#retrieval-key), whole [capsules](#capsule) by `(storeId, root)`, and discovery
 metadata — blind by construction, verified and decrypted client-side. **It is the universal read
-path**: every published capsule is readable here by its [URN](#urn) / `dig://` address the moment it
+path**: every published capsule is readable here by its [URN](#urn) / [`chia://`](#chia-protocol) address the moment it
 confirms on-chain — no registration and no payment beyond publishing the capsule. The optional,
 human-friendly [`*.on.dig.net` handle](#on-dig-net) is a front door *on top of* this; the dig RPC
 itself is always available. → [What is the dig RPC?](./rpc/what-is-the-dig-rpc.md)
@@ -164,9 +164,9 @@ request the user's address, signatures, and spends with no WalletConnect setup �
 alternative for apps that already speak CHIP-0002. → [Using window.chia](./browser/using-window-chia.md)
 · [The window.chia provider spec](./protocol/window-chia-provider.md) (normative, versioned)
 
-## DIGHub {#dighub}
+## DIGHUb {#dighub}
 
-**DIGHub** ([hub.dig.net](https://hub.dig.net)) is the web app for publishing and managing
+**DIGHUb** ([hub.dig.net](https://hub.dig.net)) is the web app for publishing and managing
 [capsules](#capsule) without the CLI — create a capsule, deploy a frontend, and view your stores in
 the browser. It is also the gated control plane that budgets expensive ZK execution-proof jobs.
 
@@ -174,9 +174,9 @@ the browser. It is also the gated control plane that budgets expensive ZK execut
 
 An **on.dig.net handle** is an *optional, paid* human-friendly web address for a [store](#store):
 `<your-name>.on.dig.net`. A store does **not** get one automatically — you register the handle (a
-paid CHIP-54 / `on.dig.net` registration in [DIGHub](#dighub)) and that registration pins the store
+paid CHIP-54 / `on.dig.net` registration in [DIGHUb](#dighub)) and that registration pins the store
 to the name. No registration means no `*.on.dig.net` address. It is purely a convenience front door:
-the store is already readable over the [dig RPC](#dig-rpc) by its [URN](#urn) / `dig://` address
+the store is already readable over the [dig RPC](#dig-rpc) by its [URN](#urn) / [`chia://`](#chia-protocol) address
 whether or not a handle exists. (Account handles and store slugs are separate namespaces and do not
 auto-expose a subdomain.) → [Can I get a `*.on.dig.net` address?](./support/faq.md#can-i-use-my-own-domain)
 

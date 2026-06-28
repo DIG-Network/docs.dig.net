@@ -23,7 +23,7 @@ Short answers to the questions that come up most. Follow a link to go deep.
 
 ## What does it cost?
 
-A flat **100 DIG per [capsule](../concepts.md#capsule)** — the same whether you mint your first one (`init` / first Publish) or ship an update (`commit` / re-Publish) — plus a small XCH transaction fee. A store's lifetime cost is `100 DIG × number of capsules`. The price is [uniform by design](../digstore/cli/onchain-anchoring.md#why-the-price-is-flat).
+A flat **100 $DIG per [capsule](../concepts.md#capsule)** — the same whether you mint your first one (`init` / first Publish) or ship an update (`commit` / re-Publish) — plus a small XCH transaction fee. A store's lifetime cost is `100 DIG × number of capsules`. The price is [uniform by design](../digstore/cli/onchain-anchoring.md#why-the-price-is-flat).
 
 ## Can I try it for free?
 
@@ -55,11 +55,11 @@ Publish again. Edit, preview the new draft for free, then Publish (web) or `digs
 
 ## Is my store reachable as soon as I publish?
 
-Yes — over the **read path**. The moment a capsule confirms on-chain it's readable through the [dig RPC](../concepts.md#dig-rpc) by its [URN](../concepts.md#urn) / `dig://` address: universal, verified client-side, no registration and nothing more to pay. A friendly `*.on.dig.net` web address is a separate, optional step (next question).
+Yes — over the **read path**. The moment a capsule confirms on-chain it's readable through the [dig RPC](../concepts.md#dig-rpc) by its [URN](../concepts.md#urn) / [`chia://`](../browser/chia-protocol.md) address: universal, verified client-side, no registration and nothing more to pay. A friendly `*.on.dig.net` web address is a separate, optional step (next question).
 
 ## Can I get a `*.on.dig.net` address or use my own domain? {#can-i-use-my-own-domain}
 
-A store does **not** get a `*.on.dig.net` subdomain automatically. You get one by **registering a handle** for the store in DIGHub — a paid registration that pins the store to that name. (Your account handle and a store's slug are separate namespaces; they don't auto-expose a subdomain.) DIGHub also supports custom domains with TLS. Either way, the store is already readable by its URN / `dig://` address without any of this. See [DIGHub ↗](https://hub.dig.net).
+A store does **not** get a `*.on.dig.net` subdomain automatically. You get one by **registering a handle** for the store in DIGHUb — a paid registration that pins the store to that name. (Your account handle and a store's slug are separate namespaces; they don't auto-expose a subdomain.) DIGHUb also supports custom domains with TLS. Either way, the store is already readable by its URN / `chia://` address without any of this. See [DIGHUb ↗](https://hub.dig.net).
 
 ## What happens if I lose my seed?
 

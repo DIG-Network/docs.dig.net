@@ -7,7 +7,7 @@ keywords:
   - deploy on Chia
   - free preview
   - publish capsule
-  - DIGHub
+  - DIGHUb
   - digstore deploy
 tags:
   - dighub
@@ -21,11 +21,11 @@ tags:
 
 Ship a site to a network no host can read, change, or take down — in about ten minutes.
 
-**You build and preview for free.** Scaffolding and previewing cost nothing; you spend a flat **100 DIG** only at the moment you publish a [capsule](./concepts.md#capsule) on-chain. *Iterate for free, publish when it's ready.*
+**You build and preview for free.** Scaffolding and previewing cost nothing; you spend a flat **100 $DIG** only at the moment you publish a [capsule](./concepts.md#capsule) on-chain. *Iterate for free, publish when it's ready.*
 
 Two ways to do it. Most people start on the web.
 
-- **[A. Publish from the web](#a-publish-from-the-web)** — in [DIGHub](./concepts.md#dighub), connect a wallet at the end. Best for sites and frontends. ~10 min.
+- **[A. Publish from the web](#a-publish-from-the-web)** — in [DIGHUb](./concepts.md#dighub), connect a wallet at the end. Best for sites and frontends. ~10 min.
 - **[B. Publish from the CLI](#b-publish-from-the-cli)** — `digstore` on your machine, scriptable and CI-ready. Best for devs and automation.
 
 ---
@@ -34,9 +34,9 @@ Two ways to do it. Most people start on the web.
 
 The fastest path: build and preview in the browser, fund a wallet only at the final step.
 
-### 1. Open DIGHub and start a draft — free, no wallet
+### 1. Open DIGHUb and start a draft — free, no wallet
 
-[**Start a new project in DIGHub ↗**](https://hub.dig.net/new). Drop in your built site (a folder of static files — your `dist/` or `build/`). DIGHub gives you a **free draft preview** of exactly how it will serve, with nothing on-chain and no DIG spent.
+[**Start a new project in DIGHUb ↗**](https://hub.dig.net/new). Drop in your built site (a folder of static files — your `dist/` or `build/`). DIGHUb gives you a **free draft preview** of exactly how it will serve, with nothing on-chain and no DIG spent.
 
 You don't need a wallet yet. Iterate on the draft as many times as you like — re-upload, re-preview — entirely for free.
 
@@ -50,15 +50,15 @@ When the draft looks right, hit **Publish**. This is the only step that costs an
 
 - Connect a Chia wallet (your wallet *is* your account — no email, no password).
 - Approve the on-chain spend: a flat **100 DIG + a small XCH fee**, in one signature.
-- DIGHub mints your store and publishes the first **capsule** on Chia mainnet.
+- DIGHUb mints your store and publishes the first **capsule** on Chia mainnet.
 
 Short on DIG? The publish screen shows your balance and where to top up. See [Where to get DIG](./digstore/cli/onchain-anchoring.md#where-to-get-dig) — TibetSwap, dexie.space, or 9mm.pro.
 
 ### 4. You're live
 
-Your capsule is now anchored on-chain and **immediately readable over the [dig RPC](./concepts.md#dig-rpc)** — anyone can fetch and verify it by its [`urn:dig:` URN](./concepts.md#urn) or `dig://` address, no registration and nothing more to pay. The URN is both the address *and* the key; share it to share the content. The read path is universal and free; it's live the moment the capsule confirms.
+Your capsule is now anchored on-chain and **immediately readable over the [dig RPC](./concepts.md#dig-rpc)** — anyone can fetch and verify it by its [`urn:dig:` URN](./concepts.md#urn) or [`chia://`](./browser/chia-protocol.md) address, no registration and nothing more to pay. The URN is both the address *and* the key; share it to share the content. The read path is universal and free; it's live the moment the capsule confirms.
 
-**Want a human-friendly `*.on.dig.net` address?** That's optional. A store gets a `*.on.dig.net` subdomain only when you **register a handle** for it in DIGHub — a separate, paid registration that pins the store to that name. Until you register one, there's no `*.on.dig.net` URL (the URN / `dig://` address above is always the canonical way to reach it). See [Can I use my own domain?](./support/faq.md#can-i-use-my-own-domain).
+**Want a human-friendly `*.on.dig.net` address?** That's optional. A store gets a `*.on.dig.net` subdomain only when you **register a handle** for it in DIGHUb — a separate, paid registration that pins the store to that name. Until you register one, there's no `*.on.dig.net` URL (the URN / `chia://` address above is always the canonical way to reach it). See [Can I use my own domain?](./support/faq.md#can-i-use-my-own-domain).
 
 **To ship an update later:** edit, preview the new draft for free, and Publish again. Each published update is a new capsule and costs another **100 DIG** — you only pay when you promote a draft to a permanent on-chain version.
 
@@ -144,7 +144,7 @@ digstore cat urn:dig:chia:<storeId>/readme   # a URN both locates AND decrypts
 | You're doing | Cost |
 |---|---|
 | Scaffolding, building, previewing a draft | **Free** |
-| Publishing your first capsule (`init` / DIGHub Publish) | **100 DIG** + small XCH fee |
+| Publishing your first capsule (`init` / DIGHUb Publish) | **100 DIG** + small XCH fee |
 | Publishing each update (`commit` / re-Publish) | **100 DIG** + small XCH fee |
 
 The price is a flat **100 DIG per capsule** everywhere — see [why the price is flat](./digstore/cli/onchain-anchoring.md#why-the-price-is-flat).
