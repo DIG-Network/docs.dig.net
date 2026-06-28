@@ -81,14 +81,14 @@ See [Installing the CLI](./digstore/cli/install.md) for per-OS installers and bu
 
 ### 2. Scaffold and preview — free, no chain, no spend
 
-> **Coming soon.** A free, no-mint scaffolder and a local preview loop are on the roadmap, so you can see your project work end-to-end before spending anything:
->
-> ```sh
-> digstore new <template>   # scaffold a wallet-wired project — free, no mint
-> digstore dev              # watch + compile-on-save + serve the real dig:// read path, with an injected window.chia — free
-> ```
->
-> Until these land, build your site with your usual toolchain (`npm run build` → `dist/`) and publish that output with the steps below.
+Scaffold a project and preview it locally — **free, no mint, no chain** — before you ever spend:
+
+```sh
+digstore new <template>   # scaffold a wallet-wired project (static-site · vite-react · next-static · nft-drop · dapp-window-chia) — free, no mint
+digstore dev              # watch + compile-on-save + serve the real dig:// read path, with an injected window.chia — free, live-reload
+```
+
+`new` writes a runnable project (a `dig.toml` + a starter app); `dev` serves it over the genuine DIG read path (compile → verify → decrypt) with live reload. You spend the 100 DIG only when you publish (next steps). Or build with your usual toolchain (`npm run build` → `dist/`) and publish that output.
 
 ### 3. Set up a wallet (only needed to publish)
 
