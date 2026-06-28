@@ -32,6 +32,10 @@ Content-Type: application/json
 
 For any well-formed JSON body the HTTP status is `200`; success or a JSON-RPC `error` is carried in the envelope. Every method is a pure, idempotent read.
 
+:::tip Machine-readable spec
+This method set is also published as an [OpenRPC document](https://docs.dig.net/openrpc.json) — every method, its request/response JSON Schemas, and the catalogued error responses, against server `https://rpc.dig.net`. Point an OpenRPC client generator at it to get a typed client without reading this page.
+:::
+
 ## Identifiers
 
 All identifiers are lower-case hex on the wire.
@@ -233,4 +237,6 @@ A malformed or unroutable **call** uses the standard JSON-RPC codes. A content *
 - [Conformance & Security](./conformance.md) — the blind model, decoys, and CORS
 - [Using the public network RPC](./public-network-rpc.md) — call `rpc.dig.net` from any client
 - [URNs & Encryption](../digstore/format/urns-and-encryption.md) — how the retrieval key is derived
+- [Error codes](../support/error-codes.md) — the JSON-RPC codes (and every other surface)
 - [Concepts & glossary](../concepts.md) — the dig RPC, capsule, and retrieval key defined
+- [OpenRPC document](https://docs.dig.net/openrpc.json) — the machine-readable spec for this method set
