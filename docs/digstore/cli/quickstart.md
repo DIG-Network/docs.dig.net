@@ -118,7 +118,7 @@ digstore cat urn:dig:chia:<storeId>/readme --out readme.copy.txt
 - **[Streaming & keys](./streaming-and-keys.md)** — fetch encrypted vs decrypted, list retrieval keys, checkout a whole deployment.
 
 :::tip Try it
-- [**View & manage your stores in the Hub ↗**](https://hub.dig.net) — see your published stores in the browser.
+- [**View & manage your stores in DIGHub ↗**](https://hub.dig.net) — see your published stores in the browser.
 - [**Ready to ship? Publish on DIGHub ↗**](https://hub.dig.net/new) — deploy a new capsule from the web, no CLI required.
 :::
 

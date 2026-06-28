@@ -43,7 +43,7 @@ Unlike Git, DigStore is built for **build output**, not repository source. You p
 - **[The DigStore Format](./format/overview.md)** — the concepts: projects, deployments, the `.wasm` module, URNs, encryption, and proofs. Start here if you want to understand *what* DigStore is.
 - **[CLI Tutorial](./cli/install.md)** — install the CLI and use it in a real project: initialize a project, capture a build directory, commit deployments, share over a remote, and stream content back out.
 
-If you just want to try it, jump straight to the **[Quick start](./cli/quickstart.md)**.
+If you just want to try it, jump straight to the **[Quickstart](../quickstart.md)** (the free, web-first path) or the **[CLI tutorial](./cli/quickstart.md)**.
 
 :::note
 DigStore is part of the [DIG Network](https://dig.net). The full technical design lives in the [DigStore whitepaper](../whitepapers/digstore.md), *The Content-Addressable WASM Store Format*.
@@ -54,5 +54,5 @@ DigStore is part of the [DIG Network](https://dig.net). The full technical desig
 - [The DigStore Format](./format/overview.md) — projects, the WASM module, URNs, encryption, proofs
 - [Store structure](./format/store-structure.md) — store identity, generations, and the compiled module
 - [URNs & Encryption](./format/urns-and-encryption.md) — the URN that both addresses *and* decrypts
-- [CLI quick start](./cli/quickstart.md) — create, commit, and read a store in minutes
+- [CLI tutorial](./cli/quickstart.md) — create, commit, and read a store in minutes
 - [Concepts & glossary](../concepts.md) — the core DIG entities at a glance

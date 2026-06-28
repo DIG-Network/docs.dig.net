@@ -84,12 +84,12 @@ Remotes persist tombstones and clients honor them fail-closed — a revoked root
 :::note Reading over the network
 A remote serves the **whole module** for `clone`/`pull`/`push`. To read individual resources from a
 published store over the network, see the [dig RPC](../../rpc/what-is-the-dig-rpc.md) and its
-git-style [`chia://` remote](../../rpc/dig-remote.md) — the same nodes, addressed as `chia://…`.
+git-style [`dig://` remote](../../rpc/dig-remote.md) — the same nodes, addressed as `dig://…`.
 :::
 
 ## Related
 
-- [The chia:// remote](../../rpc/dig-remote.md) — clone/pull/push over `chia://` with per-request auth
+- [The dig:// remote](../../rpc/dig-remote.md) — clone/pull/push over `dig://` with per-request auth
 - [What is the dig RPC?](../../rpc/what-is-the-dig-rpc.md) — the network-wide read interface
 - [Proofs & Security](../format/proofs-and-security.md) — what `clone`/`pull` verify before installing
 - [Streaming & retrieval keys](./streaming-and-keys.md) — fetch resources by URN or key

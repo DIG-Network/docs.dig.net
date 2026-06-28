@@ -104,7 +104,7 @@ no separate transaction, and the memo carries the store id. → [Costs](./digsto
 
 `digstore` is the command-line tool that creates, commits, shares, and reads stores — a Git-shaped
 workflow (`init`, `add`, `commit`, `log`, `clone`, `push`, `pull`) over the encrypted, on-chain
-store format. → [Command reference](./digstore/cli/command-reference.md) · [Quick start](./digstore/cli/quickstart.md)
+store format. → [Command reference](./digstore/cli/command-reference.md) · [CLI tutorial](./digstore/cli/quickstart.md)
 
 ## dig.toml {#dig-toml}
 

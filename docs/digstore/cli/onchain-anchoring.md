@@ -188,7 +188,7 @@ If the chain is unreachable, or the served root does not match the on-chain root
 
 ## Related
 
-- [Quick start](./quickstart.md) — the wallet-then-init flow end to end
+- [CLI tutorial](./quickstart.md) — the wallet-then-init flow end to end
 - [Store structure](../format/store-structure.md) — why the store id *is* the singleton launcher id
 - [Proofs & Security](../format/proofs-and-security.md) — the on-chain root check that verifies downloads
 - [Command reference](./command-reference.md) — every wallet and anchoring command
