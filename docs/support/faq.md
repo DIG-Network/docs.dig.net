@@ -63,7 +63,7 @@ A **public** store needs only its URN to read. A **private** store adds a secret
 
 ## How do I deploy from CI?
 
-Add the [GitHub Action](../digstore/cli/deploy-from-github-actions.md): push to `main` and it publishes a new capsule to your existing store, like Vercel's Git integration. Use a **dedicated, funded deploy wallet**.
+Add the [GitHub Action](../digstore/cli/deploy-from-github-actions.md): push to `main` and it publishes a new capsule to your existing store — git-push-to-deploy. Use a **dedicated, funded deploy wallet**.
 
 ## Is it open source?
 

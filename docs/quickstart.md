@@ -61,7 +61,7 @@ Your site is now served at its `*.on.dig.net` address — immutable, encrypted, 
 **To ship an update later:** edit, preview the new draft for free, and Publish again. Each published update is a new capsule and costs another **100 DIG** — you only pay when you promote a draft to a permanent on-chain version.
 
 :::tip Automate it
-Once your store exists, wire up [Deploy from GitHub Actions](./digstore/cli/deploy-from-github-actions.md) so every push to `main` publishes a new capsule — like Vercel's Git integration.
+Once your store exists, wire up [Deploy from GitHub Actions](./digstore/cli/deploy-from-github-actions.md) so every push to `main` publishes a new capsule — git-push-to-deploy.
 :::
 
 ---

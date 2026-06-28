@@ -1,7 +1,7 @@
 ---
 sidebar_position: 7
 title: Deploy from GitHub Actions
-description: "Auto-publish your built site or dapp to your existing DIG store on every push with the digstore GitHub Action — like Vercel's Git integration."
+description: "Auto-publish your built site or dapp to your existing DIG store on every push with the digstore GitHub Action — git-push-to-deploy."
 keywords:
   - digstore deploy
   - github actions
@@ -19,7 +19,7 @@ tags:
 
 # Deploy from GitHub Actions
 
-Publish your site or dapp to DIG automatically on every push — a new **capsule** of your existing store, exactly like Vercel's Git integration. You add one workflow file and two repository secrets; every push to your default branch builds your site and publishes it.
+Publish your site or dapp to DIG automatically on every push — a new **capsule** of your existing store, exactly the git-push-to-deploy flow you'd expect from a managed host, but decentralized. You add one workflow file and two repository secrets; every push to your default branch builds your site and publishes it.
 
 :::note You create the store once; CI only updates it
 Your store already exists (you ran [`digstore init`](./onchain-anchoring.md) once, which mints it and spends 100 DIG). The Action only **advances** that store — it never mints. Each deploy is a new capsule and costs 100 DIG + a small XCH fee, paid from your deploy wallet.
@@ -137,7 +137,7 @@ DIGSTORE_DEPLOY_KEY=<64-hex> digstore deploy --output-dir dist --json
 ## Per-PR previews
 
 :::note Coming soon
-Per-PR preview deployments (a temporary capsule per pull request, like Vercel's preview URLs) are planned. For now the Action deploys on push to your default branch.
+Per-PR preview deployments (a temporary capsule per pull request, the kind of managed-host-style preview URLs you'd expect — but decentralized) are planned. For now the Action deploys on push to your default branch.
 :::
 
 ## Related
