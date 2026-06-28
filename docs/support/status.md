@@ -19,9 +19,20 @@ tags:
 
 The health of the services your dapp depends on at runtime.
 
-:::note Status page coming soon
-A live status dashboard for the DIG services is planned. Until it's published, use the per-service health checks below. DIG is pre-release, so expect occasional downtime — if something looks down, check [Discord ↗](https://discord.gg/dignetwork).
+:::tip Live status dashboard
+Check **[status.dig.net ↗](https://status.dig.net/)** for the live health of all DIG services — the dig RPC, DIGHUb, the resolver, coinset, and Chia mainnet — with per-service status, uptime, and latency. DIG is pre-release, so expect occasional downtime; if something looks down, also check [Discord ↗](https://discord.gg/dignetwork).
 :::
+
+The dashboard is **agent-readable** — poll these documents instead of scraping the page:
+
+| Endpoint | Shape |
+|---|---|
+| [`status.dig.net/health.json`](https://status.dig.net/health.json) | `{ schemaVersion, overall, generatedAt, systems: { <id>: status } }` — quick liveness summary. |
+| [`status.dig.net/status.json`](https://status.dig.net/status.json) | Full current status (per-system `status`, `latencyMs`, `uptime`, `detail.errorCode`) + `schemaVersion`. |
+| [`status.dig.net/history.json`](https://status.dig.net/history.json) | Rolling history series (uptime / sparklines). |
+| `status.dig.net/{status,history,health}.schema.json` | JSON Schemas (draft-2020-12) for each document. |
+
+`status` is the stable enum `up` · `degraded` · `down`; a failure carries a stable `detail.errorCode` (e.g. `TIMEOUT`, `HTTP_5XX`, `RPC_ERROR`, `STALE_PEAK`). See [Error codes](./error-codes.md).
 
 ## Services
 
