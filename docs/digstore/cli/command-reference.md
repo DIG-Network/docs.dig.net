@@ -154,7 +154,7 @@ Build the spend with the canonical CHIP-0035 builders, sign with your wallet, an
 
 ## Related
 
-- [Quick start](./quickstart.md) — the most common commands in order
+- [CLI tutorial](./quickstart.md) — the most common commands in order
 - [On-chain anchoring](./onchain-anchoring.md) — wallet, costs, and the `init`/`commit` flow
 - [Sharing over a remote](./sharing.md) — `remote`, `clone`, `push`, `pull`, `revoke`
 - [Streaming & retrieval keys](./streaming-and-keys.md) — `cat`, `keys`, `checkout`

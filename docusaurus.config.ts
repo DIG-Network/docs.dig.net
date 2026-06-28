@@ -195,7 +195,7 @@ const config: Config = {
           title: "DigStore",
           items: [
             { label: "The Format", to: "/docs/digstore/format/overview" },
-            { label: "CLI Quick start", to: "/docs/digstore/cli/quickstart" },
+            { label: "CLI tutorial", to: "/docs/digstore/cli/quickstart" },
             { label: "Command reference", to: "/docs/digstore/cli/command-reference" },
           ],
         },

@@ -514,11 +514,10 @@
     {
       "id": "/docs/rpc/dig-remote",
       "type": "doc",
-      "title": "The chia:// remote (clone/pull/push)",
+      "title": "The dig:// remote (clone/pull/push)",
       "url": "https://docs.dig.net/docs/rpc/dig-remote",
       "tags": [
         "dig-rpc",
-        "chia-protocol",
         "digstore-cli",
         "store",
         "anchoring",
@@ -1566,11 +1565,6 @@
     {
       "from": "/docs/rpc/dig-remote",
       "to": "concept:dig-rpc",
-      "type": "part-of"
-    },
-    {
-      "from": "/docs/rpc/dig-remote",
-      "to": "concept:chia-protocol",
       "type": "part-of"
     },
     {

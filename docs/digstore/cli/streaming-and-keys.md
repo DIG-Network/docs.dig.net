@@ -81,7 +81,7 @@ This is the bulk counterpart to `cat`: instead of one resource, it reconstructs 
 - [URNs & Encryption](../format/urns-and-encryption.md) — why the URN and retrieval key are different values
 - [Command reference](./command-reference.md) — full flags for `cat`, `keys`, and `checkout`
 - [The dig RPC: Streaming](../../rpc/streaming.md) — the same fetch, over the network in chunks
-- [Quick start](./quickstart.md) — read a resource back end to end
+- [CLI tutorial](./quickstart.md) — read a resource back end to end
 - [Concepts & glossary](../../concepts.md) — URN and retrieval key defined
 
 Next: [Deploy from GitHub Actions →](./deploy-from-github-actions.md), or see the full [Command reference](./command-reference.md)

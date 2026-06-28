@@ -50,7 +50,7 @@ Audiences, simple to deep: (1) Hub users / frontend deployers, (2) integrating d
 - [Streaming](https://docs.dig.net/docs/rpc/streaming): the chunk object, 64 KiB alignment, reassembly, inclusion-proof verification, and a reference client loop.
 - [Conformance & Security](https://docs.dig.net/docs/rpc/conformance): the blind serving model, decoy streams (no existence oracle), CORS, and the node conformance checklist.
 - [Using the public network RPC](https://docs.dig.net/docs/rpc/public-network-rpc): rpc.dig.net, node portability, running your own node, rate limits.
-- [The chia:// remote](https://docs.dig.net/docs/rpc/dig-remote): git-style clone/pull/push over chia:// URLs with per-request BLS identity-key auth.
+- [The dig:// remote](https://docs.dig.net/docs/rpc/dig-remote): git-style clone/pull/push over dig:// URLs with per-request BLS identity-key auth.
 
 ## DIG Browser (integrating developers)
 

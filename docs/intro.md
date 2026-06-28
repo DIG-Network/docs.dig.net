@@ -42,7 +42,7 @@ The capsule is the network's unit of:
 This is the ecosystem-wide definition: "capsule = `(storeId, rootHash)`" means the same thing in DigStore, the dig RPC, and the DIG Browser.
 
 :::tip Try it
-[**Create your first capsule in the Hub ↗**](https://hub.dig.net/new) — publish a site in the browser, no CLI required. Each capsule (mint or commit) costs **100 DIG**.
+[**Create your first capsule in DIGHub ↗**](https://hub.dig.net/new) — publish a site in the browser, no CLI required. Each capsule (mint or commit) costs **100 DIG**.
 :::
 
 ## Primitives
