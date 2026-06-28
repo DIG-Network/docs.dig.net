@@ -50,6 +50,10 @@ cd my-dapp
 
 You get a Vite + React app, a `dig.toml` (`output-dir = "dist"`, `build-command = "npm install && npm run build"`), and an `App.jsx` already wired to the in-page wallet. No store is minted and nothing is spent — `new` is purely local.
 
+:::tip Prefer npm? `npm create dig-app`
+`npm create dig-app@latest my-dapp -- --template vite-react` scaffolds the same template straight from npm — the JS front door, no `digstore` install needed to start. See [Scaffold an app](./scaffold.md) for all five templates and how the two front doors compare.
+:::
+
 ## 2. Develop against the real read path — free
 
 ```sh
@@ -178,6 +182,7 @@ You went from an empty folder to a wallet-aware React app, live on Chia mainnet 
 
 ## Related
 
+- [Scaffold an app (create-dig-app)](./scaffold.md) — the five templates and the npm vs CLI front doors
 - [Example gallery](./example-gallery.md) — clone a finished dapp and open it in a template
 - [Using window.chia](../browser/using-window-chia.md) — the in-page wallet provider in full
 - [The window.chia provider spec](../protocol/window-chia-provider.md) — the normative, versioned provider contract

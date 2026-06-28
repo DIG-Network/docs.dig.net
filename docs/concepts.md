@@ -25,6 +25,8 @@ tags:
   - provider-spec
   - digstore-cli
   - dig-toml
+  - create-dig-app
+  - deploy-action
   - dig-sdk
   - anchoring
   - dig-payment
@@ -110,6 +112,23 @@ store format. → [Command reference](./digstore/cli/command-reference.md) · [Q
 `build-command`, and other project config, shared by `digstore dev`, `digstore deploy`, and the
 scaffolding templates. It holds **no secrets** (those come from the environment), so it's safe to
 commit. → [Project config & build-time values](./digstore/cli/configuration.md)
+
+## create-dig-app {#create-dig-app}
+
+`create-dig-app` (`npm create dig-app`) is the **JS front door** for starting a DIG project: it
+scaffolds a runnable starter — an app, a [`dig.toml`](#dig-toml), and (for the wallet templates) the
+[DIG SDK](#dig-sdk) wired in — from one of five templates (`static`, `vite-react`, `next-static`,
+`nft-drop`, `dapp-window-chia`). Scaffolding is **free** — no mint, no chain, no spend; you spend
+100 DIG only when you publish a [capsule](#capsule). It is the npm-side companion to the Rust CLI's
+`digstore new`. → [Scaffold an app](./build-a-dapp/scaffold.md)
+
+## The GitHub deploy Action {#deploy-action}
+
+`dig-network/deploy-action` is the **git-push-to-deploy** GitHub Action: it installs the
+[`digstore` CLI](#digstore-cli) on the runner, runs `digstore deploy` to advance your store (never
+mints), and reports the published [capsule](#capsule) + URLs + cost back as step outputs, a PR
+comment, a GitHub Deployment, and a commit status. With `if-changed` (default), a byte-identical
+build is a no-op — no spend. → [Deploy from GitHub Actions](./digstore/cli/deploy-from-github-actions.md)
 
 ## DIG SDK {#dig-sdk}
 

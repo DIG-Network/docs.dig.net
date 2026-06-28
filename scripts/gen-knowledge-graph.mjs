@@ -36,6 +36,8 @@ const CONCEPT_TITLES = {
   'dig-payment': 'DIG payment',
   'digstore-cli': 'DigStore CLI',
   'dig-toml': 'dig.toml',
+  'create-dig-app': 'create-dig-app',
+  'deploy-action': 'The GitHub deploy Action',
   'dig-sdk': 'DIG SDK',
   'dig-rpc': 'The dig RPC',
   streaming: 'Streaming',
