@@ -157,6 +157,17 @@ const config: Config = {
           position: "left",
         },
         {
+          to: "/docs/support/get-help",
+          label: "Get help",
+          position: "right",
+        },
+        {
+          href: "https://discord.gg/dignetwork",
+          position: "right",
+          className: "navbar-discord-link",
+          "aria-label": "DIG Network Discord",
+        },
+        {
           href: "https://github.com/DIG-Network/digstore",
           position: "right",
           className: "navbar-github-link",
@@ -186,6 +197,15 @@ const config: Config = {
             { label: "The Format", to: "/docs/digstore/format/overview" },
             { label: "CLI Quick start", to: "/docs/digstore/cli/quickstart" },
             { label: "Command reference", to: "/docs/digstore/cli/command-reference" },
+          ],
+        },
+        {
+          title: "Community & support",
+          items: [
+            { label: "Get help", to: "/docs/support/get-help" },
+            { label: "Troubleshooting", to: "/docs/support/troubleshooting" },
+            { label: "FAQ", to: "/docs/support/faq" },
+            { label: "Discord", href: "https://discord.gg/dignetwork" },
           ],
         },
         {

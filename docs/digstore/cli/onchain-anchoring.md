@@ -64,10 +64,14 @@ digstore seed status    # shows whether a seed exists and is currently unlocked
 
 ## Costs
 
+Every on-chain action publishes one **capsule** (`storeId:rootHash`) and costs the same flat price.
+
 | Operation | DIG | XCH |
 |---|---|---|
-| `digstore init` (mint a project) | **100 DIG** | small mainnet fee |
-| `digstore commit` (anchor a deployment root) | **10 DIG** | small mainnet fee |
+| `digstore init` (mint the first capsule) | **100 DIG** | small mainnet fee |
+| `digstore commit` (publish a new capsule) | **100 DIG** | small mainnet fee |
+
+The price is a flat **100 DIG per capsule** — the same whether you mint (`init`) or commit. A store's lifetime cost is therefore `100 DIG × number of capsules`. (The price is uniform by design: each capsule compiles to one fixed-size module, so a size-varying price would leak content size — see [why 100 DIG per capsule](#why-the-price-is-flat).)
 
 DIG is the DIG Network token (a Chia CAT). The DIG payment is included **atomically in the same spend bundle** as the mint or deployment root update — there is no separate transaction. The memo on the DIG output is the store id. Before submitting, each command prints the cost and your current balance; if the wallet is short on XCH **or** DIG the command blocks with a clear message rather than broadcasting a partial spend. Use `digstore balance` to check your spendable XCH and DIG at any time:
 
@@ -81,8 +85,16 @@ digstore balance --json
 `init` and `commit` spend both **XCH** (the transaction fee) and **DIG** (the DIG token). The wallet derived from your seed needs **both**. If either is short, the command blocks and prints the **receive address** — fund that address on mainnet, then retry. Both XCH and DIG are received at the same `xch1…` address (DIG arrives as a CAT). Transactions go out via coinset.org over HTTPS; the `coinset_url` key in `~/.dig/config.toml` overrides the default endpoint.
 
 :::tip Need DIG?
-[**Buy $DIG on TibetSwap ↗**](https://v2.tibetswap.io/) — swap XCH for DIG on the AMM, then send it to your `digstore balance` receive address.
+[**Buy DIG on TibetSwap ↗**](https://v2.tibetswap.io/) — swap XCH for DIG on the AMM, then send it to your `digstore balance` receive address.
 :::
+
+:::note Iterate for free — pay only to publish
+You only spend DIG when you publish a capsule on-chain (`init`/`commit`). Scaffolding, building, and previewing a site locally cost **nothing**. Start from the [zero-cost quickstart](./quickstart.md) and fund a wallet only when you're ready to go live.
+:::
+
+### Why the price is flat {#why-the-price-is-flat}
+
+The 100-DIG price is the same for every capsule on purpose. Each capsule compiles to a **fixed-size** WASM module — padded so its length reveals nothing about how much content is inside. A price that varied with content size would re-leak the size the padding hides, so the price has to be uniform. That's why there's no per-byte fee, no tiers, and no "small commit" discount: one capsule, one price, regardless of what's in it.
 
 ## `digstore init` — mint the project singleton
 
@@ -162,8 +174,9 @@ If the chain is unreachable, or the served root does not match the on-chain root
 
 ## Cost and safety
 
-- **`init` costs 100 DIG + an XCH fee** — one spend bundle to mint the singleton.
-- **`commit` costs 10 DIG + an XCH fee** — one spend bundle per anchored deployment.
+- **`init` costs 100 DIG + an XCH fee** — one spend bundle to mint the singleton (the first capsule).
+- **`commit` costs 100 DIG + an XCH fee** — one spend bundle per published capsule.
+- The price is a flat **100 DIG per capsule** (mint or commit) everywhere in the ecosystem.
 - Both are on **Chia mainnet**. There is no testnet mode; use a wallet with only as much XCH and DIG as you intend to spend.
 - Lost seed = lost ability to update the project. The singleton stays on-chain and existing content remains readable, but no new commits are possible. Back up `~/.dig/seed.enc` and your mnemonic.
 

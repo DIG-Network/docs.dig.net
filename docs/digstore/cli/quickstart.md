@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
-title: Quick start
-description: "Five-minute walkthrough to initialize a project, commit files, and read content back via DigStore CLI."
+title: CLI tutorial
+description: "Full walkthrough of the DigStore CLI: initialize a project, commit files, and read content back. The parallel track to the web-first quickstart."
 keywords:
   - digstore quickstart
   - digstore init
@@ -17,13 +17,17 @@ tags:
   - capsule
 ---
 
-# Quick start
+# CLI tutorial
 
-Create a project, commit a file, and read it back — in under a minute.
+Create a project, commit a file, and read it back with the `digstore` CLI.
+
+:::tip New here? Start with the Quickstart
+The [**Quickstart**](../../quickstart.md) leads with the free, web-first path (build and preview at no cost, publish only at the end). This page is the deeper CLI walkthrough — the parallel track for terminal and CI workflows.
+:::
 
 ## 0. Set up your wallet
 
-`digstore init` mints a singleton on **Chia mainnet** and costs real XCH, so you need a seed and a funded wallet first.
+`digstore init` mints a singleton on **Chia mainnet** and costs **100 DIG + a small XCH fee**, so you need a seed and a funded wallet first. (Building and previewing locally are free — you only spend when you publish a capsule.)
 
 ```sh
 digstore seed import        # import an existing BIP-39 mnemonic (prompted)
@@ -115,11 +119,12 @@ digstore cat urn:dig:chia:<storeId>/readme --out readme.copy.txt
 
 :::tip Try it
 - [**View & manage your stores in the Hub ↗**](https://hub.dig.net) — see your published stores in the browser.
-- [**Ready to ship? Publish on DIGHUb ↗**](https://hub.dig.net/new) — deploy a new capsule from the web, no CLI required.
+- [**Ready to ship? Publish on DIGHub ↗**](https://hub.dig.net/new) — deploy a new capsule from the web, no CLI required.
 :::
 
 ## Related
 
+- [Quickstart](../../quickstart.md) — the free, web-first path; publish only at the end
 - [Installing the CLI](./install.md) — get `digstore` on your machine first
 - [On-chain anchoring](./onchain-anchoring.md) — wallet setup, funding, and costs
 - [URNs & Encryption](../format/urns-and-encryption.md) — what a URN locates *and* decrypts

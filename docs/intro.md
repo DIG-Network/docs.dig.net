@@ -90,8 +90,10 @@ The client primitive: a **browser with a built-in Chia wallet**. It injects a `w
 
 ## Where to start
 
+- **Just want to ship something?** Follow the [Quickstart](./quickstart.md) — build and preview a site for **free**, and spend DIG only when you publish.
 - **New to the vocabulary?** Skim [Concepts & glossary](./concepts.md) — every core entity defined once, with links into the deep docs.
 - **Building with content today?** Go straight to [DigStore](./digstore/what-is-digstore.md) — it's production-ready and has a full [CLI tutorial](./digstore/cli/quickstart.md).
+- **Stuck?** [Get help](./support/get-help.md) — community, troubleshooting, and the error-code reference.
 - **Want the deep design?** Read the [DIG Network whitepapers](./whitepapers/index.md) — the full protocol specification.
 
 :::note
@@ -100,8 +102,10 @@ DIG Network and its primitives are open source. DigStore is licensed under GPL-2
 
 ## Related
 
+- [Quickstart](./quickstart.md) — ship your first site; free to build and preview
 - [Concepts & glossary](./concepts.md) — the core DIG entities, defined and linked
 - [What is DigStore?](./digstore/what-is-digstore.md) — the content-addressable store format
 - [What is the dig RPC?](./rpc/what-is-the-dig-rpc.md) — the network-wide read interface
 - [The chia:// protocol](./browser/chia-protocol.md) — opening content in the DIG Browser
+- [Get help](./support/get-help.md) — community, troubleshooting, and error codes
 - [Whitepapers](./whitepapers/index.md) — the full protocol specifications
