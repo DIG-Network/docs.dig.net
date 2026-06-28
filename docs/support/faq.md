@@ -1,0 +1,78 @@
+---
+sidebar_position: 3
+title: FAQ
+description: "Frequently asked questions about DIG — what it costs, whether you can iterate for free, how the host can't read your app, custom domains, and updates."
+keywords:
+  - DIG FAQ
+  - DIG cost
+  - free preview
+  - custom domain
+  - private store
+  - update a site
+tags:
+  - dighub
+  - capsule
+  - dig-payment
+  - digstore-cli
+  - urn
+---
+
+# FAQ
+
+Short answers to the questions that come up most. Follow a link to go deep.
+
+## What does it cost?
+
+A flat **100 DIG per [capsule](../concepts.md#capsule)** — the same whether you mint your first one (`init` / first Publish) or ship an update (`commit` / re-Publish) — plus a small XCH transaction fee. A store's lifetime cost is `100 DIG × number of capsules`. The price is [uniform by design](../digstore/cli/onchain-anchoring.md#why-the-price-is-flat).
+
+## Can I try it for free?
+
+Yes. **Scaffolding, building, and previewing cost nothing.** You spend DIG only when you publish a capsule on-chain. Start from the [Quickstart](../quickstart.md) — build and preview a draft for free, fund a wallet only at the Publish step.
+
+## Why is every capsule the same price — isn't a small update cheaper?
+
+No, and that's intentional. Each capsule compiles to a **fixed-size** module (padded so its length leaks nothing about content size). A price that varied with size would re-leak the size the padding hides — so the price has to be flat. See [why the price is flat](../digstore/cli/onchain-anchoring.md#why-the-price-is-flat).
+
+## Do I need a wallet to start?
+
+Not to build and preview. You connect a Chia wallet only at the moment you publish. Your **wallet is your account** — no email, no password.
+
+## Is there a testnet?
+
+No. There's no testnet mode; everything runs on **Chia mainnet**. Use a wallet funded with only as much XCH and DIG as you intend to spend. (You can still iterate for free — see above — because previews never touch the chain.)
+
+## How can the host not read my app?
+
+The host only ever stores **ciphertext keyed by hashes**. Encryption and decryption happen entirely in the client; the [URN](../concepts.md#urn) is both the address *and* the key, and the URN never reaches the host (only `SHA-256(URN)` does). The host literally cannot read or scan your content. See [URNs & Encryption](../digstore/format/urns-and-encryption.md).
+
+## How do I update a site after it's live?
+
+Publish again. Edit, preview the new draft for free, then Publish (web) or `digstore commit` (CLI) to ship a new capsule for 100 DIG. Each capsule is immutable; an update is a new one, and your store points at the latest.
+
+## Can I use my own domain?
+
+Every store is served at a `*.on.dig.net` address out of the box, and DIGHub supports custom domains with TLS. See [DIGHub ↗](https://hub.dig.net).
+
+## What happens if I lose my seed?
+
+The store stays on-chain and existing content stays readable, but **you can't publish new capsules** to it. Back up `~/.dig/seed.enc` and your mnemonic. See [On-chain anchoring](../digstore/cli/onchain-anchoring.md).
+
+## Public vs private — what's the difference?
+
+A **public** store needs only its URN to read. A **private** store adds a secret `salt`; the URN alone isn't enough — the reader also needs the salt. Treat the salt like a password. See [URNs & Encryption](../digstore/format/urns-and-encryption.md).
+
+## How do I deploy from CI?
+
+Add the [GitHub Action](../digstore/cli/deploy-from-github-actions.md): push to `main` and it publishes a new capsule to your existing store, like Vercel's Git integration. Use a **dedicated, funded deploy wallet**.
+
+## Is it open source?
+
+Yes. DigStore is GPL-2.0 — see the [digstore repository ↗](https://github.com/DIG-Network/digstore). The whole protocol is [specified in the whitepapers](../whitepapers/index.md).
+
+## Related
+
+- [Quickstart](../quickstart.md) — build and preview free, publish at the end
+- [Troubleshooting](./troubleshooting.md) — fixes for the common failures
+- [Error codes](./error-codes.md) — every error code in one table
+- [Get help](./get-help.md) — community channels and how to report
+- [Concepts & glossary](../concepts.md) — the vocabulary, defined once

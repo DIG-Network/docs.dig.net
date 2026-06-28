@@ -250,7 +250,7 @@
     {
       "id": "/docs/digstore/cli/quickstart",
       "type": "doc",
-      "title": "Quick start",
+      "title": "CLI tutorial",
       "url": "https://docs.dig.net/docs/digstore/cli/quickstart",
       "tags": [
         "digstore-cli",
@@ -376,6 +376,19 @@
       ]
     },
     {
+      "id": "/docs/quickstart",
+      "type": "doc",
+      "title": "Quickstart",
+      "url": "https://docs.dig.net/docs/quickstart",
+      "tags": [
+        "dighub",
+        "capsule",
+        "digstore-cli",
+        "dig-payment",
+        "anchoring"
+      ]
+    },
+    {
       "id": "/docs/rpc/conformance",
       "type": "doc",
       "title": "Conformance & Security",
@@ -455,6 +468,53 @@
         "streaming",
         "store",
         "chip-0035"
+      ]
+    },
+    {
+      "id": "/docs/support/error-codes",
+      "type": "doc",
+      "title": "Error codes",
+      "url": "https://docs.dig.net/docs/support/error-codes",
+      "tags": [
+        "dig-rpc",
+        "digstore-cli",
+        "dighub"
+      ]
+    },
+    {
+      "id": "/docs/support/faq",
+      "type": "doc",
+      "title": "FAQ",
+      "url": "https://docs.dig.net/docs/support/faq",
+      "tags": [
+        "dighub",
+        "capsule",
+        "dig-payment",
+        "digstore-cli",
+        "urn"
+      ]
+    },
+    {
+      "id": "/docs/support/get-help",
+      "type": "doc",
+      "title": "Get help",
+      "url": "https://docs.dig.net/docs/support/get-help",
+      "tags": [
+        "dighub",
+        "digstore-cli",
+        "dig-rpc"
+      ]
+    },
+    {
+      "id": "/docs/support/troubleshooting",
+      "type": "doc",
+      "title": "Troubleshooting",
+      "url": "https://docs.dig.net/docs/support/troubleshooting",
+      "tags": [
+        "digstore-cli",
+        "dighub",
+        "anchoring",
+        "dig-payment"
       ]
     },
     {
@@ -1121,6 +1181,31 @@
       "type": "part-of"
     },
     {
+      "from": "/docs/quickstart",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/quickstart",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/quickstart",
+      "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/quickstart",
+      "to": "concept:dig-payment",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/quickstart",
+      "to": "concept:anchoring",
+      "type": "part-of"
+    },
+    {
       "from": "/docs/rpc/conformance",
       "to": "concept:dig-rpc",
       "type": "part-of"
@@ -1291,6 +1376,81 @@
       "type": "part-of"
     },
     {
+      "from": "/docs/support/error-codes",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/support/error-codes",
+      "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/support/error-codes",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/support/faq",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/support/faq",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/support/faq",
+      "to": "concept:dig-payment",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/support/faq",
+      "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/support/faq",
+      "to": "concept:urn",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/support/get-help",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/support/get-help",
+      "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/support/get-help",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/support/troubleshooting",
+      "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/support/troubleshooting",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/support/troubleshooting",
+      "to": "concept:anchoring",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/support/troubleshooting",
+      "to": "concept:dig-payment",
+      "type": "part-of"
+    },
+    {
       "from": "/docs/whitepapers/consensus",
       "to": "concept:whitepaper",
       "type": "part-of"
@@ -1412,6 +1572,11 @@
     },
     {
       "from": "/docs/concepts",
+      "to": "/docs/quickstart",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/concepts",
       "to": "/docs/digstore/what-is-digstore",
       "type": "see-also"
     },
@@ -1423,6 +1588,11 @@
     {
       "from": "/docs/concepts",
       "to": "/docs/browser/chia-protocol",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/concepts",
+      "to": "/docs/support/get-help",
       "type": "see-also"
     },
     {
@@ -1578,6 +1748,11 @@
     {
       "from": "/docs/digstore/cli/project-workflow",
       "to": "/docs/digstore/cli/sharing",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/digstore/cli/quickstart",
+      "to": "/docs/quickstart",
       "type": "see-also"
     },
     {
@@ -1822,6 +1997,11 @@
     },
     {
       "from": "/docs",
+      "to": "/docs/quickstart",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs",
       "to": "/docs/concepts",
       "type": "see-also"
     },
@@ -1842,7 +2022,37 @@
     },
     {
       "from": "/docs",
+      "to": "/docs/support/get-help",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs",
       "to": "/docs/whitepapers",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/quickstart",
+      "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/quickstart",
+      "to": "/docs/digstore/cli/install",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/quickstart",
+      "to": "/docs/digstore/cli/onchain-anchoring",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/quickstart",
+      "to": "/docs/digstore/cli/deploy-from-github-actions",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/quickstart",
+      "to": "/docs/digstore/cli/quickstart",
       "type": "see-also"
     },
     {
@@ -1997,6 +2207,101 @@
     },
     {
       "from": "/docs/rpc/what-is-the-dig-rpc",
+      "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/error-codes",
+      "to": "/docs/support/troubleshooting",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/error-codes",
+      "to": "/docs/support/faq",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/error-codes",
+      "to": "/docs/support/get-help",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/error-codes",
+      "to": "/docs/rpc/methods",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/error-codes",
+      "to": "/docs/digstore/cli/onchain-anchoring",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/faq",
+      "to": "/docs/quickstart",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/faq",
+      "to": "/docs/support/troubleshooting",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/faq",
+      "to": "/docs/support/error-codes",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/faq",
+      "to": "/docs/support/get-help",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/faq",
+      "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/get-help",
+      "to": "/docs/support/troubleshooting",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/get-help",
+      "to": "/docs/support/faq",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/get-help",
+      "to": "/docs/support/error-codes",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/get-help",
+      "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/troubleshooting",
+      "to": "/docs/support/error-codes",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/troubleshooting",
+      "to": "/docs/support/faq",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/troubleshooting",
+      "to": "/docs/support/get-help",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/troubleshooting",
+      "to": "/docs/digstore/cli/onchain-anchoring",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/support/troubleshooting",
       "to": "/docs/concepts",
       "type": "see-also"
     },

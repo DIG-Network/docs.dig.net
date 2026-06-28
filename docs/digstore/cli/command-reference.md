@@ -23,7 +23,7 @@ tags:
 
 Every `digstore` command. Run `digstore <command> --help` for full flags and examples.
 
-> **On-chain by default.** `init` mints the project's singleton on **Chia mainnet** and `commit` anchors each new deployment root on-chain (both block until confirmed and spend real XCH). Starting in v0.5.4, `init` also costs **100 DIG** and `commit` costs **10 DIG** — paid to the DIG treasury in the same spend bundle (memo = store id). Both commands disclose the cost and check your balance before submitting; they block if the wallet is short on XCH **or** DIG. You need an unlocked wallet seed and a funded wallet first — see [On-chain anchoring](./onchain-anchoring.md).
+> **On-chain by default.** `init` mints the project's singleton on **Chia mainnet** and `commit` anchors each new deployment root on-chain (both block until confirmed and spend real XCH). Each publishes one **capsule** and costs a flat **100 DIG** (mint or commit) — paid to the DIG treasury in the same spend bundle (memo = store id). Both commands disclose the cost and check your balance before submitting; they block if the wallet is short on XCH **or** DIG. You need an unlocked wallet seed and a funded wallet first — see [On-chain anchoring](./onchain-anchoring.md).
 
 ## Wallet & on-chain anchoring
 
@@ -58,7 +58,7 @@ A single workspace (`.dig/`) can hold many projects. The commands below create a
 | `digstore add <path…> [-A] [--key <name>]` | Stage files (`-A` = the whole content root) |
 | `digstore staged` | List the staging area |
 | `digstore unstage` | Clear the staging area |
-| `digstore commit [-m <msg>] [--wait-timeout <secs>]` | Seal a new deployment: **anchor the new deployment root on Chia mainnet and block until confirmed** (`--wait-timeout`, default 300s), then compile the module + write the URN manifest. Costs **10 DIG + an XCH fee** (paid atomically in the same bundle; cost is disclosed before submission). On failure/timeout the local deployment is not finalized (re-run to resume). |
+| `digstore commit [-m <msg>] [--wait-timeout <secs>]` | Seal a new deployment: **anchor the new deployment root on Chia mainnet and block until confirmed** (`--wait-timeout`, default 300s), then compile the module + write the URN manifest. Publishes a new capsule for **100 DIG + an XCH fee** (paid atomically in the same bundle; cost is disclosed before submission). On failure/timeout the local deployment is not finalized (re-run to resume). |
 | `digstore status` | Show staged / modified / untracked + remaining capacity |
 
 ## History

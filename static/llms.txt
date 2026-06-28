@@ -9,6 +9,7 @@ Audiences, simple to deep: (1) Hub users / frontend deployers, (2) integrating d
 ## Start here
 
 - [DIG Network overview](https://docs.dig.net/docs/): the primitives at a glance — DigStore, dig RPC, DIG Browser, and the capsule.
+- [Quickstart](https://docs.dig.net/docs/quickstart): ship your first site — free to build and preview, you spend a flat 100 DIG only when you publish a capsule. Web-first path (connect a wallet only at the end) plus a parallel CLI track.
 - [Concepts & glossary](https://docs.dig.net/docs/concepts): every core entity defined once (capsule, store, generation, URN, retrieval key, the dig RPC, chia:// protocol, on-chain anchoring), each linked to its deep doc. The human-readable spine of the knowledge graph.
 - [Tags index](https://docs.dig.net/docs/tags): the controlled vocabulary of entities, each tag listing every doc about it.
 
@@ -54,6 +55,13 @@ Audiences, simple to deep: (1) Hub users / frontend deployers, (2) integrating d
 - [Part 1 · Consensus](https://docs.dig.net/docs/whitepapers/consensus): a Proof-of-Stake Layer 2 on Chia — Groth16 + BLS finality, five CLVM puzzles, the validator lifecycle. PDF: https://docs.dig.net/whitepapers/DIG-Network-Part1-Consensus.pdf
 - [Part 2 · DFSP](https://docs.dig.net/docs/whitepapers/dfsp): the Decentralized File Storage Protocol — availability-audited capsule hosting, full replication, paid to serve. PDF: https://docs.dig.net/whitepapers/DIG-Network-Part2-DFSP.pdf
 - [Part 3 · Digstore](https://docs.dig.net/docs/whitepapers/digstore): the content-addressable WASM store format — immutable capsules, URN-derived keys, ZK execution proofs, Git workflow. PDF: https://docs.dig.net/whitepapers/DIG-Network-Part3-Digstore.pdf
+
+## Support
+
+- [Get help](https://docs.dig.net/docs/support/get-help): community Discord, GitHub issues, and how to file a report that gets answered.
+- [Troubleshooting](https://docs.dig.net/docs/support/troubleshooting): fixes for the common failures — insufficient DIG, confirmation timeout, non-fast-forward, verification failed, wallet/session.
+- [FAQ](https://docs.dig.net/docs/support/faq): what it costs (flat 100 DIG/capsule), iterate-for-free, blind hosting, custom domains, updates, public vs private.
+- [Error codes](https://docs.dig.net/docs/support/error-codes): one table for every code — dig RPC JSON-RPC (-32xxx), digstore CLI exit codes (0–16), and DIGHub user-facing codes (DIG_INSUFFICIENT, SLUG_TAKEN, WALLET_DECLINED, …).
 
 ## Machine-readable
 

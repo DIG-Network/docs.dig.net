@@ -151,6 +151,24 @@ html[data-theme="dark"] {
   background-color: var(--ifm-color-primary);
 }
 
+/* Discord icon in navbar — same masked-SVG pattern as GitHub above. */
+.navbar-discord-link {
+  display: flex;
+  align-items: center;
+}
+.navbar-discord-link::before {
+  content: "";
+  width: 22px;
+  height: 22px;
+  display: block;
+  background-color: currentColor;
+  -webkit-mask: url("/img/discord.svg") center / 22px 22px no-repeat;
+  mask: url("/img/discord.svg") center / 22px 22px no-repeat;
+}
+.navbar-discord-link:hover::before {
+  background-color: var(--ifm-color-primary);
+}
+
 /* ---- headings: brand display face ---- */
 .markdown h1,
 .markdown h2,

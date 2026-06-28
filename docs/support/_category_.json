@@ -1,0 +1,11 @@
+{
+  "label": "Support",
+  "position": 5,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Support",
+    "description": "Get unstuck: common failures and their fixes, frequently asked questions, a consolidated table of every error code (dig RPC, CLI exit codes, and DIGHub messages), and where to get help."
+  }
+}

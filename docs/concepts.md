@@ -136,9 +136,11 @@ for protocol developers who want the full design. Most builders won't need them 
 ## Related
 
 - [DIG Network overview](./intro.md) — the primitives at a glance
+- [Quickstart](./quickstart.md) — build and preview free, publish a capsule at the end
 - [What is DigStore?](./digstore/what-is-digstore.md) — the one-file store format
 - [What is the dig RPC?](./rpc/what-is-the-dig-rpc.md) — the network read path
 - [The chia:// protocol](./browser/chia-protocol.md) — addressing content in the browser
+- [Get help](./support/get-help.md) — community channels and how to report
 - [Whitepapers](./whitepapers/index.md) — the full protocol specifications
 
 ## For agents & LLMs
