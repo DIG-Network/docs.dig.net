@@ -20,7 +20,7 @@ tags:
 
 # On-chain anchoring
 
-Every DigStore project is a **singleton on Chia mainnet**. There is no offline mode: `init` mints the singleton and `commit` anchors each new deployment root on-chain. Both operations block until the transaction is confirmed and spend real XCH.
+Every DigStore store is a **singleton on Chia mainnet**. There is no offline mode: `init` mints the singleton and `commit` anchors each new deployment root on-chain. Both operations block until the transaction is confirmed and spend real XCH.
 
 ## Wallet seed setup
 
@@ -73,7 +73,7 @@ Every on-chain action publishes one **capsule** (`storeId:rootHash`) and costs t
 
 The price is a flat **100 DIG per capsule** — the same whether you mint (`init`) or commit. A store's lifetime cost is therefore `100 DIG × number of capsules`. (The price is uniform by design: each capsule compiles to one fixed-size module, so a size-varying price would leak content size — see [why 100 DIG per capsule](#why-the-price-is-flat).)
 
-DIG is the DIG Network token (a Chia CAT). The DIG payment is included **atomically in the same spend bundle** as the mint or deployment root update — there is no separate transaction. The memo on the DIG output is the store id. Before submitting, each command prints the cost and your current balance; if the wallet is short on XCH **or** DIG the command blocks with a clear message rather than broadcasting a partial spend. Use `digstore balance` to check your spendable XCH and DIG at any time:
+**$DIG** is the DIG Network token (a Chia CAT). The $DIG payment is included **atomically in the same spend bundle** as the mint or deployment root update — there is no separate transaction. The memo on the DIG output is the store id. Before submitting, each command prints the cost and your current balance; if the wallet is short on XCH **or** DIG the command blocks with a clear message rather than broadcasting a partial spend. Use `digstore balance` to check your spendable XCH and DIG at any time:
 
 ```sh
 digstore balance          # shows XCH (mojos), DIG (3-decimal), and receive address
@@ -86,7 +86,7 @@ digstore balance --json
 
 ### Where to get DIG {#where-to-get-dig}
 
-DIG is the DIG Network token (a Chia CAT). Acquire it on any of these, then send it to your `digstore balance` receive address:
+$DIG is the DIG Network token (a Chia CAT). Acquire it on any of these, then send it to your `digstore balance` receive address:
 
 - [**TibetSwap ↗**](https://v2.tibetswap.io/) — swap XCH for DIG on the AMM.
 - [**dexie.space ↗**](https://dexie.space/offers/XCH/a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367df16832f81) — trade DIG on the Chia DEX.
