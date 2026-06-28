@@ -2694,6 +2694,11 @@
     },
     {
       "from": "/docs/rpc/methods",
+      "to": "/docs/support/error-codes",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/rpc/methods",
       "to": "/docs/concepts",
       "type": "see-also"
     },

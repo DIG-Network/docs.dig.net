@@ -1,0 +1,620 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "generatedFrom": "scripts/dig-spec.mjs (mirrors docs/support/error-codes.md + the source enums)",
+  "site": "https://docs.dig.net",
+  "version": 1,
+  "surfaces": {
+    "dig-rpc": "JSON-RPC 2.0 codes for the dig RPC (rpc.dig.net). http_or_exit is the transport status (always 200; the error rides in the JSON envelope).",
+    "digstore-cli": "digstore CLI process exit codes (0..16). http_or_exit is the process exit code.",
+    "dighub": "DIGHUb (hub.dig.net) user-facing codes. http_or_exit is the HTTP status where one exists.",
+    "dig-loader": "dig:// content-loader failure codes (DIG Browser / extension). http_or_exit is null (surfaced on the error page)."
+  },
+  "errors": [
+    {
+      "surface": "dig-rpc",
+      "code": -32700,
+      "name": "PARSE_ERROR",
+      "http_or_exit": 200,
+      "description": "Parse error — The request body isn’t valid JSON (id is null)."
+    },
+    {
+      "surface": "dig-rpc",
+      "code": -32600,
+      "name": "INVALID_REQUEST",
+      "http_or_exit": 200,
+      "description": "Invalid request — Not a request object/array, an empty batch, or a missing method."
+    },
+    {
+      "surface": "dig-rpc",
+      "code": -32601,
+      "name": "METHOD_NOT_FOUND",
+      "http_or_exit": 200,
+      "description": "Method not found — This node doesn’t implement the method."
+    },
+    {
+      "surface": "dig-rpc",
+      "code": -32602,
+      "name": "INVALID_PARAMS",
+      "http_or_exit": 200,
+      "description": "Invalid params — Missing/malformed store_id, root, or retrieval_key; or \"latest\" on a store with no confirmed generation."
+    },
+    {
+      "surface": "dig-rpc",
+      "code": -32603,
+      "name": "INTERNAL_ERROR",
+      "http_or_exit": 200,
+      "description": "Internal error — The node failed to satisfy a well-formed call (distinct from a miss, which is a decoy)."
+    },
+    {
+      "surface": "digstore-cli",
+      "code": "success",
+      "exit": 0,
+      "http_or_exit": 0,
+      "description": "The command completed."
+    },
+    {
+      "surface": "digstore-cli",
+      "code": "other",
+      "exit": 1,
+      "http_or_exit": 1,
+      "description": "An unclassified error. Re-run with --verbose."
+    },
+    {
+      "surface": "digstore-cli",
+      "code": "invalid-argument",
+      "exit": 2,
+      "http_or_exit": 2,
+      "description": "A flag or argument was invalid."
+    },
+    {
+      "surface": "digstore-cli",
+      "code": "no-store",
+      "exit": 3,
+      "http_or_exit": 3,
+      "description": "No store found here. Run `digstore init`."
+    },
+    {
+      "surface": "digstore-cli",
+      "code": "not-found",
+      "exit": 4,
+      "http_or_exit": 4,
+      "description": "A resource/URN/root wasn't found."
+    },
+    {
+      "surface": "digstore-cli",
+      "code": "verification-failed",
+      "exit": 5,
+      "http_or_exit": 5,
+      "description": "Content failed cryptographic verification (wrong salt/key or tampered data)."
+    },
+    {
+      "surface": "digstore-cli",
+      "code": "network",
+      "exit": 6,
+      "http_or_exit": 6,
+      "description": "A network/transport failure."
+    },
+    {
+      "surface": "digstore-cli",
+      "code": "non-fast-forward",
+      "exit": 7,
+      "http_or_exit": 7,
+      "description": "The remote root has advanced past yours. Pull first."
+    },
+    {
+      "surface": "digstore-cli",
+      "code": "unauthorized",
+      "exit": 8,
+      "http_or_exit": 8,
+      "description": "Not authorized for this action."
+    },
+    {
+      "surface": "digstore-cli",
+      "code": "no-seed",
+      "exit": 9,
+      "http_or_exit": 9,
+      "description": "No wallet seed is set up."
+    },
+    {
+      "surface": "digstore-cli",
+      "code": "bad-passphrase",
+      "exit": 10,
+      "http_or_exit": 10,
+      "description": "Wrong passphrase for the seed."
+    },
+    {
+      "surface": "digstore-cli",
+      "code": "invalid-mnemonic",
+      "exit": 11,
+      "http_or_exit": 11,
+      "description": "The mnemonic is invalid (check word list / count)."
+    },
+    {
+      "surface": "digstore-cli",
+      "code": "insufficient-funds",
+      "exit": 12,
+      "http_or_exit": 12,
+      "description": "Not enough XCH or DIG to cover the spend (100 DIG + XCH fee per capsule)."
+    },
+    {
+      "surface": "digstore-cli",
+      "code": "chain",
+      "exit": 13,
+      "http_or_exit": 13,
+      "description": "A Chia chain/coinset error."
+    },
+    {
+      "surface": "digstore-cli",
+      "code": "confirm-timeout",
+      "exit": 14,
+      "http_or_exit": 14,
+      "description": "The on-chain confirmation timed out."
+    },
+    {
+      "surface": "digstore-cli",
+      "code": "mint-failed",
+      "exit": 15,
+      "http_or_exit": 15,
+      "description": "Minting the store singleton failed."
+    },
+    {
+      "surface": "digstore-cli",
+      "code": "update-failed",
+      "exit": 16,
+      "http_or_exit": 16,
+      "description": "Anchoring the new root failed."
+    },
+    {
+      "surface": "dighub",
+      "code": "WALLET_DECLINED",
+      "http": null,
+      "wire": null,
+      "http_or_exit": null,
+      "description": "You declined the signature in your wallet. Nothing was signed or broadcast."
+    },
+    {
+      "surface": "dighub",
+      "code": "DIG_INSUFFICIENT",
+      "http": 429,
+      "wire": "over_quota",
+      "http_or_exit": 429,
+      "description": "Not enough DIG in your wallet to cover this capsule (100 DIG)."
+    },
+    {
+      "surface": "dighub",
+      "code": "COIN_CONFLICT",
+      "http": 409,
+      "wire": "coin_reserved",
+      "http_or_exit": 409,
+      "description": "The coin was just spent elsewhere (double-spend / mempool conflict)."
+    },
+    {
+      "surface": "dighub",
+      "code": "REG_PENDING",
+      "http": null,
+      "wire": null,
+      "http_or_exit": null,
+      "description": "Your spend is on chain and will appear shortly. Do not sign or pay again."
+    },
+    {
+      "surface": "dighub",
+      "code": "WALLET_SESSION",
+      "http": 401,
+      "wire": "unauthorized",
+      "http_or_exit": 401,
+      "description": "Your wallet session can't sign (expired, watch-only, or missing method)."
+    },
+    {
+      "surface": "dighub",
+      "code": "NET_OFFLINE",
+      "http": null,
+      "wire": null,
+      "http_or_exit": null,
+      "description": "You appear to be offline."
+    },
+    {
+      "surface": "dighub",
+      "code": "NET_TIMEOUT",
+      "http": null,
+      "wire": null,
+      "http_or_exit": null,
+      "description": "The request timed out or couldn't reach the network."
+    },
+    {
+      "surface": "dighub",
+      "code": "SLUG_TAKEN",
+      "http": 409,
+      "wire": "slug_taken",
+      "http_or_exit": 409,
+      "description": "That project name is already taken."
+    },
+    {
+      "surface": "dighub",
+      "code": "OVER_QUOTA",
+      "http": 429,
+      "wire": "over_quota",
+      "http_or_exit": 429,
+      "description": "You've reached the project limit for this account."
+    },
+    {
+      "surface": "dighub",
+      "code": "COIN_RESERVED",
+      "http": 409,
+      "wire": "coin_reserved",
+      "http_or_exit": 409,
+      "description": "A coin is busy finishing another transaction."
+    },
+    {
+      "surface": "dighub",
+      "code": "UNAUTHORIZED",
+      "http": 401,
+      "wire": "unauthorized",
+      "http_or_exit": 401,
+      "description": "Your session isn't authorized for this."
+    },
+    {
+      "surface": "dighub",
+      "code": "FORBIDDEN",
+      "http": 403,
+      "wire": "forbidden",
+      "http_or_exit": 403,
+      "description": "You don't have permission to do this."
+    },
+    {
+      "surface": "dighub",
+      "code": "NOT_FOUND",
+      "http": 404,
+      "wire": "not_found",
+      "http_or_exit": 404,
+      "description": "The thing could not be found — it may have expired."
+    },
+    {
+      "surface": "dighub",
+      "code": "INVALID_REQUEST",
+      "http": 400,
+      "wire": "invalid_request",
+      "http_or_exit": 400,
+      "description": "Something about the request wasn't valid."
+    },
+    {
+      "surface": "dighub",
+      "code": "UNEXPECTED",
+      "http": 500,
+      "wire": null,
+      "http_or_exit": 500,
+      "description": "An unclassified error."
+    },
+    {
+      "surface": "dig-loader",
+      "code": "DIG_ERR_PROOF_MISMATCH",
+      "http_or_exit": null,
+      "description": "The served ciphertext did not verify against the on-chain generation root (tamper / wrong root)."
+    },
+    {
+      "surface": "dig-loader",
+      "code": "DIG_ERR_DECRYPT_TAG",
+      "http_or_exit": null,
+      "description": "AES-256-GCM-SIV authentication tag failed — wrong key/salt or corrupted bytes."
+    },
+    {
+      "surface": "dig-loader",
+      "code": "DIG_ERR_NOT_FOUND",
+      "http_or_exit": null,
+      "description": "A blind miss (decoy) — no resource at this retrieval key under this generation."
+    },
+    {
+      "surface": "dig-loader",
+      "code": "DIG_ERR_NETWORK",
+      "http_or_exit": null,
+      "description": "The node/CDN was unreachable or the transport failed."
+    }
+  ],
+  "bySurface": {
+    "dig-rpc": [
+      {
+        "surface": "dig-rpc",
+        "code": -32700,
+        "name": "PARSE_ERROR",
+        "http_or_exit": 200,
+        "description": "Parse error — The request body isn’t valid JSON (id is null)."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32600,
+        "name": "INVALID_REQUEST",
+        "http_or_exit": 200,
+        "description": "Invalid request — Not a request object/array, an empty batch, or a missing method."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32601,
+        "name": "METHOD_NOT_FOUND",
+        "http_or_exit": 200,
+        "description": "Method not found — This node doesn’t implement the method."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32602,
+        "name": "INVALID_PARAMS",
+        "http_or_exit": 200,
+        "description": "Invalid params — Missing/malformed store_id, root, or retrieval_key; or \"latest\" on a store with no confirmed generation."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32603,
+        "name": "INTERNAL_ERROR",
+        "http_or_exit": 200,
+        "description": "Internal error — The node failed to satisfy a well-formed call (distinct from a miss, which is a decoy)."
+      }
+    ],
+    "digstore-cli": [
+      {
+        "surface": "digstore-cli",
+        "code": "success",
+        "exit": 0,
+        "http_or_exit": 0,
+        "description": "The command completed."
+      },
+      {
+        "surface": "digstore-cli",
+        "code": "other",
+        "exit": 1,
+        "http_or_exit": 1,
+        "description": "An unclassified error. Re-run with --verbose."
+      },
+      {
+        "surface": "digstore-cli",
+        "code": "invalid-argument",
+        "exit": 2,
+        "http_or_exit": 2,
+        "description": "A flag or argument was invalid."
+      },
+      {
+        "surface": "digstore-cli",
+        "code": "no-store",
+        "exit": 3,
+        "http_or_exit": 3,
+        "description": "No store found here. Run `digstore init`."
+      },
+      {
+        "surface": "digstore-cli",
+        "code": "not-found",
+        "exit": 4,
+        "http_or_exit": 4,
+        "description": "A resource/URN/root wasn't found."
+      },
+      {
+        "surface": "digstore-cli",
+        "code": "verification-failed",
+        "exit": 5,
+        "http_or_exit": 5,
+        "description": "Content failed cryptographic verification (wrong salt/key or tampered data)."
+      },
+      {
+        "surface": "digstore-cli",
+        "code": "network",
+        "exit": 6,
+        "http_or_exit": 6,
+        "description": "A network/transport failure."
+      },
+      {
+        "surface": "digstore-cli",
+        "code": "non-fast-forward",
+        "exit": 7,
+        "http_or_exit": 7,
+        "description": "The remote root has advanced past yours. Pull first."
+      },
+      {
+        "surface": "digstore-cli",
+        "code": "unauthorized",
+        "exit": 8,
+        "http_or_exit": 8,
+        "description": "Not authorized for this action."
+      },
+      {
+        "surface": "digstore-cli",
+        "code": "no-seed",
+        "exit": 9,
+        "http_or_exit": 9,
+        "description": "No wallet seed is set up."
+      },
+      {
+        "surface": "digstore-cli",
+        "code": "bad-passphrase",
+        "exit": 10,
+        "http_or_exit": 10,
+        "description": "Wrong passphrase for the seed."
+      },
+      {
+        "surface": "digstore-cli",
+        "code": "invalid-mnemonic",
+        "exit": 11,
+        "http_or_exit": 11,
+        "description": "The mnemonic is invalid (check word list / count)."
+      },
+      {
+        "surface": "digstore-cli",
+        "code": "insufficient-funds",
+        "exit": 12,
+        "http_or_exit": 12,
+        "description": "Not enough XCH or DIG to cover the spend (100 DIG + XCH fee per capsule)."
+      },
+      {
+        "surface": "digstore-cli",
+        "code": "chain",
+        "exit": 13,
+        "http_or_exit": 13,
+        "description": "A Chia chain/coinset error."
+      },
+      {
+        "surface": "digstore-cli",
+        "code": "confirm-timeout",
+        "exit": 14,
+        "http_or_exit": 14,
+        "description": "The on-chain confirmation timed out."
+      },
+      {
+        "surface": "digstore-cli",
+        "code": "mint-failed",
+        "exit": 15,
+        "http_or_exit": 15,
+        "description": "Minting the store singleton failed."
+      },
+      {
+        "surface": "digstore-cli",
+        "code": "update-failed",
+        "exit": 16,
+        "http_or_exit": 16,
+        "description": "Anchoring the new root failed."
+      }
+    ],
+    "dighub": [
+      {
+        "surface": "dighub",
+        "code": "WALLET_DECLINED",
+        "http": null,
+        "wire": null,
+        "http_or_exit": null,
+        "description": "You declined the signature in your wallet. Nothing was signed or broadcast."
+      },
+      {
+        "surface": "dighub",
+        "code": "DIG_INSUFFICIENT",
+        "http": 429,
+        "wire": "over_quota",
+        "http_or_exit": 429,
+        "description": "Not enough DIG in your wallet to cover this capsule (100 DIG)."
+      },
+      {
+        "surface": "dighub",
+        "code": "COIN_CONFLICT",
+        "http": 409,
+        "wire": "coin_reserved",
+        "http_or_exit": 409,
+        "description": "The coin was just spent elsewhere (double-spend / mempool conflict)."
+      },
+      {
+        "surface": "dighub",
+        "code": "REG_PENDING",
+        "http": null,
+        "wire": null,
+        "http_or_exit": null,
+        "description": "Your spend is on chain and will appear shortly. Do not sign or pay again."
+      },
+      {
+        "surface": "dighub",
+        "code": "WALLET_SESSION",
+        "http": 401,
+        "wire": "unauthorized",
+        "http_or_exit": 401,
+        "description": "Your wallet session can't sign (expired, watch-only, or missing method)."
+      },
+      {
+        "surface": "dighub",
+        "code": "NET_OFFLINE",
+        "http": null,
+        "wire": null,
+        "http_or_exit": null,
+        "description": "You appear to be offline."
+      },
+      {
+        "surface": "dighub",
+        "code": "NET_TIMEOUT",
+        "http": null,
+        "wire": null,
+        "http_or_exit": null,
+        "description": "The request timed out or couldn't reach the network."
+      },
+      {
+        "surface": "dighub",
+        "code": "SLUG_TAKEN",
+        "http": 409,
+        "wire": "slug_taken",
+        "http_or_exit": 409,
+        "description": "That project name is already taken."
+      },
+      {
+        "surface": "dighub",
+        "code": "OVER_QUOTA",
+        "http": 429,
+        "wire": "over_quota",
+        "http_or_exit": 429,
+        "description": "You've reached the project limit for this account."
+      },
+      {
+        "surface": "dighub",
+        "code": "COIN_RESERVED",
+        "http": 409,
+        "wire": "coin_reserved",
+        "http_or_exit": 409,
+        "description": "A coin is busy finishing another transaction."
+      },
+      {
+        "surface": "dighub",
+        "code": "UNAUTHORIZED",
+        "http": 401,
+        "wire": "unauthorized",
+        "http_or_exit": 401,
+        "description": "Your session isn't authorized for this."
+      },
+      {
+        "surface": "dighub",
+        "code": "FORBIDDEN",
+        "http": 403,
+        "wire": "forbidden",
+        "http_or_exit": 403,
+        "description": "You don't have permission to do this."
+      },
+      {
+        "surface": "dighub",
+        "code": "NOT_FOUND",
+        "http": 404,
+        "wire": "not_found",
+        "http_or_exit": 404,
+        "description": "The thing could not be found — it may have expired."
+      },
+      {
+        "surface": "dighub",
+        "code": "INVALID_REQUEST",
+        "http": 400,
+        "wire": "invalid_request",
+        "http_or_exit": 400,
+        "description": "Something about the request wasn't valid."
+      },
+      {
+        "surface": "dighub",
+        "code": "UNEXPECTED",
+        "http": 500,
+        "wire": null,
+        "http_or_exit": 500,
+        "description": "An unclassified error."
+      }
+    ],
+    "dig-loader": [
+      {
+        "surface": "dig-loader",
+        "code": "DIG_ERR_PROOF_MISMATCH",
+        "http_or_exit": null,
+        "description": "The served ciphertext did not verify against the on-chain generation root (tamper / wrong root)."
+      },
+      {
+        "surface": "dig-loader",
+        "code": "DIG_ERR_DECRYPT_TAG",
+        "http_or_exit": null,
+        "description": "AES-256-GCM-SIV authentication tag failed — wrong key/salt or corrupted bytes."
+      },
+      {
+        "surface": "dig-loader",
+        "code": "DIG_ERR_NOT_FOUND",
+        "http_or_exit": null,
+        "description": "A blind miss (decoy) — no resource at this retrieval key under this generation."
+      },
+      {
+        "surface": "dig-loader",
+        "code": "DIG_ERR_NETWORK",
+        "http_or_exit": null,
+        "description": "The node/CDN was unreachable or the transport failed."
+      }
+    ]
+  }
+}

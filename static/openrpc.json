@@ -1,0 +1,747 @@
+{
+  "openrpc": "1.2.6",
+  "info": {
+    "title": "dig RPC — DIG Network Content Interface",
+    "version": "1.0.0",
+    "description": "The network-wide read interface for DIG content over JSON-RPC 2.0. Blind by construction (the node holds no URN and no key), verifiable without trust (merkle inclusion proofs against the on-chain root), and streamable at any size. See https://docs.dig.net/docs/rpc/methods.",
+    "license": {
+      "name": "GPL-2.0",
+      "url": "https://github.com/DIG-Network/digstore/blob/main/LICENSE"
+    }
+  },
+  "servers": [
+    {
+      "name": "rpc.dig.net",
+      "url": "https://rpc.dig.net",
+      "summary": "The public DIG Network read endpoint."
+    }
+  ],
+  "methods": [
+    {
+      "name": "dig.getContent",
+      "summary": "Stream one resource’s ciphertext by retrieval key.",
+      "description": "The method behind every content view and public store link. Returns a chunk object; reassemble until complete, verify the inclusion proof against `root`, then decrypt with the URN-derived key.",
+      "paramStructure": "by-name",
+      "params": [
+        {
+          "name": "store_id",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/StoreId"
+          }
+        },
+        {
+          "name": "retrieval_key",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/RetrievalKey"
+          }
+        },
+        {
+          "name": "root",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/Root"
+          }
+        },
+        {
+          "name": "offset",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 0,
+            "default": 0
+          }
+        },
+        {
+          "name": "length",
+          "required": false,
+          "description": "Clamped to the node’s max chunk (3 MiB).",
+          "schema": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      ],
+      "result": {
+        "name": "chunk",
+        "schema": {
+          "$ref": "#/components/schemas/ChunkObject"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/INVALID_PARAMS"
+        },
+        {
+          "$ref": "#/components/errors/INTERNAL_ERROR"
+        }
+      ]
+    },
+    {
+      "name": "dig.getProof",
+      "summary": "Return the inclusion proof (sync) and the execution-proof status for a resource.",
+      "description": "Read-only. The merkle inclusion proof is REAL and synchronous; the ZK execution proof is produced asynchronously by the prover and only returned when you pass a `proof_id` you already requested via the gated control plane.",
+      "paramStructure": "by-name",
+      "params": [
+        {
+          "name": "store_id",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/StoreId"
+          }
+        },
+        {
+          "name": "retrieval_key",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/RetrievalKey"
+          }
+        },
+        {
+          "name": "root",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/Root"
+          }
+        },
+        {
+          "name": "proof_id",
+          "required": false,
+          "description": "An execution-proof job id to return the real receipt for.",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "result": {
+        "name": "proof",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "inclusion_proof": {
+              "type": "string",
+              "contentEncoding": "base64"
+            },
+            "program_hash": {
+              "$ref": "#/components/schemas/StoreId"
+            },
+            "root": {
+              "$ref": "#/components/schemas/StoreId"
+            },
+            "decoy": {
+              "type": "boolean"
+            },
+            "execution_proof": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "risc0 receipt or null."
+            },
+            "execution_proof_status": {
+              "type": "string",
+              "enum": [
+                "succeeded",
+                "running",
+                "queued",
+                "not_found",
+                "request_via_control_plane"
+              ]
+            },
+            "node_pubkey": {
+              "type": "string"
+            },
+            "block_header": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/INVALID_PARAMS"
+        },
+        {
+          "$ref": "#/components/errors/INTERNAL_ERROR"
+        }
+      ]
+    },
+    {
+      "name": "dig.getProofStatus",
+      "summary": "Poll a REAL execution-proof job by id.",
+      "description": "Returns the job status and, when terminal, the real risc0 receipt. Never a mock receipt.",
+      "paramStructure": "by-name",
+      "params": [
+        {
+          "name": "store_id",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/StoreId"
+          }
+        },
+        {
+          "name": "proof_id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "result": {
+        "name": "status",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "proof_id": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "queued",
+                "running",
+                "succeeded",
+                "failed"
+              ]
+            },
+            "receipt": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "node_pubkey": {
+              "type": "string"
+            },
+            "block_header": {
+              "type": "string"
+            },
+            "root": {
+              "$ref": "#/components/schemas/StoreId"
+            }
+          }
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/INVALID_PARAMS"
+        },
+        {
+          "$ref": "#/components/errors/INTERNAL_ERROR"
+        }
+      ]
+    },
+    {
+      "name": "dig.getCapsule",
+      "summary": "Stream an entire compiled capsule (the whole .dig module) for one generation.",
+      "description": "Address a capsule by its (store_id, root) pair. The capsule self-verifies on install (store id + signed root + on-chain root), so `inclusion_proof` is null here. The alias dig.getModule is accepted for identical behavior.",
+      "paramStructure": "by-name",
+      "params": [
+        {
+          "name": "store_id",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/StoreId"
+          }
+        },
+        {
+          "name": "root",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/Root"
+          }
+        },
+        {
+          "name": "offset",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 0,
+            "default": 0
+          }
+        },
+        {
+          "name": "length",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      ],
+      "result": {
+        "name": "chunk",
+        "schema": {
+          "$ref": "#/components/schemas/ChunkObject"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/INVALID_PARAMS"
+        },
+        {
+          "$ref": "#/components/errors/INTERNAL_ERROR"
+        }
+      ]
+    },
+    {
+      "name": "dig.getManifest",
+      "summary": "Convenience over dig.getContent for the store's public discovery manifest.",
+      "description": "The node derives the canonical retrieval key for .well-known/dig/manifest.json itself.",
+      "paramStructure": "by-name",
+      "params": [
+        {
+          "name": "store_id",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/StoreId"
+          }
+        },
+        {
+          "name": "root",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/Root"
+          }
+        },
+        {
+          "name": "offset",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 0,
+            "default": 0
+          }
+        },
+        {
+          "name": "length",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      ],
+      "result": {
+        "name": "chunk",
+        "schema": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/ChunkObject"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "retrieval_key": {
+                  "$ref": "#/components/schemas/RetrievalKey"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/INVALID_PARAMS"
+        },
+        {
+          "$ref": "#/components/errors/INTERNAL_ERROR"
+        }
+      ]
+    },
+    {
+      "name": "dig.getMetadata",
+      "summary": "Read the store's plaintext metadata manifest from the .dig.",
+      "description": "Metadata is plaintext, ungated public discovery info embedded in the module (Digstore §8.4) — not a content resource, no inclusion proof, never encrypted. Its on-chain binding is the module program_hash.",
+      "paramStructure": "by-name",
+      "params": [
+        {
+          "name": "store_id",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/StoreId"
+          }
+        },
+        {
+          "name": "root",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/Root"
+          }
+        }
+      ],
+      "result": {
+        "name": "metadata",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "manifest": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/MetadataManifest"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "program_hash": {
+              "$ref": "#/components/schemas/StoreId"
+            },
+            "root": {
+              "$ref": "#/components/schemas/StoreId"
+            },
+            "decoy": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/INVALID_PARAMS"
+        },
+        {
+          "$ref": "#/components/errors/INTERNAL_ERROR"
+        }
+      ]
+    },
+    {
+      "name": "dig.listCapsules",
+      "summary": "Return the store's confirmed capsules — one entry per anchored generation.",
+      "description": "Discovery metadata, not content: only the public on-chain generation list.",
+      "paramStructure": "by-name",
+      "params": [
+        {
+          "name": "store_id",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/StoreId"
+          }
+        }
+      ],
+      "result": {
+        "name": "capsules",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "store_id": {
+              "$ref": "#/components/schemas/StoreId"
+            },
+            "capsules": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/CapsuleEntry"
+              }
+            }
+          }
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/INVALID_PARAMS"
+        },
+        {
+          "$ref": "#/components/errors/INTERNAL_ERROR"
+        }
+      ]
+    },
+    {
+      "name": "dig.health",
+      "summary": "Service discovery: liveness + the implemented method list.",
+      "description": "Takes no parameters.",
+      "paramStructure": "by-name",
+      "params": [],
+      "result": {
+        "name": "health",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "ok": {
+              "type": "boolean"
+            },
+            "service": {
+              "type": "string"
+            },
+            "methods": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "dig.methods",
+      "summary": "Service discovery: the method catalogue this node implements.",
+      "description": "Takes no parameters. Use it to confirm a third-party node implements the methods you need before relying on it.",
+      "paramStructure": "by-name",
+      "params": [],
+      "result": {
+        "name": "methods",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "methods": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "errors": []
+    }
+  ],
+  "components": {
+    "schemas": {
+      "StoreId": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$",
+        "description": "32 bytes as 64 lower-case hex characters.",
+        "title": "StoreId"
+      },
+      "RetrievalKey": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$",
+        "description": "retrieval_key = sha256(urn).",
+        "title": "RetrievalKey"
+      },
+      "Root": {
+        "title": "Root",
+        "oneOf": [
+          {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          {
+            "type": "string",
+            "const": "latest"
+          }
+        ],
+        "description": "A generation root: 64 hex of one capsule, or the literal \"latest\" for the newest confirmed generation."
+      },
+      "ChunkObject": {
+        "title": "ChunkObject",
+        "type": "object",
+        "description": "The streaming chunk object returned by every byte-bearing method (dig.getContent, dig.getCapsule, dig.getManifest). Reassemble until `complete`, verify `inclusion_proof` over the whole ciphertext against `root`, then decrypt.",
+        "required": [
+          "ciphertext",
+          "total_length",
+          "offset",
+          "length",
+          "complete",
+          "next_offset",
+          "inclusion_proof",
+          "decoy",
+          "root"
+        ],
+        "properties": {
+          "ciphertext": {
+            "type": "string",
+            "contentEncoding": "base64",
+            "description": "This chunk's bytes, standard base64."
+          },
+          "total_length": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "The full object's byte length before chunking."
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Byte offset where this chunk begins in the full object."
+          },
+          "length": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "This chunk's byte length (= decoded ciphertext length)."
+          },
+          "complete": {
+            "type": "boolean",
+            "description": "true when offset + length >= total_length."
+          },
+          "next_offset": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "The offset to request next, or null when complete."
+          },
+          "inclusion_proof": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "contentEncoding": "base64",
+            "description": "Base64 merkle inclusion proof for the whole resource (null for capsules and decoys)."
+          },
+          "decoy": {
+            "type": "boolean",
+            "description": "true if this is a blind-miss decoy stream. Treat as not-found."
+          },
+          "root": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "description": "The resolved generation root (hex). Pin subsequent chunks to it."
+          },
+          "program_hash": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "description": "The served .dig's sha256 (hex)."
+          }
+        }
+      },
+      "MetadataManifest": {
+        "title": "MetadataManifest",
+        "type": "object",
+        "description": "The store's plaintext, ungated metadata manifest, embedded in the compiled module (Digstore §8.4).",
+        "properties": {
+          "schema_version": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "authors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "handle": {
+                  "type": "string"
+                },
+                "contact": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "license": {
+            "type": "string"
+          },
+          "homepage": {
+            "type": "string"
+          },
+          "repository": {
+            "type": "string"
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "icon": {
+            "type": "string"
+          },
+          "content_type": {
+            "type": "string"
+          },
+          "links": {
+            "type": "object"
+          },
+          "custom": {
+            "type": "object"
+          }
+        }
+      },
+      "CapsuleEntry": {
+        "title": "CapsuleEntry",
+        "type": "object",
+        "description": "One confirmed capsule (anchored generation) in a store lineage.",
+        "required": [
+          "seq",
+          "root"
+        ],
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Monotonic generation number."
+          },
+          "root": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "description": "The generation root passed to the byte methods."
+          },
+          "program_hash": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "description": "32 bytes as 64 lower-case hex characters."
+          },
+          "coin_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "description": "The anchoring spend coin id."
+          },
+          "anchored_at": {
+            "type": "integer",
+            "description": "Unix timestamp of the anchoring spend."
+          }
+        }
+      }
+    },
+    "errors": {
+      "PARSE_ERROR": {
+        "code": -32700,
+        "message": "Parse error",
+        "data": {
+          "type": "object"
+        }
+      },
+      "INVALID_REQUEST": {
+        "code": -32600,
+        "message": "Invalid request",
+        "data": {
+          "type": "object"
+        }
+      },
+      "METHOD_NOT_FOUND": {
+        "code": -32601,
+        "message": "Method not found",
+        "data": {
+          "type": "object"
+        }
+      },
+      "INVALID_PARAMS": {
+        "code": -32602,
+        "message": "Invalid params",
+        "data": {
+          "type": "object"
+        }
+      },
+      "INTERNAL_ERROR": {
+        "code": -32603,
+        "message": "Internal error",
+        "data": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "dig RPC methods (prose)",
+    "url": "https://docs.dig.net/docs/rpc/methods"
+  }
+}

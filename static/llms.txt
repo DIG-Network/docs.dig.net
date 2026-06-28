@@ -79,8 +79,13 @@ Audiences, simple to deep: (1) Hub users / frontend deployers, (2) integrating d
 
 ## Machine-readable
 
+- [dig RPC OpenRPC document](https://docs.dig.net/openrpc.json): the canonical machine-readable spec for the dig JSON-RPC 2.0 read interface — every method (dig.getContent, dig.getProof, dig.getProofStatus, dig.getCapsule, dig.getManifest, dig.getMetadata, dig.listCapsules, dig.health, dig.methods), request/response JSON Schemas (StoreId, RetrievalKey, Root, ChunkObject, …), and the catalogued JSON-RPC error responses. Server: https://rpc.dig.net. Generate a typed client from this. Human page: https://docs.dig.net/docs/rpc/methods
+- [Error codes catalog](https://docs.dig.net/error-codes.json): the ecosystem cross-surface error catalog — `[{surface, code, http_or_exit, description}]` across `dig-rpc` (JSON-RPC -32xxx), `digstore-cli` (exit codes 0–16), `dighub` (the hub's user-facing codes + their HTTP status / wire code), and `dig-loader` (the dig:// content-loader DIG_ERR_* codes). Indexed by surface under `bySurface`. Human page: https://docs.dig.net/docs/support/error-codes
 - [Knowledge graph](https://docs.dig.net/knowledge-graph.json): nodes (concepts + docs) and typed edges (defines, part-of, requires, relates-to, see-also) derived from tags and related-links.
 - [Sitemap](https://docs.dig.net/sitemap.xml): every public route.
+- [Hub REST OpenAPI](https://hub.dig.net/v1/openapi.json): the OpenAPI 3 document for the DIGHUb `/v1` control plane (account/auth/store/domain/badge lifecycle). Served by the hub, not docs.dig.net — listed here as the canonical entrypoint for the hub's REST surface.
+
+The core concepts an agent should resolve first: the **capsule** (`storeId:rootHash` — one immutable store generation) and the **store** (a sequence of capsules); both are defined at https://docs.dig.net/docs/concepts. Canonical entrypoints: docs https://docs.dig.net, hub (publish/manage) https://hub.dig.net, dig RPC endpoint https://rpc.dig.net, project home https://dig.net.
 
 ## Optional
 

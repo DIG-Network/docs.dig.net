@@ -17,9 +17,13 @@ tags:
 
 # Error codes
 
-A consolidated reference for every error code you might see, across the three surfaces: the **dig RPC** (JSON-RPC), the **`digstore` CLI** (process exit codes), and **DIGHUb** (the web app's user-facing codes). Look up the code you got; each row says what it means and what to do.
+A consolidated reference for every error code you might see, across the surfaces: the **dig RPC** (JSON-RPC), the **`digstore` CLI** (process exit codes), **DIGHUb** (the web app's user-facing codes), and the **dig:// content loader** (the DIG Browser / extension). Look up the code you got; each row says what it means and what to do.
 
 For step-by-step fixes, see [Troubleshooting](./troubleshooting.md).
+
+:::tip Machine-readable
+This catalog is also published as [`error-codes.json`](https://docs.dig.net/error-codes.json) — a flat `[{surface, code, http_or_exit, description}]` list (plus a `bySurface` index) so an agent can branch on a code without scraping this table. It is generated from the same source as the tables below and drift-checked against them on every build, so the two can never disagree.
+:::
 
 ## dig RPC (JSON-RPC)
 
@@ -82,6 +86,17 @@ When a publish or account action fails, DIGHUb shows a plain-language message **
 :::note Codes are stable; messages may improve
 The **code** is the stable identifier — quote it in a [report](./get-help.md). The wording of a message may change as the copy gets clearer.
 :::
+
+## dig:// content loader
+
+When you open `chia://` content (in the DIG Browser, or via the extension) and it can't be served, the loader is **fail-closed** — it never shows unverified bytes — and surfaces a stable code so an agent can branch on *why*. These are catalogued in [`error-codes.json`](https://docs.dig.net/error-codes.json) under the `dig-loader` surface.
+
+| Code | What it means | What to do |
+|---|---|---|
+| `DIG_ERR_PROOF_MISMATCH` | The served ciphertext did not verify against the on-chain generation root (tamper, or the wrong root). | Refresh; if it persists the host is serving bad bytes — try another node. |
+| `DIG_ERR_DECRYPT_TAG` | The AES-256-GCM-SIV authentication tag failed — wrong key/salt or corrupted bytes. | Recheck the URN/salt you opened; the content may be private. |
+| `DIG_ERR_NOT_FOUND` | A blind miss (decoy) — there is no resource at this address under this generation. | Check the URN/path and that the capsule actually contains it. |
+| `DIG_ERR_NETWORK` | The node or CDN was unreachable, or the transport failed. | Check your connection; try again or point at another node. |
 
 ## Related
 

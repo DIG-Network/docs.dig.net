@@ -5,9 +5,11 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "knowledge-graph": "node scripts/gen-knowledge-graph.mjs",
-    "prestart": "node scripts/gen-knowledge-graph.mjs",
+    "machine-specs": "node scripts/gen-machine-specs.mjs",
+    "gen": "node scripts/gen-knowledge-graph.mjs && node scripts/gen-machine-specs.mjs",
+    "prestart": "npm run gen",
     "start": "docusaurus start",
-    "prebuild": "node scripts/gen-knowledge-graph.mjs",
+    "prebuild": "npm run gen",
     "build": "docusaurus build --out-dir dist",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",

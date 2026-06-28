@@ -107,6 +107,82 @@ const config: Config = {
       tagName: "meta",
       attributes: { name: "twitter:creator", content: "@digdotnet" },
     },
+    // ---- Site-wide JSON-LD (schema.org) ----
+    // A single @graph emitted on every page: the Organization, the WebSite
+    // (with a SearchAction the per-page TechArticle/DefinedTerm blocks attach
+    // to via isPartOf), and the two machine-readable Datasets (the dig RPC
+    // OpenRPC + the cross-surface error catalog). This gives crawlers/agents a
+    // stable site identity and a discoverable pointer to the machine surfaces
+    // without executing JS. Per-page entity JSON-LD lives in
+    // src/theme/DocItem/Footer (TechArticle / DefinedTerm).
+    {
+      tagName: "script",
+      attributes: { type: "application/ld+json" },
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://dig.net/#organization",
+            name: "DIG Network",
+            url: "https://dig.net",
+            sameAs: [
+              "https://github.com/DIG-Network",
+              "https://discord.gg/dignetwork",
+              "https://x.com/digdotnet",
+            ],
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://docs.dig.net/#website",
+            name: "DIG Network Documentation",
+            url: "https://docs.dig.net/",
+            inLanguage: "en",
+            publisher: { "@id": "https://dig.net/#organization" },
+            potentialAction: {
+              "@type": "SearchAction",
+              target: {
+                "@type": "EntryPoint",
+                urlTemplate: "https://docs.dig.net/search?q={search_term_string}",
+              },
+              "query-input": "required name=search_term_string",
+            },
+          },
+          {
+            "@type": "Dataset",
+            "@id": "https://docs.dig.net/openrpc.json#dataset",
+            name: "dig RPC OpenRPC document",
+            description:
+              "Machine-readable OpenRPC 1.2.6 spec for the dig JSON-RPC read interface (rpc.dig.net): methods, request/response JSON Schemas, and catalogued error responses.",
+            url: "https://docs.dig.net/docs/rpc/methods",
+            encodingFormat: "application/json",
+            distribution: {
+              "@type": "DataDownload",
+              encodingFormat: "application/json",
+              contentUrl: "https://docs.dig.net/openrpc.json",
+            },
+            isPartOf: { "@id": "https://docs.dig.net/#website" },
+            creator: { "@id": "https://dig.net/#organization" },
+          },
+          {
+            "@type": "Dataset",
+            "@id": "https://docs.dig.net/error-codes.json#dataset",
+            name: "DIG ecosystem error-code catalog",
+            description:
+              "Cross-surface error catalog: dig RPC JSON-RPC codes, digstore CLI exit codes, DIGHUb user-facing codes, and dig:// loader codes, as [{surface, code, http_or_exit, description}].",
+            url: "https://docs.dig.net/docs/support/error-codes",
+            encodingFormat: "application/json",
+            distribution: {
+              "@type": "DataDownload",
+              encodingFormat: "application/json",
+              contentUrl: "https://docs.dig.net/error-codes.json",
+            },
+            isPartOf: { "@id": "https://docs.dig.net/#website" },
+            creator: { "@id": "https://dig.net/#organization" },
+          },
+        ],
+      }),
+    },
   ],
 
   themeConfig: {
