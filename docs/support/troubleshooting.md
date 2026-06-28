@@ -30,9 +30,9 @@ Publishing a capsule costs a flat **100 DIG + a small XCH fee**, and your wallet
 
 - Check your balance: `digstore balance` (or the DIGHub publish screen).
 - Fund the **receive address** it shows. You need both: XCH for the fee and 100 DIG per capsule. DIG arrives as a Chia CAT at the same `xch1…` address.
-- Need DIG? Swap XCH for it on [TibetSwap ↗](https://v2.tibetswap.io/), then send it to your receive address.
+- Need DIG? Swap XCH for it on [TibetSwap ↗](https://v2.tibetswap.io/), [dexie.space ↗](https://dexie.space/offers/XCH/a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367df16832f81), or [9mm.pro ↗](https://xch.9mm.pro/token/a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367df16832f81), then send it to your receive address.
 
-See [Funding a wallet](../digstore/cli/onchain-anchoring.md#funding-the-wallet).
+See [Where to get DIG](../digstore/cli/onchain-anchoring.md#where-to-get-dig) and [Funding a wallet](../digstore/cli/onchain-anchoring.md#funding-the-wallet).
 
 ### The confirmation timed out {#confirm-timeout}
 

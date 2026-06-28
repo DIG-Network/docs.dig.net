@@ -37,6 +37,10 @@ No, and that's intentional. Each capsule compiles to a **fixed-size** module (pa
 
 Not to build and preview. You connect a Chia wallet only at the moment you publish. Your **wallet is your account** — no email, no password.
 
+## Where do I get DIG?
+
+DIG is the DIG Network token (a Chia CAT). Swap XCH for it on [TibetSwap ↗](https://v2.tibetswap.io/), [dexie.space ↗](https://dexie.space/offers/XCH/a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367df16832f81), or [9mm.pro ↗](https://xch.9mm.pro/token/a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367df16832f81), then send it to your wallet's receive address. See [Where to get DIG](../digstore/cli/onchain-anchoring.md#where-to-get-dig). DIG asset id: `a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367df16832f81`.
+
 ## Is there a testnet?
 
 No. There's no testnet mode; everything runs on **Chia mainnet**. Use a wallet funded with only as much XCH and DIG as you intend to spend. (You can still iterate for free — see above — because previews never touch the chain.)
