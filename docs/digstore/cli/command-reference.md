@@ -38,6 +38,16 @@ Every `digstore` command. Run `digstore <command> --help` for full flags and exa
 
 The intended flow: `digstore new <template>` → edit → `digstore dev` (free preview) → `digstore doctor` → `digstore commit` / `digstore deploy` (the only step that spends DIG).
 
+## Get set up & sign in
+
+| Command | What it does |
+|---|---|
+| `digstore setup` (alias: `auth`) | One-shot onboarding: import/generate a seed, check funds, and (optionally) sign in to DIGHub. Safe to re-run. `--generate` / `--import`, `--no-login`, `--json`. |
+| `digstore link <storeID> [--output-dir <dir>] [--remote <url>]` | Connect the current folder to an existing store — writes a `dig.toml` + remote so `digstore dev`/`deploy` work here. |
+| `digstore login` | Sign in to your DIGHub account via device pairing (no password). |
+| `digstore whoami` | Show the current DIGHub login (handle / token presence). |
+| `digstore logout` | Sign out of DIGHub (clear the stored session). |
+
 ## Wallet & on-chain anchoring
 
 | Command | What it does |
@@ -100,21 +110,35 @@ A single workspace (`.dig/`) can hold many projects. The commands below create a
 | `digstore push [remote]` | Push the local project's content + signed head |
 | `digstore pull [remote]` | Pull the latest content + signed head. Verified, including the **on-chain root check** |
 | `digstore revoke [--root <hex>\|--all] [--reason <r>]` | Revoke a published root or the whole project with a signed tombstone |
+| `digstore serve [--bind <addr:port>] [--store <name>]` | Run a `dig://` remote node for the active store — serves `clone`/`pull`/`push` over the §21 protocol (the same one `rpc.dig.net` speaks), so anyone can host an origin. Each request is authenticated by a signed message from the caller's identity key. |
 
 ## CI deploy
 
 | Command | What it does |
 |---|---|
-| `digstore deploy [--store-id <hex>] [--output-dir <dir>] [--build-command <cmd>] [-m <msg>] [--remote <url>]` | Advance an **existing** store from a fresh checkout (CI): reconstruct it locally, stage the output dir, commit + push a new capsule. Reads `dig.toml`. Never mints. |
-| `digstore deploy-key export [--out <file>]` | Export the store's publisher deploy key (64-hex) to store as a CI secret |
+| `digstore deploy [--store-id <hex>] [--output-dir <dir>] [--build-command <cmd>] [-m <msg>] [--remote <url>] [--writer-key <hex>] [--preview] [--if-changed]` | Advance an **existing** store from a fresh checkout (CI): reconstruct it locally, stage the output dir, commit + push a new capsule. Reads `dig.toml`. Never mints. `--writer-key` advances the root with a revocable writer-delegated key (no owner seed); `--preview` produces a free, no-spend content-addressed build; `--if-changed` makes a byte-identical build a no-op. |
+| `digstore deploy-key export [--out <file>]` | Export the store's §21 publisher deploy key (64-hex) to store as a CI secret |
 
 See [Deploy from GitHub Actions](./deploy-from-github-actions.md) for the full workflow.
+
+## Assets — NFTs, collections, DIDs, offers
+
+Build the spend with the canonical CHIP-0035 builders, sign with your wallet, and push via coinset — every command is `--json` / `--dry-run` CI-safe.
+
+| Command | What it does |
+|---|---|
+| `digstore nft mint\|bulk\|transfer\|list …` | Mint an NFT (media stored permanently in a DIG capsule), bulk-mint, transfer, or list the NFTs the wallet owns. |
+| `digstore collection create\|mint\|show\|list …` | Define a collection (shared id/name/royalty) and bulk-mint its items from a traits manifest, attributed to a creator DID. |
+| `digstore did create …` | Create a creator-identity DID (decentralized identifier) owned by the wallet. |
+| `digstore offer make\|take\|show …` | Make, take, and inspect Chia offers (XCH / CAT trades). |
 
 ## Maintenance
 
 | Command | What it does |
 |---|---|
 | `digstore update [--check] [--yes]` | Update DigStore to the latest release |
+| `digstore compile [--metadata]` | Compile the active project to its self-serving `.dig` WASM module (used internally by the publish flow). |
+| `digstore completion <shell>` | Print a shell completion script (`bash`, `zsh`, `fish`, `powershell`, `elvish`). |
 
 ## Global flags
 

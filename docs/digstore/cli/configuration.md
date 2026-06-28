@@ -59,7 +59,7 @@ flags  >  environment  >  dig.toml  >  built-in defaults
 So `digstore deploy --output-dir build` overrides `output-dir = "dist"` in the file for that one run, and the file overrides the built-in `dist` default.
 
 :::note Secrets live in the environment, never in `dig.toml`
-Credentials — your wallet mnemonic (`DIGSTORE_PASSPHRASE` / the deploy wallet seed), the publisher deploy key (`DIGSTORE_DEPLOY_KEY`), a private store's salt (`DIGSTORE_STORE_SALT`) — are read from the **environment**, not the manifest. `dig.toml` is committed; secrets are not. See [Deploy from GitHub Actions](./deploy-from-github-actions.md#the-one-security-caveat).
+Credentials — your wallet mnemonic (`DIGSTORE_PASSPHRASE` / the deploy wallet seed), the writer deploy-key (`DIGSTORE_WRITER_KEY`), the publisher deploy key (`DIGSTORE_DEPLOY_KEY`), a private store's salt (`DIGSTORE_STORE_SALT`) — are read from the **environment**, not the manifest. `dig.toml` is committed; secrets are not. See [Deploy from GitHub Actions](./deploy-from-github-actions.md#security).
 :::
 
 ## Build-time values for a dapp

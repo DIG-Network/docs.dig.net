@@ -134,8 +134,10 @@ build is a no-op — no spend. → [Deploy from GitHub Actions](./digstore/cli/d
 
 The **DIG SDK** (`@dignetwork/dig-sdk`) is the typed npm package for integrating developers: a
 `ChiaProvider` (prefers injected [`window.chia`](#window-chia), falls back to WalletConnect → Sage),
-a `DigClient` (reads verified, encrypted content over the [dig RPC](#dig-rpc)), and the canonical
-CHIP-0035 spend builder re-exported at the `/spend` subpath. → [Build a dapp on Chia](./build-a-dapp/tutorial.md)
+a `DigClient` (reads verified, encrypted content over the [dig RPC](#dig-rpc)), a `Paywall`
+(a high-level pay-to-unlock / NFT-gated-access helper that composes the provider with the spend
+builder), and the canonical CHIP-0035 spend builder re-exported at the `/spend` subpath.
+→ [Build a dapp on Chia](./build-a-dapp/tutorial.md)
 
 ## The dig RPC {#dig-rpc}
 

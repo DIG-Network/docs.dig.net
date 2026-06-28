@@ -152,6 +152,19 @@ const html = await dig.readText({
 
 `DigClient` derives the URN's keys in the browser, verifies inclusion against the on-chain root, and decrypts — the serving host stays blind. See [What is the dig RPC?](../rpc/what-is-the-dig-rpc.md).
 
+:::tip Charging for access? Use `Paywall`
+To monetize — pay-to-unlock content, or gate it on owning an NFT — the SDK ships a high-level **`Paywall`** helper that composes a connected `ChiaProvider` with the spend builder so you don't wire payments by hand: `paywall.requestPayment({ amount, owner })` pays the dapp owner and returns a receipt, and `paywall.verifyReceipt(...)` / `paywall.proveAccess({ nft | collection })` gate access.
+
+```jsx
+import { ChiaProvider, Paywall } from "@dignetwork/dig-sdk";
+
+const provider = await ChiaProvider.connect({ mode: "auto" });
+const paywall = new Paywall({ provider });
+const receipt = await paywall.requestPayment({ amount: 5, owner: "<your-address>" });
+if (await paywall.verifyReceipt(receipt)) { /* unlock the content */ }
+```
+:::
+
 ## 5. Deploy on-chain — 100 DIG
 
 You build and preview for free; this is the only step that spends. First create the store **once**:
