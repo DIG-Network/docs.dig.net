@@ -24,11 +24,11 @@ The failures you're most likely to hit, and how to fix them. Each one names the 
 
 ### "Insufficient DIG" / "not enough DIG" {#insufficient-dig}
 
-*CLI exit `12` · DIGHub `DIG_INSUFFICIENT`*
+*CLI exit `12` · DIGHUb `DIG_INSUFFICIENT`*
 
-Publishing a capsule costs a flat **100 DIG + a small XCH fee**, and your wallet is short on one of them.
+Publishing a capsule costs a flat **100 $DIG + a small XCH fee**, and your wallet is short on one of them.
 
-- Check your balance: `digstore balance` (or the DIGHub publish screen).
+- Check your balance: `digstore balance` (or the DIGHUb publish screen).
 - Fund the **receive address** it shows. You need both: XCH for the fee and 100 DIG per capsule. DIG arrives as a Chia CAT at the same `xch1…` address.
 - Need DIG? Swap XCH for it on [TibetSwap ↗](https://v2.tibetswap.io/), [dexie.space ↗](https://dexie.space/offers/XCH/a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367df16832f81), or [9mm.pro ↗](https://xch.9mm.pro/token/a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367df16832f81), then send it to your receive address.
 
@@ -36,7 +36,7 @@ See [Where to get DIG](../digstore/cli/onchain-anchoring.md#where-to-get-dig) an
 
 ### The confirmation timed out {#confirm-timeout}
 
-*CLI exit `14` · DIGHub `REG_PENDING`*
+*CLI exit `14` · DIGHUb `REG_PENDING`*
 
 `init`/`commit` block until Chia confirms the spend. On a slow block the wait can time out **even though the transaction will still confirm**. Nothing is lost.
 
@@ -93,16 +93,16 @@ Confirm the store has at least one confirmed capsule; `"latest"` on a brand-new 
 
 ### "Your wallet session can't sign" {#wallet-session}
 
-*DIGHub `WALLET_SESSION`*
+*DIGHUb `WALLET_SESSION`*
 
-- **Disconnect and reconnect** your wallet in DIGHub.
+- **Disconnect and reconnect** your wallet in DIGHUb.
 - Make sure **Sage is up to date** — older versions miss some signing methods.
 - A **watch-only** wallet can't sign; connect a wallet that holds the key.
 - Wrong network? Connect a **Chia mainnet** (`xch1…`) wallet.
 
 ### "You declined the request" {#declined}
 
-*DIGHub `WALLET_DECLINED`*
+*DIGHUb `WALLET_DECLINED`*
 
 Not an error — you cancelled the signature in your wallet. Nothing was signed or broadcast. Re-try and approve if you meant to publish.
 

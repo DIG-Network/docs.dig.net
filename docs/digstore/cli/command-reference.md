@@ -27,7 +27,7 @@ Every `digstore` command. Run `digstore <command> --help` for full flags and exa
 
 ## Start a project & preview — free, no spend
 
-**Try it before you pay.** Scaffolding, previewing, and cost-previews cost nothing — DIG is spent only when you publish (`commit`/`deploy`). Start here:
+**Try it before you pay.** Scaffolding, previewing, and cost-previews cost nothing — $DIG is spent only when you publish (`commit`/`deploy`). Start here:
 
 | Command | What it does |
 |---|---|
@@ -42,11 +42,11 @@ The intended flow: `digstore new <template>` → edit → `digstore dev` (free p
 
 | Command | What it does |
 |---|---|
-| `digstore setup` (alias: `auth`) | One-shot onboarding: import/generate a seed, check funds, and (optionally) sign in to DIGHub. Safe to re-run. `--generate` / `--import`, `--no-login`, `--json`. |
+| `digstore setup` (alias: `auth`) | One-shot onboarding: import/generate a seed, check funds, and (optionally) sign in to DIGHUb. Safe to re-run. `--generate` / `--import`, `--no-login`, `--json`. |
 | `digstore link <storeID> [--output-dir <dir>] [--remote <url>]` | Connect the current folder to an existing store — writes a `dig.toml` + remote so `digstore dev`/`deploy` work here. |
-| `digstore login` | Sign in to your DIGHub account via device pairing (no password). |
-| `digstore whoami` | Show the current DIGHub login (handle / token presence). |
-| `digstore logout` | Sign out of DIGHub (clear the stored session). |
+| `digstore login` | Sign in to your DIGHUb account via device pairing (no password). |
+| `digstore whoami` | Show the current DIGHUb login (handle / token presence). |
+| `digstore logout` | Sign out of DIGHUb (clear the stored session). |
 
 ## Wallet & on-chain anchoring
 
