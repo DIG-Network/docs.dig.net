@@ -115,6 +115,13 @@
       "tag": "window-chia"
     },
     {
+      "id": "concept:provider-spec",
+      "type": "concept",
+      "title": "window.chia provider spec",
+      "url": "https://docs.dig.net/docs/tags/provider-spec",
+      "tag": "provider-spec"
+    },
+    {
       "id": "concept:browser",
       "type": "concept",
       "title": "DIG Browser",
@@ -218,6 +225,7 @@
         "dig-rpc",
         "chia-protocol",
         "window-chia",
+        "provider-spec",
         "digstore-cli",
         "dig-toml",
         "dig-sdk",
@@ -429,6 +437,20 @@
         "digstore-cli",
         "dighub",
         "browser"
+      ]
+    },
+    {
+      "id": "/docs/protocol/window-chia-provider",
+      "type": "doc",
+      "title": "The window.chia provider (specification)",
+      "url": "https://docs.dig.net/docs/protocol/window-chia-provider",
+      "tags": [
+        "window-chia",
+        "provider-spec",
+        "chip-0002",
+        "browser",
+        "dig-sdk",
+        "chia-protocol"
       ]
     },
     {
@@ -726,6 +748,11 @@
     },
     {
       "from": "/docs/concepts",
+      "to": "concept:provider-spec",
+      "type": "defines"
+    },
+    {
+      "from": "/docs/concepts",
       "to": "concept:browser",
       "type": "defines"
     },
@@ -902,6 +929,11 @@
     {
       "from": "/docs/concepts",
       "to": "concept:window-chia",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/concepts",
+      "to": "concept:provider-spec",
       "type": "part-of"
     },
     {
@@ -1360,6 +1392,36 @@
       "type": "part-of"
     },
     {
+      "from": "/docs/protocol/window-chia-provider",
+      "to": "concept:window-chia",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/window-chia-provider",
+      "to": "concept:provider-spec",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/window-chia-provider",
+      "to": "concept:chip-0002",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/window-chia-provider",
+      "to": "concept:browser",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/window-chia-provider",
+      "to": "concept:dig-sdk",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/window-chia-provider",
+      "to": "concept:chia-protocol",
+      "type": "part-of"
+    },
+    {
       "from": "/docs/quickstart",
       "to": "concept:dighub",
       "type": "part-of"
@@ -1761,6 +1823,11 @@
     },
     {
       "from": "/docs/browser/using-window-chia",
+      "to": "/docs/protocol/window-chia-provider",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/browser/using-window-chia",
       "to": "/docs/browser/chia-protocol",
       "type": "see-also"
     },
@@ -1812,6 +1879,11 @@
     {
       "from": "/docs/build-a-dapp/tutorial",
       "to": "/docs/browser/using-window-chia",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/tutorial",
+      "to": "/docs/protocol/window-chia-provider",
       "type": "see-also"
     },
     {
@@ -2352,6 +2424,31 @@
     {
       "from": "/docs",
       "to": "/docs/whitepapers",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/window-chia-provider",
+      "to": "/docs/browser/using-window-chia",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/window-chia-provider",
+      "to": "/docs/browser/chia-protocol",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/window-chia-provider",
+      "to": "/docs/build-a-dapp/tutorial",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/window-chia-provider",
+      "to": "/docs/support/error-codes",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/window-chia-provider",
+      "to": "/docs/concepts",
       "type": "see-also"
     },
     {

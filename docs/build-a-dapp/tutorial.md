@@ -103,7 +103,7 @@ export default function App() {
 }
 ```
 
-One `connect()` works in the DIG Browser (no QR, no relay) and everywhere else (WalletConnect). `provider.backend` tells you which transport connected. The method names and result shapes are identical either way — see [Using `window.chia`](../browser/using-window-chia.md) for the full provider surface.
+One `connect()` works in the DIG Browser (no QR, no relay) and everywhere else (WalletConnect). `provider.backend` tells you which transport connected. The method names and result shapes are identical either way — see [Using `window.chia`](../browser/using-window-chia.md) for the integration guide, or [the normative `window.chia` provider spec](../protocol/window-chia-provider.md) for the exact method/param/return/error contract.
 
 :::note The WalletConnect project id is a PUBLIC build-time value
 `VITE_WC_PROJECT_ID` is compiled into your bundle and is world-readable — that's correct for a WalletConnect cloud id. **Never** put a wallet seed, deploy key, or any secret in the bundle: a capsule is a [blind static artifact with no server secrets](../digstore/cli/configuration.md#the-one-hard-rule-no-server-secrets-in-a-blind-static-capsule).
@@ -180,6 +180,7 @@ You went from an empty folder to a wallet-aware React app, live on Chia mainnet 
 
 - [Example gallery](./example-gallery.md) — clone a finished dapp and open it in a template
 - [Using window.chia](../browser/using-window-chia.md) — the in-page wallet provider in full
+- [The window.chia provider spec](../protocol/window-chia-provider.md) — the normative, versioned provider contract
 - [Project config & build-time values](../digstore/cli/configuration.md) — dig.toml + PUBLIC config
 - [Deploy from GitHub Actions](../digstore/cli/deploy-from-github-actions.md) — push-to-deploy in CI
 - [What is the dig RPC?](../rpc/what-is-the-dig-rpc.md) — reading verified, encrypted content

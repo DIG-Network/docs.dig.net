@@ -55,6 +55,10 @@ Audiences, simple to deep: (1) Hub users / frontend deployers, (2) integrating d
 - [The chia:// protocol](https://docs.dig.net/docs/browser/chia-protocol): the browser's native content-address scheme — the typeable front end of the urn:dig: URN; addressing forms and the shared parser grammar.
 - [Using window.chia](https://docs.dig.net/docs/browser/using-window-chia): the injected CHIP-0002 wallet provider — detect, connect (per-origin), and call key/signing methods; a drop-in WalletConnect alternative.
 
+## Protocol specs (protocol developers)
+
+- [The window.chia provider spec](https://docs.dig.net/docs/protocol/window-chia-provider): the normative, versioned specification of the window.chia provider — the provider object shape, the EIP-1193-style request/connect contract, every CHIP-0002 method (params/returns/error codes), the connect/202-pending contract, capability/version feature-detection, and EIP-6963-style multi-provider (announce/request) discovery. DIG Browser is the reference implementation; @dignetwork/dig-sdk's ChiaProvider is the recommended consumer. Normative vs. proposed surface is marked inline.
+
 ## Whitepapers (protocol developers)
 
 - [Whitepapers index](https://docs.dig.net/docs/whitepapers/): the three normative specifications.
