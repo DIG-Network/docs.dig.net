@@ -1,0 +1,11 @@
+{
+  "label": "Provider & wire specs",
+  "position": 1,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Provider & wire specs",
+    "description": "Normative, versioned specifications for the surfaces dapps and wallets implement directly — starting with the window.chia provider (the EIP-1193 of Chia) and its EIP-6963-style multi-wallet discovery."
+  }
+}

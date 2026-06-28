@@ -41,6 +41,7 @@ const CONCEPT_TITLES = {
   streaming: 'Streaming',
   'chia-protocol': 'The chia:// protocol',
   'window-chia': 'window.chia',
+  'provider-spec': 'window.chia provider spec',
   browser: 'DIG Browser',
   'chip-0002': 'CHIP-0002',
   'chip-0035': 'CHIP-0035',

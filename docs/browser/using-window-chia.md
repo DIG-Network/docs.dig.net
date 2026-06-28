@@ -29,10 +29,14 @@ This page is for **developers integrating a wallet into a web app**. It document
 
 ## How it works
 
-The provider is a thin proxy. Each call is forwarded to the browser's built-in wallet over loopback, where the **native signer** lives. Two things matter for integrators:
+The provider is a thin proxy. Each call is forwarded to the browser's built-in wallet, where the **native signer** lives. Two things matter for integrators:
 
-- **Per-origin consent.** The wallet gates access by your web **origin**, read from the unspoofable HTTP `Origin` header — page JavaScript cannot forge it. Until the user approves your origin in the wallet's Connections view, every key/sign method is refused. Your app must call [`connect()`](#connect) first; it resolves once the user approves.
-- **It's loopback, so HTTPS pages work.** The wallet listens on `127.0.0.1`, a "potentially trustworthy" origin, so an `https://` page can reach it with no mixed-content error. Security is the per-origin approval gate, not the network boundary.
+- **Per-origin consent.** The wallet gates access by your web **origin**, supplied by the browser process from the frame's unspoofable committed origin — page JavaScript cannot forge it. Until the user approves your origin in the wallet's Connections view, every key/sign method is refused. Your app must call [`connect()`](#connect) first; it resolves once the user approves.
+- **It works on any dapp, including HTTPS with a strict CSP.** The provider reaches the wallet over a frame-scoped native bridge (not `fetch`, not loopback HTTP), so there is no mixed-content error and nothing for your page's Content-Security-Policy to block. Security is the per-origin approval gate, not the network boundary.
+
+:::tip Want the exact contract?
+This page is the task-oriented guide. For the **normative, versioned** provider contract — every method's params/returns, the error codes, the connect/202-pending contract, capability detection, and EIP-6963-style multi-wallet discovery — see [The `window.chia` provider spec](../protocol/window-chia-provider.md).
+:::
 
 ## Detecting the provider
 
@@ -155,6 +159,7 @@ Pages served from a `chia://` store run inside the DIG Browser too, so `window.c
 
 ## Related
 
+- [The window.chia provider spec](../protocol/window-chia-provider.md) — the normative, versioned provider contract
 - [The chia:// protocol](./chia-protocol.md) — the browser's native content-address scheme
 - [What is the dig RPC?](../rpc/what-is-the-dig-rpc.md) — how the browser reads content from the network
 - [What is DigStore?](../digstore/what-is-digstore.md) — the store format a `chia://` page is served from
