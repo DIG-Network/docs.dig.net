@@ -282,7 +282,11 @@ const config: Config = {
             { label: "Troubleshooting", to: "/docs/support/troubleshooting" },
             { label: "FAQ", to: "/docs/support/faq" },
             { label: "Changelog", to: "/docs/support/changelog" },
-            { label: "Status", to: "/docs/support/status" },
+            // Live status dashboard for the DIG services (rpc.dig.net /
+            // hub.dig.net / on.dig.net). Points at the external dashboard rather
+            // than the internal /docs/support/status reference so the footer has
+            // exactly one canonical "Status" link to the live page.
+            { label: "Status", href: "https://status.dig.net/" },
             { label: "Discord", href: "https://discord.gg/dignetwork" },
           ],
         },
