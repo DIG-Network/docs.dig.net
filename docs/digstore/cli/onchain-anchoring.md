@@ -84,9 +84,15 @@ digstore balance --json
 
 `init` and `commit` spend both **XCH** (the transaction fee) and **DIG** (the DIG token). The wallet derived from your seed needs **both**. If either is short, the command blocks and prints the **receive address** — fund that address on mainnet, then retry. Both XCH and DIG are received at the same `xch1…` address (DIG arrives as a CAT). Transactions go out via coinset.org over HTTPS; the `coinset_url` key in `~/.dig/config.toml` overrides the default endpoint.
 
-:::tip Need DIG?
-[**Buy DIG on TibetSwap ↗**](https://v2.tibetswap.io/) — swap XCH for DIG on the AMM, then send it to your `digstore balance` receive address.
-:::
+### Where to get DIG {#where-to-get-dig}
+
+DIG is the DIG Network token (a Chia CAT). Acquire it on any of these, then send it to your `digstore balance` receive address:
+
+- [**TibetSwap ↗**](https://v2.tibetswap.io/) — swap XCH for DIG on the AMM.
+- [**dexie.space ↗**](https://dexie.space/offers/XCH/a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367df16832f81) — trade DIG on the Chia DEX.
+- [**9mm.pro ↗**](https://xch.9mm.pro/token/a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367df16832f81) — trade DIG on the 9mm DEX.
+
+DIG asset id (CAT TAIL): `a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367df16832f81`.
 
 :::note Iterate for free — pay only to publish
 You only spend DIG when you publish a capsule on-chain (`init`/`commit`). Scaffolding, building, and previewing a site locally cost **nothing**. Start from the [zero-cost quickstart](./quickstart.md) and fund a wallet only when you're ready to go live.

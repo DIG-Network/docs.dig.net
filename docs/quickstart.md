@@ -52,7 +52,7 @@ When the draft looks right, hit **Publish**. This is the only step that costs an
 - Approve the on-chain spend: a flat **100 DIG + a small XCH fee**, in one signature.
 - DIGHub mints your store and publishes the first **capsule** on Chia mainnet.
 
-Short on DIG? The publish screen shows your balance and where to top up. See [Funding a wallet](./digstore/cli/onchain-anchoring.md#funding-the-wallet).
+Short on DIG? The publish screen shows your balance and where to top up. See [Where to get DIG](./digstore/cli/onchain-anchoring.md#where-to-get-dig) — TibetSwap, dexie.space, or 9mm.pro.
 
 ### 4. You're live
 
