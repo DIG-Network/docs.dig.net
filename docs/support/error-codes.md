@@ -1,12 +1,12 @@
 ---
 sidebar_position: 4
 title: Error codes
-description: "Every DIG error code in one place: dig RPC JSON-RPC codes, digstore CLI exit codes, and DIGHub user-facing codes — each with what it means and what to do."
+description: "Every DIG error code in one place: dig RPC JSON-RPC codes, digstore CLI exit codes, and DIGHUb user-facing codes — each with what it means and what to do."
 keywords:
   - DIG error codes
   - JSON-RPC error codes
   - CLI exit codes
-  - DIGHub errors
+  - DIGHUb errors
   - DIG_INSUFFICIENT
   - SLUG_TAKEN
 tags:
@@ -17,7 +17,7 @@ tags:
 
 # Error codes
 
-A consolidated reference for every error code you might see, across the three surfaces: the **dig RPC** (JSON-RPC), the **`digstore` CLI** (process exit codes), and **DIGHub** (the web app's user-facing codes). Look up the code you got; each row says what it means and what to do.
+A consolidated reference for every error code you might see, across the three surfaces: the **dig RPC** (JSON-RPC), the **`digstore` CLI** (process exit codes), and **DIGHUb** (the web app's user-facing codes). Look up the code you got; each row says what it means and what to do.
 
 For step-by-step fixes, see [Troubleshooting](./troubleshooting.md).
 
@@ -57,15 +57,15 @@ The [dig RPC](../rpc/methods.md) uses the standard [JSON-RPC 2.0](https://www.js
 | `15` | mint-failed | Minting the store singleton failed. | Retry; if it persists, check wallet funds and coinset.org. |
 | `16` | update-failed | Anchoring the new root failed. | Retry; if it persists, check wallet funds and coinset.org. |
 
-## DIGHub (web app)
+## DIGHUb (web app)
 
-When a publish or account action fails, DIGHub shows a plain-language message **and** a stable code you can quote in a report. The codes below are the ones you're most likely to see.
+When a publish or account action fails, DIGHUb shows a plain-language message **and** a stable code you can quote in a report. The codes below are the ones you're most likely to see.
 
 | Code | What it means | What to do |
 |---|---|---|
 | `WALLET_DECLINED` | You declined the signature in your wallet. Nothing was signed or broadcast. | Not an error — re-try and approve if you meant to publish. |
 | `DIG_INSUFFICIENT` | Not enough DIG in your wallet to cover this capsule (100 DIG). | Top up DIG (the publish screen links where to get it), then retry. |
-| `COIN_CONFLICT` | The coin was just spent elsewhere (double-spend / mempool conflict). | Retry — DIGHub rebuilds the spend with a fresh coin. |
+| `COIN_CONFLICT` | The coin was just spent elsewhere (double-spend / mempool conflict). | Retry — DIGHUb rebuilds the spend with a fresh coin. |
 | `REG_PENDING` | Your spend is on chain and will appear shortly. | Wait a moment — **do not** sign or pay again. |
 | `WALLET_SESSION` | Your wallet session can't sign (expired, watch-only, or missing method). | Disconnect and reconnect your wallet; make sure Sage is up to date. |
 | `NET_OFFLINE` | You appear to be offline. | Check your connection and try again. |

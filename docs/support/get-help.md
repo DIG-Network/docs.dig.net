@@ -22,7 +22,7 @@ Stuck on something? Start here.
 |---|---|
 | [**Discord ↗**](https://discord.gg/dignetwork) | Quick questions, deploy help, talking to other builders and the team. |
 | [**digstore issues ↗**](https://github.com/DIG-Network/digstore/issues) | CLI bugs, feature requests, anything `digstore`. |
-| [**DIGHub issues ↗**](https://github.com/DIG-Network/hub.dig.net/issues) | Web app / publish / domain problems. |
+| [**DIGHUb issues ↗**](https://github.com/DIG-Network/hub.dig.net/issues) | Web app / publish / domain problems. |
 | [Troubleshooting](./troubleshooting.md) · [FAQ](./faq.md) · [Error codes](./error-codes.md) | Answers you can find without waiting. |
 
 :::tip Pre-release — expect rough edges
@@ -34,14 +34,14 @@ DIG is pre-release. If something is broken or confusing, that's worth reporting 
 You'll get an answer faster if you check these first:
 
 1. **[Troubleshooting](./troubleshooting.md)** — the common failures and their fixes.
-2. **[Error codes](./error-codes.md)** — look up the exact code you got (RPC `-32xxx`, a CLI exit code, or a DIGHub code like `SLUG_TAKEN`).
+2. **[Error codes](./error-codes.md)** — look up the exact code you got (RPC `-32xxx`, a CLI exit code, or a DIGHUb code like `SLUG_TAKEN`).
 3. **[FAQ](./faq.md)** — the questions that come up most.
 
 ## How to file a good report
 
 A report that gets answered fast includes:
 
-- **What you ran** — the exact `digstore` command (or the DIGHub step), and what you expected.
+- **What you ran** — the exact `digstore` command (or the DIGHUb step), and what you expected.
 - **What happened** — the full error message and any **error code** (e.g. exit code `12`, RPC `-32602`, or `DIG_INSUFFICIENT`). See [Error codes](./error-codes.md).
 - **Versions** — `digstore --version`, your OS; for the web, your browser and wallet.
 - **Reproduce it** — the smallest set of steps that triggers it.

@@ -44,7 +44,7 @@ Every key is optional; a missing file means all config comes from flags/env.
 | `message` | — | `deploy <sha>` | Default commit message for the new capsule. |
 | `wait-timeout` | `wait_timeout` | `300` | Seconds to wait for on-chain confirmation. |
 | `network` | — | `mainnet` | The Chia network to anchor on. |
-| `remote` | — | public DIGHub | The remote to publish to (e.g. `dig://<store-id>` or a node URL). |
+| `remote` | — | public DIGHUb | The remote to publish to (e.g. `dig://<store-id>` or a node URL). |
 
 Both `kebab-case` and `snake_case` keys are accepted, so a hand-edited file is forgiving. A **malformed** file is a hard error (it never silently deploys the wrong thing).
 
