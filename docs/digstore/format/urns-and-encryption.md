@@ -20,6 +20,10 @@ tags:
 
 # URNs & Encryption
 
+:::info Normative spec
+The byte-exact grammar, the rootless `retrieval_key` invariant, and the HKDF/GCM-SIV constants are in the Protocol section: [URN & addressing](../../protocol/urn-and-addressing.md) and [Cryptography](../../protocol/cryptography.md).
+:::
+
 The URN is the heart of DigStore. It is **both** the address that locates a resource **and** the secret that decrypts it.
 
 ## URN format

@@ -571,6 +571,189 @@
       ]
     },
     {
+      "id": "/docs/protocol/blind-host-model",
+      "type": "doc",
+      "title": "L6 · The blind host model",
+      "url": "https://docs.dig.net/docs/protocol/blind-host-model",
+      "tags": [
+        "dig-rpc",
+        "dighub",
+        "chip-0035",
+        "chip-0002",
+        "capsule"
+      ]
+    },
+    {
+      "id": "/docs/protocol/bls-signatures",
+      "type": "doc",
+      "title": "L1 · BLS signatures & domain separation",
+      "url": "https://docs.dig.net/docs/protocol/bls-signatures",
+      "tags": [
+        "capsule",
+        "dig-rpc",
+        "anchoring"
+      ]
+    },
+    {
+      "id": "/docs/protocol/capsule-format",
+      "type": "doc",
+      "title": "L2 · Capsule format (the DIGS data section)",
+      "url": "https://docs.dig.net/docs/protocol/capsule-format",
+      "tags": [
+        "capsule",
+        "merkle-proof",
+        "anchoring"
+      ]
+    },
+    {
+      "id": "/docs/protocol/conformance-and-parity",
+      "type": "doc",
+      "title": "Conformance & parity",
+      "url": "https://docs.dig.net/docs/protocol/conformance-and-parity",
+      "tags": [
+        "dig-rpc",
+        "urn",
+        "retrieval-key",
+        "merkle-proof",
+        "encryption"
+      ]
+    },
+    {
+      "id": "/docs/protocol/cryptography",
+      "type": "doc",
+      "title": "L1 · Cryptography",
+      "url": "https://docs.dig.net/docs/protocol/cryptography",
+      "tags": [
+        "encryption",
+        "urn",
+        "retrieval-key",
+        "capsule"
+      ]
+    },
+    {
+      "id": "/docs/protocol/dig-cat-payment",
+      "type": "doc",
+      "title": "L4 · DIG CAT payment & pricing",
+      "url": "https://docs.dig.net/docs/protocol/dig-cat-payment",
+      "tags": [
+        "dig-payment",
+        "chip-0035",
+        "anchoring",
+        "capsule"
+      ]
+    },
+    {
+      "id": "/docs/protocol/dig-rpc",
+      "type": "doc",
+      "title": "L6 · The dig RPC (machine interface)",
+      "url": "https://docs.dig.net/docs/protocol/dig-rpc",
+      "tags": [
+        "dig-rpc",
+        "capsule",
+        "retrieval-key",
+        "merkle-proof",
+        "streaming",
+        "chip-0035"
+      ]
+    },
+    {
+      "id": "/docs/protocol/drift-from-whitepapers",
+      "type": "doc",
+      "title": "Drift from the whitepapers (appendix)",
+      "url": "https://docs.dig.net/docs/protocol/drift-from-whitepapers",
+      "tags": [
+        "whitepaper",
+        "capsule",
+        "dig-rpc",
+        "anchoring"
+      ]
+    },
+    {
+      "id": "/docs/protocol/identity-and-naming",
+      "type": "doc",
+      "title": "L0 · Identity & naming",
+      "url": "https://docs.dig.net/docs/protocol/identity-and-naming",
+      "tags": [
+        "capsule",
+        "store",
+        "generation",
+        "chip-0035"
+      ]
+    },
+    {
+      "id": "/docs/protocol/merkle-proofs",
+      "type": "doc",
+      "title": "L1 · Merkle inclusion proofs",
+      "url": "https://docs.dig.net/docs/protocol/merkle-proofs",
+      "tags": [
+        "merkle-proof",
+        "capsule",
+        "encryption"
+      ]
+    },
+    {
+      "id": "/docs/protocol/on-chain-anchoring",
+      "type": "doc",
+      "title": "L4 · On-chain anchoring (CHIP-0035)",
+      "url": "https://docs.dig.net/docs/protocol/on-chain-anchoring",
+      "tags": [
+        "chip-0035",
+        "anchoring",
+        "store",
+        "capsule",
+        "dig-payment"
+      ]
+    },
+    {
+      "id": "/docs/protocol/self-defending-module",
+      "type": "doc",
+      "title": "L2/L3 · The self-defending module",
+      "url": "https://docs.dig.net/docs/protocol/self-defending-module",
+      "tags": [
+        "capsule",
+        "encryption",
+        "merkle-proof",
+        "dig-rpc"
+      ]
+    },
+    {
+      "id": "/docs/protocol/transport-and-push",
+      "type": "doc",
+      "title": "L5 · §21 transport & push",
+      "url": "https://docs.dig.net/docs/protocol/transport-and-push",
+      "tags": [
+        "dig-rpc",
+        "digstore-cli",
+        "store",
+        "anchoring"
+      ]
+    },
+    {
+      "id": "/docs/protocol/urn-and-addressing",
+      "type": "doc",
+      "title": "L0 · URN & addressing",
+      "url": "https://docs.dig.net/docs/protocol/urn-and-addressing",
+      "tags": [
+        "urn",
+        "retrieval-key",
+        "capsule",
+        "chia-protocol"
+      ]
+    },
+    {
+      "id": "/docs/protocol/verification-and-provenance",
+      "type": "doc",
+      "title": "L6 · Verification, provenance & anchoring",
+      "url": "https://docs.dig.net/docs/protocol/verification-and-provenance",
+      "tags": [
+        "merkle-proof",
+        "anchoring",
+        "capsule",
+        "dig-rpc",
+        "chip-0035"
+      ]
+    },
+    {
       "id": "/docs/protocol/window-chia-provider",
       "type": "doc",
       "title": "The window.chia provider (specification)",
@@ -587,12 +770,14 @@
     {
       "id": "/docs/protocol-deep-dive",
       "type": "doc",
-      "title": "Protocol deep-dive",
+      "title": "Protocol: Overview",
       "url": "https://docs.dig.net/docs/protocol-deep-dive",
       "tags": [
         "capsule",
         "dig-rpc",
         "chia-protocol",
+        "merkle-proof",
+        "anchoring",
         "whitepaper"
       ]
     },
@@ -1851,6 +2036,321 @@
       "type": "part-of"
     },
     {
+      "from": "/docs/protocol/blind-host-model",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/blind-host-model",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/blind-host-model",
+      "to": "concept:chip-0035",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/blind-host-model",
+      "to": "concept:chip-0002",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/blind-host-model",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/bls-signatures",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/bls-signatures",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/bls-signatures",
+      "to": "concept:anchoring",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/capsule-format",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/capsule-format",
+      "to": "concept:merkle-proof",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/capsule-format",
+      "to": "concept:anchoring",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/conformance-and-parity",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/conformance-and-parity",
+      "to": "concept:urn",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/conformance-and-parity",
+      "to": "concept:retrieval-key",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/conformance-and-parity",
+      "to": "concept:merkle-proof",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/conformance-and-parity",
+      "to": "concept:encryption",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/cryptography",
+      "to": "concept:encryption",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/cryptography",
+      "to": "concept:urn",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/cryptography",
+      "to": "concept:retrieval-key",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/cryptography",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/dig-cat-payment",
+      "to": "concept:dig-payment",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/dig-cat-payment",
+      "to": "concept:chip-0035",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/dig-cat-payment",
+      "to": "concept:anchoring",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/dig-cat-payment",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/dig-rpc",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/dig-rpc",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/dig-rpc",
+      "to": "concept:retrieval-key",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/dig-rpc",
+      "to": "concept:merkle-proof",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/dig-rpc",
+      "to": "concept:streaming",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/dig-rpc",
+      "to": "concept:chip-0035",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/drift-from-whitepapers",
+      "to": "concept:whitepaper",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/drift-from-whitepapers",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/drift-from-whitepapers",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/drift-from-whitepapers",
+      "to": "concept:anchoring",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/identity-and-naming",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/identity-and-naming",
+      "to": "concept:store",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/identity-and-naming",
+      "to": "concept:generation",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/identity-and-naming",
+      "to": "concept:chip-0035",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/merkle-proofs",
+      "to": "concept:merkle-proof",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/merkle-proofs",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/merkle-proofs",
+      "to": "concept:encryption",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/on-chain-anchoring",
+      "to": "concept:chip-0035",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/on-chain-anchoring",
+      "to": "concept:anchoring",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/on-chain-anchoring",
+      "to": "concept:store",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/on-chain-anchoring",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/on-chain-anchoring",
+      "to": "concept:dig-payment",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/self-defending-module",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/self-defending-module",
+      "to": "concept:encryption",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/self-defending-module",
+      "to": "concept:merkle-proof",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/self-defending-module",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/transport-and-push",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/transport-and-push",
+      "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/transport-and-push",
+      "to": "concept:store",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/transport-and-push",
+      "to": "concept:anchoring",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/urn-and-addressing",
+      "to": "concept:urn",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/urn-and-addressing",
+      "to": "concept:retrieval-key",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/urn-and-addressing",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/urn-and-addressing",
+      "to": "concept:chia-protocol",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/verification-and-provenance",
+      "to": "concept:merkle-proof",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/verification-and-provenance",
+      "to": "concept:anchoring",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/verification-and-provenance",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/verification-and-provenance",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/verification-and-provenance",
+      "to": "concept:chip-0035",
+      "type": "part-of"
+    },
+    {
       "from": "/docs/protocol/window-chia-provider",
       "to": "concept:window-chia",
       "type": "part-of"
@@ -1893,6 +2393,16 @@
     {
       "from": "/docs/protocol-deep-dive",
       "to": "concept:chia-protocol",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol-deep-dive",
+      "to": "concept:merkle-proof",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol-deep-dive",
+      "to": "concept:anchoring",
       "type": "part-of"
     },
     {
@@ -3091,6 +3601,386 @@
       "type": "see-also"
     },
     {
+      "from": "/docs/protocol/blind-host-model",
+      "to": "/docs/protocol/dig-rpc",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/blind-host-model",
+      "to": "/docs/protocol/transport-and-push",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/blind-host-model",
+      "to": "/docs/protocol/verification-and-provenance",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/blind-host-model",
+      "to": "/docs/protocol/on-chain-anchoring",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/blind-host-model",
+      "to": "/docs/protocol/drift-from-whitepapers",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/bls-signatures",
+      "to": "/docs/protocol/merkle-proofs",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/bls-signatures",
+      "to": "/docs/protocol/transport-and-push",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/bls-signatures",
+      "to": "/docs/protocol/verification-and-provenance",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/bls-signatures",
+      "to": "/docs/protocol/self-defending-module",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/bls-signatures",
+      "to": "/docs/protocol/conformance-and-parity",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/capsule-format",
+      "to": "/docs/protocol/self-defending-module",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/capsule-format",
+      "to": "/docs/protocol/merkle-proofs",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/capsule-format",
+      "to": "/docs/protocol/cryptography",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/capsule-format",
+      "to": "/docs/protocol/on-chain-anchoring",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/capsule-format",
+      "to": "/docs/protocol/drift-from-whitepapers",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/conformance-and-parity",
+      "to": "/docs/protocol/cryptography",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/conformance-and-parity",
+      "to": "/docs/protocol/urn-and-addressing",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/conformance-and-parity",
+      "to": "/docs/protocol/dig-rpc",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/conformance-and-parity",
+      "to": "/docs/machine-surfaces",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/conformance-and-parity",
+      "to": "/docs/protocol/drift-from-whitepapers",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/cryptography",
+      "to": "/docs/protocol/urn-and-addressing",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/cryptography",
+      "to": "/docs/protocol/merkle-proofs",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/cryptography",
+      "to": "/docs/protocol/verification-and-provenance",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/cryptography",
+      "to": "/docs/protocol/conformance-and-parity",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/cryptography",
+      "to": "/docs/protocol/drift-from-whitepapers",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/dig-cat-payment",
+      "to": "/docs/protocol/on-chain-anchoring",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/dig-cat-payment",
+      "to": "/docs/protocol/blind-host-model",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/dig-cat-payment",
+      "to": "/docs/support/error-codes",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/dig-cat-payment",
+      "to": "/docs/protocol/drift-from-whitepapers",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/dig-rpc",
+      "to": "/docs/protocol-deep-dive",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/dig-rpc",
+      "to": "/docs/rpc/streaming",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/dig-rpc",
+      "to": "/docs/protocol/transport-and-push",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/dig-rpc",
+      "to": "/docs/protocol/verification-and-provenance",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/dig-rpc",
+      "to": "/docs/protocol/blind-host-model",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/dig-rpc",
+      "to": "/docs/support/error-codes",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/drift-from-whitepapers",
+      "to": "/docs/protocol-deep-dive",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/drift-from-whitepapers",
+      "to": "/docs/whitepapers",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/drift-from-whitepapers",
+      "to": "/docs/protocol/conformance-and-parity",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/identity-and-naming",
+      "to": "/docs/protocol-deep-dive",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/identity-and-naming",
+      "to": "/docs/protocol/urn-and-addressing",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/identity-and-naming",
+      "to": "/docs/protocol/on-chain-anchoring",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/identity-and-naming",
+      "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/identity-and-naming",
+      "to": "/docs/protocol/drift-from-whitepapers",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/merkle-proofs",
+      "to": "/docs/protocol/cryptography",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/merkle-proofs",
+      "to": "/docs/protocol/capsule-format",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/merkle-proofs",
+      "to": "/docs/protocol/self-defending-module",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/merkle-proofs",
+      "to": "/docs/protocol/verification-and-provenance",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/merkle-proofs",
+      "to": "/docs/protocol/conformance-and-parity",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/merkle-proofs",
+      "to": "/docs/protocol/drift-from-whitepapers",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/on-chain-anchoring",
+      "to": "/docs/protocol/identity-and-naming",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/on-chain-anchoring",
+      "to": "/docs/protocol/dig-cat-payment",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/on-chain-anchoring",
+      "to": "/docs/protocol/verification-and-provenance",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/on-chain-anchoring",
+      "to": "/docs/chip-0035-spends-and-delegation",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/on-chain-anchoring",
+      "to": "/docs/protocol/drift-from-whitepapers",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/self-defending-module",
+      "to": "/docs/protocol/capsule-format",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/self-defending-module",
+      "to": "/docs/protocol/cryptography",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/self-defending-module",
+      "to": "/docs/protocol/merkle-proofs",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/self-defending-module",
+      "to": "/docs/protocol/dig-rpc",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/self-defending-module",
+      "to": "/docs/protocol/blind-host-model",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/self-defending-module",
+      "to": "/docs/protocol/drift-from-whitepapers",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/transport-and-push",
+      "to": "/docs/protocol/dig-rpc",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/transport-and-push",
+      "to": "/docs/protocol/bls-signatures",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/transport-and-push",
+      "to": "/docs/protocol/blind-host-model",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/transport-and-push",
+      "to": "/docs/rpc/dig-remote",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/transport-and-push",
+      "to": "/docs/protocol/drift-from-whitepapers",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/urn-and-addressing",
+      "to": "/docs/protocol/identity-and-naming",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/urn-and-addressing",
+      "to": "/docs/protocol/cryptography",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/urn-and-addressing",
+      "to": "/docs/protocol/transport-and-push",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/urn-and-addressing",
+      "to": "/docs/protocol/conformance-and-parity",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/urn-and-addressing",
+      "to": "/docs/protocol/drift-from-whitepapers",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/verification-and-provenance",
+      "to": "/docs/protocol/merkle-proofs",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/verification-and-provenance",
+      "to": "/docs/protocol/cryptography",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/verification-and-provenance",
+      "to": "/docs/protocol/on-chain-anchoring",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/verification-and-provenance",
+      "to": "/docs/inclusion-vs-execution-proofs",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/verification-and-provenance",
+      "to": "/docs/protocol/blind-host-model",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/verification-and-provenance",
+      "to": "/docs/protocol/drift-from-whitepapers",
+      "type": "see-also"
+    },
+    {
       "from": "/docs/protocol/window-chia-provider",
       "to": "/docs/browser/using-window-chia",
       "type": "see-also"
@@ -3122,7 +4012,22 @@
     },
     {
       "from": "/docs/protocol-deep-dive",
-      "to": "/docs/audiences/app-developers",
+      "to": "/docs/protocol/identity-and-naming",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol-deep-dive",
+      "to": "/docs/protocol/dig-rpc",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol-deep-dive",
+      "to": "/docs/protocol/drift-from-whitepapers",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol-deep-dive",
+      "to": "/docs/whitepapers",
       "type": "see-also"
     },
     {

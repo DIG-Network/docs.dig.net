@@ -20,6 +20,10 @@ tags:
 
 # Methods
 
+:::info Normative spec
+This is the task-oriented method reference. The **authoritative** machine-interface spec — the chunk wire object (`chunk_lens`, no `decoy` field), `-32004`, the node profile, and the regenerated OpenRPC — is [Protocol · The dig RPC](../protocol/dig-rpc.md).
+:::
+
 See [What is the dig RPC?](./what-is-the-dig-rpc.md) for an overview.
 
 The dig RPC is a single `POST` endpoint speaking [JSON-RPC 2.0](https://www.jsonrpc.org/specification). A request is a request object or a batch (a non-empty array of request objects); `params` is always a by-name object.
@@ -65,7 +69,7 @@ Stream one resource's ciphertext by retrieval key. This is the method behind eve
 | `offset` | uint | no | Byte offset for this chunk (default `0`). See [Streaming](./streaming.md). |
 | `length` | uint | no | Requested chunk length; clamped to the node's max chunk. |
 
-**Result** — a [chunk object](./streaming.md#the-chunk-object): `ciphertext` (base64), `total_length`, `offset`, `length`, `complete`, `next_offset`, `inclusion_proof` (base64 or `null`), `decoy`, `root` (the resolved generation, hex), and `program_hash` (the served `.dig`'s `sha256`, hex). Reassemble until `complete`, verify the proof over the whole ciphertext against `root`, then decrypt.
+**Result** — a [chunk object](./streaming.md#the-chunk-object): `ciphertext` (base64), `total_length`, `offset`, `length`, `complete`, `next_offset`, `inclusion_proof` (base64 or `null`), `chunk_lens` (per-chunk ciphertext lengths, first window only), `root` (the resolved generation, hex), and `program_hash` (the served `.dig`'s `sha256`, hex). Reassemble until `complete`, verify the proof over the whole ciphertext against `root`, split by `chunk_lens`, then decrypt. There is **no `decoy` field** — a miss is the capsule's own indistinguishable, non-verifying response (see [the blind host model](../protocol/blind-host-model.md)).
 
 ---
 
@@ -91,7 +95,6 @@ Both proofs for a resource read by retrieval key:
 { "inclusion_proof": "<base64 merkle proof>",
   "program_hash": "23b491…",
   "root": "a07c…4d",
-  "decoy": false,
   "execution_proof": "<risc0 receipt | null>",
   "execution_proof_status": "succeeded | running | queued | not_found | request_via_control_plane",
   "node_pubkey": "…", "block_header": "…" }
@@ -128,7 +131,7 @@ Stream an **entire compiled capsule** — the whole `.dig` module for one genera
 | `root` | hex(32) or `"latest"` | no | The generation (capsule) to download. Absent ≡ `"latest"`. |
 | `offset`, `length` | uint | no | Chunk window. See [Streaming](./streaming.md). |
 
-**Result** — a chunk object carrying capsule bytes. The capsule is the public, self-verifying module (its own store id and signed root are checked on install per DigStore), so `inclusion_proof` is `null` here; integrity comes from the capsule's structure and the on-chain root. A miss is a `decoy`.
+**Result** — a chunk object carrying capsule bytes. The capsule is the public, self-verifying module (its own store id and signed root are checked on install per DigStore), so `inclusion_proof` is `null`/empty here; integrity comes from the capsule's structure and the on-chain root. A module genuinely absent at the requested root yields [`-32004`](#errors).
 
 ---
 
@@ -144,7 +147,7 @@ A convenience over `dig.getContent` for the store's **public discovery manifest*
 | `root` | hex(32) or `"latest"` | no | Generation to read the manifest from. |
 | `offset`, `length` | uint | no | Chunk window. |
 
-**Result** — a chunk object for the manifest resource, plus the derived `retrieval_key` (hex) it was served under. The manifest body is itself ciphertext — verify and decrypt it exactly as any resource. A store with no public manifest yields a `decoy` (nothing to browse).
+**Result** — a chunk object for the manifest resource, plus the derived `retrieval_key` (hex) it was served under. The manifest body is itself ciphertext — verify and decrypt it exactly as any resource. A store with no public manifest yields an indistinguishable, non-verifying response (nothing to browse) — discovered client-side, not via a flag.
 
 ---
 
@@ -169,11 +172,10 @@ Read the store's **metadata manifest** (name, version, description, authors, lic
     "keywords": [], "categories": [], "icon": "…", "content_type": "…",
     "links": {}, "custom": {} },
   "program_hash": "23b491…dddf72",
-  "root": "a07c…4d",
-  "decoy": false }
+  "root": "a07c…4d" }
 ```
 
-`manifest` is `null` when the module embeds no metadata; `decoy` is `true` (with a null manifest) when no capsule is hosted at the root. **Verification:** a client compares the returned `program_hash` and `root` against the values it reads from the on-chain singleton (e.g. via its own lineage walk, or [`dig.listCapsules`](#diglistcapsules)). A mismatch means the served `.dig` is not the on-chain-anchored generation — the metadata must not be trusted.
+`manifest` is `null` when the module embeds no metadata; a module genuinely absent at the root yields [`-32004`](#errors) (there is no `decoy` field). **Verification:** a client compares the returned `program_hash` and `root` against the values it reads from the on-chain singleton (e.g. via its own lineage walk, or [`dig.listCapsules`](#diglistcapsules)). A mismatch means the served `.dig` is not the on-chain-anchored generation — the metadata must not be trusted.
 
 ---
 
@@ -221,7 +223,7 @@ A client should use `dig.methods` to confirm a third-party node implements the m
 
 ## Errors
 
-A malformed or unroutable **call** uses the standard JSON-RPC codes. A content **miss** is never an error — it is a `decoy` result (see [the blind model](./conformance.md#the-blind-serving-model)).
+A malformed or unroutable **call** uses the standard JSON-RPC codes. A content **miss** is never an error — the capsule returns its own indistinguishable, non-verifying response (there is **no `decoy` field** on the wire), discovered client-side by proof/decryption failure (see [the blind host model](../protocol/blind-host-model.md)).
 
 | Code | Meaning | When |
 |---|---|---|
@@ -229,7 +231,8 @@ A malformed or unroutable **call** uses the standard JSON-RPC codes. A content *
 | `-32600` | Invalid request | Not a request object/array, an empty batch, or a missing `method`. |
 | `-32601` | Method not found | The method is not implemented by this node. |
 | `-32602` | Invalid params | Missing/malformed `store_id`, `root`, or `retrieval_key`; or `"latest"` on a store with no confirmed generation. |
-| `-32603` | Internal error | The node failed to satisfy a well-formed call. Distinct from a miss (which is a decoy). |
+| `-32603` | Internal error | The node failed to satisfy a well-formed call. |
+| `-32004` | Resource not available at the requested root | A genuine infra miss (no host seed, module absent, bad magic/oversize, a trap, an undecodable envelope). Distinct from a content miss (which is an indistinguishable decoy, never an error). |
 
 ## Related
 

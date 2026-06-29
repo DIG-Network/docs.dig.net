@@ -20,6 +20,10 @@ tags:
 
 # Proofs & Security
 
+:::info Normative spec
+The byte-exact merkle and signature contracts are in the Protocol section: [Merkle inclusion proofs](../../protocol/merkle-proofs.md), [BLS signatures & DSTs](../../protocol/bls-signatures.md), and the four ordered [integrity gates](../../protocol/verification-and-provenance.md).
+:::
+
 DigStore's guarantees come from three mechanisms working together: a **Merkle commitment** over content, **signed roots**, and **host attestation**.
 
 ## Merkle proofs

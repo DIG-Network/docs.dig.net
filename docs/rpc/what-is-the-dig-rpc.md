@@ -21,6 +21,10 @@ tags:
 
 # What is the dig RPC?
 
+:::info Normative spec
+This is the orientation page. The authoritative machine-interface spec — methods, the chunk wire object, the node profile, and the OpenRPC documents — is [Protocol · The dig RPC](../protocol/dig-rpc.md).
+:::
+
 **The dig RPC is the network-wide interface for reading content directly from hosted DigStore `.dig` capsules.** It is a [JSON-RPC 2.0](https://www.jsonrpc.org/specification) service spoken over HTTPS `POST`.
 
 Every node that hosts capsules — the reference node at `https://rpc.dig.net`, or any third-party node — exposes the **same methods with the same semantics**. A client written against this interface reads from the whole network through one endpoint. There is no CDN; all content serving on DIG is via the dig RPC.

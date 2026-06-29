@@ -22,6 +22,10 @@ tags:
 
 # The DigStore WASM Store Format
 
+:::info Normative spec
+The byte-exact format is in the Protocol section: the [DIGS data section](../../protocol/capsule-format.md) and the [self-defending module](../../protocol/self-defending-module.md). This page is the conceptual overview.
+:::
+
 A DigStore **store** is a content-addressable, encrypted collection of files that compiles into a single WebAssembly module. This page gives you the whole picture in one read; the following pages go deeper on each piece.
 
 ## The one-file idea
