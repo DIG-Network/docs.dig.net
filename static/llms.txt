@@ -57,6 +57,11 @@ Audiences, simple to deep: (1) Hub users / frontend deployers, (2) integrating d
 - [The chia:// protocol](https://docs.dig.net/docs/browser/chia-protocol): the browser's native content-address scheme — the typeable front end of the urn:dig: URN; addressing forms and the shared parser grammar.
 - [Using window.chia](https://docs.dig.net/docs/browser/using-window-chia): the injected CHIP-0002 wallet provider — detect, connect (per-origin), and call key/signing methods; a drop-in WalletConnect alternative.
 
+## Run a node (operators / deployers)
+
+- [Run a DIG node](https://docs.dig.net/docs/run-a-node/): what a dig-node is — the headless content SERVER (serve side) that exposes the dig RPC and shares the local .dig cache; serving vs. consuming (the browser/extension consume from a local dig-node when present, else rpc.dig.net); all install paths. Pre-release.
+- [Install on Ubuntu/Debian (apt)](https://docs.dig.net/docs/run-a-node/apt): the Debian-native path — add the apt.dig.net signing key + source, apt install dig-node digstore, then systemctl enable --now dig-node (systemd service) and status/journalctl. Cross-references the cross-platform universal installer (curl|sh) and the DIG Browser. Pre-release (apt.dig.net being provisioned).
+
 ## Protocol specs (protocol developers)
 
 - [The window.chia provider spec](https://docs.dig.net/docs/protocol/window-chia-provider): the normative, versioned specification of the window.chia provider — the provider object shape, the EIP-1193-style request/connect contract, every CHIP-0002 method (params/returns/error codes), the connect/202-pending contract, capability/version feature-detection, and EIP-6963-style multi-provider (announce/request) discovery. DIG Browser is the reference implementation; @dignetwork/dig-sdk's ChiaProvider is the recommended consumer. Normative vs. proposed surface is marked inline.
