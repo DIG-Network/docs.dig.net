@@ -55,7 +55,7 @@ export const schemas = {
     title: 'ChunkObject',
     type: 'object',
     description:
-      'The streaming chunk object returned by every byte-bearing method (dig.getContent, dig.getCapsule, dig.getManifest). Reassemble until `complete`, verify `inclusion_proof` over the whole ciphertext against `root`, then decrypt.',
+      'The streaming chunk object returned by every byte-bearing method (dig.getContent, dig.getCapsule, dig.getManifest). Reassemble until `complete`, verify `inclusion_proof` over the whole ciphertext against the CALLER-supplied chain-anchored `root`, split by `chunk_lens`, then AES-256-GCM-SIV-open each chunk. There is NO `decoy` field on the wire: a blind miss is the capsule\'s own indistinguishable, non-verifying response, discovered client-side by inclusion-proof failure and/or decryption-tag failure.',
     required: [
       'ciphertext',
       'total_length',
@@ -64,24 +64,27 @@ export const schemas = {
       'complete',
       'next_offset',
       'inclusion_proof',
-      'decoy',
       'root',
     ],
     properties: {
-      ciphertext: { type: 'string', contentEncoding: 'base64', description: "This chunk's bytes, standard base64." },
-      total_length: { type: 'integer', minimum: 0, description: "The full object's byte length before chunking." },
-      offset: { type: 'integer', minimum: 0, description: "Byte offset where this chunk begins in the full object." },
-      length: { type: 'integer', minimum: 0, description: "This chunk's byte length (= decoded ciphertext length)." },
+      ciphertext: { type: 'string', contentEncoding: 'base64', description: "This window's bytes, standard base64." },
+      total_length: { type: 'integer', minimum: 0, description: "The full resource ciphertext length before windowing." },
+      offset: { type: 'integer', minimum: 0, description: "Byte offset where this window begins in the full object." },
+      length: { type: 'integer', minimum: 0, description: "This window's byte length (= decoded ciphertext length)." },
       complete: { type: 'boolean', description: 'true when offset + length >= total_length.' },
       next_offset: { type: ['integer', 'null'], description: 'The offset to request next, or null when complete.' },
       inclusion_proof: {
         type: ['string', 'null'],
         contentEncoding: 'base64',
-        description: 'Base64 merkle inclusion proof for the whole resource (null for capsules and decoys).',
+        description: 'Base64 merkle inclusion proof for the WHOLE resource, relayed verbatim from the capsule. Sent on every window for getContent/getManifest; empty string / null for getCapsule.',
       },
-      decoy: { type: 'boolean', description: 'true if this is a blind-miss decoy stream. Treat as not-found.' },
+      chunk_lens: {
+        type: 'array',
+        items: { type: 'integer', minimum: 0 },
+        description: 'Per-chunk CIPHERTEXT byte lengths of the full resource, in order. REQUIRED to split + decrypt a multi-chunk resource. Emitted on the FIRST window only (offset == 0); empty/absent ⇒ a single chunk = the whole ciphertext.',
+      },
       root: { ...hex64, description: 'The resolved generation root (hex). Pin subsequent chunks to it.' },
-      program_hash: { ...hex64, description: "The served .dig's sha256 (hex)." },
+      program_hash: { ...hex64, description: "The served .dig's sha256 (hex) — the on-chain program identity." },
     },
   },
   MetadataManifest: {
@@ -147,7 +150,7 @@ export const methods = [
       { name: 'length', required: false, schema: { type: 'integer', minimum: 1 }, description: 'Clamped to the node’s max chunk (3 MiB).' },
     ],
     result: { name: 'chunk', schema: { $ref: '#/components/schemas/ChunkObject' } },
-    errors: ['INVALID_PARAMS', 'INTERNAL_ERROR'],
+    errors: ['INVALID_PARAMS', 'INTERNAL_ERROR', 'RESOURCE_UNAVAILABLE'],
   },
   {
     name: 'dig.getProof',
@@ -166,18 +169,17 @@ export const methods = [
       schema: {
         type: 'object',
         properties: {
-          inclusion_proof: { type: 'string', contentEncoding: 'base64' },
+          inclusion_proof: { type: 'string', contentEncoding: 'base64', description: 'REAL synchronous merkle inclusion proof for the whole resource.' },
           program_hash: { $ref: '#/components/schemas/StoreId' },
           root: { $ref: '#/components/schemas/StoreId' },
-          decoy: { type: 'boolean' },
-          execution_proof: { type: ['string', 'null'], description: 'risc0 receipt or null.' },
+          execution_proof: { type: ['string', 'null'], description: 'risc0 receipt or null (read-only / job-based; never a mock receipt on the wire).' },
           execution_proof_status: { type: 'string', enum: PROOF_STATUS },
           node_pubkey: { type: 'string' },
           block_header: { type: 'string' },
         },
       },
     },
-    errors: ['INVALID_PARAMS', 'INTERNAL_ERROR'],
+    errors: ['INVALID_PARAMS', 'INTERNAL_ERROR', 'RESOURCE_UNAVAILABLE'],
   },
   {
     name: 'dig.getProofStatus',
@@ -217,7 +219,7 @@ export const methods = [
       { name: 'length', required: false, schema: { type: 'integer', minimum: 1 } },
     ],
     result: { name: 'chunk', schema: { $ref: '#/components/schemas/ChunkObject' } },
-    errors: ['INVALID_PARAMS', 'INTERNAL_ERROR'],
+    errors: ['INVALID_PARAMS', 'INTERNAL_ERROR', 'RESOURCE_UNAVAILABLE'],
   },
   {
     name: 'dig.getManifest',
@@ -239,7 +241,7 @@ export const methods = [
         ],
       },
     },
-    errors: ['INVALID_PARAMS', 'INTERNAL_ERROR'],
+    errors: ['INVALID_PARAMS', 'INTERNAL_ERROR', 'RESOURCE_UNAVAILABLE'],
   },
   {
     name: 'dig.getMetadata',
@@ -259,11 +261,10 @@ export const methods = [
           manifest: { oneOf: [{ $ref: '#/components/schemas/MetadataManifest' }, { type: 'null' }] },
           program_hash: { $ref: '#/components/schemas/StoreId' },
           root: { $ref: '#/components/schemas/StoreId' },
-          decoy: { type: 'boolean' },
         },
       },
     },
-    errors: ['INVALID_PARAMS', 'INTERNAL_ERROR'],
+    errors: ['INVALID_PARAMS', 'INTERNAL_ERROR', 'RESOURCE_UNAVAILABLE'],
   },
   {
     name: 'dig.listCapsules',
@@ -315,6 +316,74 @@ export const methods = [
 ];
 
 /* ------------------------------------------------------------------ *
+ * The dig RPC NODE PROFILE (local dig-node / dig-companion / in-process
+ * DIG Browser node). A DISTINCT, smaller surface than the network profile:
+ * of the byte methods it implements ONLY dig.getContent; everything else
+ * proxies upstream or returns -32601. It ADDS node-only methods that MUST be
+ * specced because the security model depends on them — chiefly
+ * dig.getAnchoredRoot, which resolves the CHIP-0035 singleton's on-chain head
+ * (the trusted root for mandatory root-pinning). An agent gates on dig.methods
+ * rather than assuming one uniform surface.  (dig-node lib.rs:1121-1297.)
+ * ------------------------------------------------------------------ */
+
+export const nodeMethods = [
+  {
+    name: 'dig.getContent',
+    summary: 'Stream one resource’s ciphertext (local-first, then proxy).',
+    description:
+      'Identical wire contract to the network profile, but served LOCAL-FIRST: from a cached compiled .dig (serve_blind over <cache>/modules/<store>/<root>.module), else an authenticated §21.9 whole-store sync, else the raw JSON-RPC body is proxied upstream to rpc.dig.net. The in-process node ADDITIVELY tags each chunk with `source` ("local"|"remote").',
+    paramStructure: 'by-name',
+    params: [
+      { name: 'store_id', required: true, schema: { $ref: '#/components/schemas/StoreId' } },
+      { name: 'retrieval_key', required: true, schema: { $ref: '#/components/schemas/RetrievalKey' } },
+      { name: 'root', required: false, schema: { $ref: '#/components/schemas/Root' } },
+      { name: 'offset', required: false, schema: { type: 'integer', minimum: 0, default: 0 } },
+      { name: 'length', required: false, schema: { type: 'integer', minimum: 1 }, description: 'Clamped to the node window (3 MiB).' },
+    ],
+    result: { name: 'chunk', schema: { $ref: '#/components/schemas/ChunkObject' } },
+    errors: ['INVALID_PARAMS', 'INTERNAL_ERROR', 'RESOURCE_UNAVAILABLE'],
+  },
+  {
+    name: 'dig.getAnchoredRoot',
+    summary: 'Resolve the store’s CHIP-0035 on-chain head root (the trusted root).',
+    description:
+      'Walks the CHIP-0035 DataStore singleton lineage on coinset.org (digstore_chain::singleton::sync_datastore) and returns metadata.root_hash — the on-chain-anchored tip. This is the TRUSTED root a client pins a rootless chia:// URN against; verification must never trust the rpc-served "latest". Coinset host defaults to api.coinset.org (override DIG_NODE_COINSET). NODE-PROFILE ONLY: absent from the network profile (dig-node lib.rs:721-743).',
+    paramStructure: 'by-name',
+    params: [{ name: 'store_id', required: true, schema: { $ref: '#/components/schemas/StoreId' } }],
+    result: {
+      name: 'anchored',
+      schema: {
+        type: 'object',
+        properties: {
+          store_id: { $ref: '#/components/schemas/StoreId' },
+          root: { $ref: '#/components/schemas/StoreId' },
+        },
+      },
+    },
+    errors: ['INVALID_PARAMS', 'INTERNAL_ERROR'],
+  },
+  {
+    name: 'dig.stage',
+    summary: 'Compile a local folder into a capsule .dig, in-process.',
+    description:
+      'Compiles a local directory into a capsule (.dig) in-process for preview/publish. NODE-PROFILE ONLY (dig-node lib.rs:768-904).',
+    paramStructure: 'by-name',
+    params: [{ name: 'path', required: true, schema: { type: 'string' } }],
+    result: { name: 'staged', schema: { type: 'object', properties: { store_id: { $ref: '#/components/schemas/StoreId' }, root: { $ref: '#/components/schemas/StoreId' } } } },
+    errors: ['INVALID_PARAMS', 'INTERNAL_ERROR'],
+  },
+  {
+    name: 'cache.getConfig',
+    summary: 'Read the local node cache configuration.',
+    description: 'Part of the node-only cache.* control surface (getConfig/setCapBytes/clear/listCached/removeCached/fetchAndCache). NODE-PROFILE ONLY (dig-node lib.rs:1143-1231).',
+    paramStructure: 'by-name',
+    params: [],
+    result: { name: 'config', schema: { type: 'object' } },
+    errors: ['INTERNAL_ERROR'],
+  },
+];
+
+/* ------------------------------------------------------------------ *
  * JSON-RPC error definitions (OpenRPC `components.errors`)
  * Keyed by a stable UPPER_SNAKE handle; `code` is the JSON-RPC number.
  * ------------------------------------------------------------------ */
@@ -324,7 +393,8 @@ export const rpcErrors = {
   INVALID_REQUEST: { code: -32600, message: 'Invalid request', meaning: 'Not a request object/array, an empty batch, or a missing method.' },
   METHOD_NOT_FOUND: { code: -32601, message: 'Method not found', meaning: 'This node doesn’t implement the method.' },
   INVALID_PARAMS: { code: -32602, message: 'Invalid params', meaning: 'Missing/malformed store_id, root, or retrieval_key; or "latest" on a store with no confirmed generation.' },
-  INTERNAL_ERROR: { code: -32603, message: 'Internal error', meaning: 'The node failed to satisfy a well-formed call (distinct from a miss, which is a decoy).' },
+  INTERNAL_ERROR: { code: -32603, message: 'Internal error', meaning: 'The node failed to satisfy a well-formed call.' },
+  RESOURCE_UNAVAILABLE: { code: -32004, message: 'Resource not available at the requested root', meaning: 'A genuine infrastructure miss (no host seed, module absent in both buckets, bad magic, oversize, a wasmtime trap, or an undecodable envelope) — distinct from a content miss, which is an indistinguishable decoy with no error.' },
 };
 
 /* ------------------------------------------------------------------ *

@@ -43,7 +43,14 @@
       "code": -32603,
       "name": "INTERNAL_ERROR",
       "http_or_exit": 200,
-      "description": "Internal error — The node failed to satisfy a well-formed call (distinct from a miss, which is a decoy)."
+      "description": "Internal error — The node failed to satisfy a well-formed call."
+    },
+    {
+      "surface": "dig-rpc",
+      "code": -32004,
+      "name": "RESOURCE_UNAVAILABLE",
+      "http_or_exit": 200,
+      "description": "Resource not available at the requested root — A genuine infrastructure miss (no host seed, module absent in both buckets, bad magic, oversize, a wasmtime trap, or an undecodable envelope) — distinct from a content miss, which is an indistinguishable decoy with no error."
     },
     {
       "surface": "digstore-cli",
@@ -344,7 +351,14 @@
         "code": -32603,
         "name": "INTERNAL_ERROR",
         "http_or_exit": 200,
-        "description": "Internal error — The node failed to satisfy a well-formed call (distinct from a miss, which is a decoy)."
+        "description": "Internal error — The node failed to satisfy a well-formed call."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32004,
+        "name": "RESOURCE_UNAVAILABLE",
+        "http_or_exit": 200,
+        "description": "Resource not available at the requested root — A genuine infrastructure miss (no host seed, module absent in both buckets, bad magic, oversize, a wasmtime trap, or an undecodable envelope) — distinct from a content miss, which is an indistinguishable decoy with no error."
       }
     ],
     "digstore-cli": [

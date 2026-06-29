@@ -27,7 +27,7 @@ This catalog is also published as [`error-codes.json`](https://docs.dig.net/erro
 
 ## dig RPC (JSON-RPC)
 
-The [dig RPC](../rpc/methods.md) uses the standard [JSON-RPC 2.0](https://www.jsonrpc.org/specification) error codes. A content **miss is never an error** — it's a `decoy` result (see [the blind model](../rpc/conformance.md#the-blind-serving-model)). For any well-formed body the HTTP status is `200`; the error is carried in the JSON envelope.
+The [dig RPC](../protocol/dig-rpc.md) uses the standard [JSON-RPC 2.0](https://www.jsonrpc.org/specification) error codes plus the protocol-specific `-32004`. A content **miss is never an error** — the capsule returns its own indistinguishable, non-verifying response (there is no `decoy` field on the wire), and the client discovers the miss by inclusion-proof and/or decryption failure (see [the blind host model](../protocol/blind-host-model.md)). For any well-formed body the HTTP status is `200`; the error is carried in the JSON envelope.
 
 | Code | Meaning | What to do |
 |---|---|---|
@@ -35,7 +35,8 @@ The [dig RPC](../rpc/methods.md) uses the standard [JSON-RPC 2.0](https://www.js
 | `-32600` | **Invalid request** — not a request object/array, an empty batch, or a missing `method`. | Send a valid JSON-RPC request with a `method` field. |
 | `-32601` | **Method not found** — this node doesn't implement the method. | Check the name against [Methods](../rpc/methods.md); call `dig.methods` to see what the node supports. |
 | `-32602` | **Invalid params** — missing/malformed `store_id`, `root`, or `retrieval_key`, or `"latest"` on a store with no confirmed generation. | Verify each identifier is the right length of lower-case hex; confirm the store has at least one capsule. |
-| `-32603` | **Internal error** — the node failed to satisfy a well-formed call (distinct from a miss). | Retry; if it persists, try another node or report it. |
+| `-32603` | **Internal error** — the node failed to satisfy a well-formed call. | Retry; if it persists, try another node or report it. |
+| `-32004` | **Resource not available at the requested root** — a genuine infrastructure miss (no host seed, the module absent in both buckets, bad magic, oversize, a wasmtime trap, or an undecodable envelope). Distinct from a content miss, which is an indistinguishable decoy and is *never* an error. | Confirm the `root` is a confirmed generation (`dig.listCapsules`); retry or try another node. |
 
 ## digstore CLI (exit codes)
 
