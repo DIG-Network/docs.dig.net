@@ -31,6 +31,7 @@ import {
   RPC_ENDPOINT,
   schemas,
   methods,
+  nodeMethods,
   rpcErrors,
   rpcCatalog,
   cliCatalog,
@@ -50,14 +51,14 @@ const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'))
  * OpenRPC document
  * ------------------------------------------------------------------ */
 
-function buildOpenRpc() {
+function buildOpenRpc({ title, methodSet, info, servers }) {
   // A named, reusable JSON-RPC error component per catalogued code.
   const errorComponents = {};
   for (const [name, e] of Object.entries(rpcErrors)) {
     errorComponents[name] = { code: e.code, message: e.message, data: { type: 'object' } };
   }
 
-  const openrpcMethods = methods.map((m) => ({
+  const openrpcMethods = methodSet.map((m) => ({
     name: m.name,
     summary: m.summary,
     description: m.description,
@@ -75,16 +76,15 @@ function buildOpenRpc() {
   return {
     openrpc: '1.2.6',
     info: {
-      title: 'dig RPC — DIG Network Content Interface',
+      title,
       version: pkg.version && pkg.version !== '0.0.0' ? pkg.version : '1.0.0',
-      description:
-        'The network-wide read interface for DIG content over JSON-RPC 2.0. Blind by construction (the node holds no URN and no key), verifiable without trust (merkle inclusion proofs against the on-chain root), and streamable at any size. See https://docs.dig.net/docs/rpc/methods.',
+      description: info,
       license: { name: 'GPL-2.0', url: 'https://github.com/DIG-Network/digstore/blob/main/LICENSE' },
     },
-    servers: [{ name: 'rpc.dig.net', url: RPC_ENDPOINT, summary: 'The public DIG Network read endpoint.' }],
+    servers,
     methods: openrpcMethods,
     components: { schemas, errors: errorComponents },
-    externalDocs: { description: 'dig RPC methods (prose)', url: `${SITE}/docs/rpc/methods` },
+    externalDocs: { description: 'dig RPC methods (prose)', url: `${SITE}/docs/protocol/dig-rpc` },
   };
 }
 
@@ -186,17 +186,34 @@ function driftGate(catalog) {
 
 /* ------------------------------------------------------------------ */
 
-const openrpc = buildOpenRpc();
+const openrpc = buildOpenRpc({
+  title: 'dig RPC — DIG Network Content Interface (network profile)',
+  methodSet: methods,
+  servers: [{ name: 'rpc.dig.net', url: RPC_ENDPOINT, summary: 'The public DIG Network read endpoint.' }],
+  info:
+    'The network-wide read interface for DIG content over JSON-RPC 2.0 — the NETWORK PROFILE served by the canonical node at rpc.dig.net. Blind by construction (the node holds no URN and no key), verifiable without trust (merkle inclusion proofs against the chain-anchored root), and streamable at any size. There is no `decoy` field on the wire and no CDN. See https://docs.dig.net/docs/protocol/dig-rpc.',
+});
+
+const openrpcNode = buildOpenRpc({
+  title: 'dig RPC — node profile (local dig-node / dig-companion / in-process DIG Browser)',
+  methodSet: nodeMethods,
+  servers: [{ name: 'local dig-node', url: 'http://127.0.0.1:9778', summary: 'The local node the DIG Browser runs in-process (FFI) and dig-node serves on 127.0.0.1:9778.' }],
+  info:
+    'The NODE PROFILE: a distinct, smaller surface than the network profile. Of the byte methods it implements ONLY dig.getContent (local-first, else proxy); everything else proxies upstream or returns -32601. It ADDS node-only methods the security model depends on — chiefly dig.getAnchoredRoot (the CHIP-0035 on-chain head, the trusted root for mandatory root-pinning), dig.stage, and cache.*. Gate on dig.methods rather than assuming one uniform surface. See https://docs.dig.net/docs/protocol/dig-rpc#node-profile.',
+});
+
 const catalog = buildErrorCatalog();
 
 driftGate(catalog);
 
 fs.mkdirSync(STATIC, { recursive: true });
 fs.writeFileSync(path.join(STATIC, 'openrpc.json'), JSON.stringify(openrpc, null, 2) + '\n');
+fs.writeFileSync(path.join(STATIC, 'openrpc-node.json'), JSON.stringify(openrpcNode, null, 2) + '\n');
 fs.writeFileSync(path.join(STATIC, 'error-codes.json'), JSON.stringify(catalog, null, 2) + '\n');
 
 console.log(
-  `openrpc.json: ${openrpc.methods.length} methods, ${Object.keys(openrpc.components.schemas).length} schemas; ` +
+  `openrpc.json: ${openrpc.methods.length} methods (network); openrpc-node.json: ${openrpcNode.methods.length} methods (node); ` +
+    `${Object.keys(openrpc.components.schemas).length} schemas; ` +
     `error-codes.json: ${catalog.errors.length} codes across ${Object.keys(catalog.bySurface).length} surfaces ` +
     `(drift gate passed)`,
 );

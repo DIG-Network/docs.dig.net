@@ -1,9 +1,9 @@
 {
   "openrpc": "1.2.6",
   "info": {
-    "title": "dig RPC — DIG Network Content Interface (network profile)",
+    "title": "dig RPC — node profile (local dig-node / dig-companion / in-process DIG Browser)",
     "version": "1.0.0",
-    "description": "The network-wide read interface for DIG content over JSON-RPC 2.0 — the NETWORK PROFILE served by the canonical node at rpc.dig.net. Blind by construction (the node holds no URN and no key), verifiable without trust (merkle inclusion proofs against the chain-anchored root), and streamable at any size. There is no `decoy` field on the wire and no CDN. See https://docs.dig.net/docs/protocol/dig-rpc.",
+    "description": "The NODE PROFILE: a distinct, smaller surface than the network profile. Of the byte methods it implements ONLY dig.getContent (local-first, else proxy); everything else proxies upstream or returns -32601. It ADDS node-only methods the security model depends on — chiefly dig.getAnchoredRoot (the CHIP-0035 on-chain head, the trusted root for mandatory root-pinning), dig.stage, and cache.*. Gate on dig.methods rather than assuming one uniform surface. See https://docs.dig.net/docs/protocol/dig-rpc#node-profile.",
     "license": {
       "name": "GPL-2.0",
       "url": "https://github.com/DIG-Network/digstore/blob/main/LICENSE"
@@ -11,16 +11,16 @@
   },
   "servers": [
     {
-      "name": "rpc.dig.net",
-      "url": "https://rpc.dig.net",
-      "summary": "The public DIG Network read endpoint."
+      "name": "local dig-node",
+      "url": "http://127.0.0.1:9778",
+      "summary": "The local node the DIG Browser runs in-process (FFI) and dig-node serves on 127.0.0.1:9778."
     }
   ],
   "methods": [
     {
       "name": "dig.getContent",
-      "summary": "Stream one resource’s ciphertext by retrieval key.",
-      "description": "The method behind every content view and public store link. Returns a chunk object; reassemble until complete, verify the inclusion proof against `root`, then decrypt with the URN-derived key.",
+      "summary": "Stream one resource’s ciphertext (local-first, then proxy).",
+      "description": "Identical wire contract to the network profile, but served LOCAL-FIRST: from a cached compiled .dig (serve_blind over <cache>/modules/<store>/<root>.module), else an authenticated §21.9 whole-store sync, else the raw JSON-RPC body is proxied upstream to rpc.dig.net. The in-process node ADDITIVELY tags each chunk with `source` (\"local\"|\"remote\").",
       "paramStructure": "by-name",
       "params": [
         {
@@ -56,7 +56,7 @@
         {
           "name": "length",
           "required": false,
-          "description": "Clamped to the node’s max chunk (3 MiB).",
+          "description": "Clamped to the node window (3 MiB).",
           "schema": {
             "type": "integer",
             "minimum": 1
@@ -82,345 +82,9 @@
       ]
     },
     {
-      "name": "dig.getProof",
-      "summary": "Return the inclusion proof (sync) and the execution-proof status for a resource.",
-      "description": "Read-only. The merkle inclusion proof is REAL and synchronous; the ZK execution proof is produced asynchronously by the prover and only returned when you pass a `proof_id` you already requested via the gated control plane.",
-      "paramStructure": "by-name",
-      "params": [
-        {
-          "name": "store_id",
-          "required": true,
-          "schema": {
-            "$ref": "#/components/schemas/StoreId"
-          }
-        },
-        {
-          "name": "retrieval_key",
-          "required": true,
-          "schema": {
-            "$ref": "#/components/schemas/RetrievalKey"
-          }
-        },
-        {
-          "name": "root",
-          "required": false,
-          "schema": {
-            "$ref": "#/components/schemas/Root"
-          }
-        },
-        {
-          "name": "proof_id",
-          "required": false,
-          "description": "An execution-proof job id to return the real receipt for.",
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "result": {
-        "name": "proof",
-        "schema": {
-          "type": "object",
-          "properties": {
-            "inclusion_proof": {
-              "type": "string",
-              "contentEncoding": "base64",
-              "description": "REAL synchronous merkle inclusion proof for the whole resource."
-            },
-            "program_hash": {
-              "$ref": "#/components/schemas/StoreId"
-            },
-            "root": {
-              "$ref": "#/components/schemas/StoreId"
-            },
-            "execution_proof": {
-              "type": [
-                "string",
-                "null"
-              ],
-              "description": "risc0 receipt or null (read-only / job-based; never a mock receipt on the wire)."
-            },
-            "execution_proof_status": {
-              "type": "string",
-              "enum": [
-                "succeeded",
-                "running",
-                "queued",
-                "not_found",
-                "request_via_control_plane"
-              ]
-            },
-            "node_pubkey": {
-              "type": "string"
-            },
-            "block_header": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "errors": [
-        {
-          "$ref": "#/components/errors/INVALID_PARAMS"
-        },
-        {
-          "$ref": "#/components/errors/INTERNAL_ERROR"
-        },
-        {
-          "$ref": "#/components/errors/RESOURCE_UNAVAILABLE"
-        }
-      ]
-    },
-    {
-      "name": "dig.getProofStatus",
-      "summary": "Poll a REAL execution-proof job by id.",
-      "description": "Returns the job status and, when terminal, the real risc0 receipt. Never a mock receipt.",
-      "paramStructure": "by-name",
-      "params": [
-        {
-          "name": "store_id",
-          "required": true,
-          "schema": {
-            "$ref": "#/components/schemas/StoreId"
-          }
-        },
-        {
-          "name": "proof_id",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "result": {
-        "name": "status",
-        "schema": {
-          "type": "object",
-          "properties": {
-            "proof_id": {
-              "type": "string"
-            },
-            "status": {
-              "type": "string",
-              "enum": [
-                "queued",
-                "running",
-                "succeeded",
-                "failed"
-              ]
-            },
-            "receipt": {
-              "type": [
-                "string",
-                "null"
-              ]
-            },
-            "node_pubkey": {
-              "type": "string"
-            },
-            "block_header": {
-              "type": "string"
-            },
-            "root": {
-              "$ref": "#/components/schemas/StoreId"
-            }
-          }
-        }
-      },
-      "errors": [
-        {
-          "$ref": "#/components/errors/INVALID_PARAMS"
-        },
-        {
-          "$ref": "#/components/errors/INTERNAL_ERROR"
-        }
-      ]
-    },
-    {
-      "name": "dig.getCapsule",
-      "summary": "Stream an entire compiled capsule (the whole .dig module) for one generation.",
-      "description": "Address a capsule by its (store_id, root) pair. The capsule self-verifies on install (store id + signed root + on-chain root), so `inclusion_proof` is null here. The alias dig.getModule is accepted for identical behavior.",
-      "paramStructure": "by-name",
-      "params": [
-        {
-          "name": "store_id",
-          "required": true,
-          "schema": {
-            "$ref": "#/components/schemas/StoreId"
-          }
-        },
-        {
-          "name": "root",
-          "required": false,
-          "schema": {
-            "$ref": "#/components/schemas/Root"
-          }
-        },
-        {
-          "name": "offset",
-          "required": false,
-          "schema": {
-            "type": "integer",
-            "minimum": 0,
-            "default": 0
-          }
-        },
-        {
-          "name": "length",
-          "required": false,
-          "schema": {
-            "type": "integer",
-            "minimum": 1
-          }
-        }
-      ],
-      "result": {
-        "name": "chunk",
-        "schema": {
-          "$ref": "#/components/schemas/ChunkObject"
-        }
-      },
-      "errors": [
-        {
-          "$ref": "#/components/errors/INVALID_PARAMS"
-        },
-        {
-          "$ref": "#/components/errors/INTERNAL_ERROR"
-        },
-        {
-          "$ref": "#/components/errors/RESOURCE_UNAVAILABLE"
-        }
-      ]
-    },
-    {
-      "name": "dig.getManifest",
-      "summary": "Convenience over dig.getContent for the store's public discovery manifest.",
-      "description": "The node derives the canonical retrieval key for .well-known/dig/manifest.json itself.",
-      "paramStructure": "by-name",
-      "params": [
-        {
-          "name": "store_id",
-          "required": true,
-          "schema": {
-            "$ref": "#/components/schemas/StoreId"
-          }
-        },
-        {
-          "name": "root",
-          "required": false,
-          "schema": {
-            "$ref": "#/components/schemas/Root"
-          }
-        },
-        {
-          "name": "offset",
-          "required": false,
-          "schema": {
-            "type": "integer",
-            "minimum": 0,
-            "default": 0
-          }
-        },
-        {
-          "name": "length",
-          "required": false,
-          "schema": {
-            "type": "integer",
-            "minimum": 1
-          }
-        }
-      ],
-      "result": {
-        "name": "chunk",
-        "schema": {
-          "allOf": [
-            {
-              "$ref": "#/components/schemas/ChunkObject"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "retrieval_key": {
-                  "$ref": "#/components/schemas/RetrievalKey"
-                }
-              }
-            }
-          ]
-        }
-      },
-      "errors": [
-        {
-          "$ref": "#/components/errors/INVALID_PARAMS"
-        },
-        {
-          "$ref": "#/components/errors/INTERNAL_ERROR"
-        },
-        {
-          "$ref": "#/components/errors/RESOURCE_UNAVAILABLE"
-        }
-      ]
-    },
-    {
-      "name": "dig.getMetadata",
-      "summary": "Read the store's plaintext metadata manifest from the .dig.",
-      "description": "Metadata is plaintext, ungated public discovery info embedded in the module (Digstore §8.4) — not a content resource, no inclusion proof, never encrypted. Its on-chain binding is the module program_hash.",
-      "paramStructure": "by-name",
-      "params": [
-        {
-          "name": "store_id",
-          "required": true,
-          "schema": {
-            "$ref": "#/components/schemas/StoreId"
-          }
-        },
-        {
-          "name": "root",
-          "required": false,
-          "schema": {
-            "$ref": "#/components/schemas/Root"
-          }
-        }
-      ],
-      "result": {
-        "name": "metadata",
-        "schema": {
-          "type": "object",
-          "properties": {
-            "manifest": {
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/MetadataManifest"
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            },
-            "program_hash": {
-              "$ref": "#/components/schemas/StoreId"
-            },
-            "root": {
-              "$ref": "#/components/schemas/StoreId"
-            }
-          }
-        }
-      },
-      "errors": [
-        {
-          "$ref": "#/components/errors/INVALID_PARAMS"
-        },
-        {
-          "$ref": "#/components/errors/INTERNAL_ERROR"
-        },
-        {
-          "$ref": "#/components/errors/RESOURCE_UNAVAILABLE"
-        }
-      ]
-    },
-    {
-      "name": "dig.listCapsules",
-      "summary": "Return the store's confirmed capsules — one entry per anchored generation.",
-      "description": "Discovery metadata, not content: only the public on-chain generation list.",
+      "name": "dig.getAnchoredRoot",
+      "summary": "Resolve the store’s CHIP-0035 on-chain head root (the trusted root).",
+      "description": "Walks the CHIP-0035 DataStore singleton lineage on coinset.org (digstore_chain::singleton::sync_datastore) and returns metadata.root_hash — the on-chain-anchored tip. This is the TRUSTED root a client pins a rootless chia:// URN against; verification must never trust the rpc-served \"latest\". Coinset host defaults to api.coinset.org (override DIG_NODE_COINSET). NODE-PROFILE ONLY: absent from the network profile (dig-node lib.rs:721-743).",
       "paramStructure": "by-name",
       "params": [
         {
@@ -432,18 +96,15 @@
         }
       ],
       "result": {
-        "name": "capsules",
+        "name": "anchored",
         "schema": {
           "type": "object",
           "properties": {
             "store_id": {
               "$ref": "#/components/schemas/StoreId"
             },
-            "capsules": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/CapsuleEntry"
-              }
+            "root": {
+              "$ref": "#/components/schemas/StoreId"
             }
           }
         }
@@ -458,54 +119,59 @@
       ]
     },
     {
-      "name": "dig.health",
-      "summary": "Service discovery: liveness + the implemented method list.",
-      "description": "Takes no parameters.",
+      "name": "dig.stage",
+      "summary": "Compile a local folder into a capsule .dig, in-process.",
+      "description": "Compiles a local directory into a capsule (.dig) in-process for preview/publish. NODE-PROFILE ONLY (dig-node lib.rs:768-904).",
       "paramStructure": "by-name",
-      "params": [],
+      "params": [
+        {
+          "name": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
       "result": {
-        "name": "health",
+        "name": "staged",
         "schema": {
           "type": "object",
           "properties": {
-            "ok": {
-              "type": "boolean"
+            "store_id": {
+              "$ref": "#/components/schemas/StoreId"
             },
-            "service": {
-              "type": "string"
-            },
-            "methods": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
+            "root": {
+              "$ref": "#/components/schemas/StoreId"
             }
           }
         }
       },
-      "errors": []
+      "errors": [
+        {
+          "$ref": "#/components/errors/INVALID_PARAMS"
+        },
+        {
+          "$ref": "#/components/errors/INTERNAL_ERROR"
+        }
+      ]
     },
     {
-      "name": "dig.methods",
-      "summary": "Service discovery: the method catalogue this node implements.",
-      "description": "Takes no parameters. Use it to confirm a third-party node implements the methods you need before relying on it.",
+      "name": "cache.getConfig",
+      "summary": "Read the local node cache configuration.",
+      "description": "Part of the node-only cache.* control surface (getConfig/setCapBytes/clear/listCached/removeCached/fetchAndCache). NODE-PROFILE ONLY (dig-node lib.rs:1143-1231).",
       "paramStructure": "by-name",
       "params": [],
       "result": {
-        "name": "methods",
+        "name": "config",
         "schema": {
-          "type": "object",
-          "properties": {
-            "methods": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
+          "type": "object"
         }
       },
-      "errors": []
+      "errors": [
+        {
+          "$ref": "#/components/errors/INTERNAL_ERROR"
+        }
+      ]
     }
   ],
   "components": {
