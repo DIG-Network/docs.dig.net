@@ -88,14 +88,18 @@ The client primitive: a **browser with a built-in Chia wallet**. It injects a `w
 
 *More primitives — settlement and node operation — will get their own sections as they land.*
 
-## Where to start
+## Pick your path
 
-- **Just want to ship something?** Follow the [Quickstart](./quickstart.md) — build and preview a site for **free**, and spend DIG only when you publish.
-- **Building a full dapp?** Follow [Build a dapp on Chia](./build-a-dapp/tutorial.md) — one thread from scaffold to a wallet-aware app live at your own domain.
-- **New to the vocabulary?** Skim [Concepts & glossary](./concepts.md) — every core entity defined once, with links into the deep docs.
-- **Building with content today?** Go straight to [DigStore](./digstore/what-is-digstore.md) — it's production-ready and has a full [CLI tutorial](./digstore/cli/quickstart.md).
-- **Stuck?** [Get help](./support/get-help.md) — community, troubleshooting, and the error-code reference.
-- **Want the deep design?** Read the [DIG Network whitepapers](./whitepapers/index.md) — the full protocol specification.
+The docs are organized around **what you're doing**. Each track opens with a ten-second "why", the mental model you need, and the high-signal how-to — then links into the protocol when you want to go deeper.
+
+- **[Publish a site or app you own](./audiences/app-developers.md)** — ship a website/app as your own on-chain asset; build free, publish a capsule.
+- **[Mint NFTs & collections](./audiences/nft-developers.md)** — CHIP-0007 drops backed by permanent, tamper-evident capsules.
+- **[Integrate DIG into your app](./audiences/integration-developers.md)** — a typed SDK + a fully machine-readable platform.
+- **[Run a node](./run-a-node/index.md)** — serve content provably and provider-blind.
+- **[Open chia:// content](./audiences/content-consumers.md)** — read content your own browser verifies against the chain.
+- **[Get unstuck](./audiences/troubleshooting.md)** — find your failure by its stable code.
+
+New to the vocabulary? Skim [Concepts & glossary](./concepts.md). Want the full design? Read the [Protocol deep-dive](./protocol-deep-dive.md).
 
 :::note
 DIG Network and its primitives are open source. DigStore is licensed under GPL-2.0; see the [digstore repository](https://github.com/DIG-Network/digstore).

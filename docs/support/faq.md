@@ -29,7 +29,7 @@ A **uniform per-[capsule](../concepts.md#capsule) price**, paid in $DIG at the l
 
 Yes. **Scaffolding, building, and previewing cost nothing.** You spend DIG only when you publish a capsule on-chain. Start from the [Quickstart](../quickstart.md) — build and preview a draft for free, fund a wallet only at the Publish step.
 
-## Why is every capsule the same price — isn't a small update cheaper?
+## Why is every capsule the same price — isn't a small update cheaper? {#why-uniform-price}
 
 No, and that's intentional. Each capsule compiles to a **fixed-size** module (padded so its length leaks nothing about content size). A price that varied with size would re-leak the size the padding hides — so the price has to be uniform. See [why the price is uniform](../digstore/cli/onchain-anchoring.md#why-the-price-is-uniform).
 
@@ -65,7 +65,7 @@ A store does **not** get a `*.on.dig.net` subdomain automatically. You get one b
 
 The store stays on-chain and existing content stays readable, but **you can't publish new capsules** to it. Back up `~/.dig/seed.enc` and your mnemonic. See [On-chain anchoring](../digstore/cli/onchain-anchoring.md).
 
-## Public vs private — what's the difference?
+## Public vs private — what's the difference? {#public-vs-private}
 
 A **public** store needs only its URN to read. A **private** store adds a secret `salt`; the URN alone isn't enough — the reader also needs the salt. Treat the salt like a password. See [URNs & Encryption](../digstore/format/urns-and-encryption.md).
 

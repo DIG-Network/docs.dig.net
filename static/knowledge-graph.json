@@ -171,6 +171,71 @@
       "tag": "whitepaper"
     },
     {
+      "id": "/docs/audiences/app-developers",
+      "type": "doc",
+      "title": "For app developers",
+      "url": "https://docs.dig.net/docs/audiences/app-developers",
+      "tags": [
+        "dighub",
+        "digstore-cli",
+        "capsule",
+        "store",
+        "dig-payment",
+        "anchoring"
+      ]
+    },
+    {
+      "id": "/docs/audiences/content-consumers",
+      "type": "doc",
+      "title": "For content consumers",
+      "url": "https://docs.dig.net/docs/audiences/content-consumers",
+      "tags": [
+        "browser",
+        "chia-protocol",
+        "capsule",
+        "dig-node"
+      ]
+    },
+    {
+      "id": "/docs/audiences/integration-developers",
+      "type": "doc",
+      "title": "For integration developers",
+      "url": "https://docs.dig.net/docs/audiences/integration-developers",
+      "tags": [
+        "dig-sdk",
+        "dig-rpc",
+        "window-chia",
+        "chip-0035",
+        "dighub",
+        "deploy-action"
+      ]
+    },
+    {
+      "id": "/docs/audiences/nft-developers",
+      "type": "doc",
+      "title": "For NFT developers",
+      "url": "https://docs.dig.net/docs/audiences/nft-developers",
+      "tags": [
+        "capsule",
+        "chip-0035",
+        "dig-sdk",
+        "dighub",
+        "digstore-cli"
+      ]
+    },
+    {
+      "id": "/docs/audiences/troubleshooting",
+      "type": "doc",
+      "title": "Troubleshooting — get unstuck",
+      "url": "https://docs.dig.net/docs/audiences/troubleshooting",
+      "tags": [
+        "dig-rpc",
+        "digstore-cli",
+        "dighub",
+        "capsule"
+      ]
+    },
+    {
       "id": "/docs/browser/chia-protocol",
       "type": "doc",
       "title": "The chia:// protocol & URN scheme",
@@ -238,6 +303,19 @@
         "dighub",
         "capsule",
         "anchoring"
+      ]
+    },
+    {
+      "id": "/docs/chip-0035-spends-and-delegation",
+      "type": "doc",
+      "title": "CHIP-0035 store-coin spends & delegation",
+      "url": "https://docs.dig.net/docs/chip-0035-spends-and-delegation",
+      "tags": [
+        "chip-0035",
+        "anchoring",
+        "capsule",
+        "store",
+        "deploy-action"
       ]
     },
     {
@@ -457,6 +535,17 @@
       ]
     },
     {
+      "id": "/docs/inclusion-vs-execution-proofs",
+      "type": "doc",
+      "title": "Inclusion vs execution proofs",
+      "url": "https://docs.dig.net/docs/inclusion-vs-execution-proofs",
+      "tags": [
+        "merkle-proof",
+        "dig-rpc",
+        "dighub"
+      ]
+    },
+    {
       "id": "/docs",
       "type": "doc",
       "title": "DIG Network",
@@ -472,6 +561,16 @@
       ]
     },
     {
+      "id": "/docs/machine-surfaces",
+      "type": "doc",
+      "title": "Machine-readable surfaces",
+      "url": "https://docs.dig.net/docs/machine-surfaces",
+      "tags": [
+        "dig-rpc",
+        "dig-sdk"
+      ]
+    },
+    {
       "id": "/docs/protocol/window-chia-provider",
       "type": "doc",
       "title": "The window.chia provider (specification)",
@@ -483,6 +582,18 @@
         "browser",
         "dig-sdk",
         "chia-protocol"
+      ]
+    },
+    {
+      "id": "/docs/protocol-deep-dive",
+      "type": "doc",
+      "title": "Protocol deep-dive",
+      "url": "https://docs.dig.net/docs/protocol-deep-dive",
+      "tags": [
+        "capsule",
+        "dig-rpc",
+        "chia-protocol",
+        "whitepaper"
       ]
     },
     {
@@ -591,6 +702,16 @@
       ]
     },
     {
+      "id": "/docs/run-a-node/configure",
+      "type": "doc",
+      "title": "Configure dig-node",
+      "url": "https://docs.dig.net/docs/run-a-node/configure",
+      "tags": [
+        "dig-node",
+        "dig-rpc"
+      ]
+    },
+    {
       "id": "/docs/run-a-node",
       "type": "doc",
       "title": "Run a DIG node",
@@ -599,6 +720,61 @@
         "dig-node",
         "dig-rpc",
         "capsule"
+      ]
+    },
+    {
+      "id": "/docs/run-a-node/manage",
+      "type": "doc",
+      "title": "Manage your node",
+      "url": "https://docs.dig.net/docs/run-a-node/manage",
+      "tags": [
+        "dig-node",
+        "dig-rpc",
+        "browser"
+      ]
+    },
+    {
+      "id": "/docs/run-a-node/point-a-consumer",
+      "type": "doc",
+      "title": "Point a consumer at your node",
+      "url": "https://docs.dig.net/docs/run-a-node/point-a-consumer",
+      "tags": [
+        "dig-node",
+        "browser",
+        "dig-rpc"
+      ]
+    },
+    {
+      "id": "/docs/run-a-node/universal-installer",
+      "type": "doc",
+      "title": "Install anywhere — the universal installer",
+      "url": "https://docs.dig.net/docs/run-a-node/universal-installer",
+      "tags": [
+        "dig-node",
+        "dig-rpc"
+      ]
+    },
+    {
+      "id": "/docs/sdk",
+      "type": "doc",
+      "title": "The DIG SDK",
+      "url": "https://docs.dig.net/docs/sdk",
+      "tags": [
+        "dig-sdk",
+        "window-chia",
+        "dig-rpc",
+        "chip-0035"
+      ]
+    },
+    {
+      "id": "/docs/spends",
+      "type": "doc",
+      "title": "Building spends",
+      "url": "https://docs.dig.net/docs/spends",
+      "tags": [
+        "chip-0035",
+        "dig-sdk",
+        "window-chia"
       ]
     },
     {
@@ -840,6 +1016,126 @@
       "type": "defines"
     },
     {
+      "from": "/docs/audiences/app-developers",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/app-developers",
+      "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/app-developers",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/app-developers",
+      "to": "concept:store",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/app-developers",
+      "to": "concept:dig-payment",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/app-developers",
+      "to": "concept:anchoring",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/content-consumers",
+      "to": "concept:browser",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/content-consumers",
+      "to": "concept:chia-protocol",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/content-consumers",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/integration-developers",
+      "to": "concept:dig-sdk",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/integration-developers",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/integration-developers",
+      "to": "concept:window-chia",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/integration-developers",
+      "to": "concept:chip-0035",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/integration-developers",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/integration-developers",
+      "to": "concept:deploy-action",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/nft-developers",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/nft-developers",
+      "to": "concept:chip-0035",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/nft-developers",
+      "to": "concept:dig-sdk",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/nft-developers",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/nft-developers",
+      "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/troubleshooting",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/troubleshooting",
+      "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/troubleshooting",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/audiences/troubleshooting",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
       "from": "/docs/browser/chia-protocol",
       "to": "concept:chia-protocol",
       "type": "part-of"
@@ -987,6 +1283,31 @@
     {
       "from": "/docs/build-a-dapp/tutorial",
       "to": "concept:anchoring",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/chip-0035-spends-and-delegation",
+      "to": "concept:chip-0035",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/chip-0035-spends-and-delegation",
+      "to": "concept:anchoring",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/chip-0035-spends-and-delegation",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/chip-0035-spends-and-delegation",
+      "to": "concept:store",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/chip-0035-spends-and-delegation",
+      "to": "concept:deploy-action",
       "type": "part-of"
     },
     {
@@ -1470,6 +1791,21 @@
       "type": "part-of"
     },
     {
+      "from": "/docs/inclusion-vs-execution-proofs",
+      "to": "concept:merkle-proof",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/inclusion-vs-execution-proofs",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/inclusion-vs-execution-proofs",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
       "from": "/docs",
       "to": "concept:capsule",
       "type": "part-of"
@@ -1505,6 +1841,16 @@
       "type": "part-of"
     },
     {
+      "from": "/docs/machine-surfaces",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/machine-surfaces",
+      "to": "concept:dig-sdk",
+      "type": "part-of"
+    },
+    {
       "from": "/docs/protocol/window-chia-provider",
       "to": "concept:window-chia",
       "type": "part-of"
@@ -1532,6 +1878,26 @@
     {
       "from": "/docs/protocol/window-chia-provider",
       "to": "concept:chia-protocol",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol-deep-dive",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol-deep-dive",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol-deep-dive",
+      "to": "concept:chia-protocol",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol-deep-dive",
+      "to": "concept:whitepaper",
       "type": "part-of"
     },
     {
@@ -1735,6 +2101,11 @@
       "type": "part-of"
     },
     {
+      "from": "/docs/run-a-node/configure",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
       "from": "/docs/run-a-node",
       "to": "concept:dig-rpc",
       "type": "part-of"
@@ -1742,6 +2113,66 @@
     {
       "from": "/docs/run-a-node",
       "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/run-a-node/manage",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/run-a-node/manage",
+      "to": "concept:browser",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/run-a-node/point-a-consumer",
+      "to": "concept:browser",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/run-a-node/point-a-consumer",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/run-a-node/universal-installer",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/sdk",
+      "to": "concept:dig-sdk",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/sdk",
+      "to": "concept:window-chia",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/sdk",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/sdk",
+      "to": "concept:chip-0035",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/spends",
+      "to": "concept:chip-0035",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/spends",
+      "to": "concept:dig-sdk",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/spends",
+      "to": "concept:window-chia",
       "type": "part-of"
     },
     {
@@ -2082,6 +2513,26 @@
     {
       "from": "/docs/build-a-dapp/tutorial",
       "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/chip-0035-spends-and-delegation",
+      "to": "/docs/spends",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/chip-0035-spends-and-delegation",
+      "to": "/docs/sdk",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/chip-0035-spends-and-delegation",
+      "to": "/docs/digstore/cli/onchain-anchoring",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/chip-0035-spends-and-delegation",
+      "to": "/docs/digstore/cli/deploy-from-github-actions",
       "type": "see-also"
     },
     {
@@ -2565,6 +3016,26 @@
       "type": "see-also"
     },
     {
+      "from": "/docs/inclusion-vs-execution-proofs",
+      "to": "/docs/digstore/format/proofs-and-security",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/inclusion-vs-execution-proofs",
+      "to": "/docs/rpc/conformance",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/inclusion-vs-execution-proofs",
+      "to": "/docs/whitepapers/dfsp",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/inclusion-vs-execution-proofs",
+      "to": "/docs/whitepapers/consensus",
+      "type": "see-also"
+    },
+    {
       "from": "/docs",
       "to": "/docs/quickstart",
       "type": "see-also"
@@ -2605,6 +3076,21 @@
       "type": "see-also"
     },
     {
+      "from": "/docs/machine-surfaces",
+      "to": "/docs/support/error-codes",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/machine-surfaces",
+      "to": "/docs/rpc/methods",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/machine-surfaces",
+      "to": "/docs/sdk",
+      "type": "see-also"
+    },
+    {
       "from": "/docs/protocol/window-chia-provider",
       "to": "/docs/browser/using-window-chia",
       "type": "see-also"
@@ -2627,6 +3113,16 @@
     {
       "from": "/docs/protocol/window-chia-provider",
       "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol-deep-dive",
+      "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol-deep-dive",
+      "to": "/docs/audiences/app-developers",
       "type": "see-also"
     },
     {
@@ -2845,8 +3341,48 @@
       "type": "see-also"
     },
     {
+      "from": "/docs/run-a-node/configure",
+      "to": "/docs/run-a-node/universal-installer",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/configure",
+      "to": "/docs/run-a-node/manage",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/configure",
+      "to": "/docs/rpc/conformance",
+      "type": "see-also"
+    },
+    {
       "from": "/docs/run-a-node",
       "to": "/docs/run-a-node/apt",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node",
+      "to": "/docs/run-a-node/universal-installer",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node",
+      "to": "/docs/run-a-node/point-a-consumer",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node",
+      "to": "/docs/run-a-node/configure",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node",
+      "to": "/docs/rpc/dig-remote",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node",
+      "to": "/docs/run-a-node/manage",
       "type": "see-also"
     },
     {
@@ -2856,17 +3392,97 @@
     },
     {
       "from": "/docs/run-a-node",
-      "to": "/docs/browser/chia-protocol",
+      "to": "/docs/digstore/cli/install",
       "type": "see-also"
     },
     {
-      "from": "/docs/run-a-node",
+      "from": "/docs/run-a-node/manage",
+      "to": "/docs/run-a-node/configure",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/manage",
+      "to": "/docs/rpc/conformance",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/manage",
+      "to": "/docs/rpc/dig-remote",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/point-a-consumer",
+      "to": "/docs/run-a-node",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/point-a-consumer",
+      "to": "/docs/run-a-node/configure",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/point-a-consumer",
+      "to": "/docs/run-a-node/manage",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/universal-installer",
+      "to": "/docs/run-a-node",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/universal-installer",
+      "to": "/docs/run-a-node/configure",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/universal-installer",
+      "to": "/docs/run-a-node/point-a-consumer",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/sdk",
+      "to": "/docs/build-a-dapp/tutorial",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/sdk",
+      "to": "/docs/spends",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/sdk",
+      "to": "/docs/browser/using-window-chia",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/sdk",
+      "to": "/docs/protocol/window-chia-provider",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/sdk",
       "to": "/docs/rpc/what-is-the-dig-rpc",
       "type": "see-also"
     },
     {
-      "from": "/docs/run-a-node",
-      "to": "/docs/digstore/cli/install",
+      "from": "/docs/sdk",
+      "to": "/docs/machine-surfaces",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/spends",
+      "to": "/docs/sdk",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/spends",
+      "to": "/docs/chip-0035-spends-and-delegation",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/spends",
+      "to": "/docs/build-a-dapp/tutorial",
       "type": "see-also"
     },
     {

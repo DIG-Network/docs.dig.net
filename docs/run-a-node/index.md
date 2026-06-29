@@ -17,6 +17,8 @@ tags:
 
 # Run a DIG node
 
+> **Serve content provably and provider-blind** — you only ever touch indistinguishable ciphertext keyed by hashes, can attest faithful serving with execution proofs, and the client verifies everything against the chain, so trust never rests on your node.
+
 A **dig-node** is the DIG Network's content **server** — the supply side of the network. It hosts capsules, keeps a local `.dig` cache, and exposes the [dig RPC](../rpc/what-is-the-dig-rpc.md) so anything that reads DIG content can read it from you. It runs headless (no browser, no UI) as a background service — a seedbox for the content you publish or want to help serve.
 
 It is the counterpart to the **consumers** — the [DIG Browser](../browser/chia-protocol.md) and the browser extension — which fetch ciphertext + proofs, verify against the on-chain root, decrypt locally, and render. You do **not** need a dig-node to read DIG content: a consumer alone works fine, falling back to the public reference node at `rpc.dig.net`. You run a dig-node to **serve** — and when one is present on the same machine, the consumer reads from it (local, offline-friendly, and contributing to the network) and they share one `.dig` cache.
@@ -64,7 +66,17 @@ You don't need a node. Get the **[DIG Browser ↗](https://github.com/DIG-Networ
 ## Related
 
 - [Install on Ubuntu/Debian via apt](./apt.md) — the Debian-native path + systemd service management
+- [Install anywhere — the universal installer](./universal-installer.md) — Windows / macOS / any Linux + `dig.local`
+- [Point a consumer at your node](./point-a-consumer.md) — local-first reads + the shared `.dig` cache
+- [Configure dig-node](./configure.md) — ports, listeners, cache cap, upstream
+- [Self-host a remote origin](../rpc/dig-remote.md) — `digstore serve` + dig:// clone/pull/push
+- [Manage your node](./manage.md) — the control.* admin RPCs + the My Node UI
 - [Using the public network RPC](../rpc/public-network-rpc.md) — the dig RPC your node speaks, and operating a node on the network
-- [The chia:// protocol](../browser/chia-protocol.md) — how consumers address and open content
-- [What is the dig RPC?](../rpc/what-is-the-dig-rpc.md) — the read interface in overview
 - [Installing the CLI](../digstore/cli/install.md) — `digstore` on its own (publishing, not serving)
+
+## Go deeper: the protocol
+
+- **"blind host & decoys"** → [The dig RPC blind serving model](../rpc/what-is-the-dig-rpc.md) · [Node conformance](../rpc/conformance.md)
+- **"attest faithful serving"** → [Inclusion vs execution proofs](../inclusion-vs-execution-proofs.md)
+- **"dig:// clone/pull/push"** → [The §21/§22 remote protocol](../rpc/dig-remote.md)
+- **Everything** → [Protocol deep-dive](../protocol-deep-dive.md) · [Concepts & glossary](../concepts.md)
