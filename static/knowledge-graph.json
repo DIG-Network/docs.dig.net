@@ -580,6 +580,28 @@
       ]
     },
     {
+      "id": "/docs/run-a-node/apt",
+      "type": "doc",
+      "title": "Install on Ubuntu/Debian (apt)",
+      "url": "https://docs.dig.net/docs/run-a-node/apt",
+      "tags": [
+        "dig-node",
+        "digstore-cli",
+        "dig-rpc"
+      ]
+    },
+    {
+      "id": "/docs/run-a-node",
+      "type": "doc",
+      "title": "Run a DIG node",
+      "url": "https://docs.dig.net/docs/run-a-node",
+      "tags": [
+        "dig-node",
+        "dig-rpc",
+        "capsule"
+      ]
+    },
+    {
       "id": "/docs/support/changelog",
       "type": "doc",
       "title": "Changelog",
@@ -1703,6 +1725,26 @@
       "type": "part-of"
     },
     {
+      "from": "/docs/run-a-node/apt",
+      "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/run-a-node/apt",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/run-a-node",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/run-a-node",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
       "from": "/docs/support/changelog",
       "to": "concept:digstore-cli",
       "type": "part-of"
@@ -2775,6 +2817,56 @@
     {
       "from": "/docs/rpc/what-is-the-dig-rpc",
       "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/apt",
+      "to": "/docs/run-a-node",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/apt",
+      "to": "/docs/rpc/public-network-rpc",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/apt",
+      "to": "/docs/browser/chia-protocol",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/apt",
+      "to": "/docs/digstore/cli/install",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/apt",
+      "to": "/docs/support/troubleshooting",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node",
+      "to": "/docs/run-a-node/apt",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node",
+      "to": "/docs/rpc/public-network-rpc",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node",
+      "to": "/docs/browser/chia-protocol",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node",
+      "to": "/docs/rpc/what-is-the-dig-rpc",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node",
+      "to": "/docs/digstore/cli/install",
       "type": "see-also"
     },
     {
