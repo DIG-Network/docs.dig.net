@@ -1,13 +1,16 @@
 ---
 sidebar_position: 2
 title: Methods
-description: "Complete dig RPC method set: dig.getContent, dig.getProof, dig.getCapsule, dig.getManifest, dig.listCapsules, and service discovery methods."
+description: "Complete dig RPC method set: dig.getContent, dig.getProof, dig.getCapsule, dig.getManifest, dig.listCapsules, dig.listCollectionItems, dig.getCollection, and service discovery methods."
 keywords:
   - dig RPC methods
   - dig.getContent
   - dig.getCapsule
   - dig.getProof
   - dig.listCapsules
+  - dig.getCollection
+  - dig.listCollectionItems
+  - NFT collection
   - JSON-RPC
 tags:
   - dig-rpc
@@ -203,6 +206,64 @@ Entries are ordered by `seq` (the monotonic generation number). `root` is the va
 
 ---
 
+## dig.listCollectionItems
+
+List an NFT collection's items, each resolved to its **current** on-chain state. The collection is addressed by its **item set** — the NFT `launcher_ids` the collection mint produced (the stable identity of each NFT, what its `nft1…` id encodes). For every launcher the node walks the NFT singleton's lineage forward to the live coin, so the reported owner is the **current** holder, not the mint-time owner — owner-independent, computed from on-chain coin data with no third-party indexer.
+
+This is a pure read; it never builds or pushes a spend.
+
+**Params**
+
+| Field | Type | Required | Meaning |
+|---|---|---|---|
+| `launcher_ids` | array of hex(32) | yes | The NFT launcher ids that make up the collection (the authoritative item set; mint returns these). |
+| `offset` | uint | no | Page start over `launcher_ids` (default `0`). |
+| `limit` | uint | no | Page size (default `50`, capped at `200`). |
+
+Pagination is applied over `launcher_ids` **before** resolution, so a page only reads the chain for the items it returns. Order is the input order (stable).
+
+**Result**
+
+```json
+{ "items": [
+    { "launcher_id": "ab…", "coin_id": "11…", "owner_did": "ef…",
+      "royalty_puzzle_hash": "22…", "royalty_basis_points": 300,
+      "owner_puzzle_hash": "33…",
+      "metadata": {
+        "edition_number": 1, "edition_total": 100,
+        "data_uris": ["dig://…", "https://…"], "data_hash": "44…",
+        "metadata_uris": ["dig://…"], "metadata_hash": "55…",
+        "license_uris": [], "license_hash": null } }
+  ],
+  "offset": 0, "limit": 50, "total": 2, "next_offset": 1 }
+```
+
+`owner_did` is the assigned creator DID (or `null` once an NFT is held by a plain wallet after a transfer/offer). `owner_puzzle_hash` is the **current** owner. `metadata` is the decoded on-chain CHIP-0007 metadata (or `null` when it does not decode). A launcher that does not resolve to a live NFT (never minted / not yet confirmed) is simply omitted from `items`. `next_offset` is `null` on the last page.
+
+---
+
+## dig.getCollection
+
+Collection-level facts derived from the same resolved item set: the creator DID the items agree on, how many resolved, and the shared royalty. Use it for a one-call summary before paging the items with [`dig.listCollectionItems`](#diglistcollectionitems).
+
+**Params**
+
+| Field | Type | Required | Meaning |
+|---|---|---|---|
+| `launcher_ids` | array of hex(32) | yes | The collection's NFT launcher ids. |
+| `did` | hex(32) | no | The declared creator DID — echoed back as `declared_did`. The authoritative `did` is derived from the items' on-chain attribution. |
+
+**Result**
+
+```json
+{ "did": "ef…", "declared_did": "ef…",
+  "item_count": 2, "resolved_count": 2, "royalty_basis_points": 300 }
+```
+
+`did` is the creator DID **every** resolved item is attributed to (or `null` when items disagree or none are attributed). `item_count` is how many launcher ids were requested; `resolved_count` is how many resolved to a live NFT. `royalty_basis_points` is the royalty every item agrees on (or `null` when they differ).
+
+---
+
 ## dig.health and dig.methods
 
 Service discovery. Neither takes parameters.
@@ -211,7 +272,8 @@ Service discovery. Neither takes parameters.
 // dig.health
 { "ok": true, "service": "dig-rpc",
   "methods": ["dig.getContent","dig.getProof","dig.getProofStatus","dig.getCapsule",
-              "dig.getManifest","dig.getMetadata","dig.listCapsules","dig.health","dig.methods"] }
+              "dig.getManifest","dig.getMetadata","dig.listCapsules",
+              "dig.listCollectionItems","dig.getCollection","dig.health","dig.methods"] }
 
 // dig.methods
 { "methods": [ … ] }
