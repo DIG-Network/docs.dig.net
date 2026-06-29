@@ -17,11 +17,11 @@ tags:
 
 # Using DigStore in your project
 
-This is the day-to-day workflow: point a project at your build output, commit deployments as you ship, and manage multiple projects in one workspace.
+This is the day-to-day workflow: point a store at your build output, commit deployments as you ship, and manage multiple stores in one workspace.
 
 ## Capture a build directory
 
-DigStore is built for **build output**. Point a project at the directory your build produces:
+DigStore is built for **build output**. Point a store at the directory your build produces:
 
 ```sh
 # in your project root
@@ -41,7 +41,7 @@ digstore commit -m "v1"
 Change or override the content root anytime:
 
 ```sh
-digstore dir build/site      # set the active project's content root
+digstore dir build/site      # set the active store's content root
 digstore -C ./dist add -A    # override for just this command
 ```
 
@@ -57,31 +57,29 @@ digstore staged                  # list staged files + size + remaining headroom
 digstore unstage                 # clear the staging area
 ```
 
-Each project is capped at **128 MB** of staged content. `add`, `status`, `staged`, and `stores` all show remaining capacity; `add` refuses content that would exceed the cap.
+Each store is capped at **128 MB** of staged content. `add`, `status`, `staged`, and `stores` all show remaining capacity; `add` refuses content that would exceed the cap.
 
-## Multiple projects per workspace
+## Multiple stores per workspace
 
-One `.dig/` workspace can hold many projects, each with its own content, keys, and history:
+One `.dig/` workspace can hold many stores, each with its own content, keys, and history:
 
 ```sh
 digstore init site --dir dist
 digstore init docs --dir build/docs
 
-digstore stores                  # list projects; * marks the active one + capacity
-digstore use site                # switch the active project
+digstore stores                  # list stores; * marks the active one + capacity
+digstore use site                # switch the active store
 ```
 
-`digstore stores` is also available as the alias `digstore projects`.
-
-Pick which project a command targets:
+Pick which store a command targets:
 
 ```sh
-digstore --store site add -A     # target "site" regardless of the active project
+digstore --store site add -A     # target "site" regardless of the active store
 ```
 
-The `--store` flag is also accepted as `--project`.
+**Selection precedence:** `--store <name>` → the active store (`use`) → the single store if there's only one.
 
-**Selection precedence:** `--store <name>` → the active project (`use`) → the single project if there's only one.
+> **Back-compat aliases.** `digstore projects` (for `digstore stores`) and the `--project` flag are kept only as hidden aliases for older scripts; new usage should say `stores` / `--store`.
 
 ## A typical release loop
 
@@ -101,7 +99,7 @@ digstore push origin
 
 | Flag | Effect |
 |---|---|
-| `--store <name>` | Operate on a specific project |
+| `--store <name>` | Operate on a specific store |
 | `-C, --cwd <path>` | Operating directory for this command (overrides the content root) |
 | `--dig-dir <path>` | Use a specific workspace location |
 | `--json` | Machine-readable output (great for scripts/CI) |

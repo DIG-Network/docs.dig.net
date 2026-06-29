@@ -23,7 +23,7 @@ Short answers to the questions that come up most. Follow a link to go deep.
 
 ## What does it cost?
 
-A flat **100 $DIG per [capsule](../concepts.md#capsule)** — the same whether you mint your first one (`init` / first Publish) or ship an update (`commit` / re-Publish) — plus a small XCH transaction fee. A store's lifetime cost is `100 DIG × number of capsules`. The price is [uniform by design](../digstore/cli/onchain-anchoring.md#why-the-price-is-flat).
+A **uniform per-[capsule](../concepts.md#capsule) price**, paid in $DIG at the live rate — the same whether you mint your first one (`init` / first Publish) or ship an update (`commit` / re-Publish) — plus a small XCH transaction fee. A store's lifetime cost is the uniform per-capsule price × the number of capsules. The price is [uniform by design](../digstore/cli/onchain-anchoring.md#why-the-price-is-uniform).
 
 ## Can I try it for free?
 
@@ -31,7 +31,7 @@ Yes. **Scaffolding, building, and previewing cost nothing.** You spend DIG only 
 
 ## Why is every capsule the same price — isn't a small update cheaper?
 
-No, and that's intentional. Each capsule compiles to a **fixed-size** module (padded so its length leaks nothing about content size). A price that varied with size would re-leak the size the padding hides — so the price has to be flat. See [why the price is flat](../digstore/cli/onchain-anchoring.md#why-the-price-is-flat).
+No, and that's intentional. Each capsule compiles to a **fixed-size** module (padded so its length leaks nothing about content size). A price that varied with size would re-leak the size the padding hides — so the price has to be uniform. See [why the price is uniform](../digstore/cli/onchain-anchoring.md#why-the-price-is-uniform).
 
 ## Do I need a wallet to start?
 
@@ -51,7 +51,7 @@ The host only ever stores **ciphertext keyed by hashes**. Encryption and decrypt
 
 ## How do I update a site after it's live?
 
-Publish again. Edit, preview the new draft for free, then Publish (web) or `digstore commit` (CLI) to ship a new capsule for 100 DIG. Each capsule is immutable; an update is a new one, and your store points at the latest.
+Publish again. Edit, preview the new draft for free, then Publish (web) or `digstore commit` (CLI) to ship a new capsule for the uniform capsule price. Each capsule is immutable; an update is a new one, and your store points at the latest.
 
 ## Is my store reachable as soon as I publish?
 

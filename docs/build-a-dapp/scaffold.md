@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1.5
 title: Scaffold an app (create-dig-app)
-description: "npm create dig-app — scaffold a wallet-wired, deployable DIG app in one command. Five templates (static, vite-react, next-static, nft-drop, dapp-window-chia), all free to build and preview; you spend 100 DIG only when you publish."
+description: "npm create dig-app — scaffold a wallet-wired, deployable DIG app in one command. Five templates (static, vite-react, next-static, nft-drop, dapp-window-chia), all free to build and preview; you pay the uniform capsule price only when you publish."
 keywords:
   - create-dig-app
   - npm create dig-app
@@ -36,7 +36,7 @@ npm create dig-app@latest
 It needs **Node 18+** and has no runtime dependencies. The `--` is npm's argument separator — it forwards the flags to `create-dig-app`. (With `npx create-dig-app` or `pnpm create dig-app` you can drop it.)
 
 :::tip Free until you publish
-Scaffolding, building, and previewing cost **nothing** — `create-dig-app` never mints, touches the chain, or spends. You spend a flat **[100 $DIG](../concepts.md#dig-payment)** only when you publish a [capsule](../concepts.md#capsule) with `digstore deploy`. *Iterate for free, publish when it's ready.*
+Scaffolding, building, and previewing cost **nothing** — `create-dig-app` never mints, touches the chain, or spends. You pay the **[uniform capsule price in $DIG](../concepts.md#dig-payment)** only when you publish a [capsule](../concepts.md#capsule) with `digstore deploy`. *Iterate for free, publish when it's ready.*
 :::
 
 ## The five templates
@@ -70,11 +70,11 @@ cd my-app
 npm install
 npm run dev       # work on your app locally (skip for the static template)
 
-digstore dev      # preview on the real dig:// read path — FREE, no chain, no spend
-digstore deploy   # publish a capsule when you're ready (the only step that spends 100 DIG)
+digstore dev      # preview on the real chia:// read path — FREE, no chain, no spend
+digstore deploy   # publish a capsule when you're ready (the only step that spends $DIG)
 ```
 
-[`digstore dev`](../digstore/cli/quickstart.md) serves your build over the genuine `dig://` read path (compile → verify → decrypt) with live reload — it's exactly what visitors get, with zero chain interaction. You only spend when you run `digstore deploy` (or publish from [DIGHUb](../concepts.md#dighub)). See the [Quickstart](../quickstart.md) for the full publish flow, and [On-chain anchoring](../digstore/cli/onchain-anchoring.md) for wallet setup and costs.
+[`digstore dev`](../digstore/cli/quickstart.md) serves your build over the genuine `chia://` read path (compile → verify → decrypt) with live reload — it's exactly what visitors get, with zero chain interaction. You only spend when you run `digstore deploy` (or publish from [DIGHUb](../concepts.md#dighub)). See the [Quickstart](../quickstart.md) for the full publish flow, and [On-chain anchoring](../digstore/cli/onchain-anchoring.md) for wallet setup and costs.
 
 ## What it writes
 

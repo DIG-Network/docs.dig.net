@@ -42,7 +42,7 @@ This is the starting point the changelog tracks forward from.
 
 ### `digstore` CLI
 
-- **Free pre-publish loop:** `digstore new <template>` (scaffold), `digstore dev` (local preview on the real `dig://` read path with an injected `window.chia` shim), and `digstore doctor` (preflight) — all free, no chain, no spend. Also scaffold from npm with [`npm create dig-app`](../build-a-dapp/scaffold.md).
+- **Free pre-publish loop:** `digstore new <template>` (scaffold), `digstore dev` (local preview on the real `chia://` read path with an injected `window.chia` shim), and `digstore doctor` (preflight) — all free, no chain, no spend. Also scaffold from npm with [`npm create dig-app`](../build-a-dapp/scaffold.md).
 - **Single-shot deploy:** `digstore deploy` (build → stage → advance the on-chain root → publish), non-interactive and CI-safe; `commit --dry-run` previews cost without spending.
 - **CI deploy:** the [GitHub Action](../digstore/cli/deploy-from-github-actions.md) (`uses: DIG-Network/deploy-action@v1`, requires digstore ≥ `v0.6.0`) — git-push-to-deploy with **free per-PR previews** and a PR comment + GitHub deployment status. **Keyless** by default (GitHub OIDC → a store-scoped session, no long-lived hub secret); a revocable `writer-key` advances the on-chain root and a dedicated funding wallet pays the fee, all driven from a committable [`dig.toml`](../digstore/cli/configuration.md).
 - **Distinct exit codes** per error kind for scripting/CI — see [Error codes](./error-codes.md#digstore-cli-exit-codes).
@@ -58,9 +58,9 @@ This is the starting point the changelog tracks forward from.
 - CHIP-0002 provider injected by the DIG Browser: `connect()`, `request({ method, params })`, and the supported method set (`chip0002_*`, `chia_*`), with per-origin consent. See [Using window.chia](../browser/using-window-chia.md).
 - **No key-export / seed-reveal method** on the surface — by design.
 
-### Flat pricing (unchanged, structural)
+### Uniform per-capsule pricing (structural)
 
-A flat **100 DIG per [capsule](../concepts.md#capsule)** (mint or commit). This is structural — see [why the price is flat](../digstore/cli/onchain-anchoring.md#why-the-price-is-flat) — and is not expected to change.
+A **uniform price per [capsule](../concepts.md#capsule)** (mint or commit), paid in $DIG at the live rate. The price is uniform across capsules by design — see [why the price is uniform](../digstore/cli/onchain-anchoring.md#why-the-price-is-uniform). The price targets a roughly steady real-world cost, so the $DIG amount floats with the market while the per-capsule price stays uniform.
 
 ## Breaking changes
 

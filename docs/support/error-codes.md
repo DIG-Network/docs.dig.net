@@ -55,7 +55,7 @@ The [dig RPC](../rpc/methods.md) uses the standard [JSON-RPC 2.0](https://www.js
 | `9` | no-seed | No wallet seed is set up. | Run `digstore seed import` or `digstore seed generate`. |
 | `10` | bad-passphrase | Wrong passphrase for the seed. | Re-run and enter the correct passphrase. |
 | `11` | invalid-mnemonic | The mnemonic is invalid. | Check the word list and word count (12/24). |
-| `12` | insufficient-funds | Not enough XCH **or** DIG to cover the spend. | Fund the printed receive address (you need 100 DIG + an XCH fee per capsule), then retry. |
+| `12` | insufficient-funds | Not enough XCH **or** DIG to cover the spend. | Fund the printed receive address (you need the uniform capsule price in $DIG + an XCH fee per capsule), then retry. |
 | `13` | chain | A Chia chain/coinset error. | Check your connection to coinset.org and retry. |
 | `14` | confirm-timeout | The on-chain confirmation timed out. | The tx may still confirm — run `digstore anchor status`. |
 | `15` | mint-failed | Minting the store singleton failed. | Retry; if it persists, check wallet funds and coinset.org. |
@@ -68,17 +68,17 @@ When a publish or account action fails, DIGHUb shows a plain-language message **
 | Code | What it means | What to do |
 |---|---|---|
 | `WALLET_DECLINED` | You declined the signature in your wallet. Nothing was signed or broadcast. | Not an error — re-try and approve if you meant to publish. |
-| `DIG_INSUFFICIENT` | Not enough DIG in your wallet to cover this capsule (100 DIG). | Top up DIG (the publish screen links where to get it), then retry. |
+| `DIG_INSUFFICIENT` | Not enough $DIG in your wallet to cover this capsule's price. | Top up $DIG (the publish screen links where to get it), then retry. |
 | `COIN_CONFLICT` | The coin was just spent elsewhere (double-spend / mempool conflict). | Retry — DIGHUb rebuilds the spend with a fresh coin. |
 | `REG_PENDING` | Your spend is on chain and will appear shortly. | Wait a moment — **do not** sign or pay again. |
 | `WALLET_SESSION` | Your wallet session can't sign (expired, watch-only, or missing method). | Disconnect and reconnect your wallet; make sure Sage is up to date. |
 | `NET_OFFLINE` | You appear to be offline. | Check your connection and try again. |
 | `NET_TIMEOUT` | The request timed out or couldn't reach the network. | Try again. |
-| `SLUG_TAKEN` | That project name is already taken. | Pick a different name. |
-| `OVER_QUOTA` | You've reached the project limit for this account. | Remove an unused project or contact support. |
+| `SLUG_TAKEN` | That store name is already taken. | Pick a different name. |
+| `OVER_QUOTA` | You've reached the store limit for this account. | Remove an unused store or contact support. |
 | `COIN_RESERVED` | A coin is busy finishing another transaction. | Wait a moment and try again. |
 | `UNAUTHORIZED` | Your session isn't authorized for this. | Reconnect your wallet and try again. |
-| `FORBIDDEN` | You don't have permission to do this. | Use the account that owns the project. |
+| `FORBIDDEN` | You don't have permission to do this. | Use the account that owns the store. |
 | `NOT_FOUND` | The thing couldn't be found — it may have expired. | Start over and try again. |
 | `INVALID_REQUEST` | Something about the request wasn't valid. | Try again; if it persists, report it with the code. |
 | `UNEXPECTED` | An unclassified error. | Retry; if it persists, report it with the code. |

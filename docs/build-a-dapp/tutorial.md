@@ -24,18 +24,18 @@ tags:
 
 Every DIG primitive is documented on its own — scaffolding, the in-page wallet, the read path, spends, deploy. **This page is the single thread that ties them together into one shipped dapp.** You'll start from an empty folder and finish with a wallet-aware React app, live on-chain at your own domain.
 
-The whole loop up to publishing is **free** — scaffold, develop, and preview cost nothing. You spend a flat **100 $DIG** only at the deploy step.
+The whole loop up to publishing is **free** — scaffold, develop, and preview cost nothing. You pay the **uniform capsule price in $DIG** only at the deploy step.
 
 ```
 new ──▶ dev ──▶ wire wallet (dig-sdk) ──▶ build a spend (chip35) ──▶ deploy ──▶ custom domain
- free    free          free                       free               100 DIG       free
+ free    free          free                       free            capsule price    free
 ```
 
 ## What you'll need
 
 - The [`digstore` CLI](../digstore/cli/install.md) installed.
 - Node 18+ and `npm`.
-- A funded Chia wallet — **only at the deploy step** (100 DIG + a small XCH fee). Everything before that is free.
+- A funded Chia wallet — **only at the deploy step** (the uniform capsule price in $DIG + a small XCH fee). Everything before that is free.
 
 ---
 
@@ -60,7 +60,7 @@ You get a Vite + React app, a `dig.toml` (`output-dir = "dist"`, `build-command 
 digstore dev
 ```
 
-`dev` runs your build, serves the output over the **genuine `dig://` read path** (compile → verify → decrypt), and injects a **`window.chia` dev shim** so you can build the wallet flow with no real wallet. Edit `src/App.jsx`, save, and the page live-reloads — exactly what visitors will get, with zero chain interaction and zero spend.
+`dev` runs your build, serves the output over the **genuine `chia://` read path** (compile → verify → decrypt), and injects a **`window.chia` dev shim** so you can build the wallet flow with no real wallet. Edit `src/App.jsx`, save, and the page live-reloads — exactly what visitors will get, with zero chain interaction and zero spend.
 
 ## 3. Wire the wallet with the SDK — `window.chia` + WalletConnect fallback
 
@@ -165,12 +165,12 @@ if (await paywall.verifyReceipt(receipt)) { /* unlock the content */ }
 ```
 :::
 
-## 5. Deploy on-chain — 100 DIG
+## 5. Deploy on-chain
 
 You build and preview for free; this is the only step that spends. First create the store **once**:
 
 ```sh
-digstore init my-dapp --dir dist      # mint the store's first capsule (100 DIG + XCH fee)
+digstore init my-dapp --dir dist      # mint the store's first capsule (uniform capsule price + XCH fee)
 ```
 
 `init` mints a Chia singleton on mainnet — **the launcher id becomes your store id**. Copy it into `dig.toml` (`store-id = "<64-hex>"`). From then on, one command builds and publishes a new capsule:
@@ -179,7 +179,7 @@ digstore init my-dapp --dir dist      # mint the store's first capsule (100 DIG 
 digstore deploy --json                # runs build-command, stages dist/, advances the root
 ```
 
-Each `deploy` publishes a new immutable capsule for 100 DIG. The moment it confirms, your dapp is **readable over the [dig RPC](../rpc/what-is-the-dig-rpc.md)** by its [URN](../concepts.md#urn) / `dig://` address — encrypted, verified, and impossible to take down, with no registration and nothing more to pay. (A friendly `*.on.dig.net` web address is a separate, optional step — see [the next section](#6-put-it-on-your-own-domain).) For push-to-deploy on every commit, wire up [Deploy from GitHub Actions](../digstore/cli/deploy-from-github-actions.md).
+Each `deploy` publishes a new immutable capsule for the uniform capsule price. The moment it confirms, your dapp is **readable over the [dig RPC](../rpc/what-is-the-dig-rpc.md)** by its [URN](../concepts.md#urn) / `chia://` address — encrypted, verified, and impossible to take down, with no registration and nothing more to pay. (A friendly `*.on.dig.net` web address is a separate, optional step — see [the next section](#6-put-it-on-your-own-domain).) For push-to-deploy on every commit, wire up [Deploy from GitHub Actions](../digstore/cli/deploy-from-github-actions.md).
 
 ## 6. Put it on your own domain
 

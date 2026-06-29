@@ -20,7 +20,7 @@ tags:
 On Ubuntu, Debian, and other Debian-family distributions, install the DIG ecosystem from the **`apt.dig.net`** repository. You get the `dig-node` service and the `digstore` CLI as ordinary apt packages — signed, and upgraded with `apt upgrade` like anything else on the box. Installing `dig-node` sets up and **enables a systemd service** so your node starts on boot and stays running.
 
 :::note Pre-release — infrastructure being provisioned
-`apt.dig.net` is still being stood up, so these commands may not resolve yet. They are the **real, intended** flow — bookmark this page. In the meantime, use the cross-platform [universal installer](./index.md#universal-installer-any-os) or grab a binary from the [Releases page](https://github.com/DIG-Network/dig-companion/releases).
+`apt.dig.net` is still being stood up, so these commands may not resolve yet. They are the **real, intended** flow — bookmark this page. In the meantime, use the cross-platform [universal installer](./index.md#universal-installer-any-os) or grab a binary from the [Releases page](https://github.com/DIG-Network/dig-node/releases).
 :::
 
 ## 1. Add the signing key

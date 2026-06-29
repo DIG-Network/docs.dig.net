@@ -64,14 +64,14 @@ digstore seed status    # shows whether a seed exists and is currently unlocked
 
 ## Costs
 
-Every on-chain action publishes one **capsule** (`storeId:rootHash`) and costs the same flat price.
+Every on-chain action publishes one **capsule** (`storeId:rootHash`) and costs the same uniform price.
 
-| Operation | DIG | XCH |
+| Operation | $DIG | XCH |
 |---|---|---|
-| `digstore init` (mint the first capsule) | **100 DIG** | small mainnet fee |
-| `digstore commit` (publish a new capsule) | **100 DIG** | small mainnet fee |
+| `digstore init` (mint the first capsule) | **the capsule price** | small mainnet fee |
+| `digstore commit` (publish a new capsule) | **the capsule price** | small mainnet fee |
 
-The price is a flat **100 DIG per capsule** — the same whether you mint (`init`) or commit. A store's lifetime cost is therefore `100 DIG × number of capsules`. (The price is uniform by design: each capsule compiles to one fixed-size module, so a size-varying price would leak content size — see [why 100 DIG per capsule](#why-the-price-is-flat).)
+The price is **uniform per capsule** — the same whether you mint (`init`) or commit — and is paid in $DIG at the live rate. A store's lifetime cost is therefore the uniform per-capsule price × the number of capsules. (The price is uniform by design: each capsule compiles to one fixed-size module, so a size-varying price would leak content size — see [why the price is uniform](#why-the-price-is-uniform).)
 
 **$DIG** is the DIG Network token (a Chia CAT). The $DIG payment is included **atomically in the same spend bundle** as the mint or deployment root update — there is no separate transaction. The memo on the DIG output is the store id. Before submitting, each command prints the cost and your current balance; if the wallet is short on XCH **or** DIG the command blocks with a clear message rather than broadcasting a partial spend. Use `digstore balance` to check your spendable XCH and DIG at any time:
 
@@ -98,11 +98,11 @@ DIG asset id (CAT TAIL): `a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367
 You only spend DIG when you publish a capsule on-chain (`init`/`commit`). Scaffolding, building, and previewing a site locally cost **nothing**. Start from the [zero-cost quickstart](./quickstart.md) and fund a wallet only when you're ready to go live.
 :::
 
-### Why the price is flat {#why-the-price-is-flat}
+### Why the price is uniform per capsule {#why-the-price-is-uniform}
 
-The 100-DIG price is the same for every capsule on purpose. Each capsule compiles to a **fixed-size** WASM module — padded so its length reveals nothing about how much content is inside. A price that varied with content size would re-leak the size the padding hides, so the price has to be uniform. That's why there's no per-byte fee, no tiers, and no "small commit" discount: one capsule, one price, regardless of what's in it.
+The price is the same for every capsule on purpose. Each capsule compiles to a **fixed-size** WASM module — padded so its length reveals nothing about how much content is inside. A price that varied with content size would re-leak the size the padding hides, so the price has to be uniform. That's why there's no per-byte fee, no tiers, and no "small commit" discount: one capsule, one price, regardless of what's in it. (The price is paid in $DIG at the live rate; only the publish screen shows the exact figure at the moment you publish.)
 
-## `digstore init` — mint the project singleton
+## `digstore init` — mint the store singleton
 
 ```sh
 digstore init                              # interactive prompts
@@ -112,10 +112,10 @@ digstore init --wait-timeout 600           # increase confirmation timeout (defa
 
 `init` mints a Chia singleton on mainnet. **The on-chain launcher id becomes the store id** — the old SHA-256(pubkey) store id is gone in v0.5.0. `init` blocks until the mint transaction is confirmed (default timeout 300 s).
 
-If the confirmation times out before the chain confirms, the project is written to disk in `pending` state and is resumable:
+If the confirmation times out before the chain confirms, the store is written to disk in `pending` state and is resumable:
 
 ```sh
-digstore anchor    # poll the chain and flip the project to confirmed
+digstore anchor    # poll the chain and flip the store to confirmed
 ```
 
 A failure *before* the mint (missing seed, insufficient funds) leaves nothing on disk — just fix the issue and re-run `init`.
@@ -136,12 +136,12 @@ digstore anchor                    # poll the chain; flip to confirmed when seen
 digstore anchor --wait-timeout 120
 ```
 
-Use this after a confirmation timeout on `init` or `commit`. Once the chain confirms the transaction the project or deployment moves out of `pending`.
+Use this after a confirmation timeout on `init` or `commit`. Once the chain confirms the transaction the store or deployment moves out of `pending`.
 
 ## Anchor status and inspection
 
 ```sh
-digstore anchor status             # show the project's anchor state (network, launcher/store id, current coin, confirmed height)
+digstore anchor status             # show the store's anchor state (network, launcher/store id, current coin, confirmed height)
 digstore anchor status --json      # machine-readable
 
 digstore anchor inspect <module.dig>          # decode the on-chain pointer embedded in the module
@@ -166,7 +166,7 @@ This makes the module self-describing: any tool can locate its chain state witho
 
 1. The module's embedded public key hashes to the store id you requested.
 2. The served root carries the publisher's valid signature.
-3. **The served root matches the project's current on-chain singleton root** (queried live from the chain).
+3. **The served root matches the store's current on-chain singleton root** (queried live from the chain).
 
 If the chain is unreachable, or the served root does not match the on-chain root, the command fails closed — nothing is installed.
 
@@ -180,11 +180,11 @@ If the chain is unreachable, or the served root does not match the on-chain root
 
 ## Cost and safety
 
-- **`init` costs 100 DIG + an XCH fee** — one spend bundle to mint the singleton (the first capsule).
-- **`commit` costs 100 DIG + an XCH fee** — one spend bundle per published capsule.
-- The price is a flat **100 DIG per capsule** (mint or commit) everywhere in the ecosystem.
+- **`init` costs the capsule price in $DIG + an XCH fee** — one spend bundle to mint the singleton (the first capsule).
+- **`commit` costs the capsule price in $DIG + an XCH fee** — one spend bundle per published capsule.
+- The price is **uniform per capsule** (mint or commit) everywhere in the ecosystem.
 - Both are on **Chia mainnet**. There is no testnet mode; use a wallet with only as much XCH and DIG as you intend to spend.
-- Lost seed = lost ability to update the project. The singleton stays on-chain and existing content remains readable, but no new commits are possible. Back up `~/.dig/seed.enc` and your mnemonic.
+- Lost seed = lost ability to update the store. The singleton stays on-chain and existing content remains readable, but no new commits are possible. Back up `~/.dig/seed.enc` and your mnemonic.
 
 ## Related
 

@@ -24,13 +24,13 @@ tags:
 
 Publish your site or dapp to DIG automatically — a new **capsule** of your existing store, exactly the git-push-to-deploy flow you'd expect from a managed host, but decentralized. Add one workflow file; the Action does the right thing for the event:
 
-- **Pull request → a free preview.** Your build is compiled and verified through the real `dig://` read path and you get a shareable, content-addressed preview. **No chain, no wallet, no spend.**
+- **Pull request → a free preview.** Your build is compiled and verified through the real `chia://` read path and you get a shareable, content-addressed preview. **No chain, no wallet, no spend.**
 - **Push to your default branch → a real deploy.** The Action advances your store's on-chain root and publishes the new capsule, then posts the live URL + cost back on the commit.
 
 The dedicated **[`dig-network/deploy-action`](https://github.com/DIG-Network/deploy-action)** does the work: it installs the [`digstore`](https://github.com/DIG-Network/digstore) CLI on the runner, runs `digstore deploy`, and reports the result as step outputs, a PR comment, a GitHub Deployment, and a commit status.
 
 :::note You create the store once; CI only updates it
-Your store already exists (you ran [`digstore init`](./onchain-anchoring.md) once, which mints it and spends 100 $DIG). The Action only **advances** that store — it never mints. Each real deploy is a new capsule and costs 100 DIG + a small XCH fee, paid from your deploy wallet. **PR previews are free.**
+Your store already exists (you ran [`digstore init`](./onchain-anchoring.md) once, which mints it and spends $DIG). The Action only **advances** that store — it never mints. Each real deploy is a new capsule and costs the uniform capsule price in $DIG + a small XCH fee, paid from your deploy wallet. **PR previews are free.**
 :::
 
 ## What you need
@@ -78,7 +78,7 @@ jobs:
           digstore-version: v0.6.0           # PIN for reproducible CI
           # KEYLESS: no hub secret. The on-chain spend still needs a funding wallet:
           writer-key: ${{ secrets.DIG_WRITER_KEY }}        # advances the root (revocable, root-only)
-          passphrase: ${{ secrets.DIGSTORE_PASSPHRASE }}   # funds the 100 DIG + XCH fee
+          passphrase: ${{ secrets.DIGSTORE_PASSPHRASE }}   # funds the capsule price ($DIG) + XCH fee
           mnemonic:   ${{ secrets.DIG_MNEMONIC }}
           # store-id comes from the OIDC binding (or dig.toml). Pass store-id: to override.
 
@@ -87,7 +87,7 @@ jobs:
 
 That's it. Open a PR to get a free preview commented on it; merge to `main` to advance your store's on-chain root and publish the new capsule to DIGHUb.
 
-- **PRs** run `digstore deploy --preview`: a **free**, content-addressed build verified through the real `dig://` read path. The preview address is the `content-address` output and is commented on the PR.
+- **PRs** run `digstore deploy --preview`: a **free**, content-addressed build verified through the real `chia://` read path. The preview address is the `content-address` output and is commented on the PR.
 - **Pushes to the default branch** run `digstore deploy --if-changed`: a push whose build is byte-identical to the live version is a **no-op** (no spend, nothing published), so it is safe to run on every push.
 - A push to a **non-default** branch previews (never a surprise spend). Set `preview: true` to force a preview on any event.
 
@@ -117,13 +117,13 @@ There are three distinct credentials. Two are keyless / spend-limited; only the 
 |---|---|---|
 | **Keyless OIDC session** | Authorize the DIGHUb head push for the bound store | Minted per-run from the GitHub OIDC token — **no secret in the repo** |
 | **Writer deploy-key** (`writer-key`) | Advance the store's **on-chain root only** — never change the owner, never melt; **revocable** | Repo secret |
-| **Funding wallet** (`passphrase` + `mnemonic`) | **Pay** the 100 DIG + XCH fee for a real deploy | Repo secret |
+| **Funding wallet** (`passphrase` + `mnemonic`) | **Pay** the capsule price ($DIG) + XCH fee for a real deploy | Repo secret |
 
 :::danger The funding wallet's seed can spend its DIG and XCH — use a dedicated wallet
 The funding seed only signs the *payment* for the on-chain root update (the writer-key authorizes the change itself), but protect it anyway:
 
 - Use a **dedicated deploy wallet**, never your main wallet.
-- Fund it with only **enough DIG for your expected deploys** (each real deploy = 100 DIG + a small fee).
+- Fund it with only **enough $DIG for your expected deploys** (each real deploy = the uniform capsule price + a small fee).
 - Store the passphrase and mnemonic as GitHub **encrypted secrets** — never in `dig.toml` or any committed file.
 - **PR previews are free and need none of these** — no OIDC, no writer-key, no wallet.
 :::
