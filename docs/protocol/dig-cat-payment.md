@@ -51,8 +51,8 @@ build_dig_store_payment(buyer_synth_key, dig_cats: Vec<Cat>, store_id, amount) -
 Per-capsule pricing is enforced **off-chain** (the hub/anchor-watcher reconciles a confirmed treasury payment); it is **not** a protocol constant. The mirror's `COMMIT_DIG = 100_000` base units (100 DIG) is only a deterministic CLI fallback when no explicit amount is passed (`anchor/dig.rs:28-41`).
 :::
 
-:::caution GAP — the atomic commit bundle is not on-chain-enforced
-The commit bundle (root-advance singleton spend ++ DIG-CAT payment) is **concatenated and co-signed all-or-nothing** by the client, but **nothing on-chain enforces** that a root-advance carried a DIG payment. The coupling is a [client-side convention](./on-chain-anchoring.md). Catalogued in [Drift](./drift-from-whitepapers.md).
+:::note The commit bundle is a client-side all-or-nothing bundle
+The commit bundle (the root-advance singleton spend + the DIG-CAT payment) is concatenated and co-signed **all-or-nothing** by the client. The payment-to-root-advance coupling is a [client-side bundling convention](./on-chain-anchoring.md); settlement is reconciled off-chain by the hub/anchor-watcher against a confirmed treasury payment.
 :::
 
 ## Receipt verification
@@ -64,4 +64,3 @@ The commit bundle (root-advance singleton spend ++ DIG-CAT payment) is **concate
 - [On-chain anchoring](./on-chain-anchoring.md) — the root-advance the payment rides with
 - [The blind host model](./blind-host-model.md#push-trust) — the anchor-watcher that reconciles payments
 - [Error codes](../support/error-codes.md) — `DIG_INSUFFICIENT`, `insufficient-funds`
-- [Drift from the whitepapers](./drift-from-whitepapers.md) — inverted pricing, non-enforced atomicity

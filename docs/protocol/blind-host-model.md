@@ -42,8 +42,8 @@ Root-pinned `(store, root, retrieval_key, aligned-range)` only — verbatim `ser
 
 The §21 push write path applies **two** gates: §21.9 [identity auth](./transport-and-push.md#per-request-auth) (any valid identity) + **ownership** (`verify_push_owner`: BLS verify over `SHA-256(PUSH_DST || new_root || store_id)` against the store's **registered** `store_pubkey`).
 
-:::warning DRIFT — accept-on-signature, not on-chain finality
-The trust model is **accept-on-signature**: a store the hub doesn't yet host is **auto-created headless/Unlisted** with a **trust-on-first-use** `store_pubkey`, reconciled later by the **anchor-watcher**. This is safe because readers [verify against the on-chain coinset root client-side](./verification-and-provenance.md#gate-3) — an unanchored head simply won't verify (treated as not-found) until the publisher anchors the singleton. This is a deviation from the on-chain-finality framing. Catalogued in [Drift](./drift-from-whitepapers.md).
+:::note Accept-on-signature push trust
+The write trust model is **accept-on-signature**: a store the hub doesn't yet host is **auto-created headless/Unlisted** with a **trust-on-first-use** `store_pubkey`, reconciled later by the **anchor-watcher**. This is safe because readers [verify against the on-chain coinset root client-side](./verification-and-provenance.md#gate-3) — an unanchored head simply won't verify (treated as not-found) until the publisher anchors the singleton.
 :::
 
 ## Plane B — the resolver (`*.on.dig.net` + custom domains)
@@ -63,4 +63,3 @@ The trust model is **accept-on-signature**: a store the hub doesn't yet host is 
 - [§21 transport & push](./transport-and-push.md) — the push write path
 - [Verification & provenance](./verification-and-provenance.md) — why the host is never the trust anchor
 - [On-chain anchoring](./on-chain-anchoring.md) — the anchor-watcher reconciliation
-- [Drift from the whitepapers](./drift-from-whitepapers.md) — accept-on-signature trust

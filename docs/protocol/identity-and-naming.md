@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 title: "L0 · Identity & naming"
-description: "Layer 0 of the DIG Protocol: store vs capsule vs generation. store_id is the CHIP-0035 singleton launcher id — NOT a hash of any key. A store is an ordered sequence of capsules."
+description: "Layer 0 of the DIG Protocol: store vs capsule vs generation. store_id is the CHIP-0035 singleton launcher id. A store is an ordered sequence of capsules."
 keywords:
   - store id
   - capsule
@@ -21,11 +21,7 @@ tags:
 
 ## store — the on-chain identity
 
-A **store** is an on-chain identity: `store_id: Bytes32`, which **is the CHIP-0035 DataLayer singleton launcher id** (the launcher coin id). It is the only mutable-identity anchor; everything else is derived per-generation. Host-side it is persisted as hex in `config.toml` (`digstore-store/config.rs:10,40`).
-
-:::danger DRIFT — `store_id` is NOT `SHA-256(pk)`
-The whitepaper's `id == hash(key)` is **dead**. `verify_module_root` asserts explicitly that the store id is the on-chain launcher id and is intentionally **not** bound to `SHA-256(pk)` (`digstore-compiler/data_section.rs:209-213, 286-288`). Catalogued in [Drift](./drift-from-whitepapers.md).
-:::
+A **store** is an on-chain identity: `store_id: Bytes32`, which **is the CHIP-0035 DataLayer singleton launcher id** (the launcher coin id). It is the only mutable-identity anchor; everything else is derived per-generation. Host-side it is persisted as hex in `config.toml` (`digstore-store/config.rs:10,40`). `verify_module_root` binds the store identity to this on-chain launcher id (`digstore-compiler/data_section.rs:209-213, 286-288`).
 
 ## capsule — one immutable generation
 
@@ -67,4 +63,3 @@ Urn::as_capsule() -> Some(Capsule)   // only when root_hash is Some; rootless ->
 - [URN & addressing](./urn-and-addressing.md) — how a capsule is named and hashed
 - [On-chain anchoring](./on-chain-anchoring.md) — where `store_id` comes from (the singleton launch)
 - [Concepts & glossary](../concepts.md) — capsule, store, generation defined
-- [Drift from the whitepapers](./drift-from-whitepapers.md) — `store_id` ≠ `hash(pk)`

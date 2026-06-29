@@ -39,22 +39,22 @@ The **chain**, not the serving origin, is the authority for a store's latest aut
 
 - `dig.getAnchoredRoot` (`dig-node/src/lib.rs:721-743`) walks the CHIP-0035 DataStore singleton lineage on **coinset.org** via `sync_datastore` and returns `metadata.root_hash` — the trusted root a browser pins a **rootless** `chia://` URN against.
 - CLI clone/pull additionally requires the served root to equal the singleton's current on-chain root, read via the launcher id in the module's [ChainState section](./capsule-format.md#chainstate-12--the-on-chain-anchor-pointer); it **fails closed** on mismatch OR an unreachable chain (never a silent fallback).
-- Caveat: a module with **no** embedded ChainState (pre-Phase-A) makes the chain-root gate a no-op — the [authenticated head](./transport-and-push.md#authenticated-head) signature is then the only authority.
+- Caveat: a module with **no** embedded ChainState makes the chain-root gate a no-op — the [authenticated head](./transport-and-push.md#authenticated-head) signature is then the only authority.
 
-### Gate 4 — risc0 execution proofs (wired, MOCK by default)
+### Gate 4 — risc0 execution proofs (wired, mock backend by default)
 
 The [execution proof](../inclusion-vs-execution-proofs.md) proves a node faithfully *executed* the serving computation. `verify_response` requires `response.roothash ∈ trusted_roots` AND `bound_public_output(roothash, output) == proof.public_output`; `verify_node_attested` requires the node pubkey ∈ the module's trusted attestation set before the sig check (`prover.rs:36-110`).
 
-:::caution GAP — execution proofs are MOCK/forgeable by default
-The default backend is `MockProver` (**forgeable**). Real proofs require the `risc0` cargo feature + the RISC0 toolchain + supplying `CoinsetChainSource` + `SystemClock` + `Risc0Prover`. **Not built/tested in CI.** Gates 1–3 are the enforced integrity today; gate 4 is wired but not yet trustworthy. Catalogued in [Drift](./drift-from-whitepapers.md).
+:::caution Execution proofs use a mock backend by default
+The default backend is `MockProver`, whose receipts are **not cryptographically binding**. Real risc0 proofs require the `risc0` cargo feature plus the RISC0 toolchain and supplying `CoinsetChainSource` + `SystemClock` + `Risc0Prover`. The enforced integrity guarantees today are **gates 1–3** (merkle inclusion, authenticated decryption, anchored-root pinning); rely on those, not on gate 4, for trust.
 :::
 
 ## The freshness contract
 
 When real execution proofs are enabled, `public_input = client_nonce(32) || ChiaBlockRef(44)` (= 76 bytes), and `CoinsetChainSource` fetches the Chia peak/block records from coinset.org for the §13.7/§16 freshness gate. The host attestation freshness window is **300s** ([attestation](./bls-signatures.md#attestation-verify-guest)).
 
-:::caution GAP — production rpc.dig.net serves with default (mock) deps
-The live `rpc.dig.net` serve path uses `serve_blind` **default deps** (`MockProver` + `MockChainSource` + `FixedClock`), so the §12/§13 attestation-freshness gate is **not enforced in production**. Reads are still safe because gates 1–3 verify against the chain-anchored root client-side. Catalogued in [Drift](./drift-from-whitepapers.md).
+:::caution The serve path runs with default (mock) deps
+The `rpc.dig.net` serve path uses `serve_blind` with **default deps** (`MockProver` + `MockChainSource` + `FixedClock`), so the §12/§13 attestation-freshness gate is not active there. Reads remain safe because the reader enforces gates 1–3 against the chain-anchored root client-side — the host is never the trust anchor.
 :::
 
 ## Provenance UX surfacing
@@ -68,4 +68,3 @@ The native loader records a process-global ledger keyed by capsule (`storeId:roo
 - [On-chain anchoring](./on-chain-anchoring.md) — the singleton gate 3 pins against
 - [Inclusion vs execution proofs](../inclusion-vs-execution-proofs.md) — gate 4, in depth
 - [The blind host model](./blind-host-model.md) — why the host is never the trust anchor
-- [Drift from the whitepapers](./drift-from-whitepapers.md) — mock proofs, unenforced freshness

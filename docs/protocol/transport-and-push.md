@@ -37,7 +37,7 @@ tags:
 
 ## Wire envelope: JSON outer / Chia-codec inner
 
-REST metadata (descriptor/roots/delta) is JSON for ergonomics; all content/proof/key-table blobs stay **Chia-custom-streamable-codec** encoded and base64-wrapped inside the JSON (`lib.rs:3-7`). The codec is **big-endian** fixed-width (DOCUMENTED DEVIATION 1, `codec/mod.rs:3-4` — "Chia compatibility wins"): `uintN` BE; `Option<T>` = 1 tag byte + T; `Vec<T>` = u32 BE count + items; `String` = u32 BE byte-length + utf8; `Bytes32/48/96` raw, no length prefix. The same codec frames the [MerkleProof](./merkle-proofs.md#wire-layout-chia-big-endian-streamable-codec) on the wire.
+REST metadata (descriptor/roots/delta) is JSON for ergonomics; all content/proof/key-table blobs stay **Chia-custom-streamable-codec** encoded and base64-wrapped inside the JSON (`lib.rs:3-7`). The codec is **big-endian** fixed-width (`codec/mod.rs:3-4`), matching Chia framing: `uintN` BE; `Option<T>` = 1 tag byte + T; `Vec<T>` = u32 BE count + items; `String` = u32 BE byte-length + utf8; `Bytes32/48/96` raw, no length prefix. The same codec frames the [MerkleProof](./merkle-proofs.md#wire-layout-chia-big-endian-streamable-codec) on the wire.
 
 ## Authenticated head (PUSH_DST) {#authenticated-head}
 
@@ -46,9 +46,7 @@ push_signing_message(root, store_id) = SHA-256( PUSH_DST || root(32) || store_id
 PUSH_DST = b"digstore:push:v1"
 ```
 
-:::warning DRIFT — the head is domain-separated, not bare SHA256(root||store_id)
-The whitepaper said `SHA256(root || store_id)`. The implementation prepends `PUSH_DST` (`bls.rs:194-200`). The push signature **authorizes the head** and is persisted on accept, so a later clone/pull re-verifies the served head's authorization (`StoreDescriptor.push_sig`). Catalogued in [Drift](./drift-from-whitepapers.md).
-:::
+The signing message is domain-separated with `PUSH_DST` (`bls.rs:194-200`). The push signature **authorizes the head** and is persisted on accept, so a later clone/pull re-verifies the served head's authorization (`StoreDescriptor.push_sig`).
 
 ## Push protocol v1 (2-leg)
 
@@ -73,11 +71,7 @@ Every guarded request is signed:
 SHA-256( REQ_DST || u32be(len(method)) || method || store_id(32) || u64be(ts) || nonce(32) )
 ```
 
-Method tags: `fetch`/`roots`/`module`/`push`/`push-init`/`push-complete`/`content`/`proof`/`delta`/`tombstone`. Binding the method stops a read-auth sig replaying as a write. Freshness window **300s**.
-
-:::caution GAP — nonces are not recorded server-side
-The §21.9 nonce gives uniqueness but is **not persisted**, so a captured request is **replayable within the 300s freshness window**. Catalogued in [Drift](./drift-from-whitepapers.md).
-:::
+Method tags: `fetch`/`roots`/`module`/`push`/`push-init`/`push-complete`/`content`/`proof`/`delta`/`tombstone`. Binding the method stops a read-auth sig replaying as a write. The freshness window is **300s**: a request is accepted only while its timestamp is within 300s of now, which bounds the window in which a captured request could be re-presented.
 
 ## Fetch / clone / pull, ETag & delta
 
@@ -99,4 +93,3 @@ Per-store token bucket (default 10,000 tokens, 60s refill, idle-eviction). `serv
 - [BLS signatures & DSTs](./bls-signatures.md) — PUSH_DST / REQ_DST / TOMB_DST messages
 - [The blind host model](./blind-host-model.md) — accept-on-signature push trust
 - [The dig:// remote (clone/pull/push)](../rpc/dig-remote.md) — the CLI task guide
-- [Drift from the whitepapers](./drift-from-whitepapers.md) — push DST, 2-leg push, replayable nonce

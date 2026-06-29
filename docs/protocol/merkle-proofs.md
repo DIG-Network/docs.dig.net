@@ -33,8 +33,8 @@ node     = SHA-256( NODE_TAG || left(32) || right(32) )   // hash_pair, merkle.r
 resource_leaf(ciphertext) = SHA-256(ciphertext)    // UNTAGGED — merkle.rs:140-142
 ```
 
-:::warning DRIFT — the committed tree is PER-RESOURCE, not per-chunk
-The committed generation tree has **one leaf per resource** (`resource_leaf(concat_output(ordered chunk ciphertexts))`), not one per chunk. These D5 leaves are fed to `MerkleTree::from_leaves` **already hashed and NOT re-tagged** — so leaf↔node separation rests **solely on `NODE_TAG`**. (The raw-chunk `LEAF_TAG` path exists in `MerkleTree::build` but is not the production read-path leaf.) Catalogued in [Drift](./drift-from-whitepapers.md).
+:::note The committed tree is per-resource
+The committed generation tree has **one leaf per resource**: `resource_leaf(concat_output(ordered chunk ciphertexts))`. These D5 leaves are fed to `MerkleTree::from_leaves` already hashed and **not** re-tagged, so leaf↔node separation rests **solely on `NODE_TAG`**. (`MerkleTree::build` carries a separate raw-chunk `LEAF_TAG` path; the production read-path leaf is the per-resource one above.)
 :::
 
 The single content→leaf binding is shared byte-for-byte by the producer (`store.rs:209`), the compiler (`pipeline.rs:210-230`), and the browser verifier (`dig-client-wasm lib.rs:101-103`).
@@ -81,4 +81,3 @@ MerkleProof = leaf(32) || path_count:u32(BE) || ( sibling(32) || is_left:u8 ){pa
 - [The self-defending module](./self-defending-module.md) — how the guest builds the proof
 - [Verification & provenance](./verification-and-provenance.md) — the four ordered gates
 - [Conformance & parity](./conformance-and-parity.md) — the parity goldens
-- [Drift from the whitepapers](./drift-from-whitepapers.md) — per-resource merkle

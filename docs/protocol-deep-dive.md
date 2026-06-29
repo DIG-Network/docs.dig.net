@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: "Protocol: Overview"
-description: "The DIG Protocol as seven bottom-up layers, normative and implementation-defined. The capsule (storeId:rootHash) is the fundamental unit; the host is blind and the reader verifies against the chain. This section supersedes the whitepapers."
+description: "The DIG Protocol as seven bottom-up layers, normative and implementation-defined. The capsule (storeId:rootHash) is the fundamental unit; the host is blind and the reader verifies against the chain. This is the authoritative protocol reference."
 keywords:
   - DIG protocol
   - seven-layer model
@@ -15,15 +15,14 @@ tags:
   - chia-protocol
   - merkle-proof
   - anchoring
-  - whitepaper
 ---
 
 # Protocol: Overview
 
 This is the **normative specification** of the DIG Protocol, defined as **seven layers, bottom-up**. Each layer names its **canonical crate/file** as the normative reference.
 
-:::warning This section supersedes the whitepapers — the implementation is the source of truth
-The protocol shipped, and **drifted** from the original whitepapers as it met reality (endianness, the AEAD cipher, deterministic filler, per-resource merkle, a free mint, a no-CDN read path, and more). Where this section and a [whitepaper](./whitepapers/index.md) disagree, **this section is authoritative**: it documents the code as it actually runs, with `file:line` citations. The whitepapers will be reconciled to this spec later. Every documented deviation is catalogued in [Drift from the whitepapers](./protocol/drift-from-whitepapers.md).
+:::info This is the authoritative protocol reference
+This section is the source of truth for what the network does. It documents the protocol as it actually runs, with `file:line` citations to the canonical implementation. Where this section and a [whitepaper](./whitepapers/index.md) differ, **this section is authoritative**.
 :::
 
 ## The fundamental unit: the capsule
@@ -54,7 +53,6 @@ One concept runs through every layer: the **[capsule](./concepts.md#capsule)** =
 | 6 | [Verification & provenance](./protocol/verification-and-provenance.md) | the four ordered integrity gates | `digstore-core::merkle`, `dig-node` |
 | 6 | [The blind host model](./protocol/blind-host-model.md) | provider-blindness; resolver; `/v1` control plane | hub `retrieval`/`resolver`/`api` |
 | — | [Conformance & parity](./protocol/conformance-and-parity.md) | the cross-impl parity discipline | frozen goldens, OpenRPC diff |
-| — | [Drift from the whitepapers](./protocol/drift-from-whitepapers.md) | the catalogued deviations | per-row citations |
 
 (Layers 3 and the §21 transport interleave with the read path; the table groups them where a reader meets them. The full layer numbering is given on each page.)
 
@@ -75,5 +73,5 @@ A publisher **chunks + encrypts** (L1) content into a **capsule format** (L2) th
 - [Concepts & glossary](./concepts.md) — every entity defined once
 - [Identity & naming](./protocol/identity-and-naming.md) — Layer 0, where the spec begins
 - [The dig RPC](./protocol/dig-rpc.md) — the protocol's machine interface
-- [Drift from the whitepapers](./protocol/drift-from-whitepapers.md) — the deviation catalogue
-- [Whitepapers](./whitepapers/index.md) — the historical design (being reconciled to this spec)
+- [Conformance & parity](./protocol/conformance-and-parity.md) — the cross-impl parity discipline
+- [Whitepapers](./whitepapers/index.md) — the original design papers

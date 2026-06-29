@@ -33,8 +33,8 @@ bodies   concatenated section bodies
 
 `total_len = max(offset+len)` — **self-describing, no terminator**. `HEADER_LEN = 9`, `ROW_LEN = 10`. `DataView::parse` validates the magic, `version == 1`, and that every row lies within `raw` (`datasection.rs:127-181`).
 
-:::warning DRIFT — big-endian, not little-endian
-Whitepaper §5.3 specified little-endian. The implementation is **big-endian** because Chia-streamable framing won (deviation #1). Catalogued in [Drift](./drift-from-whitepapers.md).
+:::note Big-endian framing
+All multi-byte integers are big-endian, matching Chia's streamable framing so the capsule shares one codec with the rest of the Chia-side wire formats.
 :::
 
 ## SectionIds {#sectionids}
@@ -92,4 +92,3 @@ The compiler carries a local codec for `TrustedKeys` because the core `TrustedHo
 - [Merkle inclusion proofs](./merkle-proofs.md) — what MerkleNodes (D5) commits to
 - [Cryptography](./cryptography.md) — the ChunkPool ciphertext
 - [On-chain anchoring](./on-chain-anchoring.md) — what ChainState points at
-- [Drift from the whitepapers](./drift-from-whitepapers.md) — endianness

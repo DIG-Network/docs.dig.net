@@ -57,9 +57,7 @@ encrypt_chunk(key32, plaintext) = AES-256-GCM-SIV(key).encrypt(FIXED_NONCE, plai
 decrypt_chunk(key32, ct)        → Ok(plaintext) | Err(())  on tag failure  // crypto.rs:77-81
 ```
 
-:::warning DRIFT — GCM-SIV, not GCM
-Whitepaper §11 said AES-256-GCM. The implementation uses **AES-256-GCM-SIV** (RFC 8452). The `info` string still reads `"…gcm-key-v1"` (a cosmetic legacy). Catalogued in [Drift](./drift-from-whitepapers.md).
-:::
+The AEAD is **AES-256-GCM-SIV** (RFC 8452). (The `info` string reads `"…gcm-key-v1"` — a cosmetic constant name, not a cipher selector.)
 
 **Why a fixed nonce is safe.** GCM-SIV is **nonce-misuse-resistant**: it derives a synthetic IV via POLYVAL over (key, AAD, plaintext), so reusing `(key, nonce)` across distinct plaintexts leaks neither a keystream XOR nor the auth key (it avoids GCM's "forbidden attack"). The fixed nonce also makes encryption **deterministic**, so the ciphertext-committed [merkle root](./merkle-proofs.md) is reproducible — the basis of [byte-identical compilation](./self-defending-module.md#deterministic-compilation). No RNG ⇒ no `getrandom` in the wasm build.
 
@@ -73,4 +71,3 @@ The [serving guest](./self-defending-module.md) relays **ciphertext + proof** on
 - [Merkle inclusion proofs](./merkle-proofs.md) — what the deterministic ciphertext commits to
 - [Verification & provenance](./verification-and-provenance.md) — gate 2 (authenticated decryption)
 - [Conformance & parity](./conformance-and-parity.md) — the one-crypto-impl invariant + KAT fixtures
-- [Drift from the whitepapers](./drift-from-whitepapers.md) — GCM → GCM-SIV
