@@ -1,0 +1,11 @@
+{
+  "label": "Using DIG",
+  "position": 2,
+  "collapsible": true,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "title": "Using DIG — pick your path",
+    "description": "Find the track that matches what you're doing. Each one opens with a ten-second 'why', the mental model you need, and the high-signal how-to — then links into the protocol deep-dive when you want to go further."
+  }
+}
