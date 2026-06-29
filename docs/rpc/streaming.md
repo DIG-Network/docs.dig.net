@@ -18,6 +18,10 @@ tags:
 
 # Streaming
 
+:::info Normative spec
+The authoritative wire contract for the chunk object and the streaming/window math is [Protocol · The dig RPC](../protocol/dig-rpc.md#the-chunk-wire-object).
+:::
+
 Every byte-bearing method — [`dig.getContent`](./methods.md#diggetcontent), [`dig.getCapsule`](./methods.md#diggetcapsule), [`dig.getManifest`](./methods.md#diggetmanifest) — returns the same **chunk object**. One call returns one chunk; the client continues until the chunk that completes the object.
 
 ## The chunk object
@@ -30,9 +34,11 @@ Every byte-bearing method — [`dig.getContent`](./methods.md#diggetcontent), [`
 | `length` | uint | This chunk's byte length (= decoded `ciphertext` length). |
 | `complete` | bool | `true` when `offset + length ≥ total_length` — this chunk finishes the object. |
 | `next_offset` | uint or `null` | The `offset` to request next, or `null` when `complete`. |
-| `inclusion_proof` | string or `null` | Base64 merkle inclusion proof for the **whole** resource (present on real `dig.getContent`/`dig.getManifest` hits; `null` for capsules and decoys). |
-| `decoy` | bool | `true` if this stream is a blind-miss decoy. Treat as not-found. |
+| `inclusion_proof` | string or `null` | Base64 merkle inclusion proof for the **whole** resource (present on every window of `dig.getContent`/`dig.getManifest`; empty/`null` for capsules). |
+| `chunk_lens` | uint[] | Per-chunk **ciphertext** byte lengths of the full resource, in order. **First window only** (`offset == 0`); empty ⇒ a single chunk. Required to split + decrypt a multi-chunk resource. |
 | `root` | string | The resolved generation root (hex). Pin subsequent chunks to it. |
+
+There is **no `decoy` field** on the wire: a miss is the capsule's own indistinguishable, non-verifying response, discovered client-side by inclusion-proof and/or decryption failure (see [the blind host model](../protocol/blind-host-model.md)).
 
 ## Alignment and bounds
 
@@ -50,7 +56,7 @@ The inclusion proof authenticates the **entire resource** against the generation
 4. once `complete`, verifies the proof over the fully reassembled ciphertext against the trusted `root`;
 5. only then decrypts with the URN-derived key.
 
-If any chunk reports `"decoy": true`, stop and report not-found — there is no point downloading a decoy in full. For `dig.getCapsule` there is no per-chunk proof; the reassembled capsule self-verifies on install (store id + signed root + on-chain root) per DigStore.
+A miss is **not** flagged — the capsule returns an indistinguishable, non-verifying response, so the client learns not-found only when step 4 (proof) or step 5 (decryption tag) fails. Split the reassembled ciphertext by `chunk_lens` and AES-256-GCM-SIV-open each chunk; empty/absent `chunk_lens` ⇒ a single chunk = the whole ciphertext. For `dig.getCapsule` there is no per-resource proof; the reassembled capsule self-verifies on install (store id + signed root + on-chain root) per DigStore.
 
 :::tip Pin "latest"
 When you read with `root: "latest"`, the first chunk's `root` field is the head the node resolved. Pin every subsequent chunk to that exact root so a head change mid-stream can't splice two generations together.
@@ -64,18 +70,19 @@ A fully blind, trustless read of a resource by URN (the client supplies a chain-
 async function readByUrn(urn, root) {
   const [store_id, path, salt] = parseUrn(urn);
   const rk = sha256(urn);                 // retrieval key — the only id sent to the node
-  let total = null, buf = null, proof = "", offset = 0;
+  let total = null, buf = null, proof = "", offset = 0, lens = [];
 
   for (;;) {
     const r = (await rpc("dig.getContent", {
       store_id, root, retrieval_key: rk, offset, length: 3 * 1024 * 1024,
     })).result;
 
-    if (!r || r.decoy) throw new NotFound();      // blind miss
+    if (!r) throw new NotFound();                 // genuine infra miss (-32004)
     if (total === null) {
       total = r.total_length;
       buf   = new Uint8Array(total);
       root  = r.root;                              // pin "latest" to the resolved head
+      lens  = r.chunk_lens || [];                  // per-chunk ciphertext lengths (first window)
     }
     const chunk = base64decode(r.ciphertext);
     buf.set(chunk.subarray(0, total - r.offset), r.offset);
@@ -84,8 +91,8 @@ async function readByUrn(urn, root) {
     offset = r.next_offset;
   }
 
-  if (!verifyInclusion(buf, proof, root)) throw new NotFound();   // unverifiable = decoy
-  return decrypt(store_id, path, buf, salt);       // URN-derived AES-256-GCM-SIV key
+  if (!verifyInclusion(buf, proof, root)) throw new NotFound();   // unverifiable = a miss/decoy
+  return decrypt(store_id, path, buf, salt, lens); // URN-derived AES-256-GCM-SIV key, split by chunk_lens
 }
 ```
 

@@ -22,6 +22,10 @@ tags:
 
 # Store Structure
 
+:::info Normative spec
+The normative identity model is [Protocol · Identity & naming](../../protocol/identity-and-naming.md) (store / capsule / generation; `store_id` = the CHIP-0035 launcher id).
+:::
+
 A store has an **identity**, a **history of generations**, and a compiled **module**. This page covers each.
 
 ## Store identity

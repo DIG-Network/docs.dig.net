@@ -19,6 +19,10 @@ tags:
 
 # CHIP-0035 store-coin spends & delegation
 
+:::info Normative spec
+The protocol-level anchoring + payment contracts are [Protocol · On-chain anchoring](./protocol/on-chain-anchoring.md) and [Protocol · DIG CAT payment & pricing](./protocol/dig-cat-payment.md). This page is the spend-builder reference.
+:::
+
 A [store](./digstore/format/store-structure.md) is a **CHIP-0035 DataLayer singleton** on Chia mainnet: minting it and advancing its root are **store-coin spends**. This page is the protocol-level view of how those spends are built and how authority over a store is delegated.
 
 ## The canonical wasm builder

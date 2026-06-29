@@ -19,6 +19,10 @@ tags:
 
 # The dig:// remote (clone/pull/push)
 
+:::info Normative spec
+The authoritative §21 transport wire spec — the REST surface, the JSON-outer/Chia-codec-inner envelope, 2-leg push v1, the authenticated head, and per-request §21.9 auth — is [Protocol · §21 transport & push](../protocol/transport-and-push.md). This page is the CLI task guide.
+:::
+
 On top of the read interface, DigStore has a **git-style remote**. You `clone` a store to disk, `pull` new generations, and `push` a new generation — over the same routes a node already serves. The transport is named by a `dig://` URL, and **every request is signed** by your identity key.
 
 ```bash

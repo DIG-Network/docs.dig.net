@@ -18,6 +18,10 @@ tags:
 
 # Whitepapers
 
+:::warning Historical — the Protocol section is now authoritative
+These whitepapers are the **original design**. The protocol shipped and **drifted** from them. The [**Protocol section**](../protocol-deep-dive.md) — defined against the implementation, with `file:line` citations — is now the **source of truth**; every deviation is catalogued in [Drift from the whitepapers](../protocol/drift-from-whitepapers.md). Read these for history and intent; read the Protocol section for what the network actually does. They will be reconciled later.
+:::
+
 The full technical specifications behind DIG Network, in three parts. These are the deep,
 protocol-level references — **most builders won't need them to ship.** If you're publishing a site or
 integrating the SDK, start with the [DIG Network overview](/docs/) and the

@@ -19,6 +19,10 @@ tags:
 
 # Conformance & Security
 
+:::info Normative spec
+The authoritative cross-implementation conformance discipline is [Protocol · Conformance & parity](../protocol/conformance-and-parity.md); the blind serving model is [Protocol · The blind host model](../protocol/blind-host-model.md). This page is the task-oriented node-operator contract.
+:::
+
 The dig RPC is designed so that **any** node can join the network's read path by implementing one interface exactly. This page is the contract.
 
 ## The blind serving model
@@ -27,7 +31,7 @@ A node stores, per hosted generation, the compiled `.dig` capsule — a self-def
 
 ### Decoys: no existence oracle
 
-On **any** content miss — unknown store, unknown retrieval key, a root with no hosted capsule, a runtime trap, or an envelope whose proof does not verify — a byte-bearing method returns a normal `result` whose `decoy` flag is `true` and whose `ciphertext` is a deterministic pseudo-random stream seeded by the requested key. The decoy has a plausible, key-derived length and streams through the identical chunk machinery, so a passive observer (and the operator) cannot distinguish a hit from a miss by status, shape, or size. A client treats `decoy: true` as not-found, never as an error.
+On **any** content miss — unknown store, unknown retrieval key, a root with no hosted capsule — the capsule returns a deterministic pseudo-random stream seeded by the requested key, **byte-shaped identically to a hit**. There is **no `decoy` flag on the wire**: the response is indistinguishable, so a passive observer (and the operator) cannot tell a hit from a miss by status, shape, or size. The client learns not-found **only** when the [inclusion proof](../protocol/merkle-proofs.md) fails to verify or the [GCM-SIV tag](../protocol/cryptography.md) fails to decrypt. (A *genuine infra* failure — no host seed, module absent, a trap, an undecodable envelope — is the distinct error [`-32004`](./methods.md#errors), not a decoy.)
 
 ### Root resolution
 
@@ -65,7 +69,7 @@ A node is a conformant dig RPC endpoint if and only if it:
 - returns the REAL merkle inclusion proof synchronously and serves only REAL execution-proof receipts (a forgeable mock is never published as a proof);
 - streams byte methods with the [chunk object](./streaming.md#the-chunk-object), snapping to 64 KiB blocks and capping at the declared max chunk, with correct `total_length`, `complete`, and `next_offset`;
 - returns sealed ciphertext plus a root-anchored inclusion proof for real `dig.getContent`/`dig.getManifest` hits, and **never** returns a URN, a key, or plaintext;
-- answers every miss with an indistinguishable `decoy` stream, never a `404` or a distinguishing error, and never exposes an existence oracle for a private resource;
+- answers every content miss with an indistinguishable decoy stream (no `decoy` flag on the wire), never a `404` or a distinguishing error, and never exposes an existence oracle for a private resource;
 - resolves `"latest"` to the newest confirmed generation and echoes the resolved `root`; and
 - uses the JSON-RPC error codes only for malformed or unroutable calls.
 

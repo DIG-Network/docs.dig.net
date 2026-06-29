@@ -17,6 +17,10 @@ tags:
 
 # Inclusion vs execution proofs
 
+:::info Normative spec
+The four ordered integrity gates, the anchored-root pinning contract, and the MOCK-by-default execution-proof caveat are in [Protocol · Verification, provenance & anchoring](./protocol/verification-and-provenance.md).
+:::
+
 DIG uses **two distinct kinds of proof**. They answer different questions, run on different timescales, and you'll meet them in different places.
 
 ## Inclusion proofs — synchronous, per read
