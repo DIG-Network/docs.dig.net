@@ -134,7 +134,7 @@
       "code": "insufficient-funds",
       "exit": 12,
       "http_or_exit": 12,
-      "description": "Not enough XCH or DIG to cover the spend (100 DIG + XCH fee per capsule)."
+      "description": "Not enough XCH or DIG to cover the spend (the uniform capsule price in $DIG + XCH fee per capsule)."
     },
     {
       "surface": "digstore-cli",
@@ -178,7 +178,7 @@
       "http": 429,
       "wire": "over_quota",
       "http_or_exit": 429,
-      "description": "Not enough DIG in your wallet to cover this capsule (100 DIG)."
+      "description": "Not enough $DIG in your wallet to cover this capsule's price."
     },
     {
       "surface": "dighub",
@@ -226,7 +226,7 @@
       "http": 409,
       "wire": "slug_taken",
       "http_or_exit": 409,
-      "description": "That project name is already taken."
+      "description": "That store name is already taken."
     },
     {
       "surface": "dighub",
@@ -234,7 +234,7 @@
       "http": 429,
       "wire": "over_quota",
       "http_or_exit": 429,
-      "description": "You've reached the project limit for this account."
+      "description": "You've reached the store limit for this account."
     },
     {
       "surface": "dighub",
@@ -437,7 +437,7 @@
         "code": "insufficient-funds",
         "exit": 12,
         "http_or_exit": 12,
-        "description": "Not enough XCH or DIG to cover the spend (100 DIG + XCH fee per capsule)."
+        "description": "Not enough XCH or DIG to cover the spend (the uniform capsule price in $DIG + XCH fee per capsule)."
       },
       {
         "surface": "digstore-cli",
@@ -483,7 +483,7 @@
         "http": 429,
         "wire": "over_quota",
         "http_or_exit": 429,
-        "description": "Not enough DIG in your wallet to cover this capsule (100 DIG)."
+        "description": "Not enough $DIG in your wallet to cover this capsule's price."
       },
       {
         "surface": "dighub",
@@ -531,7 +531,7 @@
         "http": 409,
         "wire": "slug_taken",
         "http_or_exit": 409,
-        "description": "That project name is already taken."
+        "description": "That store name is already taken."
       },
       {
         "surface": "dighub",
@@ -539,7 +539,7 @@
         "http": 429,
         "wire": "over_quota",
         "http_or_exit": 429,
-        "description": "You've reached the project limit for this account."
+        "description": "You've reached the store limit for this account."
       },
       {
         "surface": "dighub",

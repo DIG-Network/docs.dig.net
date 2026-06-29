@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 title: Quickstart
-description: "Ship your first site on DIG — free to build and preview, you only spend 100 DIG when you publish. Web-first path (no wallet to start) plus a parallel CLI track."
+description: "Ship your first site on DIG — free to build and preview, you only pay the uniform capsule price when you publish. Web-first path (no wallet to start) plus a parallel CLI track."
 keywords:
   - DIG quickstart
   - deploy on Chia
@@ -21,7 +21,7 @@ tags:
 
 Ship a site to a network no host can read, change, or take down — in about ten minutes.
 
-**You build and preview for free.** Scaffolding and previewing cost nothing; you spend a flat **100 $DIG** only at the moment you publish a [capsule](./concepts.md#capsule) on-chain. *Iterate for free, publish when it's ready.*
+**You build and preview for free.** Scaffolding and previewing cost nothing; you pay the **uniform capsule price in $DIG** only at the moment you publish a [capsule](./concepts.md#capsule) on-chain. *Iterate for free, publish when it's ready.*
 
 Two ways to do it. Most people start on the web.
 
@@ -36,7 +36,7 @@ The fastest path: build and preview in the browser, fund a wallet only at the fi
 
 ### 1. Open DIGHUb and start a draft — free, no wallet
 
-[**Start a new project in DIGHUb ↗**](https://hub.dig.net/new). Drop in your built site (a folder of static files — your `dist/` or `build/`). DIGHUb gives you a **free draft preview** of exactly how it will serve, with nothing on-chain and no DIG spent.
+[**Start a new store in DIGHUb ↗**](https://hub.dig.net/new). Drop in your built site (a folder of static files — your `dist/` or `build/`). DIGHUb gives you a **free draft preview** of exactly how it will serve, with nothing on-chain and no $DIG spent.
 
 You don't need a wallet yet. Iterate on the draft as many times as you like — re-upload, re-preview — entirely for free.
 
@@ -44,12 +44,12 @@ You don't need a wallet yet. Iterate on the draft as many times as you like — 
 
 The preview renders your site through the genuine DIG pipeline (encrypt → compile → verify → decrypt), so what you see is what visitors get. Click around, check assets and routing. Nothing is published and nothing is spent until you choose to.
 
-### 3. Publish — fund and connect a wallet (100 DIG)
+### 3. Publish — fund and connect a wallet
 
 When the draft looks right, hit **Publish**. This is the only step that costs anything:
 
 - Connect a Chia wallet (your wallet *is* your account — no email, no password).
-- Approve the on-chain spend: a flat **100 DIG + a small XCH fee**, in one signature.
+- Approve the on-chain spend: the **uniform capsule price in $DIG + a small XCH fee**, in one signature. The publish screen shows the exact $DIG amount before you sign.
 - DIGHUb mints your store and publishes the first **capsule** on Chia mainnet.
 
 Short on DIG? The publish screen shows your balance and where to top up. See [Where to get DIG](./digstore/cli/onchain-anchoring.md#where-to-get-dig) — TibetSwap, dexie.space, or 9mm.pro.
@@ -60,7 +60,7 @@ Your capsule is now anchored on-chain and **immediately readable over the [dig R
 
 **Want a human-friendly `*.on.dig.net` address?** That's optional. A store gets a `*.on.dig.net` subdomain only when you **register a handle** for it in DIGHUb — a separate, paid registration that pins the store to that name. Until you register one, there's no `*.on.dig.net` URL (the URN / `chia://` address above is always the canonical way to reach it). See [Can I use my own domain?](./support/faq.md#can-i-use-my-own-domain).
 
-**To ship an update later:** edit, preview the new draft for free, and Publish again. Each published update is a new capsule and costs another **100 DIG** — you only pay when you promote a draft to a permanent on-chain version.
+**To ship an update later:** edit, preview the new draft for free, and Publish again. Each published update is a new capsule and costs the **uniform capsule price** again — you only pay when you promote a draft to a permanent on-chain version.
 
 :::tip Automate it
 Once your store exists, wire up [Deploy from GitHub Actions](./digstore/cli/deploy-from-github-actions.md) so every push to `main` publishes a new capsule — git-push-to-deploy.
@@ -70,7 +70,7 @@ Once your store exists, wire up [Deploy from GitHub Actions](./digstore/cli/depl
 
 ## B. Publish from the CLI
 
-The same flow from your terminal — scriptable and the basis for CI. The CLI mirrors the web path: build and preview cost nothing; publishing a capsule costs 100 DIG.
+The same flow from your terminal — scriptable and the basis for CI. The CLI mirrors the web path: build and preview cost nothing; publishing a capsule costs the uniform capsule price in $DIG.
 
 ### 1. Install
 
@@ -87,10 +87,10 @@ Scaffold a project and preview it locally — **free, no mint, no chain** — be
 
 ```sh
 digstore new <template>   # scaffold a wallet-wired project (static · vite-react · next-static · nft-drop · dapp-window-chia) — free, no mint
-digstore dev              # watch + compile-on-save + serve the real dig:// read path, with an injected window.chia — free, live-reload
+digstore dev              # watch + compile-on-save + serve the real chia:// read path, with an injected window.chia — free, live-reload
 ```
 
-`new` writes a runnable project (a `dig.toml` + a starter app); `dev` serves it over the genuine DIG read path (compile → verify → decrypt) with live reload. You spend the 100 DIG only when you publish (next steps). Or build with your usual toolchain (`npm run build` → `dist/`) and publish that output.
+`new` writes a runnable project (a `dig.toml` + a starter app); `dev` serves it over the genuine DIG read path (compile → verify → decrypt) with live reload. You pay the uniform capsule price only when you publish (next steps). Or build with your usual toolchain (`npm run build` → `dist/`) and publish that output.
 
 :::tip Prefer npm? Use `create-dig-app`
 If you live in the Node world, `npm create dig-app@latest my-app -- --template vite-react` scaffolds the same templates straight from npm — no `digstore` install needed to start. See [Scaffold an app](./build-a-dapp/scaffold.md).
@@ -107,10 +107,10 @@ digstore balance            # show your receive address; fund it with XCH + DIG
 
 See [On-chain anchoring](./digstore/cli/onchain-anchoring.md) for import, funding, and TTL details.
 
-### 4. Publish your first capsule (100 DIG)
+### 4. Publish your first capsule
 
 ```sh
-digstore init site --dir dist     # mint the store's first capsule (100 DIG + XCH fee)
+digstore init site --dir dist     # mint the store's first capsule (uniform capsule price + XCH fee)
 ```
 
 `init` mints a Chia singleton on mainnet — **the launcher id becomes your store id** — and blocks until confirmed.
@@ -120,7 +120,7 @@ digstore init site --dir dist     # mint the store's first capsule (100 DIG + XC
 ```sh
 npm run build                      # produce dist/
 digstore add -A                    # stage the whole content root
-digstore commit -m "v1.1"          # publish a new capsule (100 DIG + XCH fee)
+digstore commit -m "v1.1"          # publish a new capsule (uniform capsule price + XCH fee)
 ```
 
 For CI, one command does add → commit → push and prints the URL:
@@ -144,10 +144,10 @@ digstore cat urn:dig:chia:<storeId>/readme   # a URN both locates AND decrypts
 | You're doing | Cost |
 |---|---|
 | Scaffolding, building, previewing a draft | **Free** |
-| Publishing your first capsule (`init` / DIGHUb Publish) | **100 DIG** + small XCH fee |
-| Publishing each update (`commit` / re-Publish) | **100 DIG** + small XCH fee |
+| Publishing your first capsule (`init` / DIGHUb Publish) | **uniform capsule price in $DIG** + small XCH fee |
+| Publishing each update (`commit` / re-Publish) | **uniform capsule price in $DIG** + small XCH fee |
 
-The price is a flat **100 DIG per capsule** everywhere — see [why the price is flat](./digstore/cli/onchain-anchoring.md#why-the-price-is-flat).
+The price is **uniform per capsule** everywhere — see [why the price is uniform](./digstore/cli/onchain-anchoring.md#why-the-price-is-uniform).
 
 ## Stuck?
 

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 title: CLI tutorial
-description: "Full walkthrough of the DigStore CLI: initialize a project, commit files, and read content back. The parallel track to the web-first quickstart."
+description: "Full walkthrough of the DigStore CLI: initialize a store, commit files, and read content back. The parallel track to the web-first quickstart."
 keywords:
   - digstore quickstart
   - digstore init
@@ -19,7 +19,7 @@ tags:
 
 # CLI tutorial
 
-Create a project, commit a file, and read it back with the `digstore` CLI.
+Create a store, commit a file, and read it back with the `digstore` CLI.
 
 :::tip New here? Start with the Quickstart
 The [**Quickstart**](../../quickstart.md) leads with the free, web-first path (build and preview at no cost, publish only at the end). This page is the deeper CLI walkthrough — the parallel track for terminal and CI workflows.
@@ -27,7 +27,7 @@ The [**Quickstart**](../../quickstart.md) leads with the free, web-first path (b
 
 ## 0. Set up your wallet
 
-`digstore init` mints a singleton on **Chia mainnet** and costs **100 $DIG + a small XCH fee**, so you need a seed and a funded wallet first. (Building and previewing locally are free — you only spend when you publish a capsule.)
+`digstore init` mints a singleton on **Chia mainnet** and costs the **uniform capsule price in $DIG + a small XCH fee**, so you need a seed and a funded wallet first. (Building and previewing locally are free — you only spend when you publish a capsule.)
 
 ```sh
 digstore seed import        # import an existing BIP-39 mnemonic (prompted)
@@ -44,22 +44,22 @@ mkdir my-project && cd my-project
 digstore init
 ```
 
-`digstore init` creates a `.dig/` workspace and mints the project's singleton on Chia mainnet — **the on-chain launcher id becomes the store id**. It blocks until the transaction is confirmed (default timeout 300 s), then writes the project locally. Run interactively, it asks a couple of setup questions:
+`digstore init` creates a `.dig/` workspace and mints the store's singleton on Chia mainnet — **the on-chain launcher id becomes the store id**. It blocks until the transaction is confirmed (default timeout 300 s), then writes the store locally. Run interactively, it asks a couple of setup questions:
 
 ```
-Relative path to the build/content directory this project captures [.]:
-Make this a private (salted) project? [y/N]:
+Relative path to the build/content directory this store captures [.]:
+Make this a private (salted) store? [y/N]:
 ```
 
-- The **content directory** is what the project captures (a build dir like `dist/`). Press Enter to use the current directory.
+- The **content directory** is what the store captures (a build dir like `dist/`). Press Enter to use the current directory.
 - **Private** mixes in a secret salt so the URN alone can't decrypt (see [Public vs private](../format/urns-and-encryption.md#public-vs-private-stores)).
 
 You can skip the prompts with flags — handy in scripts:
 
 ```sh
 digstore init                       # current dir, public
-digstore init site --dir dist       # a project named "site" capturing ./dist
-digstore init --private             # private project
+digstore init site --dir dist       # a store named "site" capturing ./dist
+digstore init --private             # private store
 ```
 
 ## 2. Add and commit
@@ -113,8 +113,8 @@ digstore cat urn:dig:chia:<storeId>/readme --out readme.copy.txt
 ## Where to go next
 
 - **[On-chain anchoring](./onchain-anchoring.md)** — wallet setup, funding, init/commit timeouts, anchor status, and config.
-- **[Project workflow](./project-workflow.md)** — capture a real build directory, run multiple projects per workspace, manage staging. List them with `digstore stores` (alias: `projects`).
-- **[Sharing over a remote](./sharing.md)** — publish a project and let others `clone`/`pull` it.
+- **[Store workflow](./project-workflow.md)** — capture a real build directory, run multiple stores per workspace, manage staging. List them with `digstore stores`.
+- **[Sharing over a remote](./sharing.md)** — publish a store and let others `clone`/`pull` it.
 - **[Streaming & keys](./streaming-and-keys.md)** — fetch encrypted vs decrypted, list retrieval keys, checkout a whole deployment.
 
 :::tip Try it

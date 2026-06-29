@@ -26,10 +26,10 @@ The failures you're most likely to hit, and how to fix them. Each one names the 
 
 *CLI exit `12` · DIGHUb `DIG_INSUFFICIENT`*
 
-Publishing a capsule costs a flat **100 $DIG + a small XCH fee**, and your wallet is short on one of them.
+Publishing a capsule costs the **uniform capsule price in $DIG + a small XCH fee**, and your wallet is short on one of them.
 
 - Check your balance: `digstore balance` (or the DIGHUb publish screen).
-- Fund the **receive address** it shows. You need both: XCH for the fee and 100 DIG per capsule. DIG arrives as a Chia CAT at the same `xch1…` address.
+- Fund the **receive address** it shows. You need both: XCH for the fee and enough $DIG for the capsule price. DIG arrives as a Chia CAT at the same `xch1…` address.
 - Need DIG? Swap XCH for it on [TibetSwap ↗](https://v2.tibetswap.io/), [dexie.space ↗](https://dexie.space/offers/XCH/a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367df16832f81), or [9mm.pro ↗](https://xch.9mm.pro/token/a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367df16832f81), then send it to your receive address.
 
 See [Where to get DIG](../digstore/cli/onchain-anchoring.md#where-to-get-dig) and [Funding a wallet](../digstore/cli/onchain-anchoring.md#funding-the-wallet).
@@ -61,8 +61,8 @@ digstore push               # then push
 ### CI deploy fails or double-spends
 
 - The Action **never mints** — the store must already exist (`digstore init` once). If you see a mint attempt, you're pointing at a missing/empty store; check `store-id` in `dig.toml`.
-- Fund the **dedicated deploy wallet** with enough DIG for your expected deploys (100 DIG each). See [Deploy from GitHub Actions](../digstore/cli/deploy-from-github-actions.md).
-- Use `--if-changed` so a no-op build doesn't spend 100 DIG on an identical capsule.
+- Fund the **dedicated deploy wallet** with enough $DIG for your expected deploys (the uniform capsule price each). See [Deploy from GitHub Actions](../digstore/cli/deploy-from-github-actions.md).
+- Use `--if-changed` so a no-op build doesn't spend the capsule price on an identical capsule.
 
 ## Reading / verification
 

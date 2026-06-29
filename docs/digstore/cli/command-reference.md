@@ -1,7 +1,7 @@
 ---
 sidebar_position: 8
 title: Command reference
-description: "Complete command reference for the digstore CLI, including wallet, project, staging, history, content, remote, and maintenance commands."
+description: "Complete command reference for the digstore CLI, including wallet, store, staging, history, content, remote, and maintenance commands."
 keywords:
   - digstore command reference
   - digstore CLI commands
@@ -23,17 +23,17 @@ tags:
 
 Every `digstore` command. Run `digstore <command> --help` for full flags and examples.
 
-> **On-chain by default.** `init` mints the project's singleton on **Chia mainnet** and `commit` anchors each new deployment root on-chain (both block until confirmed and spend real XCH). Each publishes one **capsule** and costs a flat **100 DIG** (mint or commit) — paid to the DIG treasury in the same spend bundle (memo = store id). Both commands disclose the cost and check your balance before submitting; they block if the wallet is short on XCH **or** DIG. You need an unlocked wallet seed and a funded wallet first — see [On-chain anchoring](./onchain-anchoring.md).
+> **On-chain by default.** `init` mints the store's singleton on **Chia mainnet** and `commit` anchors each new deployment root on-chain (both block until confirmed and spend real XCH). Each publishes one **capsule** and costs the **uniform capsule price in $DIG** (mint or commit) — paid to the DIG treasury in the same spend bundle (memo = store id). Both commands disclose the cost and check your balance before submitting; they block if the wallet is short on XCH **or** DIG. You need an unlocked wallet seed and a funded wallet first — see [On-chain anchoring](./onchain-anchoring.md).
 
-## Start a project & preview — free, no spend
+## Start a store & preview — free, no spend
 
 **Try it before you pay.** Scaffolding, previewing, and cost-previews cost nothing — $DIG is spent only when you publish (`commit`/`deploy`). Start here:
 
 | Command | What it does |
 |---|---|
 | `digstore new <template> [dir] [--force] [--list]` | Scaffold a working project locally from a template — **no wallet, no chain, no spend**. Templates: `static-site`, `vite-react`, `next-static`, `nft-drop`, `dapp-window-chia`. Writes a `dig.toml`, a starter app, and (for the dapp/NFT templates) a `window.chia` usage example. `--list` prints the catalog. |
-| `digstore dev [--dir <path>] [--build <cmd>] [--port <n>] [--open]` | Local preview loop: builds on save and serves your project over the **real `dig://` read path** (compile → verify → decrypt, exactly as a visitor's browser does) on `http://127.0.0.1:<port>`, with live reload and an injected dev `window.chia` shim. **Free — no chain, no spend.** Reads `output-dir`/`build-command` from `dig.toml` (flags override). |
-| `digstore doctor [--json]` | Pre-publish preflight: checks seed present/unlocked, wallet funds vs the 100 DIG + XCH cost, dighub login, default remote reachable, and content dir present — printed pass/fail. Exits non-zero if a hard check fails. Reads only; never spends. |
+| `digstore dev [--dir <path>] [--build <cmd>] [--port <n>] [--open]` | Local preview loop: builds on save and serves your project over the **real `chia://` read path** (compile → verify → decrypt, exactly as a visitor's browser does) on `http://127.0.0.1:<port>`, with live reload and an injected dev `window.chia` shim. **Free — no chain, no spend.** Reads `output-dir`/`build-command` from `dig.toml` (flags override). |
+| `digstore doctor [--json]` | Pre-publish preflight: checks seed present/unlocked, wallet funds vs the capsule price in $DIG + XCH cost, dighub login, default remote reachable, and content dir present — printed pass/fail. Exits non-zero if a hard check fails. Reads only; never spends. |
 | `digstore commit --dry-run [--json]` | Preview the resulting version (root) **and the exact DIG/XCH cost** without spending, anchoring, or publishing anything. |
 
 The intended flow: `digstore new <template>` → edit → `digstore dev` (free preview) → `digstore doctor` → `digstore commit` / `digstore deploy` (the only step that spends DIG).
@@ -57,22 +57,24 @@ The intended flow: `digstore new <template>` → edit → `digstore dev` (free p
 | `digstore seed status` | Show whether a seed exists and is currently unlocked |
 | `digstore lock` | Lock the seed (clear the cached-unlock session) |
 | `digstore balance [--json]` | Show spendable XCH (mojos) and DIG (3-decimal display) + the wallet receive address (read-only) |
-| `digstore anchor [--wait-timeout <secs>]` | Resume a pending anchor: poll the chain and flip the project to confirmed |
-| `digstore anchor status [--json]` | Show the project's anchor state (network, launcher/store id, current coin, height) + the pointer embedded in the module |
+| `digstore anchor [--wait-timeout <secs>]` | Resume a pending anchor: poll the chain and flip the store to confirmed |
+| `digstore anchor status [--json]` | Show the store's anchor state (network, launcher/store id, current coin, height) + the pointer embedded in the module |
 | `digstore anchor inspect <module.dig> [--json]` | Decode and print the on-chain pointer embedded in any compiled module file |
 
 Set the wallet passphrase non-interactively with `DIGSTORE_PASSPHRASE`. Global config lives in `~/.dig/config.toml` (`coinset_url`, `unlock_ttl`, `fee`).
 
-## Projects & workspace
+## Stores & workspace
 
-A single workspace (`.dig/`) can hold many projects. The commands below create and switch between the projects in your workspace.
+A single workspace (`.dig/`) can hold many stores. The commands below create and switch between the stores in your workspace.
 
 | Command | What it does |
 |---|---|
-| `digstore init [name] [--dir <path>] [--private] [--wait-timeout <secs>]` | Initialize a project (default name `default`); `--dir` sets its content root. **Mints the project singleton on Chia mainnet — the launcher id becomes the store id** — and blocks until confirmed (`--wait-timeout`, default 300s). Costs **100 DIG + an XCH fee** (paid atomically in the same bundle; cost is disclosed before submission). Requires an unlocked seed, XCH, and DIG; on a confirmation timeout the project is kept `pending` and resumable with `digstore anchor`. Interactive when flags are omitted. |
-| `digstore stores` (alias: `projects`) | List projects with the active marker, root, content root, and capacity |
-| `digstore use <name>` | Set the active project |
-| `digstore dir [<path>]` | Show or set the active project's content root |
+| `digstore init [name] [--dir <path>] [--private] [--wait-timeout <secs>]` | Initialize a store (default name `default`); `--dir` sets its content root. **Mints the store singleton on Chia mainnet — the launcher id becomes the store id** — and blocks until confirmed (`--wait-timeout`, default 300s). Costs the **uniform capsule price in $DIG + an XCH fee** (paid atomically in the same bundle; cost is disclosed before submission). Requires an unlocked seed, XCH, and DIG; on a confirmation timeout the store is kept `pending` and resumable with `digstore anchor`. Interactive when flags are omitted. |
+| `digstore stores` | List stores with the active marker, root, content root, and capacity |
+| `digstore use <name>` | Set the active store |
+| `digstore dir [<path>]` | Show or set the active store's content root |
+
+> **Back-compat aliases.** `digstore projects` (for `digstore stores`) and the `--project` flag are kept only as hidden aliases for older scripts; new usage should say `stores` / store.
 
 ## Staging & commits
 
@@ -81,7 +83,7 @@ A single workspace (`.dig/`) can hold many projects. The commands below create a
 | `digstore add <path…> [-A] [--key <name>]` | Stage files (`-A` = the whole content root) |
 | `digstore staged` | List the staging area |
 | `digstore unstage` | Clear the staging area |
-| `digstore commit [-m <msg>] [--wait-timeout <secs>]` | Seal a new deployment: **anchor the new deployment root on Chia mainnet and block until confirmed** (`--wait-timeout`, default 300s), then compile the module + write the URN manifest. Publishes a new capsule for **100 DIG + an XCH fee** (paid atomically in the same bundle; cost is disclosed before submission). On failure/timeout the local deployment is not finalized (re-run to resume). |
+| `digstore commit [-m <msg>] [--wait-timeout <secs>]` | Seal a new deployment: **anchor the new deployment root on Chia mainnet and block until confirmed** (`--wait-timeout`, default 300s), then compile the module + write the URN manifest. Publishes a new capsule for the **uniform capsule price in $DIG + an XCH fee** (paid atomically in the same bundle; cost is disclosed before submission). On failure/timeout the local deployment is not finalized (re-run to resume). |
 | `digstore commit --dry-run [--json]` | Preview the resulting version (root) + the exact DIG/XCH cost **without spending or publishing** anything. |
 | `digstore status` | Show staged / modified / untracked + remaining capacity |
 
@@ -106,10 +108,10 @@ A single workspace (`.dig/`) can hold many projects. The commands below create a
 | Command | What it does |
 |---|---|
 | `digstore remote add\|list\|remove …` | Manage remotes |
-| `digstore clone <url>` | Clone a project from a remote. Verified: module identity + signed head + **the served root is checked against the project's current on-chain singleton root** (fails closed) |
-| `digstore push [remote]` | Push the local project's content + signed head |
+| `digstore clone <url>` | Clone a store from a remote. Verified: module identity + signed head + **the served root is checked against the store's current on-chain singleton root** (fails closed) |
+| `digstore push [remote]` | Push the local store's content + signed head |
 | `digstore pull [remote]` | Pull the latest content + signed head. Verified, including the **on-chain root check** |
-| `digstore revoke [--root <hex>\|--all] [--reason <r>]` | Revoke a published root or the whole project with a signed tombstone |
+| `digstore revoke [--root <hex>\|--all] [--reason <r>]` | Revoke a published root or the whole store with a signed tombstone |
 | `digstore serve [--bind <addr:port>] [--store <name>]` | Run a `dig://` remote node for the active store — serves `clone`/`pull`/`push` over the §21 protocol (the same one `rpc.dig.net` speaks), so anyone can host an origin. Each request is authenticated by a signed message from the caller's identity key. |
 
 ## CI deploy
@@ -137,14 +139,14 @@ Build the spend with the canonical CHIP-0035 builders, sign with your wallet, an
 | Command | What it does |
 |---|---|
 | `digstore update [--check] [--yes]` | Update DigStore to the latest release |
-| `digstore compile [--metadata]` | Compile the active project to its self-serving `.dig` WASM module (used internally by the publish flow). |
+| `digstore compile [--metadata]` | Compile the active store to its self-serving `.dig` WASM module (used internally by the publish flow). |
 | `digstore completion <shell>` | Print a shell completion script (`bash`, `zsh`, `fish`, `powershell`, `elvish`). |
 
 ## Global flags
 
 | Flag | Effect |
 |---|---|
-| `--store <name>` (alias: `--project`) | Operate on a specific project (overrides the active project) |
+| `--store <name>` | Operate on a specific store (overrides the active store). `--project` is a hidden back-compat alias. |
 | `-C, --cwd <path>` | Operating directory for this command (overrides the content root) |
 | `--dig-dir <path>` | Workspace location |
 | `--json` | Machine-readable output |

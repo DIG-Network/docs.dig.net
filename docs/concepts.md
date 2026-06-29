@@ -46,8 +46,8 @@ vocabulary. Skim it to orient; follow a link to go deep.
 
 A **capsule** is one immutable store generation: the pair `(storeId, rootHash)`, written canonically
 as `storeId:rootHash`. It is the network's atomic unit — of compilation (one fixed-size WASM module),
-[pricing](./digstore/cli/onchain-anchoring.md) (a flat 100 $DIG to mint or commit), retrieval (a
-[URN](#urn) names one capsule), caching, and provenance. A [store](#store) is a *sequence of
+[pricing](./digstore/cli/onchain-anchoring.md) (a uniform per-capsule price to mint or commit, paid
+in $DIG), retrieval (a [URN](#urn) names one capsule), caching, and provenance. A [store](#store) is a *sequence of
 capsules*, one per commit. This definition is identical across DigStore, the dig RPC, and the DIG
 Browser. → [The capsule, in full](./intro.md#the-capsule)
 
@@ -97,8 +97,8 @@ authority for a store's latest root. → [On-chain anchoring](./digstore/cli/onc
 ## DIG payment {#dig-payment}
 
 **$DIG** is the DIG Network token (a Chia CAT). Minting a [capsule](#capsule) (`init`) or committing one
-costs a flat **$DIG fee**, included **atomically in the same on-chain spend** as the anchor — there is
-no separate transaction, and the memo carries the store id. → [Costs](./digstore/cli/onchain-anchoring.md#costs)
+costs a **uniform per-capsule price in $DIG**, included **atomically in the same on-chain spend** as the
+anchor — there is no separate transaction, and the memo carries the store id. → [Costs](./digstore/cli/onchain-anchoring.md#costs)
 
 ## DigStore CLI {#digstore-cli}
 
@@ -118,8 +118,8 @@ commit. → [Project config & build-time values](./digstore/cli/configuration.md
 `create-dig-app` (`npm create dig-app`) is the **JS front door** for starting a DIG project: it
 scaffolds a runnable starter — an app, a [`dig.toml`](#dig-toml), and (for the wallet templates) the
 [DIG SDK](#dig-sdk) wired in — from one of five templates (`static`, `vite-react`, `next-static`,
-`nft-drop`, `dapp-window-chia`). Scaffolding is **free** — no mint, no chain, no spend; you spend
-100 DIG only when you publish a [capsule](#capsule). It is the npm-side companion to the Rust CLI's
+`nft-drop`, `dapp-window-chia`). Scaffolding is **free** — no mint, no chain, no spend; you pay the
+uniform capsule price only when you publish a [capsule](#capsule). It is the npm-side companion to the Rust CLI's
 `digstore new`. → [Scaffold an app](./build-a-dapp/scaffold.md)
 
 ## The GitHub deploy Action {#deploy-action}

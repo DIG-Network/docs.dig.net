@@ -23,7 +23,7 @@ tags:
 
 Every store is a sequence of immutable capsules — one per commit. Each capsule compiles to one
 fixed-size WebAssembly module — content and the logic that serves it in a single binary — costs a
-flat 100 $DIG to mint or commit, and is retrieved and cached atomically. Keys derive from the URN, so
+uniform per-capsule price in $DIG to mint or commit, and is retrieved and cached atomically. Keys derive from the URN, so
 a host serves blind; every response can carry a zero-knowledge proof of execution. The developer
 workflow is Git — init, add, commit, push.
 

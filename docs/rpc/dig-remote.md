@@ -90,7 +90,7 @@ A `clone` is a sequence of authenticated reads of **public ciphertext** and meta
 
 Publishing a generation is an on-chain event with a fee, so where it lands depends on the origin:
 
-- **Push to DIGHUb (`rpc.dig.net`)** does **not** use the `PUT` route. DIGHUb anchors every generation on-chain and each generation pays an on-chain DIG fee; DIGHUb holds no keys, so the push goes through its authenticated, **wallet-signed `/v1` flow**, where you sign the on-chain spend. DIGHUb accepts only stores already **registered on-chain with the 100 DIG launch fee paid** — that registration is the launch gate.
+- **Push to DIGHUb (`rpc.dig.net`)** does **not** use the `PUT` route. DIGHUb anchors every generation on-chain and each generation pays an on-chain $DIG fee; DIGHUb holds no keys, so the push goes through its authenticated, **wallet-signed `/v1` flow**, where you sign the on-chain spend. DIGHUb accepts only stores already **registered on-chain with the capsule price in $DIG paid** — that registration is the launch gate.
 - **Push to a self-hosted node** uses `PUT /stores/{id}/module` directly: the node accepts the module on a valid store-key signature and advances (or stages) its head.
 
 In both cases the store-key signature over `SHA-256(root || store_id)` authorizes the write; only the on-chain settlement differs.
