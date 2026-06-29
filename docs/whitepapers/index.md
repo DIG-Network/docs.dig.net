@@ -18,8 +18,8 @@ tags:
 
 # Whitepapers
 
-:::warning Historical — the Protocol section is now authoritative
-These whitepapers are the **original design**. The protocol shipped and **drifted** from them. The [**Protocol section**](../protocol-deep-dive.md) — defined against the implementation, with `file:line` citations — is now the **source of truth**; every deviation is catalogued in [Drift from the whitepapers](../protocol/drift-from-whitepapers.md). Read these for history and intent; read the Protocol section for what the network actually does. They will be reconciled later.
+:::info For what the network does today, see the Protocol section
+These whitepapers are the **original design papers** — read them for the architecture, motivation, and intent. For the authoritative description of what the running network actually does, with `file:line` citations to the implementation, see the [**Protocol section**](../protocol-deep-dive.md).
 :::
 
 The full technical specifications behind DIG Network, in three parts. These are the deep,

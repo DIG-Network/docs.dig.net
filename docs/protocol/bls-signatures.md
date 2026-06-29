@@ -41,8 +41,8 @@ Every signing message **prepends a distinct role tag** so a signature for one ro
 - **request** binds the method (a read-auth signature cannot replay as a write), the timestamp (freshness), and the nonce (uniqueness) — the [§21.9 per-request auth](./transport-and-push.md#per-request-auth).
 - **attest** is byte-identical to the guest's `build_challenge` (`guest/attestation.rs:53-61`).
 
-:::caution GAP — `NODE_DST` collides byte-for-byte with the merkle `NODE_TAG`
-`NODE_DST = b"digstore:node:v1"` is the same bytes as the [merkle `NODE_TAG`](./merkle-proofs.md#domain-separation). It is **safe today** because the two are consumed in disjoint preimage shapes (a BLS node-attestation message vs a 65-byte merkle pair), but the reuse is a **latent footgun**. Catalogued in [Drift](./drift-from-whitepapers.md).
+:::note `NODE_DST` and the merkle `NODE_TAG` share the same bytes
+`NODE_DST = b"digstore:node:v1"` is the same byte string as the [merkle `NODE_TAG`](./merkle-proofs.md#domain-separation). The two are domain-distinct in practice because they are consumed in disjoint preimage shapes: a BLS node-attestation message versus a fixed 65-byte merkle pair.
 :::
 
 ## Attestation verify (guest)

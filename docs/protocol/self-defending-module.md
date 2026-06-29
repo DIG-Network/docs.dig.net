@@ -26,12 +26,8 @@ Every module's injected DIGS blob is padded to **exactly** `uniform_blob_len` (d
 
 Pipeline math (`pipeline.rs:106-136`): encode the blob with an **empty** Filler body → `blob_len_without_filler`; reject if it exceeds the budget (never truncate); `filler_len = budget − blob_len_without_filler`. **Filler (id 11, unreferenced) is the ONLY variable section** — it never touches leaves or `CurrentRoot`, so padding changes nothing served or proven.
 
-:::warning DRIFT — deterministic filler, not random
-Whitepaper §8.3 said "random filler." Filler bytes are **deterministic**: a ChaCha20 keystream with `seed = SHA-256(store_id || roothash || "digstore-filler-v1")`, key = seed, nonce = 12 zero bytes, positional (so a shorter request is a prefix of a longer one) — `filler.rs:7-28`. This is what makes compilation **byte-identical** (deviation #2). Catalogued in [Drift](./drift-from-whitepapers.md).
-:::
-
-:::caution GAP — the capsule-size number is stated three inconsistent ways
-`SYSTEM.md` says "100 MB", core `MAX_STORE_BYTES = 128_000_000` (128 MB ≈ 122.07 MiB), and `FIXED_BLOB_LEN = 128 MiB`. The 128 MiB budget gives ~6 MiB headroom over `MAX_STORE_BYTES`. The three figures should be reconciled. Catalogued in [Drift](./drift-from-whitepapers.md).
+:::note Deterministic filler
+Filler bytes are **deterministic**: a ChaCha20 keystream with `seed = SHA-256(store_id || roothash || "digstore-filler-v1")`, key = seed, nonce = 12 zero bytes, positional (so a shorter request is a prefix of a longer one) — `filler.rs:7-28`. Determinism is what makes compilation **byte-identical**.
 :::
 
 ## WASM injection & memory layout (BINDING D2)
@@ -57,8 +53,8 @@ opaque-true predicate
   else → an indistinguishable, success-shaped decoy
 ```
 
-:::warning DRIFT — the host-attestation gate is DISABLED by default
-Whitepaper §12.2 specified a host-attestation gate. It is **disabled** so that **any anonymous node can serve** public content and the **program hash stays network-stable** (per-node trusted keys would change it). The privacy decoy path is independent. Any gate failure **fails closed** → an indistinguishable success-shaped decoy (`content.rs:39-65,154-189`). Catalogued in [Drift](./drift-from-whitepapers.md).
+:::note The host-attestation gate is disabled by default
+The host-attestation gate is **disabled by default** so that **any anonymous node can serve** public content and the **program hash stays network-stable** (per-node trusted keys would change it). The privacy decoy path is independent. Any gate failure **fails closed** → an indistinguishable success-shaped decoy (`content.rs:39-65,154-189`).
 :::
 
 ### Oblivious gather
@@ -84,4 +80,3 @@ Compilation is **byte-identical**: deterministic filler, a pinned committed gues
 - [Merkle inclusion proofs](./merkle-proofs.md) — the proof the guest emits
 - [The dig RPC](./dig-rpc.md) — how a host runs the guest and streams the envelope
 - [The blind host model](./blind-host-model.md) — the bounded host runtime + decoys
-- [Drift from the whitepapers](./drift-from-whitepapers.md) — filler, attestation, size figures

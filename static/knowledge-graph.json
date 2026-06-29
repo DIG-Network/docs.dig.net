@@ -657,18 +657,6 @@
       ]
     },
     {
-      "id": "/docs/protocol/drift-from-whitepapers",
-      "type": "doc",
-      "title": "Drift from the whitepapers (appendix)",
-      "url": "https://docs.dig.net/docs/protocol/drift-from-whitepapers",
-      "tags": [
-        "whitepaper",
-        "capsule",
-        "dig-rpc",
-        "anchoring"
-      ]
-    },
-    {
       "id": "/docs/protocol/identity-and-naming",
       "type": "doc",
       "title": "L0 · Identity & naming",
@@ -777,8 +765,7 @@
         "dig-rpc",
         "chia-protocol",
         "merkle-proof",
-        "anchoring",
-        "whitepaper"
+        "anchoring"
       ]
     },
     {
@@ -2186,26 +2173,6 @@
       "type": "part-of"
     },
     {
-      "from": "/docs/protocol/drift-from-whitepapers",
-      "to": "concept:whitepaper",
-      "type": "part-of"
-    },
-    {
-      "from": "/docs/protocol/drift-from-whitepapers",
-      "to": "concept:capsule",
-      "type": "part-of"
-    },
-    {
-      "from": "/docs/protocol/drift-from-whitepapers",
-      "to": "concept:dig-rpc",
-      "type": "part-of"
-    },
-    {
-      "from": "/docs/protocol/drift-from-whitepapers",
-      "to": "concept:anchoring",
-      "type": "part-of"
-    },
-    {
       "from": "/docs/protocol/identity-and-naming",
       "to": "concept:capsule",
       "type": "part-of"
@@ -2403,11 +2370,6 @@
     {
       "from": "/docs/protocol-deep-dive",
       "to": "concept:anchoring",
-      "type": "part-of"
-    },
-    {
-      "from": "/docs/protocol-deep-dive",
-      "to": "concept:whitepaper",
       "type": "part-of"
     },
     {
@@ -3621,11 +3583,6 @@
       "type": "see-also"
     },
     {
-      "from": "/docs/protocol/blind-host-model",
-      "to": "/docs/protocol/drift-from-whitepapers",
-      "type": "see-also"
-    },
-    {
       "from": "/docs/protocol/bls-signatures",
       "to": "/docs/protocol/merkle-proofs",
       "type": "see-also"
@@ -3671,11 +3628,6 @@
       "type": "see-also"
     },
     {
-      "from": "/docs/protocol/capsule-format",
-      "to": "/docs/protocol/drift-from-whitepapers",
-      "type": "see-also"
-    },
-    {
       "from": "/docs/protocol/conformance-and-parity",
       "to": "/docs/protocol/cryptography",
       "type": "see-also"
@@ -3693,11 +3645,6 @@
     {
       "from": "/docs/protocol/conformance-and-parity",
       "to": "/docs/machine-surfaces",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/protocol/conformance-and-parity",
-      "to": "/docs/protocol/drift-from-whitepapers",
       "type": "see-also"
     },
     {
@@ -3721,11 +3668,6 @@
       "type": "see-also"
     },
     {
-      "from": "/docs/protocol/cryptography",
-      "to": "/docs/protocol/drift-from-whitepapers",
-      "type": "see-also"
-    },
-    {
       "from": "/docs/protocol/dig-cat-payment",
       "to": "/docs/protocol/on-chain-anchoring",
       "type": "see-also"
@@ -3738,11 +3680,6 @@
     {
       "from": "/docs/protocol/dig-cat-payment",
       "to": "/docs/support/error-codes",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/protocol/dig-cat-payment",
-      "to": "/docs/protocol/drift-from-whitepapers",
       "type": "see-also"
     },
     {
@@ -3776,21 +3713,6 @@
       "type": "see-also"
     },
     {
-      "from": "/docs/protocol/drift-from-whitepapers",
-      "to": "/docs/protocol-deep-dive",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/protocol/drift-from-whitepapers",
-      "to": "/docs/whitepapers",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/protocol/drift-from-whitepapers",
-      "to": "/docs/protocol/conformance-and-parity",
-      "type": "see-also"
-    },
-    {
       "from": "/docs/protocol/identity-and-naming",
       "to": "/docs/protocol-deep-dive",
       "type": "see-also"
@@ -3808,11 +3730,6 @@
     {
       "from": "/docs/protocol/identity-and-naming",
       "to": "/docs/concepts",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/protocol/identity-and-naming",
-      "to": "/docs/protocol/drift-from-whitepapers",
       "type": "see-also"
     },
     {
@@ -3841,11 +3758,6 @@
       "type": "see-also"
     },
     {
-      "from": "/docs/protocol/merkle-proofs",
-      "to": "/docs/protocol/drift-from-whitepapers",
-      "type": "see-also"
-    },
-    {
       "from": "/docs/protocol/on-chain-anchoring",
       "to": "/docs/protocol/identity-and-naming",
       "type": "see-also"
@@ -3863,11 +3775,6 @@
     {
       "from": "/docs/protocol/on-chain-anchoring",
       "to": "/docs/chip-0035-spends-and-delegation",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/protocol/on-chain-anchoring",
-      "to": "/docs/protocol/drift-from-whitepapers",
       "type": "see-also"
     },
     {
@@ -3896,11 +3803,6 @@
       "type": "see-also"
     },
     {
-      "from": "/docs/protocol/self-defending-module",
-      "to": "/docs/protocol/drift-from-whitepapers",
-      "type": "see-also"
-    },
-    {
       "from": "/docs/protocol/transport-and-push",
       "to": "/docs/protocol/dig-rpc",
       "type": "see-also"
@@ -3921,11 +3823,6 @@
       "type": "see-also"
     },
     {
-      "from": "/docs/protocol/transport-and-push",
-      "to": "/docs/protocol/drift-from-whitepapers",
-      "type": "see-also"
-    },
-    {
       "from": "/docs/protocol/urn-and-addressing",
       "to": "/docs/protocol/identity-and-naming",
       "type": "see-also"
@@ -3943,11 +3840,6 @@
     {
       "from": "/docs/protocol/urn-and-addressing",
       "to": "/docs/protocol/conformance-and-parity",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/protocol/urn-and-addressing",
-      "to": "/docs/protocol/drift-from-whitepapers",
       "type": "see-also"
     },
     {
@@ -3973,11 +3865,6 @@
     {
       "from": "/docs/protocol/verification-and-provenance",
       "to": "/docs/protocol/blind-host-model",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/protocol/verification-and-provenance",
-      "to": "/docs/protocol/drift-from-whitepapers",
       "type": "see-also"
     },
     {
@@ -4022,7 +3909,7 @@
     },
     {
       "from": "/docs/protocol-deep-dive",
-      "to": "/docs/protocol/drift-from-whitepapers",
+      "to": "/docs/protocol/conformance-and-parity",
       "type": "see-also"
     },
     {

@@ -136,9 +136,9 @@ const sidebars: SidebarsConfig = {
     },
     {
       // The pure, first-class protocol specification — SEVEN layers, bottom-up,
-      // with the implementation as the source of truth (supersedes the
-      // whitepapers). Each spec page names its canonical crate/file. The dig RPC
-      // + §21 transport are the protocol's machine interface and live here too.
+      // with the implementation as the source of truth. Each spec page names its
+      // canonical crate/file. The dig RPC + §21 transport are the protocol's
+      // machine interface and live here too.
       // The task-oriented format/RPC/CLI pages are kept under "Reference & guides"
       // so the dense cross-link web between docs stays intact.
       type: 'category',
@@ -162,7 +162,6 @@ const sidebars: SidebarsConfig = {
         'protocol/verification-and-provenance',
         'protocol/blind-host-model',
         'protocol/conformance-and-parity',
-        'protocol/drift-from-whitepapers',
         {
           type: 'category',
           label: 'Reference & guides',
@@ -189,7 +188,7 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: 'category',
-          label: 'Whitepapers (historical — being reconciled)',
+          label: 'Whitepapers',
           collapsible: true,
           collapsed: true,
           link: {type: 'doc', id: 'whitepapers/index'},

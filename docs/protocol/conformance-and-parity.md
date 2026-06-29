@@ -48,4 +48,3 @@ The two OpenRPC documents ([network](https://docs.dig.net/openrpc.json) + [node]
 - [URN & addressing](./urn-and-addressing.md) — the canonical form the vectors pin
 - [The dig RPC](./dig-rpc.md) — the OpenRPC documents
 - [Machine surfaces](../machine-surfaces.md) — every machine-readable artifact
-- [Drift from the whitepapers](./drift-from-whitepapers.md) — the deviation catalogue

@@ -32,8 +32,8 @@ resource-key= 1*pchar                  ; OPTIONAL path; taken verbatim (NOT lowe
 
 `Urn::canonical()` renders `urn:dig:{chain}:{store_id.hex}`, then optionally `:{root.hex}`, then optionally `/{resource_key}` (`urn.rs:63-74`). `Urn::parse` strips `urn:dig:`, splits the resource at the **first** `/`, splits the head on `:` into chain / store_id / optional root_hash, and rejects more than three head segments (`urn.rs:24-60`).
 
-:::note DRIFT/GAP — chain is `chia` by convention, generic in the parser
-Every *producer* writes the literal `chia` (`CHAIN = "chia"`, `lib.rs:68`), but the core *parser* is still chain-generic (its own tests use `mainnet`/`testnet`). Mainnet-only is enforced by producers, not the type. Catalogued in [Drift](./drift-from-whitepapers.md).
+:::note The chain label
+Every producer writes the literal `chia` (`CHAIN = "chia"`, `lib.rs:68`) — Chia mainnet is the chain. The canonical `Urn` type carries the chain label as a generic field; the `chia` value is set by every producer.
 :::
 
 ## The retrieval key — the only address on the wire
@@ -59,8 +59,8 @@ At commit, the per-resource URN is built with `root_hash: None` (`store.rs:172-1
 
 A **private** store mixes a 32-byte secret salt into the [HKDF salt](./cryptography.md#kdf). The salt is **out-of-band**: carried as a `?salt=<hex>` query parameter on the address, **not** inside the canonical URN string — so it never affects `retrieval_key`, only the AES key.
 
-:::caution DRIFT/GAP — salt is in every edge parser, absent from the core struct
-The salt param is parsed by the SDK, the extension, the wasm verifier, and the browser C++ — but the canonical core `Urn` struct has **no** salt field. It is an addressing extension layered above the canonical type. Catalogued in [Drift](./drift-from-whitepapers.md).
+:::note The salt is an addressing extension above the canonical URN
+The `?salt=<hex>` parameter is an addressing extension layered above the canonical `Urn` type, parsed at the edges (the SDK, the extension, the wasm verifier, and the browser C++). Because it lives outside the canonical URN string, it feeds only the AES key derivation and never the `retrieval_key`.
 :::
 
 ## The three-way scheme split (per SYSTEM.md)
@@ -83,4 +83,3 @@ The frozen cross-impl conformance vectors that pin `canonical()` + `retrieval_ke
 - [Cryptography](./cryptography.md) — the rootless URN as HKDF IKM
 - [§21 transport & push](./transport-and-push.md) — the `dig://` locator resolution
 - [Conformance & parity](./conformance-and-parity.md) — the URN conformance vectors
-- [Drift from the whitepapers](./drift-from-whitepapers.md) — chain-lock, salt-extension gaps

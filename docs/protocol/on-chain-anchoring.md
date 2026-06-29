@@ -26,14 +26,10 @@ tags:
 `store_id == launcher_id == the launcher coin id`. On-chain metadata is `DataStoreMetadata { root_hash, label?, description?, bytes?, size_proof? }`; the singleton inner state carries `owner_puzzle_hash` + a list of `DelegatedPuzzle`. Minted via `Launcher::new(lead_coin_id, 1).mint_datastore(ctx, metadata, owner_ph, delegated_puzzles)` (chia-sdk-driver).
 
 - **store mint** = a CHIP-0035 singleton launch. **FREE of $DIG** — mint is a singleton launch + an XCH network fee only.
-- **capsule / root-advance** = a singleton **update** + a DIG-CAT payment, concatenated and **co-signed atomically**.
+- **capsule / root-advance** = a singleton **update** + a DIG-CAT payment, concatenated and **co-signed atomically**. Pricing is per-capsule, dynamic, and USD-pegged — there is no protocol pricing constant; see [DIG CAT payment & pricing](./dig-cat-payment.md).
 
-:::warning DRIFT — pricing inverted vs the whitepaper
-The whitepaper charged at INIT. The implementation makes **mint free** and charges **per capsule** (commit), dynamically and USD-pegged — there is **no protocol pricing constant**. See [DIG CAT payment & pricing](./dig-cat-payment.md). Catalogued in [Drift](./drift-from-whitepapers.md).
-:::
-
-:::caution GAP — atomicity is a client-side convention
-That a root-advance was paid in $DIG is a **client-side bundling convention** (the commit bundle is built all-or-nothing) — there is **no on-chain enforcement** that a root-advance carried a DIG payment. Catalogued in [Drift](./drift-from-whitepapers.md).
+:::note Payment coupling is a client-side bundle
+That a root-advance carries a $DIG payment is a **client-side bundling convention**: the commit bundle (the root-advance singleton spend + the DIG-CAT payment) is built and co-signed all-or-nothing. The payment is settled off-chain (the hub/anchor-watcher reconciles a confirmed treasury payment), not enforced by the singleton puzzle.
 :::
 
 ## Owner-discovery hint (a cross-system byte contract)
@@ -77,4 +73,3 @@ The compiled module's [ChainState data section](./capsule-format.md#chainstate-1
 - [DIG CAT payment & pricing](./dig-cat-payment.md) — the per-capsule $DIG payment
 - [Verification & provenance](./verification-and-provenance.md) — anchored-root pinning
 - [CHIP-0035 store-coin spends & delegation](../chip-0035-spends-and-delegation.md) — the spend builder, in depth
-- [Drift from the whitepapers](./drift-from-whitepapers.md) — inverted pricing, deploy-token = writer-delegate
