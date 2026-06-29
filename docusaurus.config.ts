@@ -15,6 +15,7 @@ const config: Config = {
   projectName: "docs.dig.net",
 
   onBrokenLinks: "throw",
+  onBrokenAnchors: "throw",
   onBrokenMarkdownLinks: "warn",
 
   i18n: {

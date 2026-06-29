@@ -170,6 +170,14 @@ alternative for apps that already speak CHIP-0002. → [Using window.chia](./bro
 [capsules](#capsule) without the CLI — create a capsule, deploy a frontend, and view your stores in
 the browser. It is also the gated control plane that budgets expensive ZK execution-proof jobs.
 
+## dig-node {#dig-node}
+
+A **dig-node** is the network's content **server** — the supply side. It hosts [capsules](#capsule), keeps a
+local `.dig` cache, and speaks the [dig RPC](#dig-rpc) identically to `rpc.dig.net`. You do **not** need
+one to read DIG content (consumers fall back to `rpc.dig.net`); running one makes reads local-first and
+contributes serving capacity. The host is **blind** — it only ever relays ciphertext + proofs.
+→ [Run a node](./run-a-node/index.md)
+
 ## on.dig.net handle {#on-dig-net}
 
 An **on.dig.net handle** is an *optional, paid* human-friendly web address for a [store](#store):

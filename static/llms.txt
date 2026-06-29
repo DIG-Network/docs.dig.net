@@ -4,14 +4,24 @@
 
 The unifying concept is the **capsule**: one immutable store generation — the pair `(storeId, rootHash)`, written `storeId:rootHash`. It is the network's atomic unit of compilation (one fixed-size WASM module), pricing (a uniform per-capsule price in $DIG to mint or commit), retrieval (a URN names one capsule), caching, and provenance. A store is a sequence of capsules, one per commit. This definition is identical across DigStore, the dig RPC, and the DIG Browser.
 
-Audiences, simple to deep: (1) Hub users / frontend deployers, (2) integrating developers (CLI, RPC, window.chia), (3) protocol developers (whitepapers).
+The docs are organized in two top-level sections: **Using DIG** (one track per audience — each track's landing carries a 10-second "why" + the mental model, then the task-oriented how-to) and the **Protocol deep-dive** (the full normative design). Audiences: app developers, NFT developers, integration developers, node operators, content consumers, troubleshooting.
 
 ## Start here
 
-- [DIG Network overview](https://docs.dig.net/docs/): the primitives at a glance — DigStore, dig RPC, DIG Browser, and the capsule.
+- [DIG Network overview](https://docs.dig.net/docs/): the primitives at a glance and the audience-first paths.
 - [Quickstart](https://docs.dig.net/docs/quickstart): ship your first site — free to build and preview, you pay the uniform capsule price in $DIG only when you publish a capsule. Web-first path (connect a wallet only at the end) plus a parallel CLI track.
-- [Concepts & glossary](https://docs.dig.net/docs/concepts): every core entity defined once (capsule, store, generation, URN, retrieval key, the dig RPC, chia:// protocol, on-chain anchoring), each linked to its deep doc. The human-readable spine of the knowledge graph.
+- [Concepts & glossary](https://docs.dig.net/docs/concepts): every core entity defined once (capsule, store, generation, URN, retrieval key, the dig RPC, chia:// protocol, dig-node, on-chain anchoring), each linked to its deep doc. The human-readable spine of the knowledge graph.
+- [Protocol deep-dive](https://docs.dig.net/docs/protocol-deep-dive): the one idea (the capsule) through every layer — blind, verified, client-side — and how the three whitepapers fit. Most builders won't need this to ship.
 - [Tags index](https://docs.dig.net/docs/tags): the controlled vocabulary of entities, each tag listing every doc about it.
+
+## Using DIG — by audience (each landing = 10-sec why + mental model)
+
+- [For app developers](https://docs.dig.net/docs/audiences/app-developers): publish a site/app you own — build free, pay a uniform $DIG price per published capsule; two front doors (DIGHUb web + the digstore CLI/CI).
+- [For NFT developers](https://docs.dig.net/docs/audiences/nft-developers): mint CHIP-0007 collections whose art lives in a tamper-evident capsule; spends built by the canonical CHIP-0035 wasm, never hand-rolled.
+- [For integration developers](https://docs.dig.net/docs/audiences/integration-developers): a fully machine-readable platform + a typed @dignetwork/dig-sdk; two surfaces (the hub /v1 REST control plane and the dig JSON-RPC read path).
+- [For node operators](https://docs.dig.net/docs/run-a-node/): serve content provably and provider-blind; the blind host only ever touches ciphertext keyed by hashes.
+- [For content consumers](https://docs.dig.net/docs/audiences/content-consumers): open chia:// content your own browser verifies against the chain; latest vs pinned; public vs private (?salt=).
+- [Troubleshooting](https://docs.dig.net/docs/audiences/troubleshooting): find your failure by its stable code; pre-flight guards (doctor, --dry-run, --if-changed) stop wasted capsules.
 
 ## Core concepts
 
@@ -57,14 +67,27 @@ Audiences, simple to deep: (1) Hub users / frontend deployers, (2) integrating d
 - [The chia:// protocol](https://docs.dig.net/docs/browser/chia-protocol): the browser's native content-address scheme — the typeable front end of the urn:dig: URN; addressing forms and the shared parser grammar.
 - [Using window.chia](https://docs.dig.net/docs/browser/using-window-chia): the injected CHIP-0002 wallet provider — detect, connect (per-origin), and call key/signing methods; a drop-in WalletConnect alternative.
 
+## SDK, spends & machine surfaces (integration developers)
+
+- [The DIG SDK](https://docs.dig.net/docs/sdk): @dignetwork/dig-sdk — ChiaProvider (injected window.chia + WalletConnect→Sage), DigClient (verified reads), Paywall (pay-to-unlock / NFT-or-collection gating), capabilities(), and the canonical CHIP-0035 spends at the /spend subpath.
+- [Building spends](https://docs.dig.net/docs/spends): the build (wasm) → sign (wallet) → broadcast split; never hand-roll a spend bundle; delegation is built the same way.
+- [Machine-readable surfaces](https://docs.dig.net/docs/machine-surfaces): /openrpc.json, /error-codes.json, /llms.txt, /knowledge-graph.json, /sitemap.xml, per-page schema.org JSON-LD, the hub /v1 OpenAPI + JWKS + live pricing, and the CLI/SDK discovery affordances.
+
 ## Run a node (operators / deployers)
 
 - [Run a DIG node](https://docs.dig.net/docs/run-a-node/): what a dig-node is — the headless content SERVER (serve side) that exposes the dig RPC and shares the local .dig cache; serving vs. consuming (the browser/extension consume from a local dig-node when present, else rpc.dig.net); all install paths. Pre-release.
 - [Install on Ubuntu/Debian (apt)](https://docs.dig.net/docs/run-a-node/apt): the Debian-native path — add the apt.dig.net signing key + source, apt install dig-node digstore, then systemctl enable --now dig-node (systemd service) and status/journalctl. Cross-references the cross-platform universal installer (curl|sh) and the DIG Browser. Pre-release (apt.dig.net being provisioned).
+- [Install anywhere — the universal installer](https://docs.dig.net/docs/run-a-node/universal-installer): the cross-platform curl|sh installer (Windows service / systemd / launchd) + the digstore CLI; registers dig.local for same-host consumers. Pre-release.
+- [Point a consumer at your node](https://docs.dig.net/docs/run-a-node/point-a-consumer): make the DIG Browser/extension read local-first (dig.local→localhost, else rpc.dig.net) and share one .dig cache; every byte is still verified client-side.
+- [Configure dig-node](https://docs.dig.net/docs/run-a-node/configure): listeners/ports, the cache cap, and the upstream the node blind-fetches from, via config + DIGNODE_* env vars.
+- [Manage your node](https://docs.dig.net/docs/run-a-node/manage): the control.* admin RPCs (status, cache, peers/upstream) and the DIG Browser My Node UI that drives them — distinct from the public read RPC.
 
-## Protocol specs (protocol developers)
+## Protocol deep-dive (protocol developers)
 
+- [Protocol deep-dive overview](https://docs.dig.net/docs/protocol-deep-dive): the capsule as the one idea through everything; blind + verified + client-side; how the three whitepapers fit.
 - [The window.chia provider spec](https://docs.dig.net/docs/protocol/window-chia-provider): the normative, versioned specification of the window.chia provider — the provider object shape, the EIP-1193-style request/connect contract, every CHIP-0002 method (params/returns/error codes), the connect/202-pending contract, capability/version feature-detection, and EIP-6963-style multi-provider (announce/request) discovery. DIG Browser is the reference implementation; @dignetwork/dig-sdk's ChiaProvider is the recommended consumer. Normative vs. proposed surface is marked inline.
+- [Inclusion vs execution proofs](https://docs.dig.net/docs/inclusion-vs-execution-proofs): synchronous per-read Merkle inclusion proofs (pin served bytes to the on-chain root) vs asynchronous ZK/risc0 execution receipts (attest faithful serving, gated/budgeted on the hub control plane).
+- [CHIP-0035 store-coin spends & delegation](https://docs.dig.net/docs/chip-0035-spends-and-delegation): a store is a CHIP-0035 DataLayer singleton; the canonical wasm builds every store-coin spend; admin/writer/oracle delegation is the on-chain primitive behind Teams and revocable CI deploy tokens (a deploy token = a revocable writer key).
 
 ## Whitepapers (protocol developers)
 
