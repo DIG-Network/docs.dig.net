@@ -59,6 +59,8 @@ The canonical server implements (`bootstrap.rs:453-461`):
 | `dig.getManifest` | the public discovery manifest resource |
 | `dig.getMetadata` | the plaintext metadata manifest (no proof, never encrypted) |
 | `dig.listCapsules` | the confirmed capsule list (discovery metadata) |
+| `dig.listCollectionItems` | an NFT collection's items resolved to their current on-chain owner + royalty + CHIP-0007 metadata (paginated) |
+| `dig.getCollection` | collection-level facts (creator DID, item count, uniform royalty) for a set of NFT launcher ids |
 | `dig.health`, `dig.methods` | service / capability discovery (authoritative for agent self-describe) |
 
 Unknown method → `-32601`.
