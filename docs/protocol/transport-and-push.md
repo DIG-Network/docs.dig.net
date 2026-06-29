@@ -18,7 +18,7 @@ tags:
 
 # Layer 5 · §21 transport & push
 
-> **Canonical reference:** `digstore-remote` (axum server + reqwest `DigClient`) and its crypto/codec in `digstore-core` / `digstore-crypto`. This is the **transport** half of the [scheme split](./urn-and-addressing.md#the-three-way-scheme-split-per-systemmd): `chia://` = content addressing; `dig://` here = the §21 transport locator. **Browser/agent reads use the [POST JSON-RPC](./dig-rpc.md); CLI/peer sync + publishing use these authenticated REST routes.**
+> **Canonical reference:** `digstore-remote` (axum server + reqwest `DigClient`) and its crypto/codec in `digstore-core` / `digstore-crypto`. This is the **transport** half of the [scheme split](./urn-and-addressing.md#the-three-way-scheme-split): `chia://` = content addressing; `dig://` here = the §21 transport locator. **Browser/agent reads use the [POST JSON-RPC](./dig-rpc.md); CLI/peer sync + publishing use these authenticated REST routes.**
 
 ## The `dig://` transport locator
 

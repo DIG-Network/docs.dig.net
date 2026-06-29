@@ -60,7 +60,7 @@ One concept runs through every layer: the **[capsule](./concepts.md#capsule)** =
 
 A publisher **chunks + encrypts** (L1) content into a **capsule format** (L2) that **self-serves** (L3), **anchors** it on-chain (L4), and **pushes** it over §21 transport (L5). Any client **reads** it through the dig RPC and **verifies** it against the chain-anchored root entirely client-side (L6). Every cryptographic constant has **one** definition shared across producer, host, and verifier — the [C8 parity invariant](./protocol/conformance-and-parity.md).
 
-## Terminology (per SYSTEM.md)
+## Terminology
 
 - **`chia://`** — the network **content** address (what a browser opens).
 - **`dig://`** — the §21 **transport** locator (CLI/peer plane) *and* the DIG Browser's internal page scheme — two distinct uses, never the content address.

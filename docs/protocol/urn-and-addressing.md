@@ -63,7 +63,7 @@ A **private** store mixes a 32-byte secret salt into the [HKDF salt](./cryptogra
 The `?salt=<hex>` parameter is an addressing extension layered above the canonical `Urn` type, parsed at the edges (the SDK, the extension, the wasm verifier, and the browser C++). Because it lives outside the canonical URN string, it feeds only the AES key derivation and never the `retrieval_key`.
 :::
 
-## The three-way scheme split (per SYSTEM.md)
+## The three-way scheme split
 
 | Scheme | Role | Form | Used by |
 |---|---|---|---|
