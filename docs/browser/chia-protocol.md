@@ -45,6 +45,7 @@ A few addresses are special, handled by the browser itself:
 | `chia://home` | The DIG Browser home page (also the new-tab page). |
 | `chia://wallet` | The browser's built-in Chia wallet. |
 | `chia://settings` | DIG settings (local cache, etc.) — a deprecated alias the browser rewrites to `chrome://settings/dig`. |
+| `dig://control` | The **Control Pane** — opened from the dedicated Control Pane button in the toolbar (next to the wallet + shields buttons). It opens full-page in the active tab and manages your local DIG node: if a node is running it shows the management view, otherwise it shows how to install one. Browsing never needs a node. |
 
 Everything else after `chia://` is a **store id** — that is the difference between a special page and on-chain content.
 
