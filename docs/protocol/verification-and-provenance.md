@@ -37,9 +37,9 @@ The [content key](./cryptography.md#kdf) decrypts each chunk; a tag failure (tam
 
 The **chain**, not the serving origin, is the authority for a store's latest authorized root. Resolution **never** trusts the rpc-served "latest".
 
-- `dig.getAnchoredRoot` (`dig-node/src/lib.rs:721-743`) walks the CHIP-0035 DataStore singleton lineage on **coinset.org** via `sync_datastore` and returns `metadata.root_hash` — the trusted root a browser pins a **rootless** `chia://` URN against.
-- CLI clone/pull additionally requires the served root to equal the singleton's current on-chain root, read via the launcher id in the module's [ChainState section](./capsule-format.md#chainstate-12--the-on-chain-anchor-pointer); it **fails closed** on mismatch OR an unreachable chain (never a silent fallback).
-- Caveat: a module with **no** embedded ChainState makes the chain-root gate a no-op — the [authenticated head](./transport-and-push.md#authenticated-head) signature is then the only authority.
+- `dig.getAnchoredRoot` (`dig-node/src/lib.rs`) walks the CHIP-0035 DataStore singleton lineage on **coinset.org** via `sync_datastore` and returns `metadata.root_hash` — the trusted root for pinning.
+- **Mandatory + uniform pinning on the read path.** Every `dig.getContent` resolves the store's on-chain root and serves the matching generation **or fails closed** with [`-32005`](../support/error-codes.md) — before serving from a local cached module, a §21 whole-store sync, a cached window, or an upstream proxy. A **rootless** request resolves to the chain tip; an **explicit** `root` must equal the on-chain root; an unreachable chain or a store with no confirmed generation fails closed (never a silent fallback). This is uniform with CLI clone/pull, which likewise requires the served root to equal the singleton's current on-chain root and fails closed on mismatch or an unreachable chain. Because the gate resolves the root from the **live chain** (not the module's self-claimed [ChainState](./capsule-format.md#chainstate-12--the-on-chain-anchor-pointer)), a module that embeds no ChainState can never be served as the current generation — there is no silent downgrade to a no-op.
+- A node intended for offline/local development may set `DIG_NODE_PIN=off` to relax the node-side gate; clients (browser/SDK) still verify the inclusion proof against their own chain-anchored trust root, so the chain remains the authority end-to-end.
 
 ### Gate 4 — risc0 execution proofs (wired, mock backend by default)
 
