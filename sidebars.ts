@@ -50,6 +50,7 @@ const sidebars: SidebarsConfig = {
             'digstore/cli/configuration',
             'digstore/cli/onchain-anchoring',
             'digstore/cli/sharing',
+            'build-a-dapp/tip-your-store',
             'digstore/cli/deploy-from-github-actions',
           ],
         },
