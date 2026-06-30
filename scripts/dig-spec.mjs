@@ -395,6 +395,7 @@ export const rpcErrors = {
   INVALID_PARAMS: { code: -32602, message: 'Invalid params', meaning: 'Missing/malformed store_id, root, or retrieval_key; or "latest" on a store with no confirmed generation.' },
   INTERNAL_ERROR: { code: -32603, message: 'Internal error', meaning: 'The node failed to satisfy a well-formed call.' },
   RESOURCE_UNAVAILABLE: { code: -32004, message: 'Resource not available at the requested root', meaning: 'A genuine infrastructure miss (no host seed, module absent in both buckets, bad magic, oversize, a wasmtime trap, or an undecodable envelope) — distinct from a content miss, which is an indistinguishable decoy with no error.' },
+  ROOT_NOT_ANCHORED: { code: -32005, message: 'Root not chain-anchored', meaning: 'The requested or served generation is not the store’s current on-chain root. A content read is pinned to the CHIP-0035 singleton’s on-chain root (resolved live from the chain, never trusted from the serving node): a requested root that is not the on-chain root, an unreachable chain, or a store with no confirmed generation fails closed with this code rather than serving an unverified generation. Omit root to take the chain tip.' },
 };
 
 /* ------------------------------------------------------------------ *

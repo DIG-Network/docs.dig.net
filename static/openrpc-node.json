@@ -423,6 +423,13 @@
         "data": {
           "type": "object"
         }
+      },
+      "ROOT_NOT_ANCHORED": {
+        "code": -32005,
+        "message": "Root not chain-anchored",
+        "data": {
+          "type": "object"
+        }
       }
     }
   },
