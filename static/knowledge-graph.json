@@ -988,6 +988,16 @@
       ]
     },
     {
+      "id": "/docs/run-a-node/run-a-relay",
+      "type": "doc",
+      "title": "Run a relay",
+      "url": "https://docs.dig.net/docs/run-a-node/run-a-relay",
+      "tags": [
+        "dig-node",
+        "relay"
+      ]
+    },
+    {
       "id": "/docs/run-a-node/universal-installer",
       "type": "doc",
       "title": "Install anywhere — the universal installer",
@@ -4254,6 +4264,11 @@
     },
     {
       "from": "/docs/run-a-node/configure",
+      "to": "/docs/run-a-node/run-a-relay",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/configure",
       "to": "/docs/run-a-node/manage",
       "type": "see-also"
     },
@@ -4330,6 +4345,21 @@
     {
       "from": "/docs/run-a-node/point-a-consumer",
       "to": "/docs/run-a-node/manage",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/run-a-relay",
+      "to": "/docs/run-a-node/configure",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/run-a-relay",
+      "to": "/docs/run-a-node/universal-installer",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/run-a-relay",
+      "to": "/docs/run-a-node",
       "type": "see-also"
     },
     {
