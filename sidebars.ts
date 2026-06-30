@@ -42,6 +42,8 @@ const sidebars: SidebarsConfig = {
           collapsed: true,
           link: {type: 'doc', id: 'audiences/app-developers'},
           items: [
+            'journeys/hub-user',
+            'journeys/digstore-cli',
             'quickstart',
             'digstore/cli/install',
             'digstore/cli/quickstart',
@@ -52,6 +54,8 @@ const sidebars: SidebarsConfig = {
             'digstore/cli/sharing',
             'build-a-dapp/tip-your-store',
             'digstore/cli/deploy-from-github-actions',
+            'automation/deploy-keys',
+            'automation/webhooks',
           ],
         },
         {
@@ -74,6 +78,7 @@ const sidebars: SidebarsConfig = {
           collapsed: true,
           link: {type: 'doc', id: 'audiences/integration-developers'},
           items: [
+            'journeys/integrate',
             'build-a-dapp/tutorial',
             'build-a-dapp/example-gallery',
             'sdk',
@@ -86,6 +91,8 @@ const sidebars: SidebarsConfig = {
             'spends',
             'machine-surfaces',
             'digstore/cli/deploy-from-github-actions',
+            'automation/deploy-keys',
+            'automation/webhooks',
             'support/error-codes',
           ],
         },
