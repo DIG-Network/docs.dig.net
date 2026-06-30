@@ -28,9 +28,16 @@ The `control.*` namespace exposes operator actions that are **not** part of the 
 
 These are admin-scoped: a remote reader hitting the public dig RPC can never call them.
 
-## The DIG Browser My Node UI
+## The DIG Browser Control Pane
 
-The DIG Browser ships a **My Node** view that controls a local dig-node over the `control.*` RPCs — see its status, watch the shared cache, and manage the service without the command line. → [Point a consumer at your node](./point-a-consumer.md)
+The DIG Browser ships a **Control Pane** that manages your local dig-node over the `control.*` RPCs — see its status, watch the shared cache, manage hosted stores and sync, all without the command line.
+
+Open it from the **Control Pane button in the toolbar** (next to the wallet and shields buttons). It opens full-page in the active tab and behaves honestly:
+
+- **If a node is running** (at `dig.local` or `localhost`) → it shows the **management view** driven by the `control.*` admin RPCs.
+- **If no node is found** → it shows a short page on how to **install a dig-node**. You can still browse normally — reads fall back to the network — a node is only needed for the management view.
+
+→ [Point a consumer at your node](./point-a-consumer.md)
 
 ## Related
 

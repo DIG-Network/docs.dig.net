@@ -69,7 +69,7 @@ The `?salt=<hex>` parameter is an addressing extension layered above the canonic
 |---|---|---|---|
 | `chia://` | network **content** address | `chia://[<root>.]<store>/<resource>` (raw hex labels) | DIG Browser address bar; content loader |
 | `dig://` | §21 **transport** locator | `dig://[<user>@]<host>/<store>` → `https://<host>/stores/<id>` | `digstore` CLI clone/pull/push ([§21 transport](./transport-and-push.md)) |
-| `dig://*` | DIG Browser **internal** pages | `dig://home`, `dig://shields`, … | the browser UI only |
+| `dig://*` | DIG Browser **internal** pages | `dig://home`, `dig://shields`, `dig://control`, … | the browser UI only |
 
 These are distinct: `chia://` addresses content, the §21 `dig://` names a remote origin, and the browser's `dig://*` names internal pages. All three resolve through the same `urn:dig:` namespace.
 
