@@ -236,6 +236,33 @@
       ]
     },
     {
+      "id": "/docs/automation/deploy-keys",
+      "type": "doc",
+      "title": "Deploy keys",
+      "url": "https://docs.dig.net/docs/automation/deploy-keys",
+      "tags": [
+        "dighub",
+        "deploy-action",
+        "digstore-cli",
+        "chip-0035",
+        "store",
+        "anchoring"
+      ]
+    },
+    {
+      "id": "/docs/automation/webhooks",
+      "type": "doc",
+      "title": "Webhooks",
+      "url": "https://docs.dig.net/docs/automation/webhooks",
+      "tags": [
+        "dighub",
+        "deploy-action",
+        "store",
+        "capsule",
+        "anchoring"
+      ]
+    },
+    {
       "id": "/docs/browser/chia-protocol",
       "type": "doc",
       "title": "The chia:// protocol & URN scheme",
@@ -288,6 +315,18 @@
         "window-chia",
         "capsule",
         "dig-payment"
+      ]
+    },
+    {
+      "id": "/docs/build-a-dapp/tip-your-store",
+      "type": "doc",
+      "title": "Get tipped for your store",
+      "url": "https://docs.dig.net/docs/build-a-dapp/tip-your-store",
+      "tags": [
+        "dighub",
+        "dig-payment",
+        "store",
+        "capsule"
       ]
     },
     {
@@ -558,6 +597,46 @@
         "digstore-cli",
         "dighub",
         "browser"
+      ]
+    },
+    {
+      "id": "/docs/journeys/digstore-cli",
+      "type": "doc",
+      "title": "How do I… use the digstore CLI?",
+      "url": "https://docs.dig.net/docs/journeys/digstore-cli",
+      "tags": [
+        "digstore-cli",
+        "store",
+        "capsule",
+        "anchoring",
+        "dig-payment",
+        "urn"
+      ]
+    },
+    {
+      "id": "/docs/journeys/hub-user",
+      "type": "doc",
+      "title": "How do I… use DIGHUb?",
+      "url": "https://docs.dig.net/docs/journeys/hub-user",
+      "tags": [
+        "dighub",
+        "store",
+        "capsule",
+        "dig-payment",
+        "anchoring"
+      ]
+    },
+    {
+      "id": "/docs/journeys/integrate",
+      "type": "doc",
+      "title": "How do I… integrate DIG into my app?",
+      "url": "https://docs.dig.net/docs/journeys/integrate",
+      "tags": [
+        "dig-sdk",
+        "dig-rpc",
+        "window-chia",
+        "chip-0035",
+        "deploy-action"
       ]
     },
     {
@@ -1308,6 +1387,61 @@
       "type": "part-of"
     },
     {
+      "from": "/docs/automation/deploy-keys",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/automation/deploy-keys",
+      "to": "concept:deploy-action",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/automation/deploy-keys",
+      "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/automation/deploy-keys",
+      "to": "concept:chip-0035",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/automation/deploy-keys",
+      "to": "concept:store",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/automation/deploy-keys",
+      "to": "concept:anchoring",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/automation/webhooks",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/automation/webhooks",
+      "to": "concept:deploy-action",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/automation/webhooks",
+      "to": "concept:store",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/automation/webhooks",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/automation/webhooks",
+      "to": "concept:anchoring",
+      "type": "part-of"
+    },
+    {
       "from": "/docs/browser/chia-protocol",
       "to": "concept:chia-protocol",
       "type": "part-of"
@@ -1420,6 +1554,26 @@
     {
       "from": "/docs/build-a-dapp/scaffold",
       "to": "concept:dig-payment",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/tip-your-store",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/tip-your-store",
+      "to": "concept:dig-payment",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/tip-your-store",
+      "to": "concept:store",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/tip-your-store",
+      "to": "concept:capsule",
       "type": "part-of"
     },
     {
@@ -2010,6 +2164,86 @@
     {
       "from": "/docs",
       "to": "concept:browser",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/journeys/digstore-cli",
+      "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/journeys/digstore-cli",
+      "to": "concept:store",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/journeys/digstore-cli",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/journeys/digstore-cli",
+      "to": "concept:anchoring",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/journeys/digstore-cli",
+      "to": "concept:dig-payment",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/journeys/digstore-cli",
+      "to": "concept:urn",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/journeys/hub-user",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/journeys/hub-user",
+      "to": "concept:store",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/journeys/hub-user",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/journeys/hub-user",
+      "to": "concept:dig-payment",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/journeys/hub-user",
+      "to": "concept:anchoring",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/journeys/integrate",
+      "to": "concept:dig-sdk",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/journeys/integrate",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/journeys/integrate",
+      "to": "concept:window-chia",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/journeys/integrate",
+      "to": "concept:chip-0035",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/journeys/integrate",
+      "to": "concept:deploy-action",
       "type": "part-of"
     },
     {
@@ -2826,6 +3060,41 @@
       "from": "/docs/whitepapers",
       "to": "concept:store",
       "type": "part-of"
+    },
+    {
+      "from": "/docs/automation/deploy-keys",
+      "to": "/docs/digstore/cli/deploy-from-github-actions",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/automation/deploy-keys",
+      "to": "/docs/automation/webhooks",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/automation/deploy-keys",
+      "to": "/docs/digstore/cli/command-reference",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/automation/deploy-keys",
+      "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/automation/webhooks",
+      "to": "/docs/automation/deploy-keys",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/automation/webhooks",
+      "to": "/docs/digstore/cli/deploy-from-github-actions",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/automation/webhooks",
+      "to": "/docs/concepts",
+      "type": "see-also"
     },
     {
       "from": "/docs/browser/chia-protocol",
