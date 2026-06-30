@@ -108,6 +108,7 @@ const sidebars: SidebarsConfig = {
             'run-a-node/universal-installer',
             'run-a-node/point-a-consumer',
             'run-a-node/configure',
+            'run-a-node/run-a-relay',
             'rpc/dig-remote',
             'rpc/conformance',
             'run-a-node/manage',
