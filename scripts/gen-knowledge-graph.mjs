@@ -48,7 +48,6 @@ const CONCEPT_TITLES = {
   'chip-0002': 'CHIP-0002',
   'chip-0035': 'CHIP-0035',
   dighub: 'DIGHUb',
-  whitepaper: 'Whitepapers',
 };
 
 /** Recursively collect .md files under docs/. */
@@ -66,7 +65,7 @@ function walk(dir) {
 function docUrlPath(absFile, frontMatter) {
   if (frontMatter.slug === '/') return '/docs';
   let rel = path.relative(DOCS, absFile).replace(/\\/g, '/').replace(/\.md$/, '');
-  rel = rel.replace(/\/index$/, ''); // whitepapers/index -> whitepapers
+  rel = rel.replace(/\/index$/, ''); // run-a-node/index -> run-a-node
   return `/docs/${rel}`;
 }
 

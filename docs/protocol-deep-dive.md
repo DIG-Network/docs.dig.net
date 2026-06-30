@@ -22,7 +22,7 @@ tags:
 This is the **normative specification** of the DIG Protocol, defined as **seven layers, bottom-up**. Each layer names its **canonical crate/file** as the normative reference.
 
 :::info This is the authoritative protocol reference
-This section is the source of truth for what the network does. It documents the protocol as it actually runs, with `file:line` citations to the canonical implementation. Where this section and a [whitepaper](./whitepapers/index.md) differ, **this section is authoritative**.
+This section is the source of truth for what the network does. It documents the protocol as it actually runs, with `file:line` citations to the canonical implementation.
 :::
 
 ## The fundamental unit: the capsule
@@ -74,4 +74,3 @@ A publisher **chunks + encrypts** (L1) content into a **capsule format** (L2) th
 - [Identity & naming](./protocol/identity-and-naming.md) — Layer 0, where the spec begins
 - [The dig RPC](./protocol/dig-rpc.md) — the protocol's machine interface
 - [Conformance & parity](./protocol/conformance-and-parity.md) — the cross-impl parity discipline
-- [Whitepapers](./whitepapers/index.md) — the original design papers
