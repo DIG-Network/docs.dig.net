@@ -9,7 +9,7 @@ import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
  *                         high-signal task-oriented how-to (linking the existing
  *                         CLI/SDK/RPC pages). This replaces the old "Documentation".
  *   3. Protocol deep-dive — the full normative design (the format/* internals, the
- *                         RPC/protocol specs, CHIP-0035, and the three whitepapers),
+ *                         RPC/protocol specs, and CHIP-0035),
  *                         collapsed by default. Replaces the old "DigStore" + Protocol
  *                         + RPC-internals groups. "Support" folds into the
  *                         Troubleshooting audience in Section 2.
@@ -192,18 +192,6 @@ const sidebars: SidebarsConfig = {
             'rpc/dig-remote',
             'protocol/window-chia-provider',
             'chip-0035-spends-and-delegation',
-          ],
-        },
-        {
-          type: 'category',
-          label: 'Whitepapers',
-          collapsible: true,
-          collapsed: true,
-          link: {type: 'doc', id: 'whitepapers/index'},
-          items: [
-            'whitepapers/consensus',
-            'whitepapers/dfsp',
-            'whitepapers/digstore',
           ],
         },
       ],

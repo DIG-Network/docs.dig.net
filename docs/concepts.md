@@ -32,7 +32,6 @@ tags:
   - dig-payment
   - merkle-proof
   - chip-0035
-  - whitepaper
 ---
 
 # Concepts & glossary
@@ -188,12 +187,6 @@ the store is already readable over the [dig RPC](#dig-rpc) by its [URN](#urn) / 
 whether or not a handle exists. (Account handles and store slugs are separate namespaces and do not
 auto-expose a subdomain.) → [Can I get a `*.on.dig.net` address?](./support/faq.md#can-i-use-my-own-domain)
 
-## Whitepapers {#whitepaper}
-
-The three normative specifications behind the network — **Consensus**, **DFSP**, and **Digstore** —
-for protocol developers who want the full design. Most builders won't need them to ship.
-→ [Whitepapers](./whitepapers/index.md)
-
 ## Related
 
 - [DIG Network overview](./intro.md) — the primitives at a glance
@@ -203,7 +196,6 @@ for protocol developers who want the full design. Most builders won't need them 
 - [What is the dig RPC?](./rpc/what-is-the-dig-rpc.md) — the network read path
 - [The chia:// protocol](./browser/chia-protocol.md) — addressing content in the browser
 - [Get help](./support/get-help.md) — community channels and how to report
-- [Whitepapers](./whitepapers/index.md) — the full protocol specifications
 
 ## For agents & LLMs
 

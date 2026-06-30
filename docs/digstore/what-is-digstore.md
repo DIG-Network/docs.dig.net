@@ -46,7 +46,7 @@ Unlike Git, DigStore is built for **build output**, not repository source. You p
 If you just want to try it, jump straight to the **[Quickstart](../quickstart.md)** (the free, web-first path) or the **[CLI tutorial](./cli/quickstart.md)**.
 
 :::note
-DigStore is part of the [DIG Network](https://dig.net). The full technical design lives in the [DigStore whitepaper](../whitepapers/digstore.md), *The Content-Addressable WASM Store Format*.
+DigStore is part of the [DIG Network](https://dig.net). The full technical design lives in the [Protocol section](../protocol-deep-dive.md) — the content-addressable WASM store format.
 :::
 
 ## Related

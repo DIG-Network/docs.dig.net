@@ -4,7 +4,7 @@
 
 The unifying concept is the **capsule**: one immutable store generation — the pair `(storeId, rootHash)`, written `storeId:rootHash`. It is the network's atomic unit of compilation (one fixed-size WASM module), pricing (a uniform per-capsule price in $DIG to mint or commit), retrieval (a URN names one capsule), caching, and provenance. A store is a sequence of capsules, one per commit. This definition is identical across DigStore, the dig RPC, and the DIG Browser.
 
-The docs are organized in two top-level sections: **Using DIG** (one track per audience — each track's landing carries a 10-second "why" + the mental model, then the task-oriented how-to) and the **Protocol** spec (a pure, first-class specification defined as seven bottom-up layers, with the IMPLEMENTATION as the source of truth — it supersedes the whitepapers, which are being reconciled to it). Audiences: app developers, NFT developers, integration developers, node operators, content consumers, troubleshooting.
+The docs are organized in two top-level sections: **Using DIG** (one track per audience — each track's landing carries a 10-second "why" + the mental model, then the task-oriented how-to) and the **Protocol** spec (a pure, first-class specification defined as seven bottom-up layers, with the IMPLEMENTATION as the source of truth). Audiences: app developers, NFT developers, integration developers, node operators, content consumers, troubleshooting.
 
 ## Start here
 
@@ -105,13 +105,6 @@ The protocol is specified as SEVEN bottom-up layers, each naming its canonical c
 - [Inclusion vs execution proofs](https://docs.dig.net/docs/inclusion-vs-execution-proofs): synchronous per-read Merkle inclusion proofs (pin served bytes to the on-chain root) vs asynchronous ZK/risc0 execution receipts (attest faithful serving, gated/budgeted on the hub control plane).
 - [CHIP-0035 store-coin spends & delegation](https://docs.dig.net/docs/chip-0035-spends-and-delegation): a store is a CHIP-0035 DataLayer singleton; the canonical wasm builds every store-coin spend; admin/writer/oracle delegation is the on-chain primitive behind Teams and revocable CI deploy tokens (a deploy token = a revocable writer key).
 
-## Whitepapers (protocol developers)
-
-- [Whitepapers index](https://docs.dig.net/docs/whitepapers/): the three normative specifications.
-- [Part 1 · Consensus](https://docs.dig.net/docs/whitepapers/consensus): a Proof-of-Stake Layer 2 on Chia — Groth16 + BLS finality, five CLVM puzzles, the validator lifecycle. PDF: https://docs.dig.net/whitepapers/DIG-Network-Part1-Consensus.pdf
-- [Part 2 · DFSP](https://docs.dig.net/docs/whitepapers/dfsp): the Decentralized File Storage Protocol — availability-audited capsule hosting, full replication, paid to serve. PDF: https://docs.dig.net/whitepapers/DIG-Network-Part2-DFSP.pdf
-- [Part 3 · Digstore](https://docs.dig.net/docs/whitepapers/digstore): the content-addressable WASM store format — immutable capsules, URN-derived keys, ZK execution proofs, Git workflow. PDF: https://docs.dig.net/whitepapers/DIG-Network-Part3-Digstore.pdf
-
 ## Support
 
 - [Get help](https://docs.dig.net/docs/support/get-help): community Discord, GitHub issues, and how to file a report that gets answered.
@@ -135,5 +128,5 @@ The core concepts an agent should resolve first: the **capsule** (`storeId:rootH
 ## Optional
 
 - [DigStore source](https://github.com/DIG-Network/digstore): the open-source (GPL-2.0) CLI and store format.
-- [DIG Network site](https://dig.net): the project home and whitepapers landing.
+- [DIG Network site](https://dig.net): the project home.
 - [DIGHUb](https://hub.dig.net): publish and manage capsules from the web.

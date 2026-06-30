@@ -88,7 +88,7 @@ The client loops on `next_offset` until `complete`, verifies `inclusion_proof` o
 - **[Conformance](./conformance.md)** — what a node MUST implement to be a member of the network read path, plus CORS, errors, and the blind model in full.
 
 :::note
-The dig RPC is part of the [DIG Network](https://dig.net). The full normative specification is the *dig RPC: Network Content Interface* document, a companion to the [DigStore whitepaper](../whitepapers/digstore.md).
+The dig RPC is part of the [DIG Network](https://dig.net). The full normative specification is the [Protocol · The dig RPC](../protocol/dig-rpc.md) section, the network content interface.
 :::
 
 ## Related

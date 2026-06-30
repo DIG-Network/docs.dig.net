@@ -164,13 +164,6 @@
       "tag": "dighub"
     },
     {
-      "id": "concept:whitepaper",
-      "type": "concept",
-      "title": "Whitepapers",
-      "url": "https://docs.dig.net/docs/tags/whitepaper",
-      "tag": "whitepaper"
-    },
-    {
       "id": "/docs/audiences/app-developers",
       "type": "doc",
       "title": "For app developers",
@@ -380,8 +373,7 @@
         "anchoring",
         "dig-payment",
         "merkle-proof",
-        "chip-0035",
-        "whitepaper"
+        "chip-0035"
       ]
     },
     {
@@ -1097,52 +1089,6 @@
         "anchoring",
         "dig-payment"
       ]
-    },
-    {
-      "id": "/docs/whitepapers/consensus",
-      "type": "doc",
-      "title": "Part 1 · Consensus",
-      "url": "https://docs.dig.net/docs/whitepapers/consensus",
-      "tags": [
-        "whitepaper",
-        "chip-0035"
-      ]
-    },
-    {
-      "id": "/docs/whitepapers/dfsp",
-      "type": "doc",
-      "title": "Part 2 · DFSP",
-      "url": "https://docs.dig.net/docs/whitepapers/dfsp",
-      "tags": [
-        "whitepaper",
-        "capsule",
-        "dig-rpc"
-      ]
-    },
-    {
-      "id": "/docs/whitepapers/digstore",
-      "type": "doc",
-      "title": "Part 3 · Digstore",
-      "url": "https://docs.dig.net/docs/whitepapers/digstore",
-      "tags": [
-        "whitepaper",
-        "capsule",
-        "store",
-        "urn",
-        "encryption"
-      ]
-    },
-    {
-      "id": "/docs/whitepapers",
-      "type": "doc",
-      "title": "Whitepapers",
-      "url": "https://docs.dig.net/docs/whitepapers",
-      "tags": [
-        "whitepaper",
-        "capsule",
-        "chip-0035",
-        "store"
-      ]
     }
   ],
   "edges": [
@@ -1262,11 +1208,6 @@
       "type": "defines"
     },
     {
-      "from": "/docs/concepts",
-      "to": "concept:whitepaper",
-      "type": "defines"
-    },
-    {
       "from": "/docs/audiences/app-developers",
       "to": "concept:dighub",
       "type": "part-of"
@@ -1724,11 +1665,6 @@
     {
       "from": "/docs/concepts",
       "to": "concept:chip-0035",
-      "type": "part-of"
-    },
-    {
-      "from": "/docs/concepts",
-      "to": "concept:whitepaper",
       "type": "part-of"
     },
     {
@@ -2992,76 +2928,6 @@
       "type": "part-of"
     },
     {
-      "from": "/docs/whitepapers/consensus",
-      "to": "concept:whitepaper",
-      "type": "part-of"
-    },
-    {
-      "from": "/docs/whitepapers/consensus",
-      "to": "concept:chip-0035",
-      "type": "part-of"
-    },
-    {
-      "from": "/docs/whitepapers/dfsp",
-      "to": "concept:whitepaper",
-      "type": "part-of"
-    },
-    {
-      "from": "/docs/whitepapers/dfsp",
-      "to": "concept:capsule",
-      "type": "part-of"
-    },
-    {
-      "from": "/docs/whitepapers/dfsp",
-      "to": "concept:dig-rpc",
-      "type": "part-of"
-    },
-    {
-      "from": "/docs/whitepapers/digstore",
-      "to": "concept:whitepaper",
-      "type": "part-of"
-    },
-    {
-      "from": "/docs/whitepapers/digstore",
-      "to": "concept:capsule",
-      "type": "part-of"
-    },
-    {
-      "from": "/docs/whitepapers/digstore",
-      "to": "concept:store",
-      "type": "part-of"
-    },
-    {
-      "from": "/docs/whitepapers/digstore",
-      "to": "concept:urn",
-      "type": "part-of"
-    },
-    {
-      "from": "/docs/whitepapers/digstore",
-      "to": "concept:encryption",
-      "type": "part-of"
-    },
-    {
-      "from": "/docs/whitepapers",
-      "to": "concept:whitepaper",
-      "type": "part-of"
-    },
-    {
-      "from": "/docs/whitepapers",
-      "to": "concept:capsule",
-      "type": "part-of"
-    },
-    {
-      "from": "/docs/whitepapers",
-      "to": "concept:chip-0035",
-      "type": "part-of"
-    },
-    {
-      "from": "/docs/whitepapers",
-      "to": "concept:store",
-      "type": "part-of"
-    },
-    {
       "from": "/docs/automation/deploy-keys",
       "to": "/docs/digstore/cli/deploy-from-github-actions",
       "type": "see-also"
@@ -3309,11 +3175,6 @@
     {
       "from": "/docs/concepts",
       "to": "/docs/support/get-help",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/concepts",
-      "to": "/docs/whitepapers",
       "type": "see-also"
     },
     {
@@ -3768,12 +3629,7 @@
     },
     {
       "from": "/docs/inclusion-vs-execution-proofs",
-      "to": "/docs/whitepapers/dfsp",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/inclusion-vs-execution-proofs",
-      "to": "/docs/whitepapers/consensus",
+      "to": "/docs/protocol/verification-and-provenance",
       "type": "see-also"
     },
     {
@@ -3809,11 +3665,6 @@
     {
       "from": "/docs",
       "to": "/docs/support/get-help",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs",
-      "to": "/docs/whitepapers",
       "type": "see-also"
     },
     {
@@ -4179,11 +4030,6 @@
     {
       "from": "/docs/protocol-deep-dive",
       "to": "/docs/protocol/conformance-and-parity",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/protocol-deep-dive",
-      "to": "/docs/whitepapers",
       "type": "see-also"
     },
     {
@@ -4693,101 +4539,6 @@
     },
     {
       "from": "/docs/support/troubleshooting",
-      "to": "/docs/concepts",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/whitepapers/consensus",
-      "to": "/docs/whitepapers/dfsp",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/whitepapers/consensus",
-      "to": "/docs/whitepapers/digstore",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/whitepapers/consensus",
-      "to": "/docs/whitepapers",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/whitepapers/consensus",
-      "to": "/docs/concepts",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/whitepapers/dfsp",
-      "to": "/docs/whitepapers/consensus",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/whitepapers/dfsp",
-      "to": "/docs/whitepapers/digstore",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/whitepapers/dfsp",
-      "to": "/docs/rpc/what-is-the-dig-rpc",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/whitepapers/dfsp",
-      "to": "/docs/whitepapers",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/whitepapers/dfsp",
-      "to": "/docs/concepts",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/whitepapers/digstore",
-      "to": "/docs/digstore/what-is-digstore",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/whitepapers/digstore",
-      "to": "/docs/digstore/format/urns-and-encryption",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/whitepapers/digstore",
-      "to": "/docs/whitepapers/consensus",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/whitepapers/digstore",
-      "to": "/docs/whitepapers/dfsp",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/whitepapers/digstore",
-      "to": "/docs/concepts",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/whitepapers",
-      "to": "/docs/whitepapers/consensus",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/whitepapers",
-      "to": "/docs/whitepapers/dfsp",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/whitepapers",
-      "to": "/docs/whitepapers/digstore",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/whitepapers",
-      "to": "/docs/digstore/what-is-digstore",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/whitepapers",
       "to": "/docs/concepts",
       "type": "see-also"
     }

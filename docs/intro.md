@@ -114,4 +114,3 @@ DIG Network and its primitives are open source. DigStore is licensed under GPL-2
 - [What is the dig RPC?](./rpc/what-is-the-dig-rpc.md) — the network-wide read interface
 - [The chia:// protocol](./browser/chia-protocol.md) — opening content in the DIG Browser
 - [Get help](./support/get-help.md) — community, troubleshooting, and error codes
-- [Whitepapers](./whitepapers/index.md) — the full protocol specifications

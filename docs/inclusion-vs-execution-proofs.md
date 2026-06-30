@@ -41,11 +41,10 @@ An **execution proof** is a ZK / risc0 **execution receipt** that attests a node
 
 ## Why both
 
-Inclusion proofs make **each read** trustless without trusting the host. Execution proofs let the network **audit a node's overall conduct** — the basis for node attestation and the consensus/DFSP availability guarantees — without making every read pay that cost.
+Inclusion proofs make **each read** trustless without trusting the host. Execution proofs let the network **audit a node's overall conduct** — the basis for node attestation and the network's availability guarantees — without making every read pay that cost.
 
 ## Related
 
 - [Proofs & security](./digstore/format/proofs-and-security.md) — inclusion proofs, signed roots, decoys
 - [Node conformance](./rpc/conformance.md) — the blind serving contract
-- [DFSP whitepaper](./whitepapers/dfsp.md) — availability-audited hosting
-- [Consensus whitepaper](./whitepapers/consensus.md) — finality + validator lifecycle
+- [Verification, provenance & anchoring](./protocol/verification-and-provenance.md) — the four ordered integrity gates
