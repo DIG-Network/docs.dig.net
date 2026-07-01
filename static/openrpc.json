@@ -788,6 +788,127 @@
             "description": "How this node currently reaches the peer."
           }
         }
+      },
+      "AvailabilityItem": {
+        "title": "AvailabilityItem",
+        "type": "object",
+        "description": "One item to check in a dig.getAvailability batch. Granularity is inferred from the fields present: store_id only = has_store; + root = has_root (the capsule store_id:root); + retrieval_key = has_resource within the capsule.",
+        "required": [
+          "store_id"
+        ],
+        "properties": {
+          "store_id": {
+            "$ref": "#/components/schemas/StoreId"
+          },
+          "root": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "description": "Optional generation root — narrows the check to that capsule."
+          },
+          "retrieval_key": {
+            "$ref": "#/components/schemas/RetrievalKey"
+          }
+        }
+      },
+      "AvailabilityAnswer": {
+        "title": "AvailabilityAnswer",
+        "type": "object",
+        "description": "One answer in a dig.getAvailability result, positionally aligned with the queried items. Reports whether the peer holds the item plus (where cheap) planning metadata so the caller can partition ranges without a probe fetch.",
+        "required": [
+          "available"
+        ],
+        "properties": {
+          "available": {
+            "type": "boolean",
+            "description": "Whether the peer holds the queried item."
+          },
+          "roots": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "description": "32 bytes as 64 lower-case hex characters."
+            },
+            "description": "STORE granularity: the generation roots the peer currently holds for the store, newest-first."
+          },
+          "total_length": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "ROOT/RESOURCE granularity: the resource/capsule ciphertext length."
+          },
+          "chunk_count": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "ROOT/RESOURCE granularity: the number of chunks (plan ranges against this)."
+          },
+          "complete": {
+            "type": "boolean",
+            "description": "Whether the peer holds the FULL resource/capsule (true) or only part of it (false); a partial holder still serves the ranges it has."
+          }
+        }
+      },
+      "RangeFrame": {
+        "title": "RangeFrame",
+        "type": "object",
+        "description": "One frame of a streamed dig.fetchRange response. Data is delivered as an ordered stream of these frames over a logical stream of the multiplexed peer transport — the caller reads incrementally with backpressure and reassembles by `offset`. The FIRST frame (offset == range start) additionally carries the range-verification metadata (total_length, chunk_lens, chunk_index, inclusion_proof) so a range fetched from ONE peer is independently verifiable against the capsule's chain-anchored merkle root without the whole file. See https://docs.dig.net/docs/protocol/peer-network#range.",
+        "required": [
+          "offset",
+          "length",
+          "bytes",
+          "complete"
+        ],
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "This frame's start offset within the requested range (bytes into the resource ciphertext)."
+          },
+          "length": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "This frame's byte length (= decoded `bytes` length)."
+          },
+          "bytes": {
+            "type": "string",
+            "contentEncoding": "base64",
+            "description": "This frame's ciphertext bytes, standard base64."
+          },
+          "complete": {
+            "type": "boolean",
+            "description": "true when this is the final frame of the requested range."
+          },
+          "total_length": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "FIRST FRAME ONLY: the full resource ciphertext length (so a client can plan its ranges)."
+          },
+          "chunk_lens": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "description": "FIRST FRAME ONLY: per-chunk ciphertext lengths of the WHOLE resource, in order (identical to the dig RPC chunk_lens). Maps a byte range to the chunk(s) covering it; required to split + verify + decrypt."
+          },
+          "chunk_index": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "FIRST FRAME ONLY: index into chunk_lens of the first chunk in this range."
+          },
+          "inclusion_proof": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "contentEncoding": "base64",
+            "description": "FIRST FRAME ONLY: base64 merkle inclusion proof of the WHOLE resource against the generation `root`, relayed verbatim. Verify the range against the CALLER-supplied chain-anchored root — the node is never the trust anchor. null for capsule fetches (capsule: true), which self-verify on install."
+          },
+          "root": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "description": "FIRST FRAME ONLY: the resolved generation root the inclusion_proof is against."
+          }
+        }
       }
     },
     "errors": {
@@ -843,6 +964,13 @@
       "PEER_UNREACHABLE": {
         "code": -32006,
         "message": "Peer unreachable",
+        "data": {
+          "type": "object"
+        }
+      },
+      "RANGE_NOT_SATISFIABLE": {
+        "code": -32007,
+        "message": "Range not satisfiable",
         "data": {
           "type": "object"
         }

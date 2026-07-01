@@ -266,7 +266,173 @@ Alongside the standard JSON-RPC codes and the shared `-32004` (resource unavaila
 
 See the full [error catalog](../support/error-codes.md).
 
-## 8 · The relay-last-fallback invariant {#invariant}
+## 8 · Streaming-first content transport {#streaming}
+
+Peer RPC is **streaming-first for data**, not buffer-the-whole-payload. A `connect(peer)` link ([§2](#nat-traversal)) is a **multiplexed stream transport**: it carries many concurrent, independent logical streams over the single mTLS connection, so a node can run several content transfers (and control calls) in parallel without head-of-line blocking between them.
+
+- **Control methods are message-style.** The small methods — `dig.getPeers`, `dig.announce`, `dig.getNetworkInfo` — request and return a single JSON object. They fit one logical message; no streaming needed.
+- **Data methods are chunk-streamed.** Any method that returns a large or content-bearing payload (`dig.fetchRange`, [§9](#range)) delivers it as an ordered **stream of chunk frames** on its own logical stream. The caller reads frames incrementally and reassembles — it never has to hold the whole resource in memory to begin using it.
+- **Backpressure.** The stream transport applies flow control: a slow reader slows the sender rather than forcing the sender to buffer unboundedly. A caller that stops reading pauses the transfer; a caller that reads faster receives faster.
+- **Framing.** Each data frame carries `{ offset, length, bytes, complete }` — the frame's start offset within the requested range, its byte length, the raw ciphertext bytes, and whether it is the final frame. Frames arrive in ascending `offset` order and tile the requested range exactly. A caller reassembles by `offset` and stops on `complete`.
+- **Cancellation.** Closing the logical stream cancels just that transfer; the connection and any sibling streams are unaffected.
+
+This mirrors the [dig RPC streaming contract](./dig-rpc.md#streaming) (window/offset/`next_offset` reassembly) but over the peer stream transport rather than repeated JSON-RPC POSTs — the same incremental, verify-as-you-go model.
+
+## 9 · Byte-range content fetch + multi-source download {#range}
+
+A node can request a specific **byte range** `[offset, offset+length)` of a content resource or an entire `.dig` capsule, and receive **only those bytes**, streamed. This is the primitive behind **multi-source download**: a client splits a resource into ranges and fetches **different ranges from different peers simultaneously**, verifies each independently, and reassembles — the same multisource + range + integrity + resume model implemented by the `dig-download-utility` reference.
+
+### Availability first — ask before you fetch {#availability}
+
+Before requesting any content, a client asks candidate peers **whether they actually hold it**, so it fans ranges only at peers that can serve them. Availability is a small **control RPC** (message-style, not streamed), and it is **batchable** — a downloader checks several peers × several items in one call each — at all three granularities:
+
+- **store** — does the peer serve this `store_id` at all (and which roots does it hold)?
+- **root** — does the peer have this specific generation `(store_id, root)`?
+- **capsule / resource** — does the peer have this specific immutable capsule `store_id:root`, or a specific resource within it?
+
+#### `dig.getAvailability`
+
+Ask one peer about many items at once. The granularity of each item is inferred from which fields it carries.
+
+- **params:**
+
+```json
+{
+  "items": [
+    { "store_id": "<64hex>" },
+    { "store_id": "<64hex>", "root": "<64hex>" },
+    { "store_id": "<64hex>", "root": "<64hex>", "retrieval_key": "<64hex>" }
+  ]
+}
+```
+
+  - `store_id` only → **has_store**: does the peer serve the store.
+  - `store_id` + `root` → **has_root**: does the peer have that generation (the capsule `store_id:root`).
+  - `store_id` + `root` + `retrieval_key` → **has_resource**: does the peer have that resource within the capsule.
+
+- **result:** one answer per item, positionally aligned with `items`:
+
+```json
+{
+  "items": [
+    { "available": true, "roots": ["<64hex>", "<64hex>"] },
+    { "available": true, "chunk_count": 40, "total_length": 10485760, "complete": true },
+    { "available": true, "total_length": 262144, "chunk_count": 1, "complete": true }
+  ]
+}
+```
+
+  Per-item fields (present where cheap for the peer to answer):
+  - `available` (bool, always) — whether the peer holds the queried item.
+  - `roots` (store granularity) — the generation roots the peer currently holds for the store, newest-first.
+  - `total_length` + `chunk_count` (root/resource granularity) — the resource/capsule ciphertext length and its chunk count, so the caller can **plan its ranges** without a probe fetch.
+  - `complete` (bool) — whether the peer holds the **full** resource/capsule (`true`) or only **part** of it (`false`); a partial holder can still serve the ranges it has.
+
+#### `dig.listInventory`
+
+Enumerate what a peer serves — the discovery variant.
+
+- **params:** `{ "store_id"?: "<64hex>", "limit"?: uint }` — omit `store_id` to list the stores the peer serves; supply it to list the roots the peer holds for that store.
+- **result:**
+
+```json
+{ "stores": ["<64hex>", "..."] }
+```
+
+or, when `store_id` is given:
+
+```json
+{ "store_id": "<64hex>", "roots": ["<64hex>", "..."] }
+```
+
+Enumeration is best-effort discovery — a peer MAY cap or omit it (privacy / size); `dig.getAvailability` is the authoritative per-item check.
+
+### `dig.fetchRange`
+
+Stream a byte range of a resource or capsule from this peer.
+
+- **params:**
+
+```json
+{
+  "store_id": "<64hex>",
+  "retrieval_key": "<64hex>",
+  "root": "<64hex>",
+  "capsule": false,
+  "offset": 0,
+  "length": 4194304
+}
+```
+
+  - **Resource identity.** For a content resource: `store_id` + `retrieval_key` (+ optional `root`, defaulting to the chain-anchored tip). For a whole capsule / `.dig`: set `capsule: true` and identify it by `store_id` (+ optional `root`); `retrieval_key` is then omitted. The capsule identity is `<store_id>[:<root>]`.
+  - **Range.** `offset` (bytes into the resource ciphertext, default `0`) and `length` (bytes to return). `length` is clamped to the node's window (3 MiB); a request whose range is not chunk-aligned is widened to whole-chunk boundaries (see integrity below), so the response may return slightly more than asked.
+
+- **result:** a **stream** ([§8](#streaming)) of `dig.fetchRange` frames. Beyond the base frame fields, the **first frame** (`offset == range start`) carries the verification metadata for the range:
+
+```json
+{
+  "offset": 0,
+  "length": 262144,
+  "bytes": "<base64 ciphertext>",
+  "complete": false,
+  "total_length": 10485760,
+  "chunk_lens": [262144, 262144, 131072],
+  "chunk_index": 0,
+  "inclusion_proof": "<base64 merkle proof>",
+  "root": "<64hex>"
+}
+```
+
+  - `total_length` — the full resource ciphertext length (so a client can plan its ranges).
+  - `chunk_lens` — the per-chunk ciphertext lengths of the **whole resource**, in order (first frame only) — identical to the [dig RPC `chunk_lens`](./dig-rpc.md#the-chunk-wire-object). This is how a client maps a byte range to the chunk(s) that cover it.
+  - `chunk_index` — the index (into `chunk_lens`) of the first chunk in this frame.
+  - `inclusion_proof` — the merkle inclusion proof of the **whole resource** against the capsule's generation `root` (first frame only), relayed verbatim ([Merkle inclusion proofs](./merkle-proofs.md)). For `capsule: true` the capsule self-verifies on install, so `inclusion_proof` is `null` (as with [`dig.getCapsule`](./dig-rpc.md)).
+
+### Per-range integrity — verify a range without the whole file {#range-integrity}
+
+A range fetched from one peer is **independently verifiable** against the capsule's on-chain merkle root, so a single peer cannot forge a range and multi-source pieces always reassemble correctly. Integrity aligns exactly with the [existing digstore content model](./merkle-proofs.md): a resource is a sequence of AES-256-GCM-SIV chunks; the resource commits to the generation merkle root as a single leaf (`resource_leaf = SHA-256(concatenated chunk ciphertexts)`); `chunk_lens` fixes the chunk boundaries.
+
+A requested range maps to whole **chunk(s)** — the node widens the range to chunk boundaries — so each returned chunk is a complete, verifiable unit. A client verifies a fetched range as follows:
+
+1. **Split by `chunk_lens`.** Using the first frame's `chunk_lens` and `chunk_index`, cut the reassembled range bytes into the exact chunk(s) it covers.
+2. **Verify the resource against the root.** The `inclusion_proof` proves `resource_leaf` (= `SHA-256` of the *whole* resource ciphertext, reconstructed from all chunks in `chunk_lens` order) is included under the caller-supplied **chain-anchored `root`** ([Verification & provenance](./verification-and-provenance.md)) — the node is never the trust anchor. A client that already holds this proof (from an earlier range/peer) reuses it; the proof is the same regardless of which peer or range served the bytes.
+3. **Bind each chunk to the committed resource.** Because `chunk_lens` fixes each chunk's length and the resource leaf is `SHA-256` over the concatenation of all chunk ciphertexts in order, a chunk delivered for a given `chunk_index` is correct iff, when placed at its `chunk_lens` offset, the whole-resource hash still matches the proven `resource_leaf`. A chunk from a **bad source** yields a resource hash that does not match the proof — detected without downloading the whole file.
+4. **Decrypt.** AES-256-GCM-SIV-open each verified chunk; a wrong key/salt or corrupted bytes fails the authentication tag ([`DIG_ERR_DECRYPT_TAG`](../support/error-codes.md)).
+
+Detecting a bad source: any of a chunk-length mismatch against `chunk_lens`, a failed whole-resource inclusion proof, or a decryption-tag failure marks the serving peer's range as **invalid** — the client discards it and retries that range from a different peer ([`-32006`](#peer-rpc) / a fresh source), penalizing the bad peer.
+
+### The multi-source download pattern (normative) {#multi-source}
+
+```text
+1. DISCOVER  — find candidate peers via the introducer + dig.getPeers (§4).
+2. QUERY     — dig.getAvailability (batch) against the candidates: has_store /
+   AVAILABILITY   has_root / has_capsule (§9 availability). Keep only peers that
+               actually HOLD the resource; read total_length + chunk_count to plan.
+3. PLAN      — partition the resource into chunk-aligned ranges (using chunk_lens
+               from the first range frame or the availability chunk_count).
+4. FAN OUT   — request DIFFERENT ranges from DIFFERENT holders CONCURRENTLY over the
+               multiplexed stream transport (§8), respecting each peer's backpressure.
+5. VERIFY    — verify each returned range independently against the chain-anchored
+               root (§9 integrity) as it arrives; do not trust unverified bytes.
+6. RETRY     — a failed, timed-out, missing, or mismatched range is re-requested from
+               ANOTHER holder (ranges are independent); penalize the bad source.
+7. REASSEMBLE— place verified ranges by offset into the full resource; decrypt per chunk.
+```
+
+Step 2 is the gate: a downloader never fans a range at a peer it has not confirmed holds the content, and a **partial** holder (`complete: false`) is used only for the ranges it actually has.
+
+- **Concurrency across sources** is what makes this fast: N peers each serve a slice of the file in parallel.
+- **Resume.** Because each range is independently addressable and independently verifiable, an interrupted download resumes **per range** — a client re-requests only the ranges it has not yet verified, from any peer that holds the resource. No range already verified is refetched.
+- **Any source, one root.** Every range — whichever peer served it — is verified against the *same* on-chain generation root, so mixing sources never weakens integrity.
+
+### Range fetch error codes
+
+| Code | Name | Meaning |
+|---|---|---|
+| `-32004` | `RESOURCE_UNAVAILABLE` | This peer does not hold the resource/capsule at the requested root (try another source). |
+| `-32007` | `RANGE_NOT_SATISFIABLE` | The requested `offset`/`length` lies outside the resource (`offset >= total_length`), or the range is otherwise unsatisfiable. |
+
+## 10 · The relay-last-fallback invariant {#invariant}
 
 **A node uses the relay to carry peer↔peer DATA (role 4, TURN-like) ONLY when none of DIRECT, UPnP, NAT-PMP, PCP, or hole-punch succeeds.** Concretely:
 
@@ -277,7 +443,7 @@ See the full [error catalog](../support/error-codes.md).
 
 The relay is an **untrusted bridge**: it forwards end-to-end-authenticated payloads by `peer_id` and can read none of them. Trust always rests on the mTLS peer identity ([§1](#peer-identity)), never on the relay.
 
-## 9 · Conformance {#conformance}
+## 11 · Conformance {#conformance}
 
 The peer network is implemented by several crates that must interoperate byte-for-byte. The frozen shapes a reimplementation MUST match:
 
@@ -289,7 +455,10 @@ The peer network is implemented by several crates that must interoperate byte-fo
 | **Relay error codes** | `1..4` (`NOT_REGISTERED`/`BAD_MESSAGE`/`PEER_NOT_FOUND`/`CAPACITY`) | deterministic relay-side failure signalling |
 | **Relay roles** | the four roles are distinct: STUN + introducer + hole-punch **signalling** are low-bandwidth control; only relayed/TURN transport carries data | that a node prefers brokering a direct link over proxying the stream |
 | **Peer exchange** | `RequestPeers`→`RespondPeers` of `TimestampedPeerInfo{host, port, timestamp}` (Chia-streamable, big-endian) | that nodes discover peers from each other identically |
-| **Peer RPC** | `dig.getPeers` / `dig.announce` / `dig.getNetworkInfo` + `-32006`, generated into [`openrpc-node.json`](https://docs.dig.net/openrpc-node.json) | the machine surface an agent drives; CI-diffable against a live node |
+| **Peer RPC** | `dig.getPeers` / `dig.announce` / `dig.getNetworkInfo` + `-32006`; `dig.getAvailability` / `dig.listInventory`; `dig.fetchRange` + `-32007`, generated into [`openrpc-node.json`](https://docs.dig.net/openrpc-node.json) | the machine surface an agent drives; CI-diffable against a live node |
+| **Availability** | `dig.getAvailability` batch per-item answers at store / root / capsule granularity (`available` + `roots`/`total_length`/`chunk_count`/`complete`) | that a downloader can confirm a peer HOLDS content (and plan ranges) before any fetch |
+| **Streaming + range** | `dig.fetchRange` streams `RangeFrame{offset,length,bytes,complete}`; first frame carries `total_length` + `chunk_lens` + `chunk_index` + `inclusion_proof`; ranges are chunk-aligned | that data streams (not buffered), and a single-peer range verifies against the chain-anchored root — so multi-source pieces reassemble and can't be forged |
+| **Range integrity** | a range maps to whole chunk(s); each verifies via `chunk_lens` + the whole-resource `inclusion_proof` against the on-chain `root` (same as [merkle-proofs](./merkle-proofs.md)) | that any peer's range is independently verifiable + a bad source is detectable without the whole file |
 | **NAT ladder** | the ordered strategies DIRECT → UPnP → NAT-PMP → PCP → hole-punch (relay signalling only) → RELAYED/TURN (relay carries data), relay-data-last | that every `connect(peer)` implementation prefers direct, prefers hole-punch signalling over full relaying, and proxies the stream only as a last resort |
 
 A reimplementation of any peer crate conforms iff it reproduces these — the same discipline that keeps the [read path parity-locked](./conformance-and-parity.md).

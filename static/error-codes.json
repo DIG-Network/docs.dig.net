@@ -67,6 +67,13 @@
       "description": "Peer unreachable — No connection to the named peer could be established — every NAT-traversal strategy (direct, UPnP/NAT-PMP/PCP mapping, relay-coordinated hole-punch, and relayed fallback) failed, or the peer is not registered on this network. Returned by the node-profile peer methods (dig.getPeers / dig.announce / dig.getNetworkInfo)."
     },
     {
+      "surface": "dig-rpc",
+      "code": -32007,
+      "name": "RANGE_NOT_SATISFIABLE",
+      "http_or_exit": 200,
+      "description": "Range not satisfiable — The requested byte range lies outside the resource (offset >= total_length) or is otherwise unsatisfiable. Returned by the node-profile dig.fetchRange when the offset/length cannot be served."
+    },
+    {
       "surface": "digstore-cli",
       "code": "success",
       "exit": 0,
@@ -387,6 +394,13 @@
         "name": "PEER_UNREACHABLE",
         "http_or_exit": 200,
         "description": "Peer unreachable — No connection to the named peer could be established — every NAT-traversal strategy (direct, UPnP/NAT-PMP/PCP mapping, relay-coordinated hole-punch, and relayed fallback) failed, or the peer is not registered on this network. Returned by the node-profile peer methods (dig.getPeers / dig.announce / dig.getNetworkInfo)."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32007,
+        "name": "RANGE_NOT_SATISFIABLE",
+        "http_or_exit": 200,
+        "description": "Range not satisfiable — The requested byte range lies outside the resource (offset >= total_length) or is otherwise unsatisfiable. Returned by the node-profile dig.fetchRange when the offset/length cannot be served."
       }
     ],
     "digstore-cli": [

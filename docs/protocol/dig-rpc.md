@@ -117,6 +117,7 @@ Standard JSON-RPC `-32700 / -32600 / -32601 / -32602 / -32603`, **plus** the pro
 | `-32004` | **Resource not available at the requested root** — a genuine infra miss (no host seed, module absent in both buckets, bad magic, oversize, a wasmtime trap, an undecodable envelope). Returned by getContent/getProof/getCapsule/getManifest/getMetadata. **Distinct from a content miss**, which is an indistinguishable decoy and never an error. |
 | `-32005` | **Root not chain-anchored** — the requested or served generation is not the store's current on-chain root. `dig.getContent` on a node that enforces the root pin resolves the CHIP-0035 singleton's on-chain root live (never trusting the serving node) and serves against it or fails closed: an explicit `root` that is not the on-chain root, an unreachable chain, or a store with no confirmed generation all return this code rather than serving an unverified generation. Omit `root` to take the chain tip. |
 | `-32006` | **Peer unreachable** (node profile) — no connection to the named peer could be established: every [NAT-traversal strategy](./peer-network.md#nat-traversal) failed, or the peer is not on this network. Returned by the peer methods `dig.getPeers` / `dig.announce` / `dig.getNetworkInfo`. |
+| `-32007` | **Range not satisfiable** (node profile) — the requested byte range lies outside the resource, or is otherwise unsatisfiable. Returned by [`dig.fetchRange`](./peer-network.md#range), the streaming byte-range / multi-source content fetch. |
 
 See the full [error catalog](../support/error-codes.md).
 
@@ -136,7 +137,7 @@ The local **dig-node** / **dig-companion** that the DIG Browser runs in-process 
 
 An agent **gates on `dig.methods`** rather than assuming one uniform surface — hence two OpenRPC documents (network + node).
 
-The node profile also carries the **[peer network methods](./peer-network.md#peer-rpc)** — `dig.getPeers`, `dig.announce`, and `dig.getNetworkInfo` — which expose peer discovery + the node's NAT-traversal posture over JSON-RPC. They add the node-profile error [`-32006`](#error-model) (`PEER_UNREACHABLE`).
+The node profile also carries the **[peer network methods](./peer-network.md#peer-rpc)** — `dig.getPeers`, `dig.announce`, and `dig.getNetworkInfo` — which expose peer discovery + the node's NAT-traversal posture over JSON-RPC (adding [`-32006`](#error-model) `PEER_UNREACHABLE`); **[`dig.getAvailability`](./peer-network.md#availability)** + `dig.listInventory`, the batch pre-fetch check of whether a peer holds a store / root / capsule; and **[`dig.fetchRange`](./peer-network.md#range)**, the streaming byte-range fetch behind multi-source download: it streams only a requested `[offset, length)` of a resource or capsule, with per-range merkle integrity so a downloader fans ranges across confirmed holders and verifies each independently (adding [`-32007`](#error-model) `RANGE_NOT_SATISFIABLE`).
 
 ## Related
 
