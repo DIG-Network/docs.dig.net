@@ -161,6 +161,58 @@ export const schemas = {
       via: { type: 'string', enum: ['direct', 'relay'], description: 'How this node currently reaches the peer.' },
     },
   },
+  AvailabilityItem: {
+    title: 'AvailabilityItem',
+    type: 'object',
+    description:
+      'One item to check in a dig.getAvailability batch. Granularity is inferred from the fields present: store_id only = has_store; + root = has_root (the capsule store_id:root); + retrieval_key = has_resource within the capsule.',
+    required: ['store_id'],
+    properties: {
+      store_id: { $ref: '#/components/schemas/StoreId' },
+      root: { ...hex64, description: 'Optional generation root — narrows the check to that capsule.' },
+      retrieval_key: { $ref: '#/components/schemas/RetrievalKey' },
+    },
+  },
+  AvailabilityAnswer: {
+    title: 'AvailabilityAnswer',
+    type: 'object',
+    description:
+      'One answer in a dig.getAvailability result, positionally aligned with the queried items. Reports whether the peer holds the item plus (where cheap) planning metadata so the caller can partition ranges without a probe fetch.',
+    required: ['available'],
+    properties: {
+      available: { type: 'boolean', description: 'Whether the peer holds the queried item.' },
+      roots: { type: 'array', items: { ...hex64 }, description: 'STORE granularity: the generation roots the peer currently holds for the store, newest-first.' },
+      total_length: { type: 'integer', minimum: 0, description: 'ROOT/RESOURCE granularity: the resource/capsule ciphertext length.' },
+      chunk_count: { type: 'integer', minimum: 0, description: 'ROOT/RESOURCE granularity: the number of chunks (plan ranges against this).' },
+      complete: { type: 'boolean', description: 'Whether the peer holds the FULL resource/capsule (true) or only part of it (false); a partial holder still serves the ranges it has.' },
+    },
+  },
+  RangeFrame: {
+    title: 'RangeFrame',
+    type: 'object',
+    description:
+      'One frame of a streamed dig.fetchRange response. Data is delivered as an ordered stream of these frames over a logical stream of the multiplexed peer transport — the caller reads incrementally with backpressure and reassembles by `offset`. The FIRST frame (offset == range start) additionally carries the range-verification metadata (total_length, chunk_lens, chunk_index, inclusion_proof) so a range fetched from ONE peer is independently verifiable against the capsule\'s chain-anchored merkle root without the whole file. See https://docs.dig.net/docs/protocol/peer-network#range.',
+    required: ['offset', 'length', 'bytes', 'complete'],
+    properties: {
+      offset: { type: 'integer', minimum: 0, description: 'This frame\'s start offset within the requested range (bytes into the resource ciphertext).' },
+      length: { type: 'integer', minimum: 0, description: 'This frame\'s byte length (= decoded `bytes` length).' },
+      bytes: { type: 'string', contentEncoding: 'base64', description: 'This frame\'s ciphertext bytes, standard base64.' },
+      complete: { type: 'boolean', description: 'true when this is the final frame of the requested range.' },
+      total_length: { type: 'integer', minimum: 0, description: 'FIRST FRAME ONLY: the full resource ciphertext length (so a client can plan its ranges).' },
+      chunk_lens: {
+        type: 'array',
+        items: { type: 'integer', minimum: 0 },
+        description: 'FIRST FRAME ONLY: per-chunk ciphertext lengths of the WHOLE resource, in order (identical to the dig RPC chunk_lens). Maps a byte range to the chunk(s) covering it; required to split + verify + decrypt.',
+      },
+      chunk_index: { type: 'integer', minimum: 0, description: 'FIRST FRAME ONLY: index into chunk_lens of the first chunk in this range.' },
+      inclusion_proof: {
+        type: ['string', 'null'],
+        contentEncoding: 'base64',
+        description: 'FIRST FRAME ONLY: base64 merkle inclusion proof of the WHOLE resource against the generation `root`, relayed verbatim. Verify the range against the CALLER-supplied chain-anchored root — the node is never the trust anchor. null for capsule fetches (capsule: true), which self-verify on install.',
+      },
+      root: { ...hex64, description: 'FIRST FRAME ONLY: the resolved generation root the inclusion_proof is against.' },
+    },
+  },
 };
 
 /* ------------------------------------------------------------------ *
@@ -493,6 +545,65 @@ export const nodeMethods = [
     },
     errors: ['INTERNAL_ERROR'],
   },
+  {
+    name: 'dig.getAvailability',
+    summary: 'Batch-ask whether this peer holds given stores / roots / capsules (before fetching).',
+    description:
+      'The pre-fetch availability check. Batch per-item query at three granularities inferred from each item\'s fields — store_id only (has_store), + root (has_root / capsule), + retrieval_key (has_resource). Returns one answer per item (positionally aligned): available plus, where cheap, planning metadata (roots for a store; total_length + chunk_count + complete for a root/resource) so a downloader filters to holders and plans ranges WITHOUT a probe fetch. A small control RPC (message-style, not streamed). Absence is available:false, NOT an error. NODE-PROFILE ONLY. See https://docs.dig.net/docs/protocol/peer-network#availability.',
+    paramStructure: 'by-name',
+    params: [
+      { name: 'items', required: true, schema: { type: 'array', items: { $ref: '#/components/schemas/AvailabilityItem' } }, description: 'The stores / roots / capsules to check in one call.' },
+    ],
+    result: {
+      name: 'availability',
+      schema: {
+        type: 'object',
+        required: ['items'],
+        properties: { items: { type: 'array', items: { $ref: '#/components/schemas/AvailabilityAnswer' }, description: 'One answer per queried item, in the same order.' } },
+      },
+    },
+    errors: ['INVALID_PARAMS', 'INTERNAL_ERROR'],
+  },
+  {
+    name: 'dig.listInventory',
+    summary: 'Enumerate what this peer serves — its stores, or the roots it holds for a store.',
+    description:
+      'Discovery variant of availability: omit store_id to list the stores the peer serves; supply it to list the roots the peer holds for that store. Best-effort — a peer MAY cap or omit enumeration (privacy/size); dig.getAvailability is the authoritative per-item check. NODE-PROFILE ONLY. See https://docs.dig.net/docs/protocol/peer-network#availability.',
+    paramStructure: 'by-name',
+    params: [
+      { name: 'store_id', required: false, schema: { $ref: '#/components/schemas/StoreId' }, description: 'Omit to list stores; supply to list that store\'s roots.' },
+      { name: 'limit', required: false, schema: { type: 'integer', minimum: 1 } },
+    ],
+    result: {
+      name: 'inventory',
+      schema: {
+        type: 'object',
+        properties: {
+          store_id: { ...hex64, description: 'Echoed when roots are listed for a store.' },
+          stores: { type: 'array', items: { ...hex64 }, description: 'The stores this peer serves (when store_id is omitted).' },
+          roots: { type: 'array', items: { ...hex64 }, description: 'The roots this peer holds for the store (when store_id is given).' },
+        },
+      },
+    },
+    errors: ['INVALID_PARAMS', 'INTERNAL_ERROR'],
+  },
+  {
+    name: 'dig.fetchRange',
+    summary: 'Stream a byte range [offset, offset+length) of a resource or capsule (multi-source).',
+    description:
+      'STREAMING + BYTE-RANGE fetch: return only the requested byte range of a content resource (store_id + retrieval_key) or a whole capsule/.dig (capsule: true, identified by store_id[:root]), delivered as an ordered STREAM of RangeFrame chunks over a logical stream of the multiplexed peer transport (read incrementally with backpressure; reassemble by offset). The FIRST frame carries total_length + chunk_lens + chunk_index + inclusion_proof so the range is INDEPENDENTLY verifiable against the capsule\'s chain-anchored merkle root — a downloader fans different ranges out to different peers concurrently, verifies each, retries a bad range from another source, and resumes per-range. The range is widened to whole-chunk boundaries so each returned chunk is a complete verifiable unit; length is clamped to the node window (3 MiB). NODE-PROFILE ONLY. See https://docs.dig.net/docs/protocol/peer-network#range.',
+    paramStructure: 'by-name',
+    params: [
+      { name: 'store_id', required: true, schema: { $ref: '#/components/schemas/StoreId' } },
+      { name: 'retrieval_key', required: false, schema: { $ref: '#/components/schemas/RetrievalKey' }, description: 'The content resource to fetch; omit when capsule=true.' },
+      { name: 'root', required: false, schema: { $ref: '#/components/schemas/Root' }, description: 'The generation; defaults to the chain-anchored tip.' },
+      { name: 'capsule', required: false, schema: { type: 'boolean', default: false }, description: 'true to fetch the whole capsule/.dig (identified by store_id[:root]) instead of a resource.' },
+      { name: 'offset', required: false, schema: { type: 'integer', minimum: 0, default: 0 }, description: 'Byte offset into the resource ciphertext.' },
+      { name: 'length', required: true, schema: { type: 'integer', minimum: 1 }, description: 'Bytes to return; clamped to the node window (3 MiB) and widened to whole-chunk boundaries.' },
+    ],
+    result: { name: 'frame', schema: { $ref: '#/components/schemas/RangeFrame' } },
+    errors: ['INVALID_PARAMS', 'INTERNAL_ERROR', 'RESOURCE_UNAVAILABLE', 'RANGE_NOT_SATISFIABLE'],
+  },
 ];
 
 /* ------------------------------------------------------------------ *
@@ -509,6 +620,7 @@ export const rpcErrors = {
   RESOURCE_UNAVAILABLE: { code: -32004, message: 'Resource not available at the requested root', meaning: 'A genuine infrastructure miss (no host seed, module absent in both buckets, bad magic, oversize, a wasmtime trap, or an undecodable envelope) — distinct from a content miss, which is an indistinguishable decoy with no error.' },
   ROOT_NOT_ANCHORED: { code: -32005, message: 'Root not chain-anchored', meaning: 'The requested or served generation is not the store’s current on-chain root. A content read is pinned to the CHIP-0035 singleton’s on-chain root (resolved live from the chain, never trusted from the serving node): a requested root that is not the on-chain root, an unreachable chain, or a store with no confirmed generation fails closed with this code rather than serving an unverified generation. Omit root to take the chain tip.' },
   PEER_UNREACHABLE: { code: -32006, message: 'Peer unreachable', meaning: 'No connection to the named peer could be established — every NAT-traversal strategy (direct, UPnP/NAT-PMP/PCP mapping, relay-coordinated hole-punch, and relayed fallback) failed, or the peer is not registered on this network. Returned by the node-profile peer methods (dig.getPeers / dig.announce / dig.getNetworkInfo).' },
+  RANGE_NOT_SATISFIABLE: { code: -32007, message: 'Range not satisfiable', meaning: 'The requested byte range lies outside the resource (offset >= total_length) or is otherwise unsatisfiable. Returned by the node-profile dig.fetchRange when the offset/length cannot be served.' },
 };
 
 /* ------------------------------------------------------------------ *
