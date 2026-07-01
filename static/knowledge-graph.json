@@ -764,6 +764,18 @@
       ]
     },
     {
+      "id": "/docs/protocol/peer-network",
+      "type": "doc",
+      "title": "L7 · DIG Node peer network",
+      "url": "https://docs.dig.net/docs/protocol/peer-network",
+      "tags": [
+        "dig-node",
+        "relay",
+        "dig-rpc",
+        "chia-protocol"
+      ]
+    },
+    {
       "id": "/docs/protocol/self-defending-module",
       "type": "doc",
       "title": "L2/L3 · The self-defending module",
@@ -2413,6 +2425,16 @@
       "type": "part-of"
     },
     {
+      "from": "/docs/protocol/peer-network",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/protocol/peer-network",
+      "to": "concept:chia-protocol",
+      "type": "part-of"
+    },
+    {
       "from": "/docs/protocol/self-defending-module",
       "to": "concept:capsule",
       "type": "part-of"
@@ -3774,6 +3796,11 @@
     },
     {
       "from": "/docs/protocol/conformance-and-parity",
+      "to": "/docs/protocol/peer-network",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/conformance-and-parity",
       "to": "/docs/machine-surfaces",
       "type": "see-also"
     },
@@ -3825,6 +3852,11 @@
     {
       "from": "/docs/protocol/dig-rpc",
       "to": "/docs/protocol/transport-and-push",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/dig-rpc",
+      "to": "/docs/protocol/peer-network",
       "type": "see-also"
     },
     {
@@ -3905,6 +3937,31 @@
     {
       "from": "/docs/protocol/on-chain-anchoring",
       "to": "/docs/chip-0035-spends-and-delegation",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/peer-network",
+      "to": "/docs/protocol/dig-rpc",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/peer-network",
+      "to": "/docs/protocol/bls-signatures",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/peer-network",
+      "to": "/docs/protocol/conformance-and-parity",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/peer-network",
+      "to": "/docs/protocol/verification-and-provenance",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/peer-network",
+      "to": "/docs/support/error-codes",
       "type": "see-also"
     },
     {
@@ -4035,6 +4092,11 @@
     {
       "from": "/docs/protocol-deep-dive",
       "to": "/docs/protocol/dig-rpc",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol-deep-dive",
+      "to": "/docs/protocol/peer-network",
       "type": "see-also"
     },
     {

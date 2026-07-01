@@ -168,6 +168,7 @@ const sidebars: SidebarsConfig = {
         'protocol/dig-cat-payment',
         'protocol/dig-rpc',
         'protocol/transport-and-push',
+        'protocol/peer-network',
         'protocol/verification-and-provenance',
         'protocol/blind-host-model',
         'protocol/conformance-and-parity',

@@ -713,6 +713,81 @@
             "description": "Unix timestamp of the anchoring spend."
           }
         }
+      },
+      "PeerId": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$",
+        "title": "PeerId",
+        "description": "A DIG Node peer identity: SHA-256 of the peer's TLS SubjectPublicKeyInfo DER, as 64 lower-case hex characters (32 bytes)."
+      },
+      "CandidateAddress": {
+        "title": "CandidateAddress",
+        "type": "object",
+        "description": "One address at which a peer may be reachable, tagged by how it was learned. Peers dial candidates most-direct-first.",
+        "required": [
+          "host",
+          "port",
+          "kind"
+        ],
+        "properties": {
+          "host": {
+            "type": "string",
+            "description": "IP literal or hostname."
+          },
+          "port": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 65535,
+            "description": "The peer's P2P port (default 9444)."
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "direct",
+              "reflexive",
+              "mapped",
+              "relay"
+            ],
+            "description": "How the address was learned: advertised/observed direct, STUN reflexive, UPnP/NAT-PMP/PCP mapped, or relay-reachable."
+          }
+        }
+      },
+      "PeerRecord": {
+        "title": "PeerRecord",
+        "type": "object",
+        "description": "A known peer with its identity and candidate addresses (the peer-exchange record).",
+        "required": [
+          "peer_id",
+          "addresses"
+        ],
+        "properties": {
+          "peer_id": {
+            "$ref": "#/components/schemas/PeerId"
+          },
+          "addresses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CandidateAddress"
+            },
+            "description": "The peer's candidate addresses."
+          },
+          "network_id": {
+            "type": "string",
+            "description": "The network the peer is on (e.g. DIG_MAINNET)."
+          },
+          "last_seen": {
+            "type": "integer",
+            "description": "Unix seconds this peer was last seen."
+          },
+          "via": {
+            "type": "string",
+            "enum": [
+              "direct",
+              "relay"
+            ],
+            "description": "How this node currently reaches the peer."
+          }
+        }
       }
     },
     "errors": {
@@ -761,6 +836,13 @@
       "ROOT_NOT_ANCHORED": {
         "code": -32005,
         "message": "Root not chain-anchored",
+        "data": {
+          "type": "object"
+        }
+      },
+      "PEER_UNREACHABLE": {
+        "code": -32006,
+        "message": "Peer unreachable",
         "data": {
           "type": "object"
         }

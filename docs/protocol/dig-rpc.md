@@ -116,6 +116,7 @@ Standard JSON-RPC `-32700 / -32600 / -32601 / -32602 / -32603`, **plus** the pro
 |---|---|
 | `-32004` | **Resource not available at the requested root** — a genuine infra miss (no host seed, module absent in both buckets, bad magic, oversize, a wasmtime trap, an undecodable envelope). Returned by getContent/getProof/getCapsule/getManifest/getMetadata. **Distinct from a content miss**, which is an indistinguishable decoy and never an error. |
 | `-32005` | **Root not chain-anchored** — the requested or served generation is not the store's current on-chain root. `dig.getContent` on a node that enforces the root pin resolves the CHIP-0035 singleton's on-chain root live (never trusting the serving node) and serves against it or fails closed: an explicit `root` that is not the on-chain root, an unreachable chain, or a store with no confirmed generation all return this code rather than serving an unverified generation. Omit `root` to take the chain tip. |
+| `-32006` | **Peer unreachable** (node profile) — no connection to the named peer could be established: every [NAT-traversal strategy](./peer-network.md#nat-traversal) failed, or the peer is not on this network. Returned by the peer methods `dig.getPeers` / `dig.announce` / `dig.getNetworkInfo`. |
 
 See the full [error catalog](../support/error-codes.md).
 
@@ -135,11 +136,14 @@ The local **dig-node** / **dig-companion** that the DIG Browser runs in-process 
 
 An agent **gates on `dig.methods`** rather than assuming one uniform surface — hence two OpenRPC documents (network + node).
 
+The node profile also carries the **[peer network methods](./peer-network.md#peer-rpc)** — `dig.getPeers`, `dig.announce`, and `dig.getNetworkInfo` — which expose peer discovery + the node's NAT-traversal posture over JSON-RPC. They add the node-profile error [`-32006`](#error-model) (`PEER_UNREACHABLE`).
+
 ## Related
 
 - [Protocol: Overview](../protocol-deep-dive.md) — the seven-layer model
 - [Streaming](../rpc/streaming.md) — the chunk object, in task-oriented form
 - [§21 transport & push](./transport-and-push.md) — the REST / CLI-peer sibling
+- [DIG Node peer network](./peer-network.md) — the peer methods + how nodes find and reach each other
 - [Verification & provenance](./verification-and-provenance.md) — verify against the chain root
 - [The blind host model](./blind-host-model.md) — serve_blind, the resolver, the control plane
 - [Error codes](../support/error-codes.md) — the full catalog incl. `-32004` / `-32005`
