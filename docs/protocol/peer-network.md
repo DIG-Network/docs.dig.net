@@ -1,7 +1,7 @@
 ---
 sidebar_position: 13
 title: "L7 · DIG Node peer network"
-description: "The normative node↔node protocol: mTLS peer identity (peer_id = SHA-256(TLS SPKI DER)), the ordered NAT-traversal ladder (direct → UPnP → NAT-PMP → PCP → relay-coordinated hole-punch (signalling only) → relayed/TURN transport), the relay's four roles (STUN, introducer, hole-punch signalling, relayed transport), STUN reflexive-address discovery, introducer + gossip peer discovery, the relay RelayMessage wire (RLY-001..RLY-007), the peer RPC methods (dig.getPeers/dig.announce/dig.getNetworkInfo), and the relay-last-fallback invariant (prefer hole-punch signalling over full relaying)."
+description: "The normative node↔node protocol: mTLS peer identity (peer_id = SHA-256(TLS SPKI DER)), the ordered NAT-traversal ladder (direct → UPnP → NAT-PMP → PCP → relay-coordinated hole-punch (signalling only) → relayed/TURN transport), the relay's four roles (STUN, introducer, hole-punch signalling, relayed transport), STUN reflexive-address discovery, introducer + gossip peer discovery, the Kademlia DHT with provider records that locate which peers hold content (find_node/find_providers/add_provider/ping over a framed dig-nat mTLS stream; content-key = SHA-256(domain-tag ‖ store_id[‖root[‖retrieval_key]])), the relay RelayMessage wire (RLY-001..RLY-007), the peer RPC methods (dig.getPeers/dig.announce/dig.getNetworkInfo/dig.getAvailability/dig.listInventory/dig.fetchRange), and the relay-last-fallback invariant (prefer hole-punch signalling over full relaying)."
 keywords:
   - peer network
   - peer_id
@@ -12,6 +12,10 @@ keywords:
   - relay
   - introducer
   - dig.getPeers
+  - DHT
+  - Kademlia
+  - provider record
+  - content discovery
 tags:
   - dig-node
   - relay
@@ -21,9 +25,9 @@ tags:
 
 # Layer 7 · The DIG Node peer network
 
-> **Canonical references:** `dig-gossip` (the peer transport, discovery, and gossip layer — TLS-WebSocket peers, `peer_id = SHA-256(TLS SPKI DER)`, address manager, introducer + peer-exchange), `dig-relay` (the rendezvous / hole-punch coordinator / circuit relay serving the `RelayMessage` wire), `dig-nat` (the `connect(peer)` NAT-traversal ladder), and `dig-constants` (`DIG_RELAY_URL`). This layer is how DIG Nodes find and reach each other; the [dig RPC](./dig-rpc.md) is what they speak once connected.
+> **Canonical references:** `dig-gossip` (the peer transport, discovery, and gossip layer — TLS-WebSocket peers, `peer_id = SHA-256(TLS SPKI DER)`, address manager, introducer + peer-exchange), `dig-relay` (the rendezvous / hole-punch coordinator / circuit relay serving the `RelayMessage` wire), `dig-nat` (the `connect(peer)` NAT-traversal ladder), `dig-dht` (the Kademlia DHT with provider records that locate which peers hold content), and `dig-constants` (`DIG_RELAY_URL`). This layer is how DIG Nodes find and reach each other; the [dig RPC](./dig-rpc.md) is what they speak once connected.
 
-This is the **normative anchor** for DIG Node ↔ Node communication. Every peer-facing crate — `dig-nat`, `dig-relay`, `dig-gossip`, and `dig-node` — conforms to the contracts below. Where a statement is a wire contract it is fixed at the field/byte level; a conforming reimplementation must reproduce it exactly.
+This is the **normative anchor** for DIG Node ↔ Node communication. Every peer-facing crate — `dig-nat`, `dig-relay`, `dig-gossip`, `dig-dht`, and `dig-node` — conforms to the contracts below. Where a statement is a wire contract it is fixed at the field/byte level; a conforming reimplementation must reproduce it exactly.
 
 ## The thesis: authenticated peers, direct when possible, relay only as a last resort
 
@@ -123,6 +127,73 @@ Nodes also ask **each other** for peers, so discovery does not depend on any sin
 - **`RequestPeers`** (no fields) → **`RespondPeers`** carrying a `peer_list` of `TimestampedPeerInfo{host, port, timestamp}` (Chia-streamable, big-endian). Received lists are bounded (per-response and lifetime caps) and merged into the address book.
 
 The **[peer RPC methods](#peer-rpc)** in [§7](#peer-rpc) expose this same peer-exchange over the node's JSON-RPC surface, so an agent or a non-gossip client can drive discovery through the documented [node profile](./dig-rpc.md#node-profile).
+
+### 4c · Content discovery — the DHT {#dht}
+
+§4a and §4b find **peers**; the DHT finds **which peers hold a specific piece of content**. It is a Kademlia distributed hash table whose **provider records** map a content key to the `peer_id`s that hold that content. A node consults the DHT to **locate holders before it fetches**: it looks up the content, gets back the holders' `peer_id`s and candidate addresses, then confirms and fetches from them with [`dig.getAvailability`](#availability) + [`dig.fetchRange`](#range). **The DHT locates peers; the [NAT ladder](#nat-traversal) reaches them and the [peer RPC](#range) moves the bytes.**
+
+Every node both **serves the DHT** (holds a slice of the routing table and of the global provider records, and answers lookups) and **advertises its own held inventory** as provider records, so content is findable without any central index.
+
+#### The keyspace — one 256-bit XOR metric for nodes and content
+
+Kademlia places nodes and content in a **single 256-bit keyspace** and measures closeness by **XOR distance** (Maymounkov & Mazières). DIG maps into it as follows — a frozen contract every implementation reproduces:
+
+- **A node's key IS its `peer_id`.** `peer_id = SHA-256(TLS SubjectPublicKeyInfo DER)` ([§1](#peer-identity)) is already a uniform 256-bit value, so the DHT node id and the peer id are one and the same.
+- **A content key is `SHA-256(domain-tag ‖ canonical bytes)`** over a fixed, domain-separated byte encoding. The one-byte domain tag makes the three granularities distinct points even when they share a `store_id`, so a store-level record and a resource-level record never collide:
+
+  | Content | Tag | Canonical bytes hashed | Answers |
+  |---|---|---|---|
+  | **store** | `0x01` | `store_id` (32 B) | does a peer serve this store? |
+  | **root / capsule** | `0x02` | `store_id ‖ root` (64 B) | does a peer have this generation `store_id:root`? |
+  | **resource** | `0x03` | `store_id ‖ root ‖ retrieval_key` (96 B) | does a peer have this resource in the capsule? |
+
+  All hashes are the raw 32-byte forms in the fixed field order shown; the leading tag byte is part of the frozen key derivation and is never renumbered. These granularities match the [`dig.getAvailability`](#availability) has_store / has_root / has_resource shapes, so a lookup and an availability check speak of the same content.
+- **Distance is XOR.** `d(a, b) = a XOR b`, compared big-endian (smaller = closer). A key's **routing-table bucket index** is `255 − leading_zeros(distance)` — the position of the most-significant set bit, i.e. the length of the shared prefix with this node's id. This gives 256 k-buckets, least-recently-seen ordered with the standard ping-and-replace eviction (long-lived nodes resist eviction). One iterative lookup engine (α-parallel, converging on the `k` closest peers) serves both `find_node` and `find_providers`.
+
+#### The DHT RPC — a distinct framed wire {#dht-wire}
+
+The DHT RPC is **not** a `dig.*` JSON-RPC 2.0 method. It rides an **authenticated dig-nat mTLS stream** ([§1](#peer-identity)): each RPC opens a logical stream and writes a **`u32` big-endian length prefix + a `type`-tagged JSON body** — **byte-identical framing to the dig-nat / relay control messages** ([§6](#relayed)), so a node speaks one framing across the whole peer network. The framed body is bounded (a length prefix over the cap is rejected, never allocated). There are exactly **four methods**:
+
+| Method | Request | Response |
+|---|---|---|
+| **`find_node`** | `{ "type":"find_node", "target":"<64hex>" }` | `{ "type":"nodes", "nodes":[Contact] }` — the `k` peers the responder knows closest to `target` |
+| **`find_providers`** | `{ "type":"find_providers", "content_key":"<64hex>" }` | `{ "type":"providers", "providers":[ProviderRecord], "closer":[Contact] }` — providers held locally **plus** the `k` closer peers |
+| **`add_provider`** | `{ "type":"add_provider", "record":ProviderRecord }` | `{ "type":"add_provider_ok" }` — the record was accepted + stored |
+| **`ping`** | `{ "type":"ping", "nonce":<uint> }` | `{ "type":"pong", "nonce":<uint> }` — liveness; the responder echoes the nonce |
+
+A responder that cannot answer returns the error envelope `{ "type":"error", "code":<uint>, "message":<str> }` — **advisory**: a lookup treats it like an unreachable peer and walks on. `find_providers` **always** returns `closer` contacts (even when providers are already found), because more providers may live nearer the key — this is what lets an iterative lookup keep converging.
+
+The two wire shapes:
+
+```text
+Contact        = { "peer_id":"<64hex>",
+                   "addresses":[ { "host":str, "port":uint,
+                                   "kind":"direct"|"mapped"|"reflexive"|"relay" } ] }
+
+ProviderRecord = { "content_key":"<64hex>",
+                   "provider_peer_id":"<64hex>",
+                   "addresses":[ { "host":str, "port":uint, "kind":… } ],
+                   "expires_at":<unix-seconds> }
+```
+
+The `addresses[]` shape (and the `kind` tokens `direct`/`mapped`/`reflexive`/`relay`, most-direct-first) is **byte-compatible with the L7 [`dig.getPeers`](#peer-rpc) addresses** ([§7](#peer-rpc)), so a returned `Contact` or `ProviderRecord` drops straight into a dial target for the [NAT ladder](#nat-traversal). `content_key` is the 64-hex content key derived above; `provider_peer_id` is the holder's `peer_id`.
+
+#### Provider-record lifecycle — soft state, TTL'd + republished
+
+A provider record is **soft state**, not a permanent entry, so an offline holder ages out automatically. These rules are normative:
+
+- **Announce on hold.** When a node gains content it serves, it PUTs a `ProviderRecord` (via `add_provider`) at the `k` nodes closest to that content key — binding the content key to its own `peer_id` and candidate addresses.
+- **Absolute expiry.** `expires_at` is set to `now + TTL` in absolute Unix seconds. A record at or after its `expires_at` is treated as **absent**.
+- **Republish before expiry.** The holder re-announces (a fresh record with a new `expires_at`) on an interval strictly shorter than the TTL, so its records never expire while it is online.
+- **Withdraw on removal.** A node that no longer holds content stops announcing it; the record then ages out on its TTL (no explicit delete is required).
+- **GC drops the expired.** A responder discards expired records on read and does not return them.
+- **Inbound RPC populates the routing table bidirectionally.** On **every** inbound DHT RPC, the responder folds the **mTLS-verified caller** (its `Contact`) into its own routing table — every request is evidence the caller is alive, so a node that queries you teaches you about itself. The caller identity MUST come from the authenticated transport, never from a field the caller sets.
+
+#### How a node uses the DHT
+
+- **On content-want** (a user asks for `store_id`, `store_id:root`, or a specific resource): derive the matching content key, run `find_providers`, then reach each returned provider over the [NAT ladder](#nat-traversal) and fetch via [`dig.getAvailability`](#availability) + [`dig.fetchRange`](#range). The DHT is **step 1 of the [multi-source download](#multi-source)** — it finds the candidate holders the download then fans out across.
+- **On inventory-change** (the node gains or loses content it serves): `add_provider` for each new content key, and stop announcing what it no longer holds. Run republish on the configured interval.
+- **Bootstrap** the routing table from existing discovery — the gossip peer pool ([§4b](#discovery)) or the relay introducer ([§4a](#discovery)) — then a self-lookup (`find_node` on the node's own id) fills the table. The DHT never hard-depends on a live relay.
 
 ## 5 · Relay-coordinated hole-punching (signalling only) {#hole-punch}
 
@@ -404,7 +475,9 @@ Detecting a bad source: any of a chunk-length mismatch against `chunk_lens`, a f
 ### The multi-source download pattern (normative) {#multi-source}
 
 ```text
-1. DISCOVER  — find candidate peers via the introducer + dig.getPeers (§4).
+1. DISCOVER  — locate candidate holders in the DHT: find_providers(content_key)
+               for the store/root/resource (§4c), backed by the introducer +
+               dig.getPeers peer discovery (§4).
 2. QUERY     — dig.getAvailability (batch) against the candidates: has_store /
    AVAILABILITY   has_root / has_capsule (§9 availability). Keep only peers that
                actually HOLD the resource; read total_length + chunk_count to plan.
@@ -460,6 +533,9 @@ The peer network is implemented by several crates that must interoperate byte-fo
 | **Streaming + range** | `dig.fetchRange` streams `RangeFrame{offset,length,bytes,complete}`; first frame carries `total_length` + `chunk_lens` + `chunk_index` + `inclusion_proof`; ranges are chunk-aligned | that data streams (not buffered), and a single-peer range verifies against the chain-anchored root — so multi-source pieces reassemble and can't be forged |
 | **Range integrity** | a range maps to whole chunk(s); each verifies via `chunk_lens` + the whole-resource `inclusion_proof` against the on-chain `root` (same as [merkle-proofs](./merkle-proofs.md)) | that any peer's range is independently verifiable + a bad source is detectable without the whole file |
 | **NAT ladder** | the ordered strategies DIRECT → UPnP → NAT-PMP → PCP → hole-punch (relay signalling only) → RELAYED/TURN (relay carries data), relay-data-last | that every `connect(peer)` implementation prefers direct, prefers hole-punch signalling over full relaying, and proxies the stream only as a last resort |
+| **DHT content key** | `SHA-256(tag ‖ canonical bytes)` with tags `0x01` store (`store_id`), `0x02` root/capsule (`store_id ‖ root`), `0x03` resource (`store_id ‖ root ‖ retrieval_key`); node id = `peer_id`; distance = XOR; bucket = `255 − leading_zeros` ([§4c](#dht)) | that every node derives the identical content key for the same content, and places nodes + content in one 256-bit keyspace, so a provider record announced by one implementation is found by another |
+| **DHT RPC wire** | the four `type`-tagged methods `find_node` / `find_providers` / `add_provider` / `ping` (+ the `error` envelope), `u32`-BE length-prefixed JSON over an authenticated dig-nat mTLS stream (same framing as the relay control messages), `find_providers` always returning `closer` ([§4c](#dht-wire)) | that any node's DHT speaks the same locate-the-holders wire; `dig-nat`/`dig-dht`/`dig-node` conform |
+| **DHT shapes** | `Contact { peer_id:<64hex>, addresses:[{host,port,kind}] }` and `ProviderRecord { content_key, provider_peer_id, addresses, expires_at }`, `addresses[]` byte-compatible with `dig.getPeers`; provider records are TTL'd (absolute `expires_at`), republished before expiry, GC'd when stale, and every inbound RPC folds the mTLS-verified caller into the routing table | that returned contacts/records drop straight into a dial target and that provider state is soft state that ages out |
 
 A reimplementation of any peer crate conforms iff it reproduces these — the same discipline that keeps the [read path parity-locked](./conformance-and-parity.md).
 

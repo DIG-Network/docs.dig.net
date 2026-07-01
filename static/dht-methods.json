@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "spec": "dig-dht-rpc",
+  "version": 1,
+  "site": "https://docs.dig.net",
+  "humanPage": "https://docs.dig.net/docs/protocol/peer-network#dht",
+  "title": "DIG DHT RPC — content-discovery wire (dig-dht)",
+  "description": "The Kademlia DHT RPC that locates WHICH peers hold a piece of content. This is NOT JSON-RPC 2.0 (the dig.* methods in openrpc.json / openrpc-node.json are): it is a distinct, type-tagged JSON wire carried as a u32 big-endian length-prefixed body over an authenticated dig-nat mTLS stream (byte-identical framing to the relay RelayMessage control messages). A node runs find_providers to get the peer_ids + candidate addresses of holders, then reaches them over the NAT ladder and fetches with dig.getAvailability + dig.fetchRange. dig-nat/dig-dht/dig-node conform to this frozen contract.",
+  "transport": {
+    "over": "authenticated dig-nat mTLS stream (peer_id = SHA-256(TLS SubjectPublicKeyInfo DER))",
+    "framing": "u32 big-endian body-length prefix, then a type-tagged JSON body (same framing as the relay RelayMessage control messages)",
+    "encoding": "UTF-8 JSON",
+    "discriminator": "type",
+    "maxFramedBody": 262144,
+    "notJsonRpc": true,
+    "callerIdentity": "the responder folds the mTLS-verified caller (its Contact) into its routing table on every inbound RPC; the caller identity comes from the authenticated transport, never a request field"
+  },
+  "keyspace": {
+    "description": "One 256-bit XOR (Kademlia) metric for both nodes and content.",
+    "nodeId": "a node's key IS its peer_id (already a uniform 256-bit SHA-256 value)",
+    "distance": "XOR of the two 32-byte keys, compared big-endian (smaller = closer)",
+    "bucketIndex": "255 - leading_zeros(distance) — the position of the most-significant set bit (256 k-buckets)",
+    "contentKey": {
+      "derivation": "SHA-256(domain_tag ‖ canonical_bytes) — one leading domain-tag byte then the raw 32-byte fields in fixed order; the tag keeps the three granularities distinct points",
+      "granularities": [
+        {
+          "granularity": "store",
+          "tag": "0x01",
+          "canonicalBytes": "store_id (32 bytes)",
+          "answers": "does a peer serve this store?"
+        },
+        {
+          "granularity": "root",
+          "aliases": ["capsule"],
+          "tag": "0x02",
+          "canonicalBytes": "store_id ‖ root (64 bytes)",
+          "answers": "does a peer have this generation store_id:root (the immutable capsule)?"
+        },
+        {
+          "granularity": "resource",
+          "tag": "0x03",
+          "canonicalBytes": "store_id ‖ root ‖ retrieval_key (96 bytes)",
+          "answers": "does a peer have this resource within the capsule?"
+        }
+      ]
+    }
+  },
+  "methods": [
+    {
+      "name": "find_node",
+      "summary": "Ask for the k peers the responder knows closest to an XOR-metric target key.",
+      "request": { "type": "find_node", "target": "<64hex key>" },
+      "response": { "type": "nodes", "nodes": "[Contact]" }
+    },
+    {
+      "name": "find_providers",
+      "summary": "Ask for providers of a content key. Returns any provider records the responder holds PLUS (always) the k closer contacts, so an iterative lookup keeps converging toward the key even when providers are already found.",
+      "request": { "type": "find_providers", "content_key": "<64hex content key>" },
+      "response": { "type": "providers", "providers": "[ProviderRecord]", "closer": "[Contact]" }
+    },
+    {
+      "name": "add_provider",
+      "summary": "Announce that record.provider_peer_id holds record.content_key. Sent to the k nodes closest to the content key; the responder stores the record (soft state, TTL'd).",
+      "request": { "type": "add_provider", "record": "ProviderRecord" },
+      "response": { "type": "add_provider_ok" }
+    },
+    {
+      "name": "ping",
+      "summary": "Liveness check; the responder echoes the nonce in its pong.",
+      "request": { "type": "ping", "nonce": "<uint>" },
+      "response": { "type": "pong", "nonce": "<uint>" }
+    }
+  ],
+  "errorEnvelope": {
+    "shape": { "type": "error", "code": "<uint>", "message": "<str>" },
+    "semantics": "advisory — a lookup treats an error response like an unreachable peer and walks on to the next contact"
+  },
+  "shapes": {
+    "Contact": {
+      "description": "A peer's identity plus how to reach it. addresses[] is byte-compatible with the L7 dig.getPeers addresses shape, so a Contact drops straight into a dial target for the NAT ladder.",
+      "fields": {
+        "peer_id": "<64hex> — peer_id = SHA-256(TLS SubjectPublicKeyInfo DER)",
+        "addresses": "[CandidateAddr]"
+      }
+    },
+    "ProviderRecord": {
+      "description": "The DHT's stored value: peer provider_peer_id holds the content whose key is content_key, reachable at addresses, until expires_at. Soft state — TTL'd, republished before expiry, and GC'd when stale.",
+      "fields": {
+        "content_key": "<64hex> — the content key derived above",
+        "provider_peer_id": "<64hex> — the holder's peer_id",
+        "addresses": "[CandidateAddr]",
+        "expires_at": "<uint> — absolute Unix seconds; a record at or after this time is stale/absent"
+      }
+    },
+    "CandidateAddr": {
+      "description": "One candidate address, byte-compatible with the L7 dig.getPeers addresses[] shape. The dialer prefers most-direct-first (direct < mapped < reflexive < relay).",
+      "fields": {
+        "host": "<str> — IPv4/IPv6 literal or hostname",
+        "port": "<uint> — P2P port",
+        "kind": "one of: direct | mapped | reflexive | relay"
+      }
+    }
+  },
+  "providerRecordLifecycle": {
+    "announce": "on gaining content it serves, a node add_providers a record binding the content key to its own peer_id + candidate addresses, at the k nodes closest to the key",
+    "expiry": "expires_at = now + TTL (absolute Unix seconds)",
+    "republish": "the holder re-announces (fresh expires_at) on an interval strictly shorter than the TTL, so records never expire while it is online",
+    "withdraw": "on losing content, the node stops announcing it; the record ages out on its TTL (no explicit delete)",
+    "gc": "a responder discards expired records on read and never returns them"
+  }
+}
