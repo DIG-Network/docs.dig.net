@@ -20,6 +20,10 @@ tags:
 
 > **Canonical reference:** `digstore-remote` (axum server + reqwest `DigClient`) and its crypto/codec in `digstore-core` / `digstore-crypto`. This is the **transport** half of the [scheme split](./urn-and-addressing.md#the-three-way-scheme-split): `chia://` = content addressing; `dig://` here = the §21 transport locator. **Browser/agent reads use the [POST JSON-RPC](./dig-rpc.md); CLI/peer sync + publishing use these authenticated REST routes.**
 
+:::note These routes span both RPC tiers
+Under the [dual-transport tier model](./peer-network.md#dual-transport): the §21 **GET** content routes (`content` / `proof` / `roots` / `descriptor`) are on the **PUBLIC READ tier** — anonymous, CORS-enabled, browser-reachable, client-verified, decoy-on-miss. The §21 **PUSH / WRITE** routes (`module/upload`, `module` PUT, `module/complete`, `tombstone`) are on the **PEER / CONTROL tier** — mTLS-authenticated plus the [per-request BLS signature](#per-request-auth) below, and never reachable anonymously. See the [tier map](./peer-network.md#tier-map).
+:::
+
 ## The `dig://` transport locator
 
 `dig://` is **not spoken on the wire** — it resolves client-side to `https://<host>/stores/<id>` (`config.rs:89`). The 32-byte store id is the wire address.
