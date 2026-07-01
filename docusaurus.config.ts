@@ -289,6 +289,7 @@ const config: Config = {
             // exactly one canonical "Status" link to the live page.
             { label: "Status", href: "https://status.dig.net/" },
             { label: "Discord", href: "https://discord.gg/dignetwork" },
+            { label: "@digdotnet", href: "https://x.com/digdotnet" },
           ],
         },
         {
