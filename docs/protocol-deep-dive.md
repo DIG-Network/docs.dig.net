@@ -50,6 +50,7 @@ One concept runs through every layer: the **[capsule](./concepts.md#capsule)** =
 | 4 | [DIG CAT payment & pricing](./protocol/dig-cat-payment.md) | per-capsule, dynamic, USD-pegged | `chip35_dl_coin::dig` |
 | 6 | [The dig RPC](./protocol/dig-rpc.md) | the machine interface (JSON-RPC 2.0) | hub `retrieval`, `dig-node` |
 | 5 | [§21 transport & push](./protocol/transport-and-push.md) | `dig://` locator, REST, push v1 | `digstore-remote` |
+| 7 | [DIG Node peer network](./protocol/peer-network.md) | mTLS peer identity, NAT traversal, STUN, introducer, relay wire, peer RPC | `dig-gossip`, `dig-relay`, `dig-nat`, `dig-node` |
 | 6 | [Verification & provenance](./protocol/verification-and-provenance.md) | the four ordered integrity gates | `digstore-core::merkle`, `dig-node` |
 | 6 | [The blind host model](./protocol/blind-host-model.md) | provider-blindness; resolver; `/v1` control plane | hub `retrieval`/`resolver`/`api` |
 | — | [Conformance & parity](./protocol/conformance-and-parity.md) | the cross-impl parity discipline | frozen goldens, OpenRPC diff |
@@ -73,4 +74,5 @@ A publisher **chunks + encrypts** (L1) content into a **capsule format** (L2) th
 - [Concepts & glossary](./concepts.md) — every entity defined once
 - [Identity & naming](./protocol/identity-and-naming.md) — Layer 0, where the spec begins
 - [The dig RPC](./protocol/dig-rpc.md) — the protocol's machine interface
+- [DIG Node peer network](./protocol/peer-network.md) — how nodes find + reach each other (mTLS, NAT traversal, relay)
 - [Conformance & parity](./protocol/conformance-and-parity.md) — the cross-impl parity discipline

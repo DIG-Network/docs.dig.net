@@ -127,6 +127,40 @@ export const schemas = {
       anchored_at: { type: 'integer', description: 'Unix timestamp of the anchoring spend.' },
     },
   },
+  PeerId: {
+    type: 'string',
+    pattern: '^[0-9a-f]{64}$',
+    title: 'PeerId',
+    description: 'A DIG Node peer identity: SHA-256 of the peer\'s TLS SubjectPublicKeyInfo DER, as 64 lower-case hex characters (32 bytes).',
+  },
+  CandidateAddress: {
+    title: 'CandidateAddress',
+    type: 'object',
+    description: 'One address at which a peer may be reachable, tagged by how it was learned. Peers dial candidates most-direct-first.',
+    required: ['host', 'port', 'kind'],
+    properties: {
+      host: { type: 'string', description: 'IP literal or hostname.' },
+      port: { type: 'integer', minimum: 0, maximum: 65535, description: 'The peer\'s P2P port (default 9444).' },
+      kind: {
+        type: 'string',
+        enum: ['direct', 'reflexive', 'mapped', 'relay'],
+        description: 'How the address was learned: advertised/observed direct, STUN reflexive, UPnP/NAT-PMP/PCP mapped, or relay-reachable.',
+      },
+    },
+  },
+  PeerRecord: {
+    title: 'PeerRecord',
+    type: 'object',
+    description: 'A known peer with its identity and candidate addresses (the peer-exchange record).',
+    required: ['peer_id', 'addresses'],
+    properties: {
+      peer_id: { $ref: '#/components/schemas/PeerId' },
+      addresses: { type: 'array', items: { $ref: '#/components/schemas/CandidateAddress' }, description: 'The peer\'s candidate addresses.' },
+      network_id: { type: 'string', description: 'The network the peer is on (e.g. DIG_MAINNET).' },
+      last_seen: { type: 'integer', description: 'Unix seconds this peer was last seen.' },
+      via: { type: 'string', enum: ['direct', 'relay'], description: 'How this node currently reaches the peer.' },
+    },
+  },
 };
 
 /* ------------------------------------------------------------------ *
@@ -381,6 +415,84 @@ export const nodeMethods = [
     result: { name: 'config', schema: { type: 'object' } },
     errors: ['INTERNAL_ERROR'],
   },
+  {
+    name: 'dig.getPeers',
+    summary: 'Return the peers this node knows, with peer_id + candidate addresses.',
+    description:
+      'Peer-exchange over RPC: the peers in this node\'s address book, each with its peer_id (SHA-256 of the peer\'s TLS SPKI DER) and candidate addresses. Mirrors the gossip RequestPeers/RespondPeers exchange so an agent can drive discovery without speaking the binary peer protocol. NODE-PROFILE ONLY. See https://docs.dig.net/docs/protocol/peer-network#peer-rpc.',
+    paramStructure: 'by-name',
+    params: [
+      { name: 'network_id', required: false, schema: { type: 'string' }, description: 'Filter to one network (e.g. DIG_MAINNET).' },
+      { name: 'limit', required: false, schema: { type: 'integer', minimum: 1 }, description: 'Cap the number of peers returned.' },
+    ],
+    result: {
+      name: 'peers',
+      schema: {
+        type: 'object',
+        required: ['peers'],
+        properties: { peers: { type: 'array', items: { $ref: '#/components/schemas/PeerRecord' } } },
+      },
+    },
+    errors: ['INVALID_PARAMS', 'INTERNAL_ERROR', 'PEER_UNREACHABLE'],
+  },
+  {
+    name: 'dig.announce',
+    summary: 'Advertise this node (peer_id + addresses) to a peer or the introducer.',
+    description:
+      'Announce this node\'s peer_id + candidate addresses so a target peer (or, if `target` is omitted, the relay introducer) learns to reach it. The RPC face of the introducer/announce path. NODE-PROFILE ONLY. See https://docs.dig.net/docs/protocol/peer-network#peer-rpc.',
+    paramStructure: 'by-name',
+    params: [
+      { name: 'peer_id', required: true, schema: { $ref: '#/components/schemas/PeerId' }, description: 'The announcing node\'s peer_id.' },
+      { name: 'addresses', required: true, schema: { type: 'array', items: { $ref: '#/components/schemas/CandidateAddress' } }, description: 'The announcing node\'s candidate addresses.' },
+      { name: 'network_id', required: false, schema: { type: 'string' } },
+      { name: 'target', required: false, schema: { $ref: '#/components/schemas/PeerId' }, description: 'A specific peer to announce to; omit to register with the relay introducer.' },
+    ],
+    result: {
+      name: 'announced',
+      schema: {
+        type: 'object',
+        required: ['accepted'],
+        properties: {
+          accepted: { type: 'boolean', description: 'Whether the announcement was accepted.' },
+          known_peers: { type: 'integer', minimum: 0, description: 'The recipient\'s resulting peer-view size.' },
+        },
+      },
+    },
+    errors: ['INVALID_PARAMS', 'INTERNAL_ERROR', 'PEER_UNREACHABLE'],
+  },
+  {
+    name: 'dig.getNetworkInfo',
+    summary: 'Report this node\'s identity, reachability, candidate addresses + relay state.',
+    description:
+      'The node\'s own network posture: its peer_id, listen + STUN-reflexive addresses, candidate addresses, direct-vs-relayed reachability, and relay-reservation state. The self-describe surface for discovery + NAT traversal. NODE-PROFILE ONLY. See https://docs.dig.net/docs/protocol/peer-network#peer-rpc.',
+    paramStructure: 'by-name',
+    params: [],
+    result: {
+      name: 'network_info',
+      schema: {
+        type: 'object',
+        required: ['peer_id', 'reachability'],
+        properties: {
+          peer_id: { $ref: '#/components/schemas/PeerId' },
+          network_id: { type: 'string' },
+          listen_addr: { type: 'string', description: 'The node\'s configured listen address (host:port).' },
+          reflexive_addr: { type: ['string', 'null'], description: 'The STUN-discovered public IP:port, or null if not yet learned.' },
+          candidate_addresses: { type: 'array', items: { $ref: '#/components/schemas/CandidateAddress' } },
+          reachability: { type: 'string', enum: ['direct', 'relayed'], description: 'direct = a direct inbound path exists; relayed = only reachable through the relay.' },
+          relay: {
+            type: 'object',
+            description: 'The relay reservation state.',
+            properties: {
+              url: { type: 'string', description: 'The relay endpoint (default wss://relay.dig.net:9450).' },
+              reserved: { type: 'boolean', description: 'Whether a relay reservation (RLY-001) is currently held.' },
+              connected_peers: { type: 'integer', minimum: 0 },
+            },
+          },
+        },
+      },
+    },
+    errors: ['INTERNAL_ERROR'],
+  },
 ];
 
 /* ------------------------------------------------------------------ *
@@ -396,6 +508,7 @@ export const rpcErrors = {
   INTERNAL_ERROR: { code: -32603, message: 'Internal error', meaning: 'The node failed to satisfy a well-formed call.' },
   RESOURCE_UNAVAILABLE: { code: -32004, message: 'Resource not available at the requested root', meaning: 'A genuine infrastructure miss (no host seed, module absent in both buckets, bad magic, oversize, a wasmtime trap, or an undecodable envelope) — distinct from a content miss, which is an indistinguishable decoy with no error.' },
   ROOT_NOT_ANCHORED: { code: -32005, message: 'Root not chain-anchored', meaning: 'The requested or served generation is not the store’s current on-chain root. A content read is pinned to the CHIP-0035 singleton’s on-chain root (resolved live from the chain, never trusted from the serving node): a requested root that is not the on-chain root, an unreachable chain, or a store with no confirmed generation fails closed with this code rather than serving an unverified generation. Omit root to take the chain tip.' },
+  PEER_UNREACHABLE: { code: -32006, message: 'Peer unreachable', meaning: 'No connection to the named peer could be established — every NAT-traversal strategy (direct, UPnP/NAT-PMP/PCP mapping, relay-coordinated hole-punch, and relayed fallback) failed, or the peer is not registered on this network. Returned by the node-profile peer methods (dig.getPeers / dig.announce / dig.getNetworkInfo).' },
 };
 
 /* ------------------------------------------------------------------ *

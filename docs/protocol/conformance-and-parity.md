@@ -33,6 +33,7 @@ Every cryptographic constant has **ONE** definition shared across producer, host
 | [BLS](./bls-signatures.md) host↔guest | host-signed fixtures the guest must accept (`tests/bls_fixtures.rs`) | AugScheme cross-impl parity + the five role DSTs |
 | [Merkle](./merkle-proofs.md) leaf/proof | `resource_leaf` shared by producer + verifier | D5 leaf = `SHA-256(ciphertext)`; D8 proof length ≤ `ceil(log2 n)` |
 | [dig RPC](./dig-rpc.md) | OpenRPC documents generated from the implementation, CI-diffable against live server responses | the method set, the chunk object (incl. `chunk_lens`, no `decoy`), `-32004` |
+| [Peer network](./peer-network.md) | `peer_id = SHA-256(TLS SPKI DER)`; the RLY-001..RLY-007 relay JSON wire; the peer RPC methods in `openrpc-node.json` | that any node, relay, and NAT implementation derive the same peer identity, speak the same relay wire, and prefer direct-over-relay identically |
 
 ## URN conformance vectors {#urn-conformance-vectors}
 
@@ -47,4 +48,5 @@ The two OpenRPC documents ([network](https://docs.dig.net/openrpc.json) + [node]
 - [Cryptography](./cryptography.md) — the one-crypto-impl invariant
 - [URN & addressing](./urn-and-addressing.md) — the canonical form the vectors pin
 - [The dig RPC](./dig-rpc.md) — the OpenRPC documents
+- [DIG Node peer network](./peer-network.md) — the peer identity + relay wire the peer crates match
 - [Machine surfaces](../machine-surfaces.md) — every machine-readable artifact
