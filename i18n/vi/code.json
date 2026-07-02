@@ -1,0 +1,423 @@
+{
+  "theme.ErrorPageContent.title": {
+    "message": "Trang này đã bị lỗi.",
+    "description": "The title of the fallback page when the page crashed"
+  },
+  "theme.BackToTopButton.buttonAriaLabel": {
+    "message": "Trở lại đầu trang",
+    "description": "The ARIA label for the back to top button"
+  },
+  "theme.blog.archive.title": {
+    "message": "Lưu trữ",
+    "description": "The page & hero title of the blog archive page"
+  },
+  "theme.blog.archive.description": {
+    "message": "Lưu trữ",
+    "description": "The page & hero description of the blog archive page"
+  },
+  "theme.blog.paginator.navAriaLabel": {
+    "message": "Thanh điều hướng của trang danh sách bài viết",
+    "description": "The ARIA label for the blog pagination"
+  },
+  "theme.blog.paginator.newerEntries": {
+    "message": "Các bài mới hơn",
+    "description": "The label used to navigate to the newer blog posts page (previous page)"
+  },
+  "theme.blog.paginator.olderEntries": {
+    "message": "Các bài cũ hơn",
+    "description": "The label used to navigate to the older blog posts page (next page)"
+  },
+  "theme.blog.post.paginator.navAriaLabel": {
+    "message": "Thanh điều hướng của trang bài viết",
+    "description": "The ARIA label for the blog posts pagination"
+  },
+  "theme.blog.post.paginator.newerPost": {
+    "message": "Bài mới hơn",
+    "description": "The blog post button label to navigate to the newer/previous post"
+  },
+  "theme.blog.post.paginator.olderPost": {
+    "message": "Bài cũ hơn",
+    "description": "The blog post button label to navigate to the older/next post"
+  },
+  "theme.colorToggle.ariaLabel": {
+    "message": "Chuyển đổi chế độ sáng và tối (hiện tại {mode})",
+    "description": "The ARIA label for the navbar color mode toggle"
+  },
+  "theme.colorToggle.ariaLabel.mode.dark": {
+    "message": "chế độ tối",
+    "description": "The name for the dark color mode"
+  },
+  "theme.colorToggle.ariaLabel.mode.light": {
+    "message": "chế độ sáng",
+    "description": "The name for the light color mode"
+  },
+  "theme.tags.tagsPageLink": {
+    "message": "Xem tất cả Thẻ",
+    "description": "The label of the link targeting the tag list page"
+  },
+  "theme.docs.breadcrumbs.navAriaLabel": {
+    "message": "Liên kết điều hướng",
+    "description": "The ARIA label for the breadcrumbs"
+  },
+  "theme.docs.DocCard.categoryDescription.plurals": {
+    "message": "{count} mục",
+    "description": "The default description for a category card in the generated index about how many items this category includes"
+  },
+  "theme.docs.paginator.navAriaLabel": {
+    "message": "Trang tài liệu",
+    "description": "The ARIA label for the docs pagination"
+  },
+  "theme.docs.paginator.previous": {
+    "message": "Trước",
+    "description": "The label used to navigate to the previous doc"
+  },
+  "theme.docs.paginator.next": {
+    "message": "Kế tiếp",
+    "description": "The label used to navigate to the next doc"
+  },
+  "theme.docs.tagDocListPageTitle.nDocsTagged": {
+    "message": "{count} tài liệu đã gắn thẻ",
+    "description": "Pluralized label for \"{count} docs tagged\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.docs.tagDocListPageTitle": {
+    "message": "{nDocsTagged} với \"{tagName}\"",
+    "description": "The title of the page for a docs tag"
+  },
+  "theme.docs.versionBadge.label": {
+    "message": "Phiên bản: {versionLabel}"
+  },
+  "theme.docs.versions.unreleasedVersionLabel": {
+    "message": "Đây là tài liệu chưa được phát hành chính thức của {siteTitle} phiên bản {versionLabel}.",
+    "description": "The label used to tell the user that he's browsing an unreleased doc version"
+  },
+  "theme.docs.versions.unmaintainedVersionLabel": {
+    "message": "Đây là tài liệu của {siteTitle} {versionLabel}, hiện không còn được bảo trì.",
+    "description": "The label used to tell the user that he's browsing an unmaintained doc version"
+  },
+  "theme.docs.versions.latestVersionSuggestionLabel": {
+    "message": "Để xem các cập nhật mới nhất, vui lòng xem phiên bản {latestVersionLink} ({versionLabel}).",
+    "description": "The label used to tell the user to check the latest version"
+  },
+  "theme.docs.versions.latestVersionLinkLabel": {
+    "message": "phiên bản mới nhất",
+    "description": "The label used for the latest version suggestion link label"
+  },
+  "theme.lastUpdated.atDate": {
+    "message": " vào {date}",
+    "description": "The words used to describe on which date a page has been last updated"
+  },
+  "theme.lastUpdated.byUser": {
+    "message": " bởi {user}",
+    "description": "The words used to describe by who the page has been last updated"
+  },
+  "theme.lastUpdated.lastUpdatedAtBy": {
+    "message": "Cập nhật lần cuối{atDate}{byUser}",
+    "description": "The sentence used to display when a page has been last updated, and by who"
+  },
+  "theme.common.editThisPage": {
+    "message": "Sửa trang này",
+    "description": "The link label to edit the current page"
+  },
+  "theme.common.headingLinkTitle": {
+    "message": "Đường dẫn trực tiếp tới {heading}",
+    "description": "Title for link to heading"
+  },
+  "theme.navbar.mobileVersionsDropdown.label": {
+    "message": "Phiên bản",
+    "description": "The label for the navbar versions dropdown on mobile view"
+  },
+  "theme.NotFound.title": {
+    "message": "Không tìm thấy trang",
+    "description": "The title of the 404 page"
+  },
+  "theme.tags.tagsListLabel": {
+    "message": "Thẻ:",
+    "description": "The label alongside a tag list"
+  },
+  "theme.AnnouncementBar.closeButtonAriaLabel": {
+    "message": "Đóng",
+    "description": "The ARIA label for close button of announcement bar"
+  },
+  "theme.admonition.caution": {
+    "message": "cẩn thận",
+    "description": "The default label used for the Caution admonition (:::caution)"
+  },
+  "theme.admonition.danger": {
+    "message": "cảnh báo",
+    "description": "The default label used for the Danger admonition (:::danger)"
+  },
+  "theme.admonition.info": {
+    "message": "thông tin",
+    "description": "The default label used for the Info admonition (:::info)"
+  },
+  "theme.admonition.note": {
+    "message": "ghi chú",
+    "description": "The default label used for the Note admonition (:::note)"
+  },
+  "theme.admonition.tip": {
+    "message": "mẹo",
+    "description": "The default label used for the Tip admonition (:::tip)"
+  },
+  "theme.admonition.warning": {
+    "message": "warning",
+    "description": "The default label used for the Warning admonition (:::warning)"
+  },
+  "theme.blog.sidebar.navAriaLabel": {
+    "message": "Điều hướng các bài viết gần đây trên blog",
+    "description": "The ARIA label for recent posts in the blog sidebar"
+  },
+  "theme.CodeBlock.copied": {
+    "message": "Đã sao chép",
+    "description": "The copied button label on code blocks"
+  },
+  "theme.CodeBlock.copyButtonAriaLabel": {
+    "message": "Sao chép code vào bộ nhớ tạm",
+    "description": "The ARIA label for copy code blocks button"
+  },
+  "theme.CodeBlock.copy": {
+    "message": "Sao chép",
+    "description": "The copy button label on code blocks"
+  },
+  "theme.CodeBlock.wordWrapToggle": {
+    "message": "Chuyển đổi văn bản xuống dòng",
+    "description": "The title attribute for toggle word wrapping button of code block lines"
+  },
+  "theme.DocSidebarItem.expandCategoryAriaLabel": {
+    "message": "Xem thêm danh mục '{label}'",
+    "description": "The ARIA label to expand the sidebar category"
+  },
+  "theme.DocSidebarItem.collapseCategoryAriaLabel": {
+    "message": "Thu gọn danh mục '{label}'",
+    "description": "The ARIA label to collapse the sidebar category"
+  },
+  "theme.NavBar.navAriaLabel": {
+    "message": "Thanh điều hướng",
+    "description": "The ARIA label for the main navigation"
+  },
+  "theme.navbar.mobileLanguageDropdown.label": {
+    "message": "Ngôn ngữ",
+    "description": "The label for the mobile language switcher dropdown"
+  },
+  "theme.NotFound.p1": {
+    "message": "Chúng tôi không thể tìm thấy những gì bạn đang tìm kiếm.",
+    "description": "The first paragraph of the 404 page"
+  },
+  "theme.NotFound.p2": {
+    "message": "Vui lòng liên hệ với trang web đã dẫn bạn tới đây và thông báo cho họ biết rằng đường dẫn này bị hỏng.",
+    "description": "The 2nd paragraph of the 404 page"
+  },
+  "theme.TOCCollapsible.toggleButtonLabel": {
+    "message": "Trên trang này",
+    "description": "The label used by the button on the collapsible TOC component"
+  },
+  "theme.blog.post.readMore": {
+    "message": "Đọc tiếp",
+    "description": "The label used in blog post item excerpts to link to full blog posts"
+  },
+  "theme.blog.post.readMoreLabel": {
+    "message": "Đọc thêm về {title}",
+    "description": "The ARIA label for the link to full blog posts from excerpts"
+  },
+  "theme.docs.breadcrumbs.home": {
+    "message": "Trang chủ",
+    "description": "The ARIA label for the home page in the breadcrumbs"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} phút để đọc",
+    "description": "Pluralized label for \"{readingTime} min read\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.docs.sidebar.collapseButtonTitle": {
+    "message": "Thu gọn thanh bên",
+    "description": "The title attribute for collapse button of doc sidebar"
+  },
+  "theme.docs.sidebar.collapseButtonAriaLabel": {
+    "message": "Thu gọn thanh bên",
+    "description": "The title attribute for collapse button of doc sidebar"
+  },
+  "theme.docs.sidebar.navAriaLabel": {
+    "message": "Thanh điều hướng tài liệu",
+    "description": "The ARIA label for the sidebar navigation"
+  },
+  "theme.docs.sidebar.closeSidebarButtonAriaLabel": {
+    "message": "Đóng thanh điều hướng",
+    "description": "The ARIA label for close button of mobile sidebar"
+  },
+  "theme.navbar.mobileSidebarSecondaryMenu.backButtonLabel": {
+    "message": "← Trở lại menu chính",
+    "description": "The label of the back button to return to main menu, inside the mobile navbar sidebar secondary menu (notably used to display the docs sidebar)"
+  },
+  "theme.docs.sidebar.toggleSidebarButtonAriaLabel": {
+    "message": "Đóng - mở thanh điều hướng",
+    "description": "The ARIA label for hamburger menu button of mobile navigation"
+  },
+  "theme.docs.sidebar.expandButtonTitle": {
+    "message": "Mở rộng thanh bên",
+    "description": "The ARIA label and title attribute for expand button of doc sidebar"
+  },
+  "theme.docs.sidebar.expandButtonAriaLabel": {
+    "message": "Mở rộng thanh bên",
+    "description": "The ARIA label and title attribute for expand button of doc sidebar"
+  },
+  "theme.blog.post.plurals": {
+    "message": "{count} bài viết",
+    "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.blog.tagTitle": {
+    "message": "{nPosts} được gắn thẻ \"{tagName}\"",
+    "description": "The title of the page for a blog tag"
+  },
+  "theme.blog.author.pageTitle": {
+    "message": "{authorName} - {nPosts}",
+    "description": "The title of the page for a blog author"
+  },
+  "theme.blog.authorsList.pageTitle": {
+    "message": "Authors",
+    "description": "The title of the authors page"
+  },
+  "theme.blog.authorsList.viewAll": {
+    "message": "View All Authors",
+    "description": "The label of the link targeting the blog authors page"
+  },
+  "theme.contentVisibility.unlistedBanner.title": {
+    "message": "Trang không công khai",
+    "description": "The unlisted content banner title"
+  },
+  "theme.contentVisibility.unlistedBanner.message": {
+    "message": "Trang này không được công khai. Công cụ tìm kiếm sẽ không đánh chỉ mục cho trang này và chỉ những người có liên kết mới có thể truy cập được trang.",
+    "description": "The unlisted content banner message"
+  },
+  "theme.contentVisibility.draftBanner.title": {
+    "message": "Draft page",
+    "description": "The draft content banner title"
+  },
+  "theme.contentVisibility.draftBanner.message": {
+    "message": "This page is a draft. It will only be visible in dev and be excluded from the production build.",
+    "description": "The draft content banner message"
+  },
+  "theme.ErrorPageContent.tryAgain": {
+    "message": "Thử lại",
+    "description": "The label of the button to try again rendering when the React error boundary captures an error"
+  },
+  "theme.common.skipToMainContent": {
+    "message": "Nhảy tới nội dung",
+    "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
+  },
+  "theme.tags.tagsPageTitle": {
+    "message": "Thẻ",
+    "description": "The title of the tag list page"
+  },
+  "homepage.hero.pill": {
+    "message": "Mạng Layer 2 Proof-of-Stake trên nền tảng Chia"
+  },
+  "homepage.hero.title": {
+    "message": "Xây dựng trên lớp dữ liệu {decentralized}"
+  },
+  "homepage.hero.title.decentralized": {
+    "message": "phi tập trung"
+  },
+  "homepage.hero.lead": {
+    "message": "DIG Network là nền tảng dành cho nhà phát triển để xuất bản và phân phối nội dung mà máy chủ lưu trữ không bao giờ nhìn thấy nội dung nó mang theo. Hãy bắt đầu với {digstore} — bộ lưu trữ được mã hóa, định địa chỉ theo nội dung, biên dịch thành một mô-đun WebAssembly tự bảo vệ duy nhất."
+  },
+  "homepage.hero.lead.digstore": {
+    "message": "DigStore"
+  },
+  "homepage.hero.cta.docs": {
+    "message": "Khám phá tài liệu →"
+  },
+  "homepage.hero.cta.quickstart": {
+    "message": "Bắt đầu nhanh"
+  },
+  "homepage.hero.cta.browser": {
+    "message": "Tải DIG Browser ↗"
+  },
+  "homepage.hero.trust.license": {
+    "message": "Mã nguồn mở · GPL-2.0"
+  },
+  "homepage.hero.trust.platforms": {
+    "message": "macOS · Linux · Windows"
+  },
+  "homepage.hero.trust.binary": {
+    "message": "CLI dạng tệp nhị phân đơn"
+  },
+  "homepage.pillar.encrypted.title": {
+    "message": "Mã hóa khi lưu trữ"
+  },
+  "homepage.pillar.encrypted.body": {
+    "message": "URN chính là khóa — nó vừa xác định vị trí vừa giải mã (AES-256-GCM-SIV). Không mật khẩu, không lưu khóa ở bất kỳ đâu."
+  },
+  "homepage.pillar.blind.title": {
+    "message": "Ẩn danh với bên cung cấp"
+  },
+  "homepage.pillar.blind.body": {
+    "message": "Máy chủ lưu trữ chỉ giữ văn bản mã hóa được lập chỉ mục bằng hash. Các lượt tải xuống được xác minh theo store id và root đã ký của nhà xuất bản."
+  },
+  "homepage.pillar.selfDefending.title": {
+    "message": "Một tệp tự bảo vệ duy nhất"
+  },
+  "homepage.pillar.selfDefending.body": {
+    "message": "Dữ liệu, máy chủ và bằng chứng Merkle được biên dịch vào một {wasm} duy nhất, được đệm đến kích thước đồng nhất không tiết lộ điều gì."
+  },
+  "homepage.primitives.kicker": {
+    "message": "THÀNH PHẦN CƠ BẢN"
+  },
+  "homepage.primitives.title": {
+    "message": "Các khối xây dựng có thể kết hợp"
+  },
+  "homepage.primitives.subtitle": {
+    "message": "DigStore đã có sẵn. Nhiều thành phần cơ bản khác của DIG Network sắp ra mắt."
+  },
+  "homepage.primitives.available": {
+    "message": "SẴN CÓ"
+  },
+  "homepage.primitives.digstore.lead": {
+    "message": "Một kho lưu trữ được mã hóa, định địa chỉ theo nội dung, có hình dạng giống Git. Trỏ nó vào thư mục build, commit các thế hệ, và định địa chỉ mọi thứ bằng URN."
+  },
+  "homepage.primitives.digstore.link": {
+    "message": "Đọc tài liệu DigStore →"
+  },
+  "homepage.steps.capture.title": {
+    "message": "Thu thập"
+  },
+  "homepage.steps.capture.body": {
+    "message": "Trỏ một store vào đầu ra bản build của bạn."
+  },
+  "homepage.steps.commit.title": {
+    "message": "Commit"
+  },
+  "homepage.steps.commit.body": {
+    "message": "Niêm phong một thế hệ vào một tệp .wasm duy nhất."
+  },
+  "homepage.steps.share.title": {
+    "message": "Chia sẻ"
+  },
+  "homepage.steps.share.body": {
+    "message": "Push lên remote; phân phát một URN."
+  },
+  "homepage.howItWorks.kicker": {
+    "message": "CÁCH HOẠT ĐỘNG"
+  },
+  "homepage.howItWorks.title": {
+    "message": "Ba lệnh để xuất bản"
+  },
+  "homepage.howItWorks.subtitle": {
+    "message": "Quy trình làm việc theo phong cách Git cho đầu ra bản build — được mã hóa và định địa chỉ ngay từ commit đầu tiên."
+  },
+  "homepage.cta.title": {
+    "message": "Bắt đầu xây dựng với DigStore"
+  },
+  "homepage.cta.subtitle": {
+    "message": "Cài đặt CLI và xuất bản store được mã hóa đầu tiên của bạn trong chưa đầy một phút."
+  },
+  "homepage.cta.install": {
+    "message": "Cài đặt CLI"
+  },
+  "homepage.cta.format": {
+    "message": "Tìm hiểu định dạng"
+  },
+  "homepage.meta.title": {
+    "message": "DIG Network — lớp dữ liệu phi tập trung"
+  },
+  "homepage.meta.description": {
+    "message": "DIG Network là mạng Layer 2 Proof-of-Stake trên nền tảng Chia. Tài liệu dành cho nhà phát triển về mạng lưới và các thành phần cơ bản của nó, bao gồm DigStore — bộ lưu trữ được mã hóa, định địa chỉ theo nội dung."
+  }
+}

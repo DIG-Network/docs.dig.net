@@ -1,0 +1,423 @@
+{
+  "theme.ErrorPageContent.title": {
+    "message": "यह पेज क्रैश हो गया।",
+    "description": "The title of the fallback page when the page crashed"
+  },
+  "theme.BackToTopButton.buttonAriaLabel": {
+    "message": "वापस ऊपर स्क्रॉल करें",
+    "description": "The ARIA label for the back to top button"
+  },
+  "theme.blog.paginator.navAriaLabel": {
+    "message": "ब्लॉग सूची पेज नेविगेशन",
+    "description": "The ARIA label for the blog pagination"
+  },
+  "theme.blog.paginator.newerEntries": {
+    "message": "नए एंट्रीज़",
+    "description": "The label used to navigate to the newer blog posts page (previous page)"
+  },
+  "theme.blog.paginator.olderEntries": {
+    "message": "पुराने एंट्रीज़",
+    "description": "The label used to navigate to the older blog posts page (next page)"
+  },
+  "theme.blog.archive.title": {
+    "message": "आर्काइव",
+    "description": "The page & hero title of the blog archive page"
+  },
+  "theme.blog.archive.description": {
+    "message": "आर्काइव",
+    "description": "The page & hero description of the blog archive page"
+  },
+  "theme.blog.post.paginator.navAriaLabel": {
+    "message": "ब्लॉग पोस्ट पेज नेविगेशन",
+    "description": "The ARIA label for the blog posts pagination"
+  },
+  "theme.blog.post.paginator.newerPost": {
+    "message": "नए पोस्ट",
+    "description": "The blog post button label to navigate to the newer/previous post"
+  },
+  "theme.blog.post.paginator.olderPost": {
+    "message": "पुराने पोस्ट",
+    "description": "The blog post button label to navigate to the older/next post"
+  },
+  "theme.tags.tagsPageLink": {
+    "message": "सारे टैग देखें",
+    "description": "The label of the link targeting the tag list page"
+  },
+  "theme.colorToggle.ariaLabel": {
+    "message": "डार्क और लाइट मोड के बीच स्विच करें (वर्तमान में {mode})",
+    "description": "The ARIA label for the navbar color mode toggle"
+  },
+  "theme.colorToggle.ariaLabel.mode.dark": {
+    "message": "डार्क मोड",
+    "description": "The name for the dark color mode"
+  },
+  "theme.colorToggle.ariaLabel.mode.light": {
+    "message": "लाइट मोड",
+    "description": "The name for the light color mode"
+  },
+  "theme.docs.breadcrumbs.navAriaLabel": {
+    "message": "ब्रेडक्रम्ब्स",
+    "description": "The ARIA label for the breadcrumbs"
+  },
+  "theme.docs.DocCard.categoryDescription.plurals": {
+    "message": "1 आइटम|{count} आइटम",
+    "description": "The default description for a category card in the generated index about how many items this category includes"
+  },
+  "theme.docs.tagDocListPageTitle.nDocsTagged": {
+    "message": "एक डॉक टैग की गई|{count} डॉक्स टैग की गईं",
+    "description": "Pluralized label for \"{count} docs tagged\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.docs.tagDocListPageTitle": {
+    "message": "{nDocsTagged} \"{tagName}\" के साथ",
+    "description": "The title of the page for a docs tag"
+  },
+  "theme.docs.paginator.navAriaLabel": {
+    "message": "डॉक्स पेज",
+    "description": "The ARIA label for the docs pagination"
+  },
+  "theme.docs.paginator.previous": {
+    "message": "पिछ्ला",
+    "description": "The label used to navigate to the previous doc"
+  },
+  "theme.docs.paginator.next": {
+    "message": "अगला",
+    "description": "The label used to navigate to the next doc"
+  },
+  "theme.docs.versionBadge.label": {
+    "message": "वर्जन: {versionLabel}"
+  },
+  "theme.docs.versions.unreleasedVersionLabel": {
+    "message": "यह {siteTitle} {versionLabel} वर्जन के लिए प्रकाशित डॉक्यूमेंटेशन है।",
+    "description": "The label used to tell the user that he's browsing an unreleased doc version"
+  },
+  "theme.docs.versions.unmaintainedVersionLabel": {
+    "message": "यह {siteTitle} {versionLabel} के लिए डॉक्यूमेंटेशन है, जिसे अब सक्रिय रूप से नहीं बनाए रखा गया है।",
+    "description": "The label used to tell the user that he's browsing an unmaintained doc version"
+  },
+  "theme.docs.versions.latestVersionSuggestionLabel": {
+    "message": "अप-टू-डेट डॉक्यूमेंटेशन के लिए {latestVersionLink} ({versionLabel}) देखें।",
+    "description": "The label used to tell the user to check the latest version"
+  },
+  "theme.docs.versions.latestVersionLinkLabel": {
+    "message": "सबसे नया वर्जन",
+    "description": "The label used for the latest version suggestion link label"
+  },
+  "theme.common.editThisPage": {
+    "message": "इस पेज को बदलें",
+    "description": "The link label to edit the current page"
+  },
+  "theme.common.headingLinkTitle": {
+    "message": "{heading} का सीधा लिंक",
+    "description": "Title for link to heading"
+  },
+  "theme.lastUpdated.atDate": {
+    "message": " {date} पर",
+    "description": "The words used to describe on which date a page has been last updated"
+  },
+  "theme.lastUpdated.byUser": {
+    "message": " {user} द्वारा",
+    "description": "The words used to describe by who the page has been last updated"
+  },
+  "theme.lastUpdated.lastUpdatedAtBy": {
+    "message": "आखरी अपडेट{atDate}{byUser}",
+    "description": "The sentence used to display when a page has been last updated, and by who"
+  },
+  "theme.navbar.mobileVersionsDropdown.label": {
+    "message": "वर्जन",
+    "description": "The label for the navbar versions dropdown on mobile view"
+  },
+  "theme.NotFound.title": {
+    "message": "पेज नहीं मिला",
+    "description": "The title of the 404 page"
+  },
+  "theme.tags.tagsListLabel": {
+    "message": "टैग:",
+    "description": "The label alongside a tag list"
+  },
+  "theme.admonition.caution": {
+    "message": "सावधानी",
+    "description": "The default label used for the Caution admonition (:::caution)"
+  },
+  "theme.admonition.danger": {
+    "message": "खतरा",
+    "description": "The default label used for the Danger admonition (:::danger)"
+  },
+  "theme.admonition.info": {
+    "message": "जानकारी",
+    "description": "The default label used for the Info admonition (:::info)"
+  },
+  "theme.admonition.note": {
+    "message": "नोट",
+    "description": "The default label used for the Note admonition (:::note)"
+  },
+  "theme.admonition.tip": {
+    "message": "सुझाव",
+    "description": "The default label used for the Tip admonition (:::tip)"
+  },
+  "theme.admonition.warning": {
+    "message": "चेतावनी",
+    "description": "The default label used for the Warning admonition (:::warning)"
+  },
+  "theme.AnnouncementBar.closeButtonAriaLabel": {
+    "message": "बंद करे",
+    "description": "The ARIA label for close button of announcement bar"
+  },
+  "theme.blog.sidebar.navAriaLabel": {
+    "message": "नया ब्लॉग पोस्ट नेविगेशन",
+    "description": "The ARIA label for recent posts in the blog sidebar"
+  },
+  "theme.CodeBlock.copied": {
+    "message": "कॉपीड",
+    "description": "The copied button label on code blocks"
+  },
+  "theme.CodeBlock.copyButtonAriaLabel": {
+    "message": "क्लिपबोर्ड पर कोड कॉपी करें",
+    "description": "The ARIA label for copy code blocks button"
+  },
+  "theme.CodeBlock.copy": {
+    "message": "कॉपी",
+    "description": "The copy button label on code blocks"
+  },
+  "theme.CodeBlock.wordWrapToggle": {
+    "message": "वर्ड रैप टॉगल करें",
+    "description": "The title attribute for toggle word wrapping button of code block lines"
+  },
+  "theme.DocSidebarItem.expandCategoryAriaLabel": {
+    "message": "साइडबार श्रेणी '{label}' खोलें",
+    "description": "The ARIA label to expand the sidebar category"
+  },
+  "theme.DocSidebarItem.collapseCategoryAriaLabel": {
+    "message": "साइडबार श्रेणी '{label}' बंद करें",
+    "description": "The ARIA label to collapse the sidebar category"
+  },
+  "theme.navbar.mobileLanguageDropdown.label": {
+    "message": "भाषाएं",
+    "description": "The label for the mobile language switcher dropdown"
+  },
+  "theme.NavBar.navAriaLabel": {
+    "message": "मुख्य",
+    "description": "The ARIA label for the main navigation"
+  },
+  "theme.NotFound.p1": {
+    "message": "हमें वह नहीं मिला, जिसकी आपको तलाश थी।",
+    "description": "The first paragraph of the 404 page"
+  },
+  "theme.NotFound.p2": {
+    "message": "कृपया उस साइट के मालिक से संपर्क करें जिसने आपको मूल URL से जोड़ा है और उन्हें बताएं कि उनका लिंक टूट गया है।",
+    "description": "The 2nd paragraph of the 404 page"
+  },
+  "theme.TOCCollapsible.toggleButtonLabel": {
+    "message": "इस पेज पर",
+    "description": "The label used by the button on the collapsible TOC component"
+  },
+  "theme.blog.post.readMore": {
+    "message": "और पढ़ें",
+    "description": "The label used in blog post item excerpts to link to full blog posts"
+  },
+  "theme.blog.post.readMoreLabel": {
+    "message": "{title} के बारे में और पढ़ें",
+    "description": "The ARIA label for the link to full blog posts from excerpts"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "एक मिनट में पढ़ें|{readingTime} मिनट में पढ़ें",
+    "description": "Pluralized label for \"{readingTime} min read\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.docs.breadcrumbs.home": {
+    "message": "होम पेज",
+    "description": "The ARIA label for the home page in the breadcrumbs"
+  },
+  "theme.docs.sidebar.navAriaLabel": {
+    "message": "डॉक्स साइडबार",
+    "description": "The ARIA label for the sidebar navigation"
+  },
+  "theme.docs.sidebar.collapseButtonTitle": {
+    "message": "साइडबार बंद करें",
+    "description": "The title attribute for collapse button of doc sidebar"
+  },
+  "theme.docs.sidebar.collapseButtonAriaLabel": {
+    "message": "साइडबार बंद करें",
+    "description": "The title attribute for collapse button of doc sidebar"
+  },
+  "theme.docs.sidebar.closeSidebarButtonAriaLabel": {
+    "message": "नेविगेशन बार बंद करें",
+    "description": "The ARIA label for close button of mobile sidebar"
+  },
+  "theme.navbar.mobileSidebarSecondaryMenu.backButtonLabel": {
+    "message": "← मुख्य मेनू में वापस जाएं",
+    "description": "The label of the back button to return to main menu, inside the mobile navbar sidebar secondary menu (notably used to display the docs sidebar)"
+  },
+  "theme.docs.sidebar.toggleSidebarButtonAriaLabel": {
+    "message": "नेविगेशन बार टॉगल करें",
+    "description": "The ARIA label for hamburger menu button of mobile navigation"
+  },
+  "theme.docs.sidebar.expandButtonTitle": {
+    "message": "साइडबार खोलें",
+    "description": "The ARIA label and title attribute for expand button of doc sidebar"
+  },
+  "theme.docs.sidebar.expandButtonAriaLabel": {
+    "message": "साइडबार खोलें",
+    "description": "The ARIA label and title attribute for expand button of doc sidebar"
+  },
+  "theme.blog.post.plurals": {
+    "message": "एक पोस्ट|{count} पोस्ट",
+    "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.blog.tagTitle": {
+    "message": "{nPosts} पोस्ट \"{tagName}\" टैग के साथ",
+    "description": "The title of the page for a blog tag"
+  },
+  "theme.blog.author.pageTitle": {
+    "message": "{authorName} - {nPosts}",
+    "description": "The title of the page for a blog author"
+  },
+  "theme.blog.authorsList.pageTitle": {
+    "message": "लेखक",
+    "description": "The title of the authors page"
+  },
+  "theme.blog.authorsList.viewAll": {
+    "message": "सभी लेखक देखें",
+    "description": "The label of the link targeting the blog authors page"
+  },
+  "theme.contentVisibility.unlistedBanner.title": {
+    "message": "असूचीबद्ध पेज",
+    "description": "The unlisted content banner title"
+  },
+  "theme.contentVisibility.unlistedBanner.message": {
+    "message": "यह पेज असूचीबद्ध है। सर्च इंजन इसे इंडेक्स नहीं करेंगे, और केवल सीधा लिंक रखने वाले उपयोगकर्ता ही इसे एक्सेस कर सकते हैं।",
+    "description": "The unlisted content banner message"
+  },
+  "theme.contentVisibility.draftBanner.title": {
+    "message": "ड्राफ़्ट पेज",
+    "description": "The draft content banner title"
+  },
+  "theme.contentVisibility.draftBanner.message": {
+    "message": "यह पेज एक ड्राफ़्ट है। यह केवल डेव में दिखाई देगा और प्रोडक्शन बिल्ड से बाहर रखा जाएगा।",
+    "description": "The draft content banner message"
+  },
+  "theme.ErrorPageContent.tryAgain": {
+    "message": "फिर से कोशिश करें",
+    "description": "The label of the button to try again rendering when the React error boundary captures an error"
+  },
+  "theme.common.skipToMainContent": {
+    "message": "मुख्य कंटेंट तक स्किप करें",
+    "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
+  },
+  "theme.tags.tagsPageTitle": {
+    "message": "टैग",
+    "description": "The title of the tag list page"
+  },
+  "homepage.hero.pill": {
+    "message": "Chia पर एक Proof-of-Stake लेयर 2 नेटवर्क"
+  },
+  "homepage.hero.title": {
+    "message": "{decentralized} डेटा लेयर पर निर्माण करें"
+  },
+  "homepage.hero.title.decentralized": {
+    "message": "विकेंद्रीकृत"
+  },
+  "homepage.hero.lead": {
+    "message": "DIG Network एक डेवलपर प्लेटफ़ॉर्म है जो सामग्री को प्रकाशित और सर्व करने के लिए है, जहाँ होस्ट कभी नहीं देख पाता कि वह क्या ले जा रहा है। {digstore} से शुरू करें — एन्क्रिप्टेड, कंटेंट-एड्रेसेबल स्टोरेज जो एक ही सेल्फ़-डिफ़ेंडिंग WebAssembly मॉड्यूल में कंपाइल होता है।"
+  },
+  "homepage.hero.lead.digstore": {
+    "message": "DigStore"
+  },
+  "homepage.hero.cta.docs": {
+    "message": "दस्तावेज़ देखें →"
+  },
+  "homepage.hero.cta.quickstart": {
+    "message": "क्विक स्टार्ट"
+  },
+  "homepage.hero.cta.browser": {
+    "message": "DIG Browser प्राप्त करें ↗"
+  },
+  "homepage.hero.trust.license": {
+    "message": "ओपन सोर्स · GPL-2.0"
+  },
+  "homepage.hero.trust.platforms": {
+    "message": "macOS · Linux · Windows"
+  },
+  "homepage.hero.trust.binary": {
+    "message": "सिंगल-बाइनरी CLI"
+  },
+  "homepage.pillar.encrypted.title": {
+    "message": "आराम की स्थिति में एन्क्रिप्टेड"
+  },
+  "homepage.pillar.encrypted.body": {
+    "message": "URN ही कुंजी है — यह स्थान बताने के साथ-साथ डिक्रिप्ट भी करता है (AES-256-GCM-SIV)। कोई पासवर्ड नहीं, कहीं भी कुंजी संग्रहीत नहीं।"
+  },
+  "homepage.pillar.blind.title": {
+    "message": "प्रोवाइडर-ब्लाइंड"
+  },
+  "homepage.pillar.blind.body": {
+    "message": "होस्ट केवल हैश द्वारा कुंजीबद्ध साइफरटेक्स्ट रखते हैं। डाउनलोड को स्टोर आईडी और प्रकाशक के हस्ताक्षरित रूट के विरुद्ध सत्यापित किया जाता है।"
+  },
+  "homepage.pillar.selfDefending.title": {
+    "message": "एक सेल्फ़-डिफ़ेंडिंग फ़ाइल"
+  },
+  "homepage.pillar.selfDefending.body": {
+    "message": "डेटा, सर्वर, और मर्कल प्रूफ़ एक ही {wasm} में कंपाइल होते हैं, जिसे एक समान आकार में पैड किया जाता है जो कुछ भी उजागर नहीं करता।"
+  },
+  "homepage.primitives.kicker": {
+    "message": "प्रिमिटिव्स"
+  },
+  "homepage.primitives.title": {
+    "message": "संयोज्य बिल्डिंग ब्लॉक्स"
+  },
+  "homepage.primitives.subtitle": {
+    "message": "DigStore अभी उपलब्ध है। और अधिक DIG Network प्रिमिटिव्स जल्द आ रहे हैं।"
+  },
+  "homepage.primitives.available": {
+    "message": "उपलब्ध"
+  },
+  "homepage.primitives.digstore.lead": {
+    "message": "Git-आकार का, एन्क्रिप्टेड, कंटेंट-एड्रेसेबल स्टोर। इसे अपनी बिल्ड डायरेक्टरी पर पॉइंट करें, जनरेशन कमिट करें, और सब कुछ URN से एड्रेस करें।"
+  },
+  "homepage.primitives.digstore.link": {
+    "message": "DigStore दस्तावेज़ पढ़ें →"
+  },
+  "homepage.steps.capture.title": {
+    "message": "कैप्चर"
+  },
+  "homepage.steps.capture.body": {
+    "message": "अपने बिल्ड आउटपुट पर एक स्टोर पॉइंट करें।"
+  },
+  "homepage.steps.commit.title": {
+    "message": "कमिट"
+  },
+  "homepage.steps.commit.body": {
+    "message": "एक जनरेशन को एक ही .wasm में सील करें।"
+  },
+  "homepage.steps.share.title": {
+    "message": "शेयर"
+  },
+  "homepage.steps.share.body": {
+    "message": "रिमोट पर पुश करें; एक URN दें।"
+  },
+  "homepage.howItWorks.kicker": {
+    "message": "यह कैसे काम करता है"
+  },
+  "homepage.howItWorks.title": {
+    "message": "प्रकाशित करने के लिए तीन कमांड"
+  },
+  "homepage.howItWorks.subtitle": {
+    "message": "बिल्ड आउटपुट के लिए Git-शैली वर्कफ़्लो — पहले कमिट से ही एन्क्रिप्टेड और एड्रेसेबल।"
+  },
+  "homepage.cta.title": {
+    "message": "DigStore के साथ निर्माण शुरू करें"
+  },
+  "homepage.cta.subtitle": {
+    "message": "CLI इंस्टॉल करें और एक मिनट से भी कम समय में अपना पहला एन्क्रिप्टेड स्टोर प्रकाशित करें।"
+  },
+  "homepage.cta.install": {
+    "message": "CLI इंस्टॉल करें"
+  },
+  "homepage.cta.format": {
+    "message": "फ़ॉर्मैट के बारे में जानें"
+  },
+  "homepage.meta.title": {
+    "message": "DIG Network — विकेंद्रीकृत डेटा लेयर"
+  },
+  "homepage.meta.description": {
+    "message": "DIG Network, Chia पर एक Proof-of-Stake लेयर 2 है। नेटवर्क और इसके प्रिमिटिव्स के लिए डेवलपर दस्तावेज़, जिसमें DigStore शामिल है — एन्क्रिप्टेड कंटेंट-एड्रेसेबल स्टोरेज।"
+  }
+}
