@@ -82,6 +82,41 @@
     },
     {
       "surface": "dig-rpc",
+      "code": -32010,
+      "name": "UPSTREAM_ERROR",
+      "http_or_exit": 200,
+      "description": "Upstream error — A thin-shell node relayed a method it does not resolve locally to its upstream DIG RPC, and the upstream was unreachable or returned a non-JSON response."
+    },
+    {
+      "surface": "dig-rpc",
+      "code": -32011,
+      "name": "STAGE_DIR_UNREADABLE",
+      "http_or_exit": 200,
+      "description": "Stage: source directory unreadable — dig.stage (local control) could not read the source directory."
+    },
+    {
+      "surface": "dig-rpc",
+      "code": -32012,
+      "name": "STAGE_NO_FILES",
+      "http_or_exit": 200,
+      "description": "Stage: no files to stage — dig.stage found no files in the source directory."
+    },
+    {
+      "surface": "dig-rpc",
+      "code": -32013,
+      "name": "STAGE_OVER_CAP",
+      "http_or_exit": 200,
+      "description": "Stage: content exceeds capsule size cap — dig.stage content exceeds the capsule size cap."
+    },
+    {
+      "surface": "dig-rpc",
+      "code": -32014,
+      "name": "STAGE_COMPILE_IO",
+      "http_or_exit": 200,
+      "description": "Stage: compile/IO failure — dig.stage hit a compile or IO failure while building the module."
+    },
+    {
+      "surface": "dig-rpc",
       "code": -32020,
       "name": "ONION_CIRCUIT_UNAVAILABLE",
       "http_or_exit": 200,
@@ -100,6 +135,27 @@
       "name": "ONION_HOPS_OUT_OF_RANGE",
       "http_or_exit": 200,
       "description": "Onion hop count out of range — The requested privacy.hops (circuit length) is outside the allowed range [2, 5] (default 3). Request a hop count within range. See https://docs.dig.net/docs/protocol/onion-routing#modes."
+    },
+    {
+      "surface": "dig-rpc",
+      "code": -32030,
+      "name": "CONTROL_UNAUTHORIZED",
+      "http_or_exit": 200,
+      "description": "Unauthorized (control) — A control.* method was called without a valid local control token. Control methods are loopback-only. Control codes are -32030+ so they never collide with the onion codes -32020/21/22."
+    },
+    {
+      "surface": "dig-rpc",
+      "code": -32031,
+      "name": "CONTROL_NOT_SUPPORTED",
+      "http_or_exit": 200,
+      "description": "Not supported (control) — A control operation this build/pin cannot perform (e.g. §21 whole-store sync with no loaded identity)."
+    },
+    {
+      "surface": "dig-rpc",
+      "code": -32032,
+      "name": "CONTROL_ERROR",
+      "http_or_exit": 200,
+      "description": "Control error — A control operation failed at runtime — distinct from bad input or an absent capability."
     },
     {
       "surface": "digstore-cli",
@@ -439,6 +495,41 @@
       },
       {
         "surface": "dig-rpc",
+        "code": -32010,
+        "name": "UPSTREAM_ERROR",
+        "http_or_exit": 200,
+        "description": "Upstream error — A thin-shell node relayed a method it does not resolve locally to its upstream DIG RPC, and the upstream was unreachable or returned a non-JSON response."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32011,
+        "name": "STAGE_DIR_UNREADABLE",
+        "http_or_exit": 200,
+        "description": "Stage: source directory unreadable — dig.stage (local control) could not read the source directory."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32012,
+        "name": "STAGE_NO_FILES",
+        "http_or_exit": 200,
+        "description": "Stage: no files to stage — dig.stage found no files in the source directory."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32013,
+        "name": "STAGE_OVER_CAP",
+        "http_or_exit": 200,
+        "description": "Stage: content exceeds capsule size cap — dig.stage content exceeds the capsule size cap."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32014,
+        "name": "STAGE_COMPILE_IO",
+        "http_or_exit": 200,
+        "description": "Stage: compile/IO failure — dig.stage hit a compile or IO failure while building the module."
+      },
+      {
+        "surface": "dig-rpc",
         "code": -32020,
         "name": "ONION_CIRCUIT_UNAVAILABLE",
         "http_or_exit": 200,
@@ -457,6 +548,27 @@
         "name": "ONION_HOPS_OUT_OF_RANGE",
         "http_or_exit": 200,
         "description": "Onion hop count out of range — The requested privacy.hops (circuit length) is outside the allowed range [2, 5] (default 3). Request a hop count within range. See https://docs.dig.net/docs/protocol/onion-routing#modes."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32030,
+        "name": "CONTROL_UNAUTHORIZED",
+        "http_or_exit": 200,
+        "description": "Unauthorized (control) — A control.* method was called without a valid local control token. Control methods are loopback-only. Control codes are -32030+ so they never collide with the onion codes -32020/21/22."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32031,
+        "name": "CONTROL_NOT_SUPPORTED",
+        "http_or_exit": 200,
+        "description": "Not supported (control) — A control operation this build/pin cannot perform (e.g. §21 whole-store sync with no loaded identity)."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32032,
+        "name": "CONTROL_ERROR",
+        "http_or_exit": 200,
+        "description": "Control error — A control operation failed at runtime — distinct from bad input or an absent capability."
       }
     ],
     "digstore-cli": [
