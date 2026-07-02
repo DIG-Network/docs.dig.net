@@ -1,0 +1,46 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Start here": {
+    "message": "Empieza aquí",
+    "description": "The label for category Start here in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Using DIG": {
+    "message": "Usar DIG",
+    "description": "The label for category Using DIG in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.App developers": {
+    "message": "Desarrolladores de apps",
+    "description": "The label for category App developers in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.NFT developers": {
+    "message": "Desarrolladores de NFT",
+    "description": "The label for category NFT developers in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Integration developers": {
+    "message": "Desarrolladores de integraciones",
+    "description": "The label for category Integration developers in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Node operators": {
+    "message": "Operadores de nodos",
+    "description": "The label for category Node operators in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Content consumers": {
+    "message": "Consumidores de contenido",
+    "description": "The label for category Content consumers in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Troubleshooting": {
+    "message": "Solución de problemas",
+    "description": "The label for category Troubleshooting in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Protocol": {
+    "message": "Protocolo",
+    "description": "The label for category Protocol in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Reference & guides": {
+    "message": "Referencia y guías",
+    "description": "The label for category Reference & guides in sidebar tutorialSidebar"
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "link.title.Documentation": {
+    "message": "Dokumentation",
+    "description": "The title of the footer links column with title=Documentation in the footer"
+  },
+  "link.title.DigStore": {
+    "message": "DigStore",
+    "description": "The title of the footer links column with title=DigStore in the footer"
+  },
+  "link.title.Community & support": {
+    "message": "Community & Support",
+    "description": "The title of the footer links column with title=Community & support in the footer"
+  },
+  "link.title.Project": {
+    "message": "Projekt",
+    "description": "The title of the footer links column with title=Project in the footer"
+  },
+  "link.item.label.DIG Network": {
+    "message": "DIG Network",
+    "description": "The label of footer link with label=DIG Network linking to https://dig.net"
+  },
+  "link.item.label.DigStore": {
+    "message": "DigStore",
+    "description": "The label of footer link with label=DigStore linking to /docs/digstore/what-is-digstore"
+  },
+  "link.item.label.The Format": {
+    "message": "Das Format",
+    "description": "The label of footer link with label=The Format linking to /docs/digstore/format/overview"
+  },
+  "link.item.label.CLI tutorial": {
+    "message": "CLI-Tutorial",
+    "description": "The label of footer link with label=CLI tutorial linking to /docs/digstore/cli/quickstart"
+  },
+  "link.item.label.Command reference": {
+    "message": "Befehlsreferenz",
+    "description": "The label of footer link with label=Command reference linking to /docs/digstore/cli/command-reference"
+  },
+  "link.item.label.Get help": {
+    "message": "Hilfe erhalten",
+    "description": "The label of footer link with label=Get help linking to /docs/support/get-help"
+  },
+  "link.item.label.Troubleshooting": {
+    "message": "Fehlerbehebung",
+    "description": "The label of footer link with label=Troubleshooting linking to /docs/support/troubleshooting"
+  },
+  "link.item.label.FAQ": {
+    "message": "Häufige Fragen",
+    "description": "The label of footer link with label=FAQ linking to /docs/support/faq"
+  },
+  "link.item.label.Changelog": {
+    "message": "Änderungsprotokoll",
+    "description": "The label of footer link with label=Changelog linking to /docs/support/changelog"
+  },
+  "link.item.label.Status": {
+    "message": "Status",
+    "description": "The label of footer link with label=Status linking to https://status.dig.net/"
+  },
+  "link.item.label.Discord": {
+    "message": "Discord",
+    "description": "The label of footer link with label=Discord linking to https://discord.gg/dignetwork"
+  },
+  "link.item.label.@digdotnet": {
+    "message": "@digdotnet",
+    "description": "The label of footer link with label=@digdotnet linking to https://x.com/digdotnet"
+  },
+  "link.item.label.digstore on GitHub": {
+    "message": "digstore auf GitHub",
+    "description": "The label of footer link with label=digstore on GitHub linking to https://github.com/DIG-Network/digstore"
+  },
+  "link.item.label.Releases": {
+    "message": "Releases",
+    "description": "The label of footer link with label=Releases linking to https://github.com/DIG-Network/digstore/releases"
+  },
+  "copyright": {
+    "message": "Copyright © 2026 DIG Network. DigStore is open source under GPL-2.0.",
+    "description": "The footer copyright"
+  },
+  "logo.alt": {
+    "message": "DigStore — by DIG Network",
+    "description": "The alt text of footer logo"
+  }
+}
