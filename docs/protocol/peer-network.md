@@ -376,6 +376,7 @@ The implementers' contract for the [dual-transport tiers](#dual-transport). The 
 | `dig.fetchRange` (peer sync / multi-source) | **PEER / CONTROL** | mTLS | dig-nat mTLS |
 | DHT `find_node` / `find_providers` / `add_provider` / `ping` ([§4c](#dht)) | **PEER / CONTROL** | mTLS | dig-nat mTLS stream |
 | PEX `pex_handshake` / `pex_snapshot` / `pex_delta` / `pex_error` ([§4d](#pex)) | **PEER / CONTROL** | mTLS (node↔node) or registered relay identity (RLY-008) | dig-nat mTLS stream / relay WebSocket |
+| onion circuit cells (`dig.onion` stream: `CREATE`/`EXTEND`/`RELAY`/`DESTROY`) ([onion routing](./onion-routing.md)) | **PEER / CONTROL** | mTLS | dig-nat mTLS stream |
 | §21 PUSH / WRITE: `module/upload` · `module` PUT · `module/complete` · `tombstone` | **PEER / CONTROL** | mTLS + per-request BLS ([§21.9](./transport-and-push.md#per-request-auth)) | authenticated HTTPS |
 | node config / control (`cache.*`, `control.*`, `dig.stage`, `dig.getAnchoredRoot`) | **CONTROL (loopback)** | local authorization (loopback-only) | local FFI / loopback HTTP |
 
@@ -702,6 +703,7 @@ A reimplementation of any peer crate conforms iff it reproduces these — the sa
 
 ## Related
 
+- [Private retrieval (onion routing)](./onion-routing.md) — the PRIVACY retrieval mode: telescoping onion circuits over these mTLS peer links, the `dig.onion` stream, and the onion-relay directory
 - [The dig RPC](./dig-rpc.md) — the PUBLIC READ tier: what a browser/agent reads over anonymous JSON-RPC; the node profile the peer RPC extends
 - [§21 transport & push](./transport-and-push.md) — the §21 GET (public read) vs PUSH/WRITE (mTLS peer/control) split
 - [BLS signatures & DSTs](./bls-signatures.md) — the node/attestation signatures carried over peer links; the per-request write auth on the control tier

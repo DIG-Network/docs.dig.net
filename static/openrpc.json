@@ -981,6 +981,27 @@
         "data": {
           "type": "object"
         }
+      },
+      "ONION_CIRCUIT_UNAVAILABLE": {
+        "code": -32020,
+        "message": "Onion circuit unavailable",
+        "data": {
+          "type": "object"
+        }
+      },
+      "PRIVACY_REQUIRES_LOCAL_NODE": {
+        "code": -32021,
+        "message": "Privacy requires a local node",
+        "data": {
+          "type": "object"
+        }
+      },
+      "ONION_HOPS_OUT_OF_RANGE": {
+        "code": -32022,
+        "message": "Onion hop count out of range",
+        "data": {
+          "type": "object"
+        }
       }
     }
   },
