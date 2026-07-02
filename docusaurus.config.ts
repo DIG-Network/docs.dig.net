@@ -18,6 +18,12 @@ const config: Config = {
   onBrokenAnchors: "throw",
   onBrokenMarkdownLinks: "warn",
 
+  // Client-only first-visit browser-locale redirect. Docusaurus has no built-in
+  // "send a first-time visitor to their browser language" behaviour; this module
+  // adds it (once per browser, never overriding a manual LocaleDropdown choice),
+  // mirroring hub.dig.net's detectBrowserLocale resolution. See the file header.
+  clientModules: ["./src/clientLocaleRedirect.ts"],
+
   i18n: {
     defaultLocale: "en",
     locales: [
