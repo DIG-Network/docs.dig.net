@@ -74,6 +74,13 @@
       "description": "Range not satisfiable — The requested byte range lies outside the resource (offset >= total_length) or is otherwise unsatisfiable. Returned by the node-profile dig.fetchRange when the offset/length cannot be served."
     },
     {
+      "surface": "dig-rpc",
+      "code": -32008,
+      "name": "CONTENT_REDIRECT",
+      "http_or_exit": 200,
+      "description": "Content held elsewhere — redirect — This node does not hold the requested content, but it located peers that do (via the DHT) — a redirect, not a not-found. error.data.redirect names the holder(s) (providers[] = peer_id + candidate addresses), the requested content, and the bounded redirect budget (redirect_depth, max_redirects). Returned by the node-profile content methods (dig.getContent / dig.fetchRange) on a local miss when a provider exists; re-request against a named provider, echoing redirect_depth."
+    },
+    {
       "surface": "digstore-cli",
       "code": "success",
       "exit": 0,
@@ -401,6 +408,13 @@
         "name": "RANGE_NOT_SATISFIABLE",
         "http_or_exit": 200,
         "description": "Range not satisfiable — The requested byte range lies outside the resource (offset >= total_length) or is otherwise unsatisfiable. Returned by the node-profile dig.fetchRange when the offset/length cannot be served."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32008,
+        "name": "CONTENT_REDIRECT",
+        "http_or_exit": 200,
+        "description": "Content held elsewhere — redirect — This node does not hold the requested content, but it located peers that do (via the DHT) — a redirect, not a not-found. error.data.redirect names the holder(s) (providers[] = peer_id + candidate addresses), the requested content, and the bounded redirect budget (redirect_depth, max_redirects). Returned by the node-profile content methods (dig.getContent / dig.fetchRange) on a local miss when a provider exists; re-request against a named provider, echoing redirect_depth."
       }
     ],
     "digstore-cli": [
