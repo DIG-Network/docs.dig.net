@@ -21,6 +21,7 @@
     "typecheck": "tsc",
     "test:unit": "node --test tests/unit/",
     "test:e2e": "playwright test",
+    "test:a11y": "playwright test tests/e2e/a11y.spec.ts tests/e2e/mobile-nav.spec.ts tests/e2e/aria-snapshot.spec.ts tests/e2e/keyboard-nav.spec.ts",
     "test": "npm run test:unit && npm run test:e2e"
   },
   "dependencies": {

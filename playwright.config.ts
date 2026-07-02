@@ -28,5 +28,19 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     timeout: 60_000,
   },
-  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
+  projects: [
+    // Desktop: the full suite (SEO/hreflang, ARIA tree, keyboard traversal,
+    // axe a11y) — these specs assume the desktop navbar layout (Tab walks
+    // the inline navbar; the sidebar is always visible, not a slide-over).
+    { name: "chromium", use: { ...devices["Desktop Chrome"] }, testIgnore: "**/mobile-*.spec.ts" },
+    // Mobile viewport project (umbrella project's §6.5/§6.6 — every modified
+    // view is audited at desktop AND mobile widths, incl. the mobile
+    // nav/sidebar open state). Pixel 5 is Playwright's standard mobile-Chrome
+    // device profile: a real mobile viewport + touch + UA, so this exercises
+    // the theme's actual mobile nav breakpoint (Docusaurus's slide-over
+    // sidebar activates below 997px) — only the dedicated mobile-*.spec.ts
+    // files run here; the desktop-shaped specs above would misfire on a
+    // collapsed hamburger navbar.
+    { name: "mobile-chromium", use: { ...devices["Pixel 5"] }, testMatch: "**/mobile-*.spec.ts" },
+  ],
 });

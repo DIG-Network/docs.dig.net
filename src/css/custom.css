@@ -244,7 +244,17 @@ code {
    already clear 4.5:1 there and are left untouched. Overriding ONLY the
    failing token classes (not swapping themes) keeps the rest of each
    theme's palette and avoids drifting from upstream on tokens that already
-   pass. Selectors match prism-react-renderer's actual emitted class names. */
+   pass. Selectors match prism-react-renderer's actual emitted class names.
+
+   The light-mode overrides below (#1446b4 blue, #236e23 green) are ONLY
+   safe against the light code background — with no dark-mode counterpart
+   they leaked into dark mode too (same `.token.*` selector, no
+   `[data-theme="dark"]` scope), landing at 2.11:1 / 2.73:1 against the dark
+   code background (#19192d) — a real WCAG 2.2 AA violation caught by
+   tests/e2e/a11y.spec.ts's forced-dark-mode axe run on a shell code block
+   (quickstart). Fixed by adding the missing dark-mode overrides, mirroring
+   the pattern already used for `.token.comment` below (8.18:1 / 8.56:1 on
+   the dark code background — comfortably over 4.5:1). */
 .token.comment,
 .token.prolog,
 .token.doctype,
@@ -265,7 +275,25 @@ code {
 [data-theme="dark"] .token.prolog,
 [data-theme="dark"] .token.doctype,
 [data-theme="dark"] .token.cdata {
-  color: #8c9bc8 !important;
+  /* #8c9bc8 (the original dark-mode comment override) measured 4.29:1 —
+     just under the 4.5:1 floor — against the actual composited background
+     axe-core found on some `language-sh` code blocks (#353742, lighter than
+     the plain dracula card background #282a36 this file's blocks mostly
+     sit on — some code blocks pick up an extra lightening layer, e.g. a
+     line-numbers/diff-highlight wrapper). #a9b6e0 clears 5.88:1 against
+     that same worst-case background (and higher against the plainer
+     #282a36 case), with margin instead of sitting exactly on the line. */
+  color: #a9b6e0 !important;
+}
+[data-theme="dark"] .token.variable,
+[data-theme="dark"] .token.function,
+[data-theme="dark"] .token.parameter {
+  color: #8ab4f8 !important;
+}
+[data-theme="dark"] .token.string,
+[data-theme="dark"] .token.char,
+[data-theme="dark"] .token.attr-value {
+  color: #7ec699 !important;
 }
 
 /* ---- tables ---- */
