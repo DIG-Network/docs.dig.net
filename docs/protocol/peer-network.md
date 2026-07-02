@@ -479,7 +479,7 @@ This mirrors the [dig RPC streaming contract](./dig-rpc.md#streaming) (window/of
 
 ## 9 · Byte-range content fetch + multi-source download {#range}
 
-A node can request a specific **byte range** `[offset, offset+length)` of a content resource or an entire `.dig` capsule, and receive **only those bytes**, streamed. This is the primitive behind **multi-source download**: a client splits a resource into ranges and fetches **different ranges from different peers simultaneously**, verifies each independently, and reassembles — the same multisource + range + integrity + resume model implemented by the `dig-download-utility` reference.
+A node can request a specific **byte range** `[offset, offset+length)` of a content resource or an entire `.dig` capsule, and receive **only those bytes**, streamed. This is the primitive behind **multi-source download**: a client splits a resource into ranges and fetches **different ranges from different peers simultaneously**, verifies each independently, and reassembles — the multisource + range + integrity + resume model the node-side download engine implements.
 
 ### Availability first — ask before you fetch {#availability}
 
