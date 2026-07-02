@@ -1034,6 +1034,41 @@
           "type": "object"
         }
       },
+      "UPSTREAM_ERROR": {
+        "code": -32010,
+        "message": "Upstream error",
+        "data": {
+          "type": "object"
+        }
+      },
+      "STAGE_DIR_UNREADABLE": {
+        "code": -32011,
+        "message": "Stage: source directory unreadable",
+        "data": {
+          "type": "object"
+        }
+      },
+      "STAGE_NO_FILES": {
+        "code": -32012,
+        "message": "Stage: no files to stage",
+        "data": {
+          "type": "object"
+        }
+      },
+      "STAGE_OVER_CAP": {
+        "code": -32013,
+        "message": "Stage: content exceeds capsule size cap",
+        "data": {
+          "type": "object"
+        }
+      },
+      "STAGE_COMPILE_IO": {
+        "code": -32014,
+        "message": "Stage: compile/IO failure",
+        "data": {
+          "type": "object"
+        }
+      },
       "ONION_CIRCUIT_UNAVAILABLE": {
         "code": -32020,
         "message": "Onion circuit unavailable",
@@ -1051,6 +1086,27 @@
       "ONION_HOPS_OUT_OF_RANGE": {
         "code": -32022,
         "message": "Onion hop count out of range",
+        "data": {
+          "type": "object"
+        }
+      },
+      "CONTROL_UNAUTHORIZED": {
+        "code": -32030,
+        "message": "Unauthorized (control)",
+        "data": {
+          "type": "object"
+        }
+      },
+      "CONTROL_NOT_SUPPORTED": {
+        "code": -32031,
+        "message": "Not supported (control)",
+        "data": {
+          "type": "object"
+        }
+      },
+      "CONTROL_ERROR": {
+        "code": -32032,
+        "message": "Control error",
         "data": {
           "type": "object"
         }
