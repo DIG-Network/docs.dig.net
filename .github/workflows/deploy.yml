@@ -1,22 +1,23 @@
 name: deploy
 
-# Build the Docusaurus site (npm run build -> ./dist), replace the contents of the S3 website
-# bucket, and invalidate the CloudFront cache. Bucket + distribution discovered from the live
-# CloudFront config:
+# `test`: build across all 14 locales (onBrokenLinks/onBrokenAnchors: "throw"
+# catches broken links) and run the a11y/SEO Playwright + unit suite. Runs on
+# every push AND every pull_request, so a regression is caught before merge.
+#
+# `deploy`: on an actual push to main (or manual dispatch) only — never on a
+# pull_request run, which has no AWS credentials — rebuilds (a fresh checkout,
+# not the `test` job's artifact) and replaces the contents of the S3 website
+# bucket, then invalidates the CloudFront cache. Bucket + distribution
+# discovered from the live CloudFront config:
 #   docs.dig.net -> CloudFront E1G7CFG1FDYG9Y -> origin docs-dig-net.s3-website-us-east-1.amazonaws.com
 on:
   push:
     branches: [main]
+  pull_request: {}
   workflow_dispatch: {}
-
-# Serialize deploys so two runs never race on `s3 sync --delete`. Let an in-flight sync finish.
-concurrency:
-  group: docs-dignet-deploy
-  cancel-in-progress: false
 
 permissions:
   contents: read
-  id-token: write # OIDC (assume the deploy role; no stored keys)
 
 env:
   AWS_REGION: us-east-1
@@ -53,8 +54,21 @@ jobs:
   deploy:
     name: build + sync + invalidate
     needs: test
+    # Never deploy from a pull_request run (no AWS credentials are available
+    # to a fork/PR context anyway) — only an actual push to main, or a manual
+    # dispatch, publishes.
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment: production
+    permissions:
+      contents: read
+      id-token: write # OIDC (assume the deploy role; no stored keys)
+    # Serialize deploys so two runs never race on `s3 sync --delete`. Let an
+    # in-flight sync finish. Job-scoped (not workflow-scoped) so concurrent
+    # pull_request `test` runs are never queued behind or block a deploy.
+    concurrency:
+      group: docs-dignet-deploy
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
