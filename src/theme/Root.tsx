@@ -1,5 +1,5 @@
 import React from 'react';
-import BaseUrlWrapper from '../pages/BaseUrlWrapper';
+import BaseUrlWrapper from '../components/BaseUrlWrapper';
 
 const Root = ({ children }) => {
   return <BaseUrlWrapper>{children}</BaseUrlWrapper>;

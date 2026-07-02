@@ -77,11 +77,14 @@ const config: Config = {
         },
         // preset-classic bundles @docusaurus/plugin-sitemap and enables it by
         // default. Configure it explicitly so it is clearly NOT disabled — this
-        // emits /sitemap.xml at the site root listing every public route.
+        // emits /sitemap.xml (per locale — see robots.txt) listing every
+        // public route. `ignorePatterns` excludes Docusaurus's own internal
+        // routes that carry no real content and must never be indexed.
         sitemap: {
           changefreq: "weekly",
           priority: 0.5,
           filename: "sitemap.xml",
+          ignorePatterns: ["/404.html", "/BaseUrlWrapper", "/markdown-page"],
         },
       } satisfies Preset.Options,
     ],
@@ -99,11 +102,16 @@ const config: Config = {
       tagName: "meta",
       attributes: { name: "theme-color", content: "#0a0a20" },
     },
-    // Public, unauthenticated docs — explicitly invite indexing.
-    {
-      tagName: "meta",
-      attributes: { name: "robots", content: "index, follow" },
-    },
+    // NOTE: the site-wide "index, follow" robots default lives in
+    // `themeConfig.metadata` below, NOT here. `headTags` is injected as
+    // static HTML in the SSR template, outside react-helmet-async's
+    // reconciliation — a per-page Helmet-managed override (e.g.
+    // src/theme/NotFound's noindex) can't dedupe against it, so both tags
+    // would ship simultaneously (verified: a static headTags "index, follow"
+    // plus a Helmet noindex both landed in 404.html's raw output, an
+    // ambiguous double robots meta some crawlers may resolve unpredictably).
+    // `themeConfig.metadata` flows through the SAME Helmet pipeline as every
+    // page-level override, so it dedupes correctly by tag name.
     // ---- Open Graph (fields Docusaurus does not emit on its own) ----
     {
       tagName: "meta",
@@ -244,6 +252,12 @@ const config: Config = {
           "Developer docs for DIG Network — a Proof-of-Stake Layer 2 on Chia for publishing, addressing, and serving content without trusting the host.",
       },
       { name: "twitter:card", content: "summary_large_image" },
+      // Public, unauthenticated docs — explicitly invite indexing by default.
+      // Lives here (not in the static `headTags` array above) so a
+      // page-level override (src/theme/NotFound's noindex) flows through the
+      // SAME react-helmet-async pipeline and dedupes correctly instead of
+      // both tags shipping side by side.
+      { name: "robots", content: "index, follow" },
     ],
     navbar: {
       title: "Docs",
