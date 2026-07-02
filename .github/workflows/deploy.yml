@@ -39,10 +39,28 @@ jobs:
       # onBrokenLinks/onBrokenAnchors: "throw" (docusaurus.config.ts) means this
       # also fails the build on any broken link/anchor across all 14 locales.
       - run: npm run build # docusaurus build --out-dir dist; postbuild annotates sitemap hreflang
+      # Machine-entry-point freshness gate (umbrella project's §6.6): fail
+      # fast, before spinning up a browser, if llms.txt/sitemap.xml/
+      # robots.txt didn't actually make it into the built output root.
+      - name: verify llms.txt / sitemap.xml / robots.txt exist in the build output
+        run: |
+          set -euo pipefail
+          test -s dist/llms.txt
+          test -s dist/sitemap.xml
+          test -s dist/robots.txt
+          echo "llms.txt, sitemap.xml, robots.txt all present and non-empty in dist/"
       - run: npx playwright install --with-deps chromium
       # Unit suite (tests/unit/) needs the same dist/ the e2e suite serves —
       # both run after the build above, not before.
       - run: npm run test:unit
+      # Named a11y gate (umbrella project's §6.6 — axe + ARIA-tree + keyboard
+      # coverage), run as its own step so a WCAG regression is unambiguous in
+      # the CI log; test:e2e below re-runs the same spec files as part of the
+      # full suite (SEO/hreflang included), which is intentional redundancy
+      # rather than duplicated cost — Playwright's own caching/parallelism
+      # keeps the combined wall-clock small, and a11y failing on its own
+      # step still fails the job before test:e2e's report replaces it.
+      - run: npm run test:a11y
       - run: npm run test:e2e
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: failure()
