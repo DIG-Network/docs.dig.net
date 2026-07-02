@@ -374,16 +374,17 @@ The implementers' contract for the [dual-transport tiers](#dual-transport). The 
 | `dig.getPeers` / `dig.announce` / `dig.getNetworkInfo` | **PEER / CONTROL** | mTLS | dig-nat mTLS |
 | `dig.getAvailability` / `dig.listInventory` | **PEER / CONTROL** | mTLS | dig-nat mTLS |
 | `dig.fetchRange` (peer sync / multi-source) | **PEER / CONTROL** | mTLS | dig-nat mTLS |
+| `dig.getAnchoredRoot` / `dig.getCollection` / `dig.listCollectionItems` (read) | **PEER / CONTROL** | mTLS | dig-nat mTLS |
 | DHT `find_node` / `find_providers` / `add_provider` / `ping` ([§4c](#dht)) | **PEER / CONTROL** | mTLS | dig-nat mTLS stream |
 | PEX `pex_handshake` / `pex_snapshot` / `pex_delta` / `pex_error` ([§4d](#pex)) | **PEER / CONTROL** | mTLS (node↔node) or registered relay identity (RLY-008) | dig-nat mTLS stream / relay WebSocket |
 | onion circuit cells (`dig.onion` stream: `CREATE`/`EXTEND`/`RELAY`/`DESTROY`) ([onion routing](./onion-routing.md)) | **PEER / CONTROL** | mTLS | dig-nat mTLS stream |
 | §21 PUSH / WRITE: `module/upload` · `module` PUT · `module/complete` · `tombstone` | **PEER / CONTROL** | mTLS + per-request BLS ([§21.9](./transport-and-push.md#per-request-auth)) | authenticated HTTPS |
-| node config / control (`cache.*`, `control.*`, `dig.stage`, `dig.getAnchoredRoot`) | **CONTROL (loopback)** | local authorization (loopback-only) | local FFI / loopback HTTP |
+| node config / control (`cache.*`, `control.*`, `dig.stage`) | **CONTROL (loopback)** | local authorization (loopback-only) | local FFI / loopback HTTP |
 
 Notes:
 
 - **`dig.getAvailability` / `dig.fetchRange` are PEER/CONTROL**, not public read: they are the node↔node **sync/multi-source** surface, ridden over the mTLS mux. The browser/agent public read path is the [dig RPC](./dig-rpc.md) (`dig.getContent` et al.) — a browser does not fan byte-ranges across peers; that is a node-side operation ([multi-source download](#multi-source)).
-- **`dig.getAnchoredRoot` and `cache.*` are local control** (loopback / in-process FFI, [node profile](./dig-rpc.md#node-profile)), not exposed on the public read listener. A browser resolves the anchored root from its own chain source, not from the serving node.
+- **The peer JSON-RPC surface is an allowlist.** Because the mTLS client-cert verifier accepts any well-formed self-signed leaf, "authenticated" means only "some `peer_id`", not "authorized". The peer surface therefore answers ONLY the read / discovery / announce methods above (`dig.getContent`, `dig.getAvailability`, `dig.listInventory`, `dig.fetchRange`, `dig.getNetworkInfo`, `dig.getPeers`, `dig.announce`, `dig.getAnchoredRoot`, `dig.getCollection`, `dig.listCollectionItems`) and returns [`-32601`](./dig-rpc.md#error-model) for every `cache.*` / `control.*` / `dig.stage` method — those are loopback / in-process only. `dig.getAnchoredRoot` / `dig.getCollection` / `dig.listCollectionItems` are read-only, owner-independent chain reads and are peer-reachable; `cache.*` / `control.*` / `dig.stage` mutate or read local state and are not.
 - **The read subset is identical in shape to the [network profile](./dig-rpc.md)** — this is why one JSON-RPC endpoint serves both a browser and the local consumer; only the *set of methods the anonymous listener answers* differs.
 
 ## 7 · Peer RPC methods (node profile) {#peer-rpc}
