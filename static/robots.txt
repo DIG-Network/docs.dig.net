@@ -3,10 +3,30 @@
 User-agent: *
 Allow: /
 
+# One sitemap per shipped locale (Docusaurus builds each locale as its own
+# static tree and emits its own sitemap.xml at that locale's root — there is
+# no single unified sitemap). Every page's own <head> additionally carries the
+# full hreflang alternate-link set for all 14 locales + x-default, and each
+# per-locale sitemap.xml below carries the same set as <xhtml:link> entries
+# (see scripts/gen-hreflang-sitemaps.mjs, run as the "postbuild" npm script).
 Sitemap: https://docs.dig.net/sitemap.xml
+Sitemap: https://docs.dig.net/zh-CN/sitemap.xml
+Sitemap: https://docs.dig.net/zh-TW/sitemap.xml
+Sitemap: https://docs.dig.net/ko/sitemap.xml
+Sitemap: https://docs.dig.net/ja/sitemap.xml
+Sitemap: https://docs.dig.net/ru/sitemap.xml
+Sitemap: https://docs.dig.net/es/sitemap.xml
+Sitemap: https://docs.dig.net/pt-BR/sitemap.xml
+Sitemap: https://docs.dig.net/fr/sitemap.xml
+Sitemap: https://docs.dig.net/de/sitemap.xml
+Sitemap: https://docs.dig.net/tr/sitemap.xml
+Sitemap: https://docs.dig.net/vi/sitemap.xml
+Sitemap: https://docs.dig.net/id/sitemap.xml
+Sitemap: https://docs.dig.net/hi/sitemap.xml
 
 # Agent/LLM aids (see also /llms.txt and /knowledge-graph.json):
 #   /llms.txt            — curated, link-rich map of these docs for LLMs/agents
 #   /knowledge-graph.json — entities + typed edges (defines, part-of, requires, see-also)
 #   /openrpc.json        — OpenRPC spec for the dig JSON-RPC (rpc.dig.net)
 #   /error-codes.json    — cross-surface error catalog (dig RPC, CLI, DIGHUb, dig:// loader)
+# Each shipped locale also serves its own /<locale>/llms.txt.
