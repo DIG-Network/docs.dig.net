@@ -61,6 +61,10 @@ Register a **webhook** in the **Automation** tab to receive a signed event when 
 
 → [Webhooks](../automation/webhooks.md)
 
+## Can I use DIGHUb in my language?
+
+Yes. DIGHUb is available in **14 languages** — English, 简体中文, 繁體中文, 한국어, 日本語, Русский, Español, Português (Brasil), Français, Deutsch, Türkçe, Tiếng Việt, Bahasa Indonesia, and हिन्दी. It **automatically matches your browser's language** on first visit; to pick a specific one, open **Settings → Preferences → Language**. Your choice is saved on that device.
+
 ## Stuck?
 
 - [FAQ](../support/faq.md) — quick answers (cost, updates, privacy, domains).
