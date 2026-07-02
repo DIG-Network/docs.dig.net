@@ -20,7 +20,41 @@ const config: Config = {
 
   i18n: {
     defaultLocale: "en",
-    locales: ["en"],
+    locales: [
+      "en",
+      "zh-CN",
+      "zh-TW",
+      "ko",
+      "ja",
+      "ru",
+      "es",
+      "pt-BR",
+      "fr",
+      "de",
+      "tr",
+      "vi",
+      "id",
+      "hi",
+    ],
+    // Endonyms + direction mirror hub.dig.net's SUPPORTED_LOCALES table
+    // (apps/web/i18n/locales.ts) so the language name a user sees is
+    // identical across docs.dig.net and hub.dig.net.
+    localeConfigs: {
+      en: { label: "English", direction: "ltr", htmlLang: "en" },
+      "zh-CN": { label: "简体中文", direction: "ltr", htmlLang: "zh-CN" },
+      "zh-TW": { label: "繁體中文", direction: "ltr", htmlLang: "zh-TW" },
+      ko: { label: "한국어", direction: "ltr", htmlLang: "ko" },
+      ja: { label: "日本語", direction: "ltr", htmlLang: "ja" },
+      ru: { label: "Русский", direction: "ltr", htmlLang: "ru" },
+      es: { label: "Español", direction: "ltr", htmlLang: "es" },
+      "pt-BR": { label: "Português (Brasil)", direction: "ltr", htmlLang: "pt-BR" },
+      fr: { label: "Français", direction: "ltr", htmlLang: "fr" },
+      de: { label: "Deutsch", direction: "ltr", htmlLang: "de" },
+      tr: { label: "Türkçe", direction: "ltr", htmlLang: "tr" },
+      vi: { label: "Tiếng Việt", direction: "ltr", htmlLang: "vi" },
+      id: { label: "Bahasa Indonesia", direction: "ltr", htmlLang: "id" },
+      hi: { label: "हिन्दी", direction: "ltr", htmlLang: "hi" },
+    },
   },
 
   presets: [
@@ -236,6 +270,10 @@ const config: Config = {
         {
           to: "/docs/support/get-help",
           label: "Get help",
+          position: "right",
+        },
+        {
+          type: "localeDropdown",
           position: "right",
         },
         {

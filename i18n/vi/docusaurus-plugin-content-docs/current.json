@@ -1,0 +1,46 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Start here": {
+    "message": "Bắt đầu tại đây",
+    "description": "The label for category Start here in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Using DIG": {
+    "message": "Sử dụng DIG",
+    "description": "The label for category Using DIG in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.App developers": {
+    "message": "Nhà phát triển ứng dụng",
+    "description": "The label for category App developers in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.NFT developers": {
+    "message": "Nhà phát triển NFT",
+    "description": "The label for category NFT developers in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Integration developers": {
+    "message": "Nhà phát triển tích hợp",
+    "description": "The label for category Integration developers in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Node operators": {
+    "message": "Nhà vận hành node",
+    "description": "The label for category Node operators in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Content consumers": {
+    "message": "Người dùng nội dung",
+    "description": "The label for category Content consumers in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Troubleshooting": {
+    "message": "Khắc phục sự cố",
+    "description": "The label for category Troubleshooting in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Protocol": {
+    "message": "Giao thức",
+    "description": "The label for category Protocol in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Reference & guides": {
+    "message": "Tài liệu tham khảo & hướng dẫn",
+    "description": "The label for category Reference & guides in sidebar tutorialSidebar"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Start here": {
+    "message": "從這裡開始",
+    "description": "The label for category Start here in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Using DIG": {
+    "message": "使用 DIG",
+    "description": "The label for category Using DIG in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.App developers": {
+    "message": "應用程式開發者",
+    "description": "The label for category App developers in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.NFT developers": {
+    "message": "NFT 開發者",
+    "description": "The label for category NFT developers in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Integration developers": {
+    "message": "整合開發者",
+    "description": "The label for category Integration developers in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Node operators": {
+    "message": "節點營運者",
+    "description": "The label for category Node operators in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Content consumers": {
+    "message": "內容使用者",
+    "description": "The label for category Content consumers in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Troubleshooting": {
+    "message": "疑難排解",
+    "description": "The label for category Troubleshooting in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Protocol": {
+    "message": "協議",
+    "description": "The label for category Protocol in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Reference & guides": {
+    "message": "參考與指南",
+    "description": "The label for category Reference & guides in sidebar tutorialSidebar"
+  }
+}
