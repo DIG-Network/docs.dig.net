@@ -17,7 +17,15 @@
   --dig-violet: #5800d6;
   --dig-magenta: #ff00de;
   --dig-pink-glow: #ff3df5;
-  --grad-brand: linear-gradient(115deg, #5800d6 0%, #ff00de 100%);
+  /* --grad-brand is the CTA-button gradient, which always carries white
+     button text on top. Its end stop is a DARKENED magenta (#b8009c, not the
+     decorative --dig-magenta #ff00de used for glows/accents elsewhere) so
+     white text over the right/bottom end of the gradient still clears WCAG
+     2.2 AA's 4.5:1 text-contrast minimum: white-on-#ff00de is only 3.33:1
+     (fails), white-on-#b8009c is 5.97:1 (passes with margin). Decorative-only
+     uses of magenta (glows, orbit lines, gradient TEXT via --grad-text, which
+     is checked against the page background, not white) are unaffected. */
+  --grad-brand: linear-gradient(115deg, #5800d6 0%, #b8009c 100%);
   --grad-text: linear-gradient(100deg, #b98cff 0%, #ff6bee 100%);
 
   /* ---- Infima: primary = brand violet ---- */
@@ -169,6 +177,21 @@ html[data-theme="dark"] {
   background-color: var(--ifm-color-primary);
 }
 
+/* ---- inline links in prose (WCAG 1.4.1 — not by color alone) ----
+   Infima's default --ifm-link-decoration is "none": a link inline in a
+   paragraph is distinguished from surrounding text ONLY by color (verified:
+   axe's link-in-text-block rule flagged this across every doc page's prose
+   links). Underline every link that appears inside actual article content —
+   .markdown (doc/blog prose) and .theme-doc-markdown — so it reads as a link
+   independent of color perception; navbar/sidebar/footer/card links are
+   unaffected (they're distinguished by position/role, not prose color, and
+   underlining every nav item would look wrong). */
+.markdown a,
+.theme-doc-markdown a {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 /* ---- headings: brand display face ---- */
 .markdown h1,
 .markdown h2,
@@ -210,6 +233,41 @@ code {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+/* ---- code-block token contrast (WCAG 2.2 AA) ----
+   prism-react-renderer's stock themes are tuned against THEIR OWN reference
+   background, not this brand's page background — verified with axe-core:
+   oneLight's comment gray (#a0a1a7) is only 2.47:1 on our near-white light
+   code background (needs 4.5:1), and its blue (variable/function/parameter,
+   #4078f2) and green (string, #50a14f) tokens are 3.88:1 / 3.07:1. dracula's
+   comment blue-gray (#6272a4) is 3.66:1 on our actual dark-mode composited
+   code background (~#19192d, not dracula's own #282a36) — its other tokens
+   already clear 4.5:1 there and are left untouched. Overriding ONLY the
+   failing token classes (not swapping themes) keeps the rest of each
+   theme's palette and avoids drifting from upstream on tokens that already
+   pass. Selectors match prism-react-renderer's actual emitted class names. */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #6c6d73 !important;
+}
+.token.variable,
+.token.function,
+.token.parameter {
+  color: #1446b4 !important;
+}
+.token.string,
+.token.char,
+.token.attr-value {
+  color: #236e23 !important;
+}
+[data-theme="dark"] .token.comment,
+[data-theme="dark"] .token.prolog,
+[data-theme="dark"] .token.doctype,
+[data-theme="dark"] .token.cdata {
+  color: #8c9bc8 !important;
+}
+
 /* ---- tables ---- */
 .markdown table thead tr {
   background: rgba(88, 0, 214, 0.06);
@@ -236,6 +294,54 @@ code {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/* ============================================================
+   Accessibility — WCAG 2.2 AA baseline (umbrella project §6.6).
+   ============================================================ */
+
+/* ---- visible focus (WCAG 2.4.7 / 2.4.11) ----
+   Infima's default focus ring is a thin outline in the current-color primary,
+   which on this brand's violet-on-navy dark surface can read as low-contrast
+   against adjacent violet UI (buttons, active nav links, links). Give every
+   keyboard-focusable element an explicit, high-contrast ring independent of
+   element color: a light ring in dark mode, a dark ring in light mode, both
+   with an outline-offset so the ring never gets clipped by a tight-fitting
+   parent (nav items, pills, table cells). `:focus-visible` (not `:focus`) so
+   the ring only appears for keyboard/AT navigation, not every mouse click. */
+:focus-visible {
+  outline: 3px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+[data-theme="dark"] :focus-visible {
+  outline-color: #ecdcff;
+}
+/* Buttons/pills already carry a colored background close to the ring color
+   in dark mode (primary buttons, the alpha badge) — an outline in a
+   near-white shade keeps it visible against both the button fill and the
+   page background behind it. */
+[data-theme="dark"] .button:focus-visible,
+[data-theme="dark"] .navbar-alpha-badge:focus-visible {
+  outline-color: #ffffff;
+}
+
+/* ---- reduced motion (WCAG 2.3.3) ----
+   The only non-essential motion on this site is the CTA button's hover
+   lift/transition (custom.css `.button--brand`/`.button--primary`) plus
+   Infima's own default transitions (color-mode swap, menu expand/collapse,
+   dropdown open). Collapsing all of it to nearly-instant for users who've
+   asked the OS for reduced motion covers both without hunting down every
+   individual transition property across Infima's stylesheet. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 @tailwind components;

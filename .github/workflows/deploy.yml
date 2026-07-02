@@ -24,8 +24,35 @@ env:
   CLOUDFRONT_DISTRIBUTION_ID: E1G7CFG1FDYG9Y
 
 jobs:
+  test:
+    name: build + a11y/SEO tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+      # onBrokenLinks/onBrokenAnchors: "throw" (docusaurus.config.ts) means this
+      # also fails the build on any broken link/anchor across all 14 locales.
+      - run: npm run build # docusaurus build --out-dir dist; postbuild annotates sitemap hreflang
+      - run: npx playwright install --with-deps chromium
+      # Unit suite (tests/unit/) needs the same dist/ the e2e suite serves —
+      # both run after the build above, not before.
+      - run: npm run test:unit
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
   deploy:
     name: build + sync + invalidate
+    needs: test
     runs-on: ubuntu-latest
     environment: production
     steps:

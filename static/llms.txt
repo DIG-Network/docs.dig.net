@@ -132,3 +132,14 @@ The core concepts an agent should resolve first: the **capsule** (`storeId:rootH
 - [DigStore source](https://github.com/DIG-Network/digstore): the open-source (GPL-2.0) CLI and store format.
 - [DIG Network site](https://dig.net): the project home.
 - [DIGHUb](https://hub.dig.net): publish and manage capsules from the web.
+
+## Locales
+
+These docs ship in 14 locales: en (default, unprefixed paths, e.g.
+https://docs.dig.net/docs/quickstart), zh-CN, zh-TW, ko, ja, ru, es, pt-BR,
+fr, de, tr, vi, id, hi (each prefixed, e.g.
+https://docs.dig.net/de/docs/quickstart). Every page declares its full set of
+locale alternates via `<link rel="alternate" hreflang>` in its own `<head>`
+and in each locale's `/sitemap.xml`; this file itself is served identically
+at every locale's root (e.g. https://docs.dig.net/de/llms.txt) — link targets
+above are the canonical English paths.

@@ -9,6 +9,12 @@
 .docusaurus
 .cache-loader
 
+# Test artifacts (tests/e2e via playwright.config.ts)
+/test-results
+/playwright-report
+/blob-report
+/playwright/.cache
+
 # Misc
 .DS_Store
 .env.local
