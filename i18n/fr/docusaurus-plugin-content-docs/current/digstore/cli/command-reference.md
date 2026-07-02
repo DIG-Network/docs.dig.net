@@ -61,7 +61,26 @@ The intended flow: `digstore new <template>` → edit → `digstore dev` (free p
 | `digstore anchor status [--json]` | Show the store's anchor state (network, launcher/store id, current coin, height) + the pointer embedded in the module |
 | `digstore anchor inspect <module.dig> [--json]` | Decode and print the on-chain pointer embedded in any compiled module file |
 
-Set the wallet passphrase non-interactively with `DIGSTORE_PASSPHRASE`. Global config lives in `~/.dig/config.toml` (`coinset_url`, `unlock_ttl`, `fee`).
+Set the wallet passphrase non-interactively with `DIGSTORE_PASSPHRASE`. Global config lives in `~/.dig/config.toml` (`coinset_url`, `unlock_ttl`, `fee`, `node.url`).
+
+## Configuration
+
+| Command | What it does |
+|---|---|
+| `digstore config node.url <url>` | Persist a custom node endpoint to `~/.dig/config.toml` — every subsequent command talks to this node first, ahead of the automatic `dig.local` → `localhost` → `rpc.dig.net` resolution below. |
+| `digstore config node.url --unset` | Remove the stored override; resolution falls back to the automatic ladder. |
+| `digstore config <key> [<value>]` | Get or set any config key in `~/.dig/config.toml` (`coinset_url`, `unlock_ttl`, `fee`, `node.url`). Omit `<value>` to print the current value. |
+
+### Which node digstore talks to
+
+Every command that reaches a node (`clone`, `pull`, `push`, reads, `serve` peers, etc.) resolves the endpoint in this fixed order, using the first that responds:
+
+1. **An explicit override** — the `--node <url>` global flag, then the `$DIG_NODE_URL` environment variable, then the `node.url` value in `~/.dig/config.toml` (set via `digstore config node.url <url>`). Any of these always wins over the steps below.
+2. **`dig.local`** — your installed local dig-node.
+3. **`localhost`** — a dig-node on the loopback address, its default local port.
+4. **`rpc.dig.net`** — the public gateway, the final fallback when no local node answers.
+
+Each tier is a cheap health probe with a short timeout, so digstore never hangs waiting on an unreachable local node. Connections to any tier use mTLS with a client certificate derived from your identity key; `rpc.dig.net` additionally serves plain HTTPS for browsers, which can't present a client certificate. See [Point a consumer at your node](../../run-a-node/point-a-consumer.md) for the same ladder as it applies to the DIG Browser and extension.
 
 ## Stores & workspace
 
@@ -146,6 +165,7 @@ Build the spend with the canonical CHIP-0035 builders, sign with your wallet, an
 
 | Flag | Effect |
 |---|---|
+| `--node <url>` | Use this node for the command, ahead of the automatic `dig.local` → `localhost` → `rpc.dig.net` resolution. Same precedence tier as `$DIG_NODE_URL` and the stored `node.url` config (flag wins if more than one is set) — see [Which node digstore talks to](#which-node-digstore-talks-to). |
 | `--store <name>` | Operate on a specific store (overrides the active store). `--project` is a hidden back-compat alias. |
 | `-C, --cwd <path>` | Operating directory for this command (overrides the content root) |
 | `--dig-dir <path>` | Workspace location |
@@ -161,4 +181,5 @@ Build the spend with the canonical CHIP-0035 builders, sign with your wallet, an
 - [Sharing over a remote](./sharing.md) — `remote`, `clone`, `push`, `pull`, `revoke`
 - [Streaming & retrieval keys](./streaming-and-keys.md) — `cat`, `keys`, `checkout`
 - [Deploy from GitHub Actions](./deploy-from-github-actions.md) — `deploy`, `deploy-key`
+- [Point a consumer at your node](../../run-a-node/point-a-consumer.md) — the same node-resolution ladder for the DIG Browser and extension
 - [Concepts & glossary](../../concepts.md) — the entities these commands operate on

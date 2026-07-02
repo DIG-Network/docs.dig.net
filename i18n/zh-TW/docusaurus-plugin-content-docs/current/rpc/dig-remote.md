@@ -26,7 +26,7 @@ The authoritative §21 transport wire spec — the REST surface, the JSON-outer/
 On top of the read interface, DigStore has a **git-style remote**. You `clone` a store to disk, `pull` new generations, and `push` a new generation — over the same routes a node already serves. The transport is named by a `dig://` URL, and **every request is signed** by your identity key.
 
 ```bash
-digstore clone dig://5b1f…e9             # default network node (rpc.dig.net)
+digstore clone dig://5b1f…e9             # resolves your node (see below), else rpc.dig.net
 digstore pull                            # sync new generations
 digstore push                            # publish a new generation
 ```
@@ -37,15 +37,28 @@ digstore push                            # publish a new generation
 
 ## The `dig://` scheme
 
-A `dig://` URL names the store's **owner** (an informational namespace, like GitHub's `user/`) and the **node host** that serves it — a store can have many origins — and resolves to `https://<host>/stores/<storeId>` under the hood.
+A `dig://` URL names the store's **owner** (an informational namespace, like GitHub's `user/`) and, optionally, the **node host** that serves it — a store can have many origins — and resolves to `https://<host>/stores/<storeId>` under the hood.
 
 | You write… | It resolves to… | Notes |
 |---|---|---|
-| `dig://<storeId>` | `https://rpc.dig.net/stores/<storeId>` | Bare 64-hex store id; default network node. |
-| `dig://<user>@<storeId>` | `https://rpc.dig.net/stores/<storeId>` | `<user>` is the owner handle — display only. |
-| `dig://[<user>@]<host>[:port]/<storeId>` | `https://<host>[:port]/stores/<storeId>` | Any node: the reference node, a third party, or one you run. |
+| `dig://<storeId>` | `https://<resolved-node>/stores/<storeId>` | Bare 64-hex store id; no host given, so the CLI resolves a node — see [Which node it talks to](#which-node-it-talks-to) below. |
+| `dig://<user>@<storeId>` | `https://<resolved-node>/stores/<storeId>` | `<user>` is the owner handle — display only; host still resolved. |
+| `dig://[<user>@]<host>[:port]/<storeId>` | `https://<host>[:port]/stores/<storeId>` | An explicit host in the URL always wins: the reference node, a third party, or one you run. |
 
 The owner segment never changes which bytes you fetch — content is addressed by the chain-anchored `storeId` and verified against the on-chain root, so **any origin returns the same store**. DIGHUb shows a store's canonical origin in a GitHub-style clone box as `dig://<handle>@rpc.dig.net/<storeId>`.
+
+## Which node it talks to
+
+When a `dig://` URL doesn't name a host, the CLI resolves one by trying, in order, the **first that responds**:
+
+1. **An explicitly-configured node** — the `--node <url>` flag, the `$DIG_NODE_URL` environment variable, or a stored `digstore config node.url <url>` value. Sourced in that order, and this always wins over the automatic steps below.
+2. **`dig.local`** — your installed local dig-node.
+3. **`localhost`** — a dig-node on the loopback address, its default local port.
+4. **`rpc.dig.net`** — the public gateway, used only when no local node answers.
+
+Each tier is a cheap health probe with a short timeout, so an unreachable local node falls through quickly rather than hanging a `clone`/`pull`/`push`. See [Which node digstore talks to](../digstore/cli/command-reference.md#which-node-digstore-talks-to) for how to set an override, and [Point a consumer at your node](../run-a-node/point-a-consumer.md) for the same ladder as it applies to the DIG Browser and extension.
+
+Connections to any of the three tiers use mTLS, presenting a client certificate derived from your identity key — the same per-request signing described below rides on top of that authenticated channel.
 
 ## Every request is signed (per-request auth)
 

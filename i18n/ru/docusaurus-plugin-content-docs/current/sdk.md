@@ -52,14 +52,14 @@ One `connect()` works in the [DIG Browser](./browser/using-window-chia.md) (no Q
 ```jsx
 import { DigClient } from "@dignetwork/dig-sdk";
 
-const dig = new DigClient();                 // defaults to https://rpc.dig.net
+const dig = new DigClient();                 // resolves a node automatically; pass endpoint to override
 const html = await dig.readText({
   urn: "urn:dig:chia:<storeId>/index.html",
   root: "<onchain-root-hex>",                 // the trust anchor, read from the chain
 });
 ```
 
-It derives the URN's keys in the browser, [verifies inclusion](./digstore/format/proofs-and-security.md) against the on-chain root, and decrypts — the serving host stays blind. → [What is the dig RPC?](./rpc/what-is-the-dig-rpc.md)
+`DigClient` accepts an `endpoint` constructor option to point at a specific node; left unset, it resolves one automatically — preferring a reachable local dig-node (`dig.local`, then `localhost`) and falling back to the public gateway `https://rpc.dig.net` only when neither answers. Pointing at a local node changes *where* ciphertext is fetched, never *whether* it's trusted: it derives the URN's keys in the browser, [verifies inclusion](./digstore/format/proofs-and-security.md) against the on-chain root, and decrypts — the serving host stays blind. → [What is the dig RPC?](./rpc/what-is-the-dig-rpc.md)
 
 ## `Paywall` — monetize & gate {#paywall}
 

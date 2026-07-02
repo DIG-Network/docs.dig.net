@@ -41,7 +41,7 @@ curl -s https://rpc.dig.net -X POST -H 'content-type: application/json' \
        "params":{"store_id":"5b1f…e9","root":"latest","retrieval_key":"9f23…c1"}}'
 ```
 
-In JavaScript, the DIG read-crypto client derives the retrieval + decryption keys from a URN and talks to the RPC for you — set the endpoint with `VITE_RPC` (defaults to `https://rpc.dig.net`) and call `readByUrn(...)`. Every read is verified against the on-chain root and decrypted in your process; the node only ever sees a hash.
+In JavaScript, the DIG read-crypto client derives the retrieval + decryption keys from a URN and talks to the RPC for you — set the endpoint with `VITE_RPC` to point at your own node, or leave it unset to resolve one automatically (a reachable local dig-node first, `https://rpc.dig.net` only as the final fallback), then call `readByUrn(...)`. Every read is verified against the on-chain root and decrypted in your process; the node only ever sees a hash.
 
 ## What it serves
 
