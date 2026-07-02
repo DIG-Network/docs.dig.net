@@ -1,0 +1,46 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Start here": {
+    "message": "Mulai di sini",
+    "description": "The label for category Start here in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Using DIG": {
+    "message": "Menggunakan DIG",
+    "description": "The label for category Using DIG in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.App developers": {
+    "message": "Pengembang aplikasi",
+    "description": "The label for category App developers in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.NFT developers": {
+    "message": "Pengembang NFT",
+    "description": "The label for category NFT developers in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Integration developers": {
+    "message": "Pengembang integrasi",
+    "description": "The label for category Integration developers in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Node operators": {
+    "message": "Operator node",
+    "description": "The label for category Node operators in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Content consumers": {
+    "message": "Konsumen konten",
+    "description": "The label for category Content consumers in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Troubleshooting": {
+    "message": "Pemecahan masalah",
+    "description": "The label for category Troubleshooting in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Protocol": {
+    "message": "Protokol",
+    "description": "The label for category Protocol in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Reference & guides": {
+    "message": "Referensi & panduan",
+    "description": "The label for category Reference & guides in sidebar tutorialSidebar"
+  }
+}

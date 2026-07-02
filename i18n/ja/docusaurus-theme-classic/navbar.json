@@ -1,0 +1,22 @@
+{
+  "title": {
+    "message": "Docs",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "DIG Network",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Documentation": {
+    "message": "ドキュメント",
+    "description": "Navbar item with label Documentation"
+  },
+  "item.label.DigStore": {
+    "message": "DigStore",
+    "description": "Navbar item with label DigStore"
+  },
+  "item.label.Get help": {
+    "message": "サポート",
+    "description": "Navbar item with label Get help"
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "link.title.Documentation": {
+    "message": "Tài liệu",
+    "description": "The title of the footer links column with title=Documentation in the footer"
+  },
+  "link.title.DigStore": {
+    "message": "DigStore",
+    "description": "The title of the footer links column with title=DigStore in the footer"
+  },
+  "link.title.Community & support": {
+    "message": "Cộng đồng & hỗ trợ",
+    "description": "The title of the footer links column with title=Community & support in the footer"
+  },
+  "link.title.Project": {
+    "message": "Dự án",
+    "description": "The title of the footer links column with title=Project in the footer"
+  },
+  "link.item.label.DIG Network": {
+    "message": "DIG Network",
+    "description": "The label of footer link with label=DIG Network linking to https://dig.net"
+  },
+  "link.item.label.DigStore": {
+    "message": "DigStore",
+    "description": "The label of footer link with label=DigStore linking to /docs/digstore/what-is-digstore"
+  },
+  "link.item.label.The Format": {
+    "message": "Định dạng",
+    "description": "The label of footer link with label=The Format linking to /docs/digstore/format/overview"
+  },
+  "link.item.label.CLI tutorial": {
+    "message": "Hướng dẫn CLI",
+    "description": "The label of footer link with label=CLI tutorial linking to /docs/digstore/cli/quickstart"
+  },
+  "link.item.label.Command reference": {
+    "message": "Tài liệu tham khảo lệnh",
+    "description": "The label of footer link with label=Command reference linking to /docs/digstore/cli/command-reference"
+  },
+  "link.item.label.Get help": {
+    "message": "Nhận trợ giúp",
+    "description": "The label of footer link with label=Get help linking to /docs/support/get-help"
+  },
+  "link.item.label.Troubleshooting": {
+    "message": "Khắc phục sự cố",
+    "description": "The label of footer link with label=Troubleshooting linking to /docs/support/troubleshooting"
+  },
+  "link.item.label.FAQ": {
+    "message": "Câu hỏi thường gặp",
+    "description": "The label of footer link with label=FAQ linking to /docs/support/faq"
+  },
+  "link.item.label.Changelog": {
+    "message": "Nhật ký thay đổi",
+    "description": "The label of footer link with label=Changelog linking to /docs/support/changelog"
+  },
+  "link.item.label.Status": {
+    "message": "Trạng thái",
+    "description": "The label of footer link with label=Status linking to https://status.dig.net/"
+  },
+  "link.item.label.Discord": {
+    "message": "Discord",
+    "description": "The label of footer link with label=Discord linking to https://discord.gg/dignetwork"
+  },
+  "link.item.label.@digdotnet": {
+    "message": "@digdotnet",
+    "description": "The label of footer link with label=@digdotnet linking to https://x.com/digdotnet"
+  },
+  "link.item.label.digstore on GitHub": {
+    "message": "digstore trên GitHub",
+    "description": "The label of footer link with label=digstore on GitHub linking to https://github.com/DIG-Network/digstore"
+  },
+  "link.item.label.Releases": {
+    "message": "Bản phát hành",
+    "description": "The label of footer link with label=Releases linking to https://github.com/DIG-Network/digstore/releases"
+  },
+  "copyright": {
+    "message": "Copyright © 2026 DIG Network. DigStore is open source under GPL-2.0.",
+    "description": "The footer copyright"
+  },
+  "logo.alt": {
+    "message": "DigStore — by DIG Network",
+    "description": "The alt text of footer logo"
+  }
+}

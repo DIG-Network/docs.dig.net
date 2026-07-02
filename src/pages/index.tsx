@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
+import Translate, { translate } from '@docusaurus/Translate';
 import React from 'react';
 
 import styles from './index.module.css';
@@ -34,36 +35,42 @@ function Hero() {
       <div className={clsx('container', styles.heroInner)}>
         <div className={styles.heroCopy}>
           <span className={styles.pill}>
-            <span className={styles.pillDot} /> Proof-of-Stake Layer 2 on Chia
+            <span className={styles.pillDot} />{' '}
+            <Translate id="homepage.hero.pill">Proof-of-Stake Layer 2 on Chia</Translate>
           </span>
           <Heading as="h1" className={styles.h1}>
-            Build on the <span className="gt">decentralized</span> data layer
+            <Translate
+              id="homepage.hero.title"
+              values={{ decentralized: <span className="gt"><Translate id="homepage.hero.title.decentralized">decentralized</Translate></span> }}>
+              {'Build on the {decentralized} data layer'}
+            </Translate>
           </Heading>
           <p className={styles.lead}>
-            DIG Network is a developer platform for publishing and serving content
-            where the host never sees what it carries. Start with{' '}
-            <strong>DigStore</strong> — encrypted, content-addressable storage that
-            compiles to a single self-defending WebAssembly module.
+            <Translate
+              id="homepage.hero.lead"
+              values={{ digstore: <strong><Translate id="homepage.hero.lead.digstore">DigStore</Translate></strong> }}>
+              {'DIG Network is a developer platform for publishing and serving content where the host never sees what it carries. Start with {digstore} — encrypted, content-addressable storage that compiles to a single self-defending WebAssembly module.'}
+            </Translate>
           </p>
           <div className={styles.ctaRow}>
             <Link className="button button--primary button--lg" to="/docs/">
-              Explore the docs →
+              <Translate id="homepage.hero.cta.docs">Explore the docs →</Translate>
             </Link>
             <Link className={clsx('button button--lg', styles.ghost)} to="/docs/digstore/cli/quickstart">
-              Quick start
+              <Translate id="homepage.hero.cta.quickstart">Quick start</Translate>
             </Link>
             <Link
               className={clsx('button button--lg', styles.ghost)}
               to="https://github.com/DIG-Network/DIG_Browser/releases">
-              Get the DIG Browser ↗
+              <Translate id="homepage.hero.cta.browser">Get the DIG Browser ↗</Translate>
             </Link>
           </div>
           <div className={styles.trust}>
-            <span>Open source · GPL-2.0</span>
+            <span><Translate id="homepage.hero.trust.license">Open source · GPL-2.0</Translate></span>
             <span className={styles.dot} />
-            <span>macOS · Linux · Windows</span>
+            <span><Translate id="homepage.hero.trust.platforms">macOS · Linux · Windows</Translate></span>
             <span className={styles.dot} />
-            <span>Single-binary CLI</span>
+            <span><Translate id="homepage.hero.trust.binary">Single-binary CLI</Translate></span>
           </div>
         </div>
 
@@ -92,76 +99,99 @@ $ digstore cat urn:dig:chia:…/index.html`}</code>
   );
 }
 
-type Pillar = { title: string; icon: JSX.Element; body: JSX.Element };
+type Pillar = { title: JSX.Element; icon: JSX.Element; body: JSX.Element };
 
-const PILLARS: Pillar[] = [
-  {
-    title: 'Encrypted at rest',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="4" y="10" width="16" height="10" rx="2" />
-        <path d="M8 10V7a4 4 0 0 1 8 0v3" />
-        <circle cx="12" cy="15" r="1.4" />
-      </svg>
-    ),
-    body: (
-      <>The URN <em>is</em> the key — it both locates and decrypts (AES-256-GCM-SIV). No password, no key stored anywhere.</>
-    ),
-  },
-  {
-    title: 'Provider-blind',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="9" />
-        <path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18" />
-      </svg>
-    ),
-    body: (
-      <>Hosts hold only ciphertext keyed by hashes. Downloads are verified against the store id and the publisher's signed root.</>
-    ),
-  },
-  {
-    title: 'One self-defending file',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z" />
-        <path d="M9.5 12l2 2 3.5-4" />
-      </svg>
-    ),
-    body: (
-      <>Data, server, and Merkle proofs compile into one <code>.wasm</code>, padded to a uniform size that reveals nothing.</>
-    ),
-  },
-];
+function usePillars(): Pillar[] {
+  return [
+    {
+      title: <Translate id="homepage.pillar.encrypted.title">Encrypted at rest</Translate>,
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="4" y="10" width="16" height="10" rx="2" />
+          <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+          <circle cx="12" cy="15" r="1.4" />
+        </svg>
+      ),
+      body: (
+        <Translate id="homepage.pillar.encrypted.body">
+          {'The URN is the key — it both locates and decrypts (AES-256-GCM-SIV). No password, no key stored anywhere.'}
+        </Translate>
+      ),
+    },
+    {
+      title: <Translate id="homepage.pillar.blind.title">Provider-blind</Translate>,
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18" />
+        </svg>
+      ),
+      body: (
+        <Translate id="homepage.pillar.blind.body">
+          {"Hosts hold only ciphertext keyed by hashes. Downloads are verified against the store id and the publisher's signed root."}
+        </Translate>
+      ),
+    },
+    {
+      title: <Translate id="homepage.pillar.selfDefending.title">One self-defending file</Translate>,
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z" />
+          <path d="M9.5 12l2 2 3.5-4" />
+        </svg>
+      ),
+      body: (
+        <Translate
+          id="homepage.pillar.selfDefending.body"
+          values={{ wasm: <code>.wasm</code> }}>
+          {'Data, server, and Merkle proofs compile into one {wasm}, padded to a uniform size that reveals nothing.'}
+        </Translate>
+      ),
+    },
+  ];
+}
 
 function Primitives() {
+  const pillars = usePillars();
   return (
     <section className={styles.section}>
       <div className="container">
         <div className={styles.head}>
-          <span className={styles.kicker}>PRIMITIVES</span>
-          <Heading as="h2">Composable building blocks</Heading>
-          <p>DigStore is available now. More DIG Network primitives are on the way.</p>
+          <span className={styles.kicker}>
+            <Translate id="homepage.primitives.kicker">PRIMITIVES</Translate>
+          </span>
+          <Heading as="h2">
+            <Translate id="homepage.primitives.title">Composable building blocks</Translate>
+          </Heading>
+          <p>
+            <Translate id="homepage.primitives.subtitle">
+              DigStore is available now. More DIG Network primitives are on the way.
+            </Translate>
+          </p>
         </div>
 
         <div className={styles.featureCard}>
           <div className={styles.featureCardHead}>
             <div>
-              <span className={styles.badge}>AVAILABLE</span>
+              <span className={styles.badge}>
+                <Translate id="homepage.primitives.available">AVAILABLE</Translate>
+              </span>
               <Heading as="h3" className={styles.featureTitle}>
                 <span className="gt">DigStore</span>
               </Heading>
               <p className={styles.featureLead}>
-                A Git-shaped, encrypted, content-addressable store. Point it at a
-                build directory, commit generations, and address everything by URN.
+                <Translate id="homepage.primitives.digstore.lead">
+                  A Git-shaped, encrypted, content-addressable store. Point it at a
+                  build directory, commit generations, and address everything by URN.
+                </Translate>
               </p>
               <Link className={styles.textLink} to="/docs/digstore/what-is-digstore">
-                Read the DigStore docs →
+                <Translate id="homepage.primitives.digstore.link">Read the DigStore docs →</Translate>
               </Link>
             </div>
           </div>
           <div className={styles.pillarGrid}>
-            {PILLARS.map((p, i) => (
+            {pillars.map((p, i) => (
               <div className={styles.pillar} key={i}>
                 <div className={styles.pillarIcon}>{p.icon}</div>
                 <h4>{p.title}</h4>
@@ -175,23 +205,49 @@ function Primitives() {
   );
 }
 
-const STEPS = [
-  { n: '01', t: 'Capture', d: 'Point a store at your build output.', c: 'digstore init site --dir dist' },
-  { n: '02', t: 'Commit', d: 'Seal a generation into one .wasm.', c: 'digstore add -A && digstore commit -m "v1"' },
-  { n: '03', t: 'Share', d: 'Push to a remote; hand out a URN.', c: 'digstore push origin' },
-];
+function useSteps() {
+  return [
+    {
+      n: '01',
+      t: <Translate id="homepage.steps.capture.title">Capture</Translate>,
+      d: <Translate id="homepage.steps.capture.body">Point a store at your build output.</Translate>,
+      c: 'digstore init site --dir dist',
+    },
+    {
+      n: '02',
+      t: <Translate id="homepage.steps.commit.title">Commit</Translate>,
+      d: <Translate id="homepage.steps.commit.body">Seal a generation into one .wasm.</Translate>,
+      c: 'digstore add -A && digstore commit -m "v1"',
+    },
+    {
+      n: '03',
+      t: <Translate id="homepage.steps.share.title">Share</Translate>,
+      d: <Translate id="homepage.steps.share.body">Push to a remote; hand out a URN.</Translate>,
+      c: 'digstore push origin',
+    },
+  ];
+}
 
 function HowItWorks() {
+  const steps = useSteps();
   return (
     <section className={clsx(styles.section, styles.sectionAlt)}>
       <div className="container">
         <div className={styles.head}>
-          <span className={styles.kicker}>HOW IT WORKS</span>
-          <Heading as="h2">Three commands to publish</Heading>
-          <p>Git-style workflow for build output — encrypted and addressable from the first commit.</p>
+          <span className={styles.kicker}>
+            <Translate id="homepage.howItWorks.kicker">HOW IT WORKS</Translate>
+          </span>
+          <Heading as="h2">
+            <Translate id="homepage.howItWorks.title">Three commands to publish</Translate>
+          </Heading>
+          <p>
+            <Translate id="homepage.howItWorks.subtitle">
+              Git-style workflow for build output — encrypted and addressable from the first commit.
+            </Translate>
+          </p>
         </div>
         <div className={styles.steps}>
-          {STEPS.map((s) => (
+          {steps.map((s) => (
             <div className={styles.step} key={s.n}>
               <span className={styles.stepNum}>{s.n}</span>
               <h4>{s.t}</h4>
@@ -210,14 +266,20 @@ function CTABand() {
     <section className={styles.ctaBand}>
       <div className={clsx('container', styles.ctaInner)}>
         <div className={styles.ctaGlow} aria-hidden="true" />
-        <Heading as="h2">Start building with DigStore</Heading>
-        <p>Install the CLI and publish your first encrypted store in under a minute.</p>
+        <Heading as="h2">
+          <Translate id="homepage.cta.title">Start building with DigStore</Translate>
+        </Heading>
+        <p>
+          <Translate id="homepage.cta.subtitle">
+            Install the CLI and publish your first encrypted store in under a minute.
+          </Translate>
+        </p>
         <div className={styles.ctaRow}>
           <Link className="button button--primary button--lg" to="/docs/digstore/cli/install">
-            Install the CLI
+            <Translate id="homepage.cta.install">Install the CLI</Translate>
           </Link>
           <Link className={clsx('button button--lg', styles.ghost)} to="/docs/digstore/format/overview">
-            Learn the format
+            <Translate id="homepage.cta.format">Learn the format</Translate>
           </Link>
         </div>
       </div>
@@ -226,10 +288,17 @@ function CTABand() {
 }
 
 export default function Home(): JSX.Element {
+  const title = translate({
+    id: 'homepage.meta.title',
+    message: 'DIG Network — the decentralized data layer',
+  });
+  const description = translate({
+    id: 'homepage.meta.description',
+    message:
+      'DIG Network is a Proof-of-Stake Layer 2 on Chia. Developer docs for the network and its primitives, including DigStore — encrypted content-addressable storage.',
+  });
   return (
-    <Layout
-      title="DIG Network — the decentralized data layer"
-      description="DIG Network is a Proof-of-Stake Layer 2 on Chia. Developer docs for the network and its primitives, including DigStore — encrypted content-addressable storage.">
+    <Layout title={title} description={description}>
       <div className={styles.page}>
         <Hero />
         <main>
