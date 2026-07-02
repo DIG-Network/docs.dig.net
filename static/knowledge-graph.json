@@ -764,6 +764,18 @@
       ]
     },
     {
+      "id": "/docs/protocol/onion-routing",
+      "type": "doc",
+      "title": "L7 · Private retrieval (onion routing)",
+      "url": "https://docs.dig.net/docs/protocol/onion-routing",
+      "tags": [
+        "dig-node",
+        "dig-onion",
+        "dig-rpc",
+        "peer network"
+      ]
+    },
+    {
       "id": "/docs/protocol/peer-network",
       "type": "doc",
       "title": "L7 · DIG Node peer network",
@@ -2425,6 +2437,11 @@
       "type": "part-of"
     },
     {
+      "from": "/docs/protocol/onion-routing",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
       "from": "/docs/protocol/peer-network",
       "to": "concept:dig-rpc",
       "type": "part-of"
@@ -3937,6 +3954,41 @@
     {
       "from": "/docs/protocol/on-chain-anchoring",
       "to": "/docs/chip-0035-spends-and-delegation",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/onion-routing",
+      "to": "/docs/protocol/peer-network",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/onion-routing",
+      "to": "/docs/protocol/peer-network",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/onion-routing",
+      "to": "/docs/protocol/dig-rpc",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/onion-routing",
+      "to": "/docs/protocol/verification-and-provenance",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/onion-routing",
+      "to": "/docs/protocol/merkle-proofs",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/onion-routing",
+      "to": "/docs/support/error-codes",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/peer-network",
+      "to": "/docs/protocol/onion-routing",
       "type": "see-also"
     },
     {
