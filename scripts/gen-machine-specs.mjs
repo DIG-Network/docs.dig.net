@@ -195,7 +195,7 @@ const openrpc = buildOpenRpc({
 });
 
 const openrpcNode = buildOpenRpc({
-  title: 'dig RPC — node profile (local dig-node / dig-companion / in-process DIG Browser)',
+  title: 'dig RPC — node profile (local dig-node / in-process DIG Browser)',
   methodSet: nodeMethods,
   servers: [{ name: 'local dig-node', url: 'http://127.0.0.1:9778', summary: 'The local node the DIG Browser runs in-process (FFI) and dig-node serves on 127.0.0.1:9778.' }],
   info:

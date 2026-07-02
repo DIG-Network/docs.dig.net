@@ -131,7 +131,7 @@ See the full [error catalog](../support/error-codes.md).
 
 ## 7 · Node profile {#node-profile}
 
-The local **dig-node** / **dig-companion** that the DIG Browser runs in-process (FFI) is `rpc.dig.net`-compatible but implements a **different, smaller** subset (`dig-node/src/lib.rs:1121-1297`):
+The local **dig-node** that the DIG Browser runs in-process (FFI) is `rpc.dig.net`-compatible but implements a **different, smaller** subset (`dig-node/src/lib.rs:1121-1297`):
 
 - Of the byte methods, **only `dig.getContent`** (local-first: cached `.dig` → §21.9 whole-store sync → proxy upstream). Everything else proxies or returns `-32601`. Before serving from ANY source, the node resolves the store's on-chain root and **pins** the served generation to it (or fails closed with [`-32005`](#error-model)) — so a compromised upstream/host can never choose which generation is served. A rootless request resolves to the chain tip; an explicit `root` must equal it.
 - **Plus node-only methods the security model depends on:**

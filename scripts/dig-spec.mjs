@@ -402,7 +402,7 @@ export const methods = [
 ];
 
 /* ------------------------------------------------------------------ *
- * The dig RPC NODE PROFILE (local dig-node / dig-companion / in-process
+ * The dig RPC NODE PROFILE (local dig-node / in-process
  * DIG Browser node). A DISTINCT, smaller surface than the network profile:
  * of the byte methods it implements ONLY dig.getContent; everything else
  * proxies upstream or returns -32601. It ADDS node-only methods that MUST be
