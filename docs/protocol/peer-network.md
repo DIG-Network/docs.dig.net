@@ -155,8 +155,18 @@ Rules:
 - **Attempt in order; stop at the first success.** A node does not skip ahead to the relay while an earlier, cheaper strategy can still yield a direct path.
 - **Prefer hole-punch signalling (e) over full relaying (f).** Both involve the relay, but they are not the same tier: in (e) the relay only *brokers the introduction* and the stream goes peer-to-peer, whereas in (f) the relay *carries every byte*. A node falls to (f) **only** when the hole punch of (e) fails — this saves relay bandwidth, since a brokered direct link costs the relay almost nothing. A successful (e) is a **direct** link (strategy result "Direct"), authenticated by the same mTLS `peer_id` as every other tier.
 - **Strategies (b)–(d) run once at startup / on address change**, not per connection: they establish inbound reachability so future dials land as (a) DIRECT for peers dialing *this* node. A node that obtains a stable external mapping via UPnP/NAT-PMP/PCP advertises it as a candidate address so peers dial it directly.
-- **Candidate addresses.** A node advertises the set of addresses at which it may be reachable — its configured/observed listen address, any UPnP/NAT-PMP/PCP-mapped external address, and its STUN-derived reflexive address ([§3](#stun)). Peers dial candidates in most-direct-first order.
+- **Candidate addresses.** A node advertises the set of addresses at which it may be reachable — its configured/observed listen address, any UPnP/NAT-PMP/PCP-mapped external address, and its STUN-derived reflexive address ([§3](#stun)). Peers dial candidates most-direct-first and **IPv6-first** ([§2a](#address-family)).
 - **Reflexive discovery precedes hole-punch.** Before requesting a hole-punch a node learns its public reflexive `IP:port` via STUN ([§3](#stun)) and supplies it as the `external_addr` in the coordination exchange.
+
+## 2a · Address family — IPv6-first, IPv4-fallback {#address-family}
+
+All peer communication is **IPv6-first, with IPv4 used only as a fallback**. This applies wherever a node binds, advertises, or dials a peer address.
+
+- **Bind — dual-stack.** A node's peer listener binds the IPv6 unspecified address `[::]` as a **dual-stack** socket, so the single socket accepts both native IPv6 connections and IPv4 connections (via IPv4-mapped-IPv6) on the same port. It does not bind an IPv4-only wildcard.
+- **Advertise — IPv6 first.** A node advertises its real, directly-dialable candidate addresses ordered IPv6-first: a routable (global-unicast) IPv6 address precedes the IPv4 fallback. The wildcard bind address is never advertised (it is not dialable). A node with no routable address advertises no direct candidate and is reached via the relay-coordinated tiers ([§2e/f](#nat-traversal)).
+- **Dial — happy-eyeballs, IPv6 preferred.** When dialing a peer with several candidate addresses, a node tries the peer's IPv6 candidate(s) first and falls back to IPv4 only when IPv6 fails or times out. The full candidate list is preserved through the dial path so every family is tried in IPv6-first order — not collapsed to one address.
+
+IPv4 remains a fully supported fallback (many networks are still IPv4-only); it is the fallback, never the default, wherever IPv6 is possible.
 
 ## 3 · STUN — reflexive address discovery {#stun}
 
@@ -432,15 +442,15 @@ Report this node's own network posture — its identity, reachability, candidate
 {
   "peer_id": "<64hex>",
   "network_id": "DIG_MAINNET",
-  "listen_addr": "0.0.0.0:9444",
+  "listen_addr": "[2001:db8::7]:9444",
   "reflexive_addr": "203.0.113.1:9444",
-  "candidate_addresses": [ { "host": "203.0.113.1", "port": 9444, "kind": "reflexive" } ],
+  "candidate_addresses": [ "[2001:db8::7]:9444", "203.0.113.7:9444" ],
   "reachability": "direct",
   "relay": { "url": "wss://relay.dig.net:9450", "reserved": true, "connected_peers": 42 }
 }
 ```
 
-`reflexive_addr` is the STUN-discovered public address ([§3](#stun)) or `null` if not yet learned; `reachability` is `"direct"` (a direct inbound path exists — publicly reachable or a working UPnP/NAT-PMP/PCP mapping) or `"relayed"` (only reachable through the relay); `relay.reserved` reflects the RLY-001 reservation state.
+`candidate_addresses` is the node's real, directly-dialable candidate endpoints, ordered **IPv6-first** ([§2a](#address-family)): a routable IPv6 address (when the host has one) precedes the IPv4 fallback. It never contains the wildcard bind address. `listen_addr` is the primary (first, IPv6-preferred) dialable candidate — **not** the socket's wildcard bind target. `reflexive_addr` is the STUN-discovered public address ([§3](#stun)) or `null` if not yet learned; `reachability` is `"direct"` (a direct inbound path exists — publicly reachable or a working UPnP/NAT-PMP/PCP mapping) or `"relayed"` (only reachable through the relay); `relay.reserved` reflects the RLY-001 reservation state.
 
 ### Peer RPC error codes
 
