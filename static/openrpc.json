@@ -974,6 +974,13 @@
         "data": {
           "type": "object"
         }
+      },
+      "CONTENT_REDIRECT": {
+        "code": -32008,
+        "message": "Content held elsewhere — redirect",
+        "data": {
+          "type": "object"
+        }
       }
     }
   },
