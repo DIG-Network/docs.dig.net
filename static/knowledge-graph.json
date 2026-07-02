@@ -1008,7 +1008,8 @@
       "tags": [
         "dig-node",
         "browser",
-        "dig-rpc"
+        "dig-rpc",
+        "digstore-cli"
       ]
     },
     {
@@ -2827,6 +2828,11 @@
       "type": "part-of"
     },
     {
+      "from": "/docs/run-a-node/point-a-consumer",
+      "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
       "from": "/docs/run-a-node/universal-installer",
       "to": "concept:dig-rpc",
       "type": "part-of"
@@ -3249,6 +3255,11 @@
     {
       "from": "/docs/digstore/cli/command-reference",
       "to": "/docs/digstore/cli/deploy-from-github-actions",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/digstore/cli/command-reference",
+      "to": "/docs/run-a-node/point-a-consumer",
       "type": "see-also"
     },
     {
@@ -4469,6 +4480,16 @@
     {
       "from": "/docs/run-a-node/point-a-consumer",
       "to": "/docs/run-a-node/manage",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/point-a-consumer",
+      "to": "/docs/digstore/cli/command-reference",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/point-a-consumer",
+      "to": "/docs/rpc/dig-remote",
       "type": "see-also"
     },
     {
