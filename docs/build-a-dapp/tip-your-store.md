@@ -45,35 +45,40 @@ If your store is published under a handle on DIGHUb, it also has a tip page at `
 
 ## Embed a Tip button on your own site
 
-Paste this one line into any web page where you want the button to appear:
+The easiest way: open your store's **Developer** tab on DIGHUb (or your tip page) and copy the ready-made **Embed snippet**. It comes pre-filled with your receive address, the **$DIG** asset, and your store name — paste it into any web page and you're done.
+
+The snippet is the [xchtip.app](https://xchtip.app) tip widget — a self-contained, embeddable Tip button. It looks like this:
 
 ```html
-<script
-  src="https://hub.dig.net/embed/dig-tip.js"
-  data-store="<your 64-hex store id>"
-  data-wc-project-id="<your WalletConnect projectId>"
-  data-label="Tip in DIG"
-  data-presets="1,5,25"
+<script src="https://xchtip.app/embed/xch-tip.js"
+  data-recipient="<your xch1… receive address>"
+  data-asset="a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367df16832f81"
+  data-scheme="purple"
+  data-name="<your store name>"
   async></script>
 ```
 
-The widget is fully self-contained: on click it opens its **own** wallet connection (scan a QR or copy a link — it works best with [Sage](https://sagewallet.net/)), then a tipping modal (pick an amount → sign → send). It loads its dependencies only when the visitor clicks, so the button is weightless until used and never collides with the rest of your page.
+On click it opens its **own** wallet connection (scan a QR or copy a link — works best with [Sage](https://sagewallet.net/)), then a tipping modal: pick an amount, sign in your wallet, send. It loads its dependencies only when a visitor clicks, so the button is weightless until used and never collides with the rest of your page.
 
 ### Options
 
 | Attribute | Required | What it does |
 |---|---|---|
-| `data-store` | **required** | Your store's on-chain id (64-hex). The widget resolves your receive address from it. |
-| `data-wc-project-id` | **required** | A free WalletConnect (Reown) projectId from [cloud.reown.com](https://cloud.reown.com). A public embed can't share one; you provide your own. |
-| `data-label` | optional | The button text. Default: `Tip in DIG`. |
-| `data-presets` | optional | Comma-separated $DIG amount chips. Default: `1,5,25`. |
-| `data-target` | optional | A CSS selector to mount the button into. Default: right after the script tag. |
-| `data-api-base` | optional | Override the DIGHUb API base. Default: `https://hub.dig.net/v1`. |
-| `data-recipient` | optional | Pin the recipient address (64-hex inner puzzle hash) instead of resolving it from the store. Advanced. |
+| `data-recipient` | **required** | Your bech32m receive address (`xch1…`). DIGHUb fills this in from your store. |
+| `data-asset` | **required** | `xch` for XCH, or a CAT asset id. The **$DIG** CAT id is `a406d3a9…16832f81`. |
+| `data-scheme` | optional | `green` (default), `purple` (the $DIG brand), or `orange`. |
+| `data-name` | optional | A display name shown on the widget's card/banner variants and your tip page. DIGHUb fills in your `handle/store` name. |
+| `data-label` | optional | The button text. Default: `Send a tip` for a CAT, `Tip in XCH` for XCH. |
+| `data-amount-presets` | optional | Comma-separated amount chips (whole units). Default for a CAT: `1,5,25`. |
+| `data-variant` | optional | `button` (default), `compact`, `pill`, `inline`, `banner`, or `card`. |
+| `data-target` | optional | A CSS selector to mount the button into. Default: inline, right after the script tag. |
+| `data-wc-project-id` | optional | A WalletConnect projectId. Not needed — the widget uses xchtip.app's own by default. |
 
-:::note Why you supply your own projectId
-WalletConnect needs a project id to open a session, and a public script can't ship a shared secret one. Get a free id at [cloud.reown.com](https://cloud.reown.com) and put it in `data-wc-project-id`. Without it the button still renders and explains the missing id on click — it never fails silently.
+:::tip No projectId to manage
+Unlike a raw WalletConnect integration, you don't supply a WalletConnect projectId — the widget ships with xchtip.app's. Just paste the snippet and the button works.
 :::
+
+For the full attribute set (custom colors, sizes, symbols, locale), open the [xchtip.app](https://xchtip.app) builder — it previews the button live and generates the snippet for any configuration.
 
 ## How a tip flows
 
@@ -82,4 +87,4 @@ WalletConnect needs a project id to open a session, and a public script can't sh
 3. They choose an amount and sign the payment in their wallet.
 4. The payment broadcasts to Chia mainnet and arrives in your wallet.
 
-The tip is a direct wallet-to-wallet **$DIG** transfer. DIGHUb only helps look up your store's receive address and build the payment in the visitor's browser — it never holds the funds, and there is no checkout or custodian in the middle.
+The tip is a direct wallet-to-wallet **$DIG** transfer, built in the visitor's browser and broadcast to Chia mainnet. There is no checkout and no custodian in the middle — neither DIGHUb nor xchtip.app ever holds the funds.
