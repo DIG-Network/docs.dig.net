@@ -47,6 +47,33 @@ Delegation is itself an on-chain store-coin spend, built through the same wasm �
 
 - **Teams / orgs** — share write access to a store across people without sharing one private key; revoke a member by removing their delegated key.
 - **CI deploy tokens** — a **deploy token is a revocable writer key**. [Keyless CI deploys](./digstore/cli/deploy-from-github-actions.md) hand a runner writer authority scoped to one store; revoke it without touching the owner key. This is why a leaked deploy token can advance a capsule but never seize a store.
+- **Authorizing a website/hub directly** — `digstore authorize-origin-as-writer <origin>` delegates writer authority straight to an origin's OWN DIG identity (its BLS pubkey), discovered from the origin itself rather than copy-pasted or issued through a hub UI. See [Well-known origin pubkey discovery](#well-known-origin-pubkey-discovery) below.
+
+## Well-known origin pubkey discovery
+
+A website or hub can publish its own DIG identity at a fixed, well-known HTTPS path (RFC 8615)
+so any digstore CLI operator can discover and authorize it as a writer without a key ever
+being copy-pasted or emailed:
+
+```
+GET https://<origin>/.well-known/dig/pubkey
+```
+
+A conformant origin responds `200 application/json`:
+
+```json
+{ "pubkey": "<96-hex BLS12-381 G1 public key>" }
+```
+
+- The endpoint is a **plain, unauthenticated GET** — a pubkey is public identity, not a secret.
+- Any non-2xx response, or a body missing a string `pubkey` field, is a discovery **failure**
+  — never a silent fallback to an unverified or cached key.
+- `digstore authorize-origin-as-writer <origin>` fetches this endpoint, then adds the returned
+  pubkey to the active store's delegated-puzzle set in the **writer** role via the same
+  `update_store_ownership` primitive behind deploy keys and Teams roles above — re-sending
+  every existing delegate so no prior admin/writer/oracle is dropped. `--pubkey <96-hex>` skips
+  discovery entirely for a caller that already has the key, or an origin whose well-known
+  endpoint isn't live yet.
 
 ## Related
 

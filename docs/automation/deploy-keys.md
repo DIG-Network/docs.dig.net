@@ -122,6 +122,22 @@ A deploy key is for **machines**. To share write access with **people**, use the
 
 Owner, Admin, and Deployer are on-chain delegated roles — the same CHIP-0035 delegation primitive behind deploy keys — so revoking a member is the same kind of owner-signed change. → [CHIP-0035 store-coin spends & delegation](../chip-0035-spends-and-delegation.md#what-delegation-powers)
 
+## Authorize a website or hub directly (no key to copy)
+
+A deploy key is a key **you generate**. If you'd rather authorize a website's own DIG identity
+directly — e.g. giving `hub.dig.net` writer access without copying anything — use:
+
+```
+digstore authorize-origin-as-writer hub.dig.net
+```
+
+This discovers the origin's DIG pubkey from its [well-known
+endpoint](../chip-0035-spends-and-delegation.md#well-known-origin-pubkey-discovery)
+(`https://hub.dig.net/.well-known/dig/pubkey`) and adds it as a writer delegate — the same
+on-chain primitive as above, just sourced from the origin instead of a hub-issued secret.
+Add `--pubkey <96-hex>` to skip discovery when you already have the key, or `--dry-run --json`
+to preview the change first.
+
 ---
 
 ## Go deeper: the protocol

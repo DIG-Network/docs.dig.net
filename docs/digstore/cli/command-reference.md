@@ -139,6 +139,7 @@ A single workspace (`.dig/`) can hold many stores. The commands below create and
 |---|---|
 | `digstore deploy [--store-id <hex>] [--output-dir <dir>] [--build-command <cmd>] [-m <msg>] [--remote <url>] [--writer-key <hex>] [--preview] [--if-changed]` | Advance an **existing** store from a fresh checkout (CI): reconstruct it locally, stage the output dir, commit + push a new capsule. Reads `dig.toml`. Never mints. `--writer-key` advances the root with a revocable writer-delegated key (no owner seed); `--preview` produces a free, no-spend content-addressed build; `--if-changed` makes a byte-identical build a no-op. |
 | `digstore deploy-key export [--out <file>]` | Export the store's §21 publisher deploy key (64-hex) to store as a CI secret |
+| `digstore authorize-origin-as-writer <origin> [--pubkey <hex>] [--dry-run] [--fee <mojos>]` | Discover ORIGIN's DIG pubkey at `https://<origin>/.well-known/dig/pubkey` and add it as a CHIP-0035 **writer** delegate on the active store — authorizes a website/hub's own identity directly, with no key to copy or hub-managed secret. `--pubkey` skips discovery for a caller that already has the key. Idempotent: re-authorizing an already-authorized pubkey is a no-op. |
 
 See [Deploy from GitHub Actions](./deploy-from-github-actions.md) for the full workflow.
 
