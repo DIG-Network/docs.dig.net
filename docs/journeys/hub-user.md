@@ -49,6 +49,14 @@ Every store has a public **tip page** (`https://hub.dig.net/tip/store/<your stor
 
 → [Get tipped for your store](../build-a-dapp/tip-your-store.md)
 
+## How do I list my dApp in the DIG Network dApp store?
+
+Connect your wallet at [hub.dig.net/submit](https://hub.dig.net/submit), fill in your dApp's details
+and artwork, and submit for review. An admin reviews it, and once approved DIGHUb publishes it to
+[explore.dig.net](https://explore.dig.net) automatically — no repository or pull request on your end.
+
+→ [Submit your dApp to the store](../build-a-dapp/submit-to-the-store.md)
+
 ## How do I let CI publish for me?
 
 Issue a **deploy key** (a revocable key that can publish but never touch ownership) in your store's **Automation** tab, then wire it into CI — or use the GitHub deploy Action for push-to-publish with free PR previews.
