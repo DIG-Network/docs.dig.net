@@ -12,7 +12,7 @@ name: deploy
 #   docs.dig.net -> CloudFront E1G7CFG1FDYG9Y -> origin docs-dig-net.s3-website-us-east-1.amazonaws.com
 on:
   push:
-    branches: [main]
+    tags: ['v*']
   pull_request: {}
   workflow_dispatch: {}
 
