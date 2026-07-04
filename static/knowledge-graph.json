@@ -4020,6 +4020,11 @@
     },
     {
       "from": "/docs/protocol/peer-network",
+      "to": "/docs/run-a-node/point-a-consumer",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/peer-network",
       "to": "/docs/protocol/onion-routing",
       "type": "see-also"
     },
