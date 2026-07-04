@@ -1,13 +1,14 @@
 ---
 sidebar_position: 7
 title: "L2 · Capsule format (the DIGS data section)"
-description: "BINDING contract D1: the DIGS blob byte layout (big-endian, self-describing), all 12 SectionIds and their body formats (KeyTable D3, ChunkPool D4, MerkleNodes D5, ChainState, Filler), and the big-endian rationale."
+description: "BINDING contract D1: the DIGS blob byte layout (big-endian, self-describing), all 13 SectionIds and their body formats (KeyTable D3, ChunkPool D4, MerkleNodes D5, ChainState, PublicManifest, Filler), and the big-endian rationale."
 keywords:
   - DIGS data section
   - capsule format
   - SectionId
   - KeyTable
   - ChunkPool
+  - PublicManifest
   - big-endian
 tags:
   - capsule
@@ -39,7 +40,7 @@ All multi-byte integers are big-endian, matching Chia's streamable framing so th
 
 ## SectionIds {#sectionids}
 
-`SectionId` is a `u16` (`datasection.rs:60-75`). The compiler emits sections in **ascending id order**, and pushes ChainState (12) **before** Filler (11) so Filler stays the trailing / highest-offset body (`data_section.rs:92-124`).
+`SectionId` is a `u16` (`datasection.rs:60-75`). The compiler emits the fixed sections in **ascending id order**, then pushes the optional ChainState (12) and PublicManifest (13) **before** Filler (11) so Filler stays the trailing / highest-offset body (`data_section.rs:92-124`).
 
 | id | Section | Body |
 |---|---|---|
@@ -54,7 +55,12 @@ All multi-byte integers are big-endian, matching Chia's streamable framing so th
 | 9 | **ChunkPool (D4)** | see below |
 | 10 | **MerkleNodes (D5)** | u32 BE count + count×32 raw — the per-resource leaves, ascending by `static_key` |
 | 11 | Filler | unreferenced ChaCha20 padding ([self-defending module](./self-defending-module.md#fixed-size-obfuscation)) |
-| 12 | ChainState | on-chain anchor pointer (see below) |
+| 12 | ChainState | on-chain anchor pointer (see below) — **optional** |
+| 13 | PublicManifest | normalized public file set, latest version per path (see below) — **optional** |
+
+### Reading unknown sections {#forward-compatible}
+
+A reader looks each section up by id and **ignores** any id it does not recognize; the offset table is not order-sensitive on read. Section ids are **only ever added**, never removed, renumbered, or repurposed, and the blob `version` stays `1` — so a newer writer's blob still parses in an older reader (it simply sees fewer sections), and a newer reader treats an absent optional section as "not present". `ChainState` (12) and `PublicManifest` (13) are optional: an older capsule, or one from a producer that does not emit them, omits the section entirely.
 
 ## KeyTable (8, D3)
 
@@ -81,6 +87,36 @@ version:u8 | network(u32 len+utf8) | launcher_id(32) | coin_id(32)
 ```
 
 `coinset_url` is a **hint only** (callers override). `VERSION = 1` (`datasection.rs:323-422`). This pointer lets a client resolve the on-chain head for [anchored-root pinning](./verification-and-provenance.md#gate-3).
+
+## PublicManifest (13) — the normalized public file set {#public-manifest}
+
+The public manifest is the store's **complete public file surface**, flattened across every published capsule (generation): one entry per public file **path**, holding that path's **latest** version and its provenance. Where the KeyTable (8) lists one capsule's resources by their hashed `static_key`, the public manifest exposes the human path and, for each path, which capsule and version index hold its latest content — **including files whose latest version lives in an earlier capsule**. A consumer reads the whole public surface, with version-history depth, from the module alone.
+
+The section is present **only for public stores**. A private store's file paths stay opaque, so it carries **no** PublicManifest section.
+
+Body layout (big-endian [codec](./cryptography.md) framing):
+
+```text
+schema_version : u32 BE
+entries        : u32 BE count, per entry:
+  path             : String  (u32 BE len + utf8 bytes)
+  latest_root      : 32 raw bytes
+  generation_index : u64 BE
+  sha256_latest    : 32 raw bytes
+  version_count    : u32 BE
+```
+
+Entries are ordered **ascending by `path`** (UTF-8 byte order), so the encoding is deterministic. Per entry:
+
+| Field | Type | Meaning |
+|---|---|---|
+| `path` | string | The public file path (resource key), e.g. `index.html`, `assets/app.js`. |
+| `latest_root` | 32 bytes | The capsule **root** holding this path's latest version. |
+| `generation_index` | u64 | The **version index** (generation id) of that latest version — the ordinal of the commit that last wrote the path. |
+| `sha256_latest` | 32 bytes | SHA-256 of the latest version's content — the per-resource [merkle leaf, D5](./merkle-proofs.md): `SHA-256` over the concatenated ordered chunk ciphertext bodies of the latest version (the same leaf the verifier checks). |
+| `version_count` | u32 | How many versions of this path exist across the whole store history (the number of capsules whose file set includes the path). |
+
+`schema_version` starts at `1`; future fields are only appended, so a reader dispatches on the version and older bodies stay readable. In JSON (the CLI `digstore manifest --json`, the JSON-RPC `dig.getManifest`, and the browser reader `readPublicManifest`) the byte fields are 64-char lowercase hex and the shape is `{ "schema_version", "entries": [ { "path", "latest_root", "generation_index", "sha256_latest", "version_count" } ] }`.
 
 ## Body codec note
 
