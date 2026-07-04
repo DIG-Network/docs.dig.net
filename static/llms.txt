@@ -43,6 +43,7 @@ The docs are organized in two top-level sections: **Using DIG** (one track per a
 - [Build a dapp on Chia](https://docs.dig.net/docs/build-a-dapp/tutorial): the end-to-end thread — scaffold a React app (digstore new / npm create dig-app), develop free (digstore dev), wire the in-page wallet (window.chia + WalletConnect fallback via @dignetwork/dig-sdk), build and sign a spend (chip35 wasm via the SDK /spend subpath), deploy on-chain (the uniform capsule price in $DIG), and add a custom domain.
 - [Scaffold an app (create-dig-app)](https://docs.dig.net/docs/build-a-dapp/scaffold): npm create dig-app — the JS front door; scaffolds a runnable starter (app + dig.toml + the DIG SDK on wallet templates) from five templates (static, vite-react, next-static, nft-drop, dapp-window-chia). Free to scaffold/build/preview; the uniform capsule price in $DIG only at publish. The npm companion to the Rust CLI's digstore new.
 - [Example gallery](https://docs.dig.net/docs/build-a-dapp/example-gallery): example projects mapped to scaffold templates — static, vite-react, nft-drop, next-static, dapp-window-chia (example repo links are placeholders during pre-release).
+- [Submit your dApp to the store](https://docs.dig.net/docs/build-a-dapp/submit-to-the-store): list a dApp on the DIG Network dApp store (explore.dig.net) — connect a wallet at hub.dig.net/submit, fill in metadata + artwork, submit for review; an admin approval publishes the listing automatically, no repository or pull request needed from the submitter.
 
 ## DigStore CLI (integrating developers)
 
