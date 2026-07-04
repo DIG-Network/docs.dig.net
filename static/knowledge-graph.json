@@ -311,6 +311,17 @@
       ]
     },
     {
+      "id": "/docs/build-a-dapp/submit-to-the-store",
+      "type": "doc",
+      "title": "Submit your dApp to the store",
+      "url": "https://docs.dig.net/docs/build-a-dapp/submit-to-the-store",
+      "tags": [
+        "dighub",
+        "store",
+        "dapp-store"
+      ]
+    },
+    {
       "id": "/docs/build-a-dapp/tip-your-store",
       "type": "doc",
       "title": "Get tipped for your store",
@@ -1530,6 +1541,16 @@
     {
       "from": "/docs/build-a-dapp/scaffold",
       "to": "concept:dig-payment",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/submit-to-the-store",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/submit-to-the-store",
+      "to": "concept:store",
       "type": "part-of"
     },
     {

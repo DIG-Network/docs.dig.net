@@ -96,6 +96,14 @@ Wire `dig-network/deploy-action` so every push publishes a new capsule — with 
 
 → [Deploy from GitHub Actions](../digstore/cli/deploy-from-github-actions.md)
 
+## List your dApp in the store
+
+Once your dApp is live, submit it to the [DIG Network dApp store](https://explore.dig.net) — connect
+your wallet at [hub.dig.net/submit](https://hub.dig.net/submit), fill in one form, and an admin
+review publishes it for you.
+
+→ [Submit your dApp to the store](../build-a-dapp/submit-to-the-store.md)
+
 ## Add a `*.on.dig.net` web address (optional)
 
 Your store is reachable by its [URN](../concepts.md#urn) / [`chia://`](../browser/chia-protocol.md) address the moment it confirms — no extra cost. A human-friendly `<name>.on.dig.net` handle is an **optional, paid** registration in DIGHUb on top of that.
