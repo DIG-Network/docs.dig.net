@@ -1,0 +1,30 @@
+# Changelog
+
+All notable changes to this project are documented here.
+This project adheres to [Semantic Versioning](https://semver.org) and
+[Conventional Commits](https://www.conventionalcommits.org).
+
+## [0.1.0] - 2026-07-04
+
+### Features
+- Implemented home page feature dark and light icons- Applied home page banner- Added homepage icon SVG's- Update features page with react FC arrow functions- **seo:** Complete social card + link metadata via config
+
+### Bug Fixes
+- Wrong icons show up on page refresh- **docs:** Gray background on scroll — paint <html>, not a non-matching selector- **docs:** Broken GitHub navbar icon — mask a real SVG file
+
+### Refactor
+- Remove orphaned HomepageFeatures dead code
+
+### Documentation
+- Revamp for DigStore — format overview + CLI tutorial + brand restyle- Scope site to DIG Network; DigStore becomes a dedicated section- Polished cosmic landing page (DIG Network)- Update for digstore v0.5.0 on-chain anchoring (seed/anchor commands, init mints, commit anchors, chain-verified clone/pull, store_id = launcher id)- DIG token costs (init 100, commit 10) + digstore balance- **rpc:** Add the dig:// remote (clone/pull/push) page- Align user-facing terminology with hub (project/deployment)- Add window.chia DIG Browser guide; rename dig:// scheme to chia://- Introduce capsule (storeId:rootHash) terminology- Add chia:// protocol & URN scheme page (DIG Browser)- Conservative consistency pass (frontmatter, titles, terminology, links)- Add "try it" funnels into the product (close dead-ends)- Glue to the DIG Network whitepapers (dig.net/whitepapers)- Migrate whitepapers into a dedicated low-prominence Whitepapers section- Ecosystem UX consistency pass (brand, link arrows, OG dims, type, alpha badge)- Make the docs agent-friendly (graph-extractable, still human-first)- Add "Deploy from GitHub Actions" CLI page- Wave-1 developer-platform slice (cost fix, zero-cost quickstart, support, role-based sidebar)- Remove trademarked competitor names (Vercel) from prose- Digstore new/dev are live — flip the quickstart "coming soon" to available- Build-a-dapp tutorial + gallery, dig.toml/build-config, changelog/status (#26/#28/#47)- Normative, versioned window.chia provider spec + EIP-6963 discovery (#22)- Correct the on.dig.net auto-serve claim across the docs- List all three ways to get DIG (TibetSwap, dexie.space, 9mm.pro)- Fix stale deploy-action, complete CLI reference, surface Paywall- Correct the CLI/remote scheme to dig://, align hub naming- Order the sidebar by audience priority — deploy before build-dapps- Fix hub wordmark casing DIGHub -> DIGHUb- Use the $DIG sigil on first token reference (+ residual DIGHUb casing)- Use chia:// for content-open prose; drop "project" as a store synonym- Status page → live status.dig.net + agent-readable health/status/schema endpoints (#98)- **rpc:** Regenerate machine surfaces from reality- **protocol:** Rewrite the Protocol section as a first-class spec- Point reference pages at the authoritative Protocol spec- **protocol:** Make the Protocol spec a clean authoritative spec (no drift framing)- **protocol:** Add L7 DIG Node peer network spec (mTLS identity, NAT-traversal ladder, relay wire, peer RPC)- **protocol:** Refine peer network spec — relay's four roles, streaming + byte-range multi-source fetch, availability queries- **protocol:** Document the dig-dht Kademlia DHT content-discovery layer (L7)- Add missing canonical RPC error codes (#200b) — -32010, -32011..14, control -32030/31/32- Fix error-codes drift — add -32010/-32011..14/-32030..32 to the canonical rpcErrors enum- Document the digstore client-node resolution ladder (#193)- Finish dig-companion rename cleanup (#168 tail); sync locale error-codes taxonomy (#200)- Tip embed is now the xchtip.app widget (retire hub dig-tip.js offering)- Capsule-format — add the normalized public manifest (SectionId 13)
+
+### CI
+- Add deployment workflow- Add commitlint + version-increment gate + git-cliff changelog config (#230 pipeline lockdown)- Release automation — git-cliff changelog + tag on merge, deploy on tag (#230 Unit 2)
+
+### Styling
+- **docs:** Space the navbar title off the wordmark
+
+### Peer-network
+- IPv6-first address-family policy + real getNetworkInfo posture- Clarify the peer JSON-RPC surface is an allowlist
+
+
