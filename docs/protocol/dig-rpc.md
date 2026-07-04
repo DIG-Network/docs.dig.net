@@ -47,7 +47,7 @@ Content-Type: application/json
 - CORS `*`, **no credentials** (content is public ciphertext); `OPTIONS` → 204 (`bootstrap.rs:468`).
 
 :::tip This is the PUBLIC READ tier
-`rpc.dig.net` and this network profile ARE the anonymous, browser-reachable **public read tier** of the [dual-transport model](./peer-network.md#dual-transport): no client certificate, CORS-`*`, read-only, decoy-on-miss, and integrity self-verified client-side against the chain-anchored root. The **peer / write / config / control** surface (peer exchange, DHT, PEX, availability-for-sync, PUSH/WRITE, node control) lives on the separate **mTLS peer/control tier** and is never reachable here — see the [tier map](./peer-network.md#tier-map).
+`rpc.dig.net` and this network profile ARE the anonymous, browser-reachable **public read tier** of the [dual-transport model](./peer-network.md#dual-transport): no client certificate, CORS-`*`, read-only, decoy-on-miss, and integrity self-verified client-side against the chain-anchored root. The **peer / write / config / control** surface (peer exchange, DHT, PEX, availability-for-sync, PUSH/WRITE, node control) lives on the separate **mTLS peer/control tier** and is never reachable here — see the [tier map](./peer-network.md#tier-map). `rpc.dig.net` additionally answers on a separate mTLS front for node-class clients (and ephemeral-cert anonymous readers) — this plain-HTTPS endpoint is not that front; see [gateway dual-mode](./peer-network.md#gateway-dual-mode).
 :::
 
 ## 2 · Method catalogue (network profile)
