@@ -30,7 +30,7 @@ One wallet surface ([CHIP-0002 `window.chia`](../concepts.md#window-chia)) over 
 
 ## How do I connect a wallet?
 
-Use `ChiaProvider.connect()` — it prefers the injected [`window.chia`](../browser/using-window-chia.md) (DIG Browser) and falls back to WalletConnect → Sage, with the same method names and result shapes either way.
+Use `ChiaProvider.connect()` — it prefers the injected [`window.chia`](../browser/using-window-chia.md) (DIG Browser) and falls back to WalletConnect → Sage, with the same method names and result shapes either way. To offer the user an explicit **Browser Wallet vs WalletConnect** choice instead of the silent default, enumerate `ChiaProvider.listConnectors()` and connect with the picked connector's `id` as `mode`.
 
 → [The DIG SDK → ChiaProvider](../sdk.md) · [Using window.chia](../browser/using-window-chia.md)
 
