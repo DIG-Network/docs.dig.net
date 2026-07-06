@@ -49,6 +49,10 @@ Every store has a public **tip page** (`https://hub.dig.net/tip/store/<your stor
 
 → [Get tipped for your store](../build-a-dapp/tip-your-store.md)
 
+## How do I set up my public profile?
+
+Every handle gets a public profile page at `hub.dig.net/<your handle>`, listing your stores. Open it while connected and hit **Edit profile** to add an avatar (or keep the default generated one), a display name, a short bio, and links (your website, socials, anything `https://`). Visitors see your profile and can tip you straight from it; only you can edit it.
+
 ## How do I list my dApp in the DIG Network dApp store?
 
 Connect your wallet at [hub.dig.net/submit](https://hub.dig.net/submit), fill in your dApp's details
