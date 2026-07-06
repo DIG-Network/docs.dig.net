@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.3.4] - 2026-07-06
+
+### Documentation
+- Add the window.chia provider reference for integrating developers (#14)
+
 ## [0.3.3] - 2026-07-06
 
 ### Documentation
