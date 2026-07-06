@@ -61,6 +61,8 @@ Yes — over the **read path**. The moment a capsule confirms on-chain it's read
 
 A store does **not** get a `*.on.dig.net` subdomain automatically. You get one by **registering a handle** for the store in DIGHUb — a paid registration that pins the store to that name. (Your account handle and a store's slug are separate namespaces; they don't auto-expose a subdomain.) DIGHUb also supports custom domains with TLS. Either way, the store is already readable by its URN / `chia://` address without any of this. See [DIGHUb ↗](https://hub.dig.net).
 
+DIG Super Supporters pay **half** for a handle registration. The discount applies only while the Super Supporter NFT is **held in the wallet you're paying from** — DIGHUb checks the live chain across all your wallet's addresses at purchase time. If the NFT is staked, moved, or sold, the discount doesn't apply and DIGHUb shows the full price up front (so the payment is never underfunded). To get the discount, keep the NFT in your wallet when you register.
+
 ## What happens if I lose my seed?
 
 The store stays on-chain and existing content stays readable, but **you can't publish new capsules** to it. Back up `~/.dig/seed.enc` and your mnemonic. See [On-chain anchoring](../digstore/cli/onchain-anchoring.md).
