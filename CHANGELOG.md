@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.3.5] - 2026-07-06
+
+### Documentation
+- **digstore:** Clarify macOS raw-binary install, real self-updater, and canonical publish flow (#15)
+
 ## [0.3.4] - 2026-07-06
 
 ### Documentation
