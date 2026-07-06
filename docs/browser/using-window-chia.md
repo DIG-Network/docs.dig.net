@@ -49,21 +49,22 @@ function getDigProvider() {
 }
 ```
 
-The provider is injected at document start, so it is present synchronously on load. It also fires a `chia#initialized` event on `window` once it is in place, and exposes a boolean `isConnected` that flips to `true` after a successful `connect()`.
+The provider is injected at document start, so it is present synchronously on load. It also fires a `chia#initialized` event on `window` once it is in place. Beyond `isDIG`, the provider carries `isGoby`, `name`, `apiVersion`, `info`, and a `methods` catalogue, and exposes an `isConnected()` method plus `chainId` / `selectedAddress` getters — the [provider reference](./window-chia-reference.md#provider-object) lists them all.
 
-## `connect(eager?)` {#connect}
+## `connect(options?)` {#connect}
 
 ```js
-await window.chia.connect();        // prompt the user to approve this origin
-await window.chia.connect(true);    // "eager": try to reconnect a previously approved origin
+const ok = await window.chia.connect();                    // prompt the user to approve this origin
+const eager = await window.chia.connect({ eager: true });  // try to reconnect a previously approved origin
 ```
 
-`connect()` asks the DIG Browser wallet to approve **your origin**. It **blocks until the user approves** (or rejects, or it times out) — when an approval is pending it polls the wallet until the user acts, then resolves. On success it sets `window.chia.isConnected = true` and emits a [`connect`](#events) event.
+`connect({ eager?, scope? })` asks the DIG wallet to approve **your origin** and resolves to a **`boolean`** (`true` on success). It **blocks until the user approves** (or rejects, or it times out), then emits [`connect`](#events) and [`accountChanged`](#events) and caches the address.
 
 - Pass `eager: true` to attempt a silent reconnect for an origin the user already approved (e.g. on page load), so returning users don't see a prompt.
-- A rejection or timeout throws. Approval is **per-origin** and persists across browser restarts, so a user approves your site once.
+- `scope` is `"full"` (default) or `"read-only"`.
+- Approval is **per-origin** and persists across browser restarts, so a user approves your site once.
 
-You must `connect()` before any key or signing method. A key/sign call from an unapproved origin is refused — call `connect()` and have the user approve, then retry.
+You must `connect()` before any key, balance, coin, or signing method. A call from an unapproved origin is refused with error code [`4001`](./window-chia-reference.md#errors) — call `connect()`, have the user approve, then retry.
 
 ## `request({ method, params })` {#request}
 
@@ -71,28 +72,31 @@ You must `connect()` before any key or signing method. A key/sign call from an u
 const { address } = await window.chia.request({ method: "chia_getAddress" });
 ```
 
-`request` takes a single object with a `method` name and a `params` object, and resolves to the **bare result the wallet returns** (the same value a CHIP-0002 wallet would return over WalletConnect). Errors throw.
+`request` takes a single object with a `method` name and a `params` object, and resolves to the **bare result the wallet returns** (the same value a CHIP-0002 wallet would return over WalletConnect). Errors throw with a numeric CHIP-0002 [`.code`](#handling-errors).
 
-Method names may be passed **bare or namespaced** — a bare name like `getPublicKeys` is auto-prefixed to `chip0002_getPublicKeys`. Names already starting with `chip0002_` or `chia_` are used as-is. Prefer the explicit namespaced names below for clarity.
+Method names may be passed **bare or namespaced** — a bare name like `getPublicKeys` is auto-prefixed to `chip0002_getPublicKeys`; names already starting with `chip0002_` or `chia_` are used as-is. The provider also exposes **direct methods** (`window.chia.getPublicKeys(...)`, `window.chia.transfer(...)`) whose bare names alias the namespaced forms, so code written for a Goby- or Sage-shaped provider works unchanged.
 
-### Supported methods
+### Common methods
+
+The methods you'll reach for most often:
 
 | Method | `params` | Returns |
 |---|---|---|
-| `chip0002_getPublicKeys` | `{ offset?, limit? }` (defaults to the first 10 keys; `limit` is clamped) | Array of synthetic public keys (hex). |
-| `chip0002_signMessage` | `{ message, publicKey }` | A signature over `message` by the given key. |
-| `chip0002_signCoinSpends` | `{ coinSpends }` | A signature over the supplied coin spends. |
-| `chip0002_getAssetBalance` | `{ type?, assetId? }` — `type: null` for XCH, `type: "cat"` for a CAT (the DIG CAT) | `{ confirmed, spendable }`. |
-| `chip0002_getAssetCoins` | `{ type?, assetId?, offset?, limit? }` | `{ coins: [...] }` in Sage's `SpendableCoin` shape (`{ coin{parent_coin_info,puzzle_hash,amount}, locked, spent_block_index }`; XCH entries also carry `puzzle`). |
-| `chia_getAddress` | `{}` | `{ address }` — the wallet's receive address (`xch1…`). |
-| `chia_signMessageByAddress` | `{ message, address }` | A signed-message result for `message` under `address`. |
-| `chia_takeOffer` | `{ offer, fee? }` | Accepts an offer (build + sign the taker side); returns a transaction-shaped result. |
+| `chip0002_getPublicKeys` | — | Public keys (hex), across both HD schemes. |
+| `chia_getAddress` | — | `{ address }` — the wallet's receive address (`xch1…`). |
+| `chip0002_getAssetBalance` | `{ type, assetId }` — `null`/`null` for XCH, `type:"cat"` + TAIL `assetId` for a CAT | `{ confirmed, spendable, spendableCoinCount }` (base-unit strings). |
+| `chia_send` (alias `transfer`) | `{ to, amount, assetId?, fee? }` (base units) | `{ id }` — shows an approval prompt. |
+| `chia_signMessageByAddress` | `{ message, address }` | `{ signature, publicKey }` — the login-challenge path. |
 
-These map to the wallet's native CHIP-0002 signer; the result shapes are byte-compatible with Sage's, so client code that parses a Sage/WalletConnect response parses these unchanged.
+The full catalogue — every read, every write (transfers, offers, signing), each param and return shape — is the [**`window.chia` provider reference**](./window-chia-reference.md). Result shapes are byte-compatible with Sage's, so client code that parses a Sage/WalletConnect response parses these unchanged.
 
 :::note
 There is **no key-export or seed-reveal method** on this surface. The recovery phrase and projectId settings are reachable only from the wallet's own UI — never from a page, a WalletConnect session, or `window.chia`.
 :::
+
+## Handling errors {#handling-errors}
+
+A rejected call throws an `Error` with a numeric CHIP-0002 **`.code`** — branch on the code, not the message. The ones you'll handle most: **`4001`** (not connected / locked — `connect()` first), **`4002`** (the user declined the prompt), **`4003`** (spendable balance exceeded), and **`4004`** (method not implemented). See the [full error-code table](./window-chia-reference.md#errors).
 
 ## Events {#events}
 
@@ -105,7 +109,7 @@ window.chia.on("connect", onConnect);
 window.chia.off("connect", onConnect);
 ```
 
-The `connect` event fires when your origin is approved (including via an eager reconnect).
+The provider emits `connect` when your origin is approved (including via an eager reconnect), `accountChanged` when the active address changes (also on connect), and `chainChanged` if the active chain changes (mainnet-only, so this does not fire in normal use). `off` is also aliased as `removeListener`.
 
 ## Recommended pattern: prefer `window.chia`, fall back to WalletConnect
 
@@ -159,6 +163,7 @@ Pages served from a `chia://` store run inside the DIG Browser too, so `window.c
 
 ## Related
 
+- [The window.chia provider reference](./window-chia-reference.md) — every method, param, return, event, and error code
 - [The window.chia provider spec](../protocol/window-chia-provider.md) — the normative, versioned provider contract
 - [The chia:// protocol](./chia-protocol.md) — the browser's native content-address scheme
 - [What is the dig RPC?](../rpc/what-is-the-dig-rpc.md) — how the browser reads content from the network

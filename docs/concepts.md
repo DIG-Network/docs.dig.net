@@ -161,7 +161,7 @@ from the network, content-addressed and cryptographically verified. → [The chi
 [CHIP-0002](https://github.com/Chia-Network/chips/blob/main/CHIPs/chip-0002.md), so a web app can
 request the user's address, signatures, and spends with no WalletConnect setup — a drop-in
 alternative for apps that already speak CHIP-0002. → [Using window.chia](./browser/using-window-chia.md)
-· [The window.chia provider spec](./protocol/window-chia-provider.md) (normative, versioned)
+· [provider reference](./browser/window-chia-reference.md) · [The window.chia provider spec](./protocol/window-chia-provider.md) (normative, versioned)
 
 ## DIGHUb {#dighub}
 
