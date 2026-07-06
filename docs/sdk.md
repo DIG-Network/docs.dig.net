@@ -47,6 +47,23 @@ const address = await provider.getAddress();
 
 One `connect()` works in the [DIG Browser](./browser/using-window-chia.md) (no QR, no relay) and everywhere else (WalletConnect). The method names and result shapes are identical either way; the exact contract is the [normative `window.chia` provider spec](./protocol/window-chia-provider.md).
 
+### Offer a chooser instead of auto-picking
+
+`mode: "auto"` above silently prefers the injected wallet — fine for a single-wallet-target app, but a user who has **both** a Browser Wallet and Sage should get to pick. `ChiaProvider.listConnectors()` enumerates the connectors a chooser UI can offer, without connecting to either:
+
+```jsx
+import { ChiaProvider } from "@dignetwork/dig-sdk";
+
+const connectors = ChiaProvider.listConnectors();
+// [{ id: "browser-wallet", backend: "injected", label: "Browser Wallet", available }, 
+//  { id: "walletconnect", backend: "walletconnect", label: "WalletConnect", available: true }]
+
+// render one button per connector (disable any with available: false), then:
+const provider = await ChiaProvider.connect({ mode: chosenConnector.id, walletConnect });
+```
+
+`"browser-wallet"` is an alias of `"injected"` — pass the picked connector's `id` straight through as `mode`.
+
 ## `DigClient` — read verified content
 
 ```jsx
