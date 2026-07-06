@@ -6,6 +6,7 @@ keywords:
   - digstore quickstart
   - digstore init
   - digstore commit
+  - digstore push
   - digstore cat
   - URN
 tags:
@@ -24,6 +25,20 @@ Create a store, commit a file, and read it back with the `digstore` CLI.
 :::tip New here? Start with the Quickstart
 The [**Quickstart**](../../quickstart.md) leads with the free, web-first path (build and preview at no cost, publish only at the end). This page is the deeper CLI walkthrough — the parallel track for terminal and CI workflows.
 :::
+
+## The publish flow at a glance
+
+This is the canonical publish flow — run it top-to-bottom from inside your project once your wallet is funded (step 0):
+
+```sh
+digstore init                       # create the on-chain store (mints on Chia; store id = launcher id)
+digstore add -A                     # stage every file under the store root
+digstore add --discovery            # publish the public /.well-known discovery manifest
+digstore commit -m "v3"             # anchor a new capsule on-chain (dynamic per-capsule $DIG price + XCH fee)
+digstore push origin                # push the deployment to DIGHub (rpc.dig.net)
+```
+
+Building and previewing locally are free — you only spend when you `commit` a capsule. The rest of this page walks through each step and reads content back.
 
 ## 0. Set up your wallet
 
