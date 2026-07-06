@@ -32,8 +32,14 @@ This page is for **provider authors** (wallets that want to be `window.chia`-com
 guide](../browser/using-window-chia.md). If you just want to wire a wallet into an app, start there;
 this page is the contract underneath it.
 
+:::tip Integrating a dapp?
+For the current method list, params, returns, events, and error codes to call `window.chia` from an
+app, use the [**`window.chia` provider reference**](../browser/window-chia-reference.md). This page is
+the versioned protocol contract underneath it.
+:::
+
 :::info Status & versioning
-The provider surface is versioned by a single field, [`chiaVersion`](#capability--version), and the
+The provider surface is versioned by a single field, [`apiVersion`](#capability--version), and the
 status of each part of this spec is called out inline:
 
 - **Normative** — implemented today and required for compatibility. The [DIG Browser](#reference-implementation)
@@ -55,55 +61,80 @@ detect it without polling).
 
 ```ts
 interface ChiaProvider {
-  // ---- identity / capability (normative) ----
-  isDIG?: boolean;          // unspoofable marker set by the DIG Browser's provider
-  isConnected: boolean;     // flips true after a successful connect()
+  // ---- identity (normative) ----
+  isDIG?: boolean;          // unspoofable marker set by the DIG provider
+  isGoby?: boolean;         // Goby-compatibility marker (feature-detect parity)
+  name?: string;            // "DIG"
+  apiVersion?: string;      // semver of THIS provider's window.chia surface, e.g. "1.0.0"
+  version?: string;         // the wallet build version
+  info?: {                  // how the provider is delivered
+    isDIG: boolean;
+    transport: "injected" | "native";
+    edition: "extension" | "browser";
+    providerVersion: string;
+  };
 
-  // ---- capability descriptor (proposed) ----
-  chiaVersion?: string;     // semver of THIS provider's window.chia surface
-  capabilities?: string[];  // method names this provider implements (feature-detect)
+  // ---- capability (normative) ----
+  methods: string[];                    // the method names this provider answers (feature-detect)
+  errorCodes: Record<string, number>;   // the CHIP-0002 error-code enum (§4.3)
+
+  // ---- connection state (normative) ----
+  isConnected(): boolean;               // true once an origin is approved
+  get chainId(): string;                // "mainnet" once connected
+  get selectedAddress(): string;        // the connected address (cached)
 
   // ---- the EIP-1193-style contract (normative) ----
   request(args: { method: string; params?: unknown }): Promise<unknown>;
-  connect(eager?: boolean): Promise<unknown>;
+  connect(options?: { eager?: boolean; scope?: "full" | "read-only" }): Promise<boolean>;
+
+  // methods are also callable directly; bare names alias the namespaced forms,
+  // e.g. provider.transfer(...) → chia_send:
+  [method: string]: unknown;
 
   // ---- events (normative) ----
   on(event: string, handler: (data: unknown) => void): void;
-  off(event: string, handler: (data: unknown) => void): void;
+  off(event: string, handler: (data: unknown) => void): void;  // alias: removeListener
 }
 ```
 
 | Member | Status | Contract |
 |---|---|---|
-| `isDIG` | normative | `true` iff this is the DIG Browser's native provider. A consumer that specifically wants the DIG wallet MUST key on this, **not** on the bare presence of `window.chia` (another Chia wallet could also define `window.chia`). Other providers MAY set their own `isX` marker. |
-| `isConnected` | normative | `false` until a `connect()` resolves for this origin, then `true`. Reflects per-origin approval, not transport liveness. |
-| `chiaVersion` | **proposed** | Semantic version of the provider surface this object implements (e.g. `"1.0.0"`). Absent today; see [§5](#capability--version). |
-| `capabilities` | **proposed** | The method names this provider answers, for feature detection without a round-trip. See [§5](#capability--version). |
-| `request(...)` | normative | The single CHIP-0002 entrypoint. See [§3](#request). |
-| `connect(...)` | normative | Establishes per-origin consent. See [§2](#connect). |
-| `on` / `off` | normative | EIP-1193-style event subscription. See [§6](#events). |
+| `isDIG` | normative | `true` iff this is the DIG provider. A consumer that specifically wants the DIG wallet MUST key on this, **not** on the bare presence of `window.chia` (another Chia wallet could also define `window.chia`). Other providers MAY set their own `isX` marker. |
+| `isGoby` | normative | `true` — a Goby-compatibility marker so a page that feature-detects a Goby-style provider finds this one. |
+| `name` | normative | The provider name (`"DIG"`). |
+| `apiVersion` | normative | Semantic version of the `window.chia` surface this object implements (e.g. `"1.0.0"`). See [§5](#capability--version). |
+| `version` | normative | The wallet build version. |
+| `info` | normative | `{ isDIG, transport: "injected" \| "native", edition: "extension" \| "browser", providerVersion }` — how the provider is delivered and which edition injected it. |
+| `methods` | normative | The method names this provider answers — feature-detect against this (or [`chip0002_getMethods`](#method-registry)). See [§5](#capability--version). |
+| `errorCodes` | normative | The CHIP-0002 error-code enum ([§4.3](#errors)). |
+| `isConnected()` | normative | Returns `false` until a `connect()` resolves for this origin, then `true`. Reflects per-origin approval, not transport liveness. |
+| `chainId` / `selectedAddress` | normative | Getters: the chain id (`"mainnet"`) and the connected address, once connected. |
+| `request(...)` | normative | The CHIP-0002 entrypoint. See [§3](#request). Methods are also callable directly (`provider.getPublicKeys(...)`). |
+| `connect(...)` | normative | Establishes per-origin consent; resolves to `true` on success. See [§2](#connect). |
+| `on` / `off` | normative | EIP-1193-style event subscription (`off` alias `removeListener`). See [§6](#events). |
 
 A provider MUST NOT clobber an already-present provider: if `window.chia` is already set, an injecting
 provider MUST leave it in place. (The DIG Browser does exactly this — `if (window.chia) return;` —
 which is also why two Chia wallets cannot coexist today and why [§7 discovery](#discovery) exists.)
 
-## 2. `connect(eager?)` — per-origin consent {#connect}
+## 2. `connect(options?)` — per-origin consent {#connect}
 
 ```ts
-await window.chia.connect();      // prompt the user to approve this origin
-await window.chia.connect(true);  // "eager": silently reuse a prior approval, else reject
+await window.chia.connect();                 // prompt the user to approve this origin
+await window.chia.connect({ eager: true });  // silently reuse a prior approval, else resolve falsy
 ```
 
-A dapp MUST call `connect()` and have it resolve **before** any key, signing, balance, or coin
+`connect({ eager?, scope? })` resolves to a **`boolean`** (`true` on approval). A dapp MUST call it and have it resolve **before** any key, signing, balance, or coin
 method. The provider gates every such method on **per-origin consent**: the wallet keys approval to
 the calling frame's **committed web origin**, which it MUST obtain from a source the page cannot
 forge (the browser process / the unspoofable HTTP `Origin`), never from page-supplied JavaScript.
 
-- `connect()` (no arg / falsy) MUST prompt the user to approve **this origin** and MUST block until
-  the user approves, rejects, or it times out. On approval it MUST set `isConnected = true` and emit
-  a [`connect`](#events) event, then resolve.
-- `connect(true)` ("eager") MUST attempt a silent reconnect for an already-approved origin and MUST
+- `connect()` (no options) MUST prompt the user to approve **this origin** and MUST block until the
+  user approves, rejects, or it times out. On approval `isConnected()` returns `true`, it emits
+  [`connect`](#events) and [`accountChanged`](#events), and it resolves `true`.
+- `connect({ eager: true })` MUST attempt a silent reconnect for an already-approved origin and MUST
   NOT prompt; if the origin was never approved it rejects (or resolves falsy — see below).
+- `scope` selects `"full"` (default) or `"read-only"` access.
 - Approval is **per-origin** and SHOULD persist across browser restarts, so a user approves a site
   once.
 - A rejection or timeout MUST reject the returned promise.
@@ -145,8 +176,9 @@ WalletConnect) and **rejects** on error.
 - On failure `request` MUST reject with an `Error` carrying a numeric **`code`** (see
   [§4.3 errors](#errors)).
 
-`request` is the **only** way to invoke a method. There is no per-method function on the provider
-object; `connect` is the one exception (and is also reachable as `request({ method: "chip0002_connect" })`).
+`request` is one way to invoke a method; the provider ALSO exposes each method directly
+(`provider.getPublicKeys(...)`, `provider.transfer(...)`), whose bare names alias the namespaced forms.
+`connect` is likewise reachable as `request({ method: "chip0002_connect" })`.
 
 ## 4. The CHIP-0002 method registry {#method-registry}
 
@@ -173,7 +205,7 @@ robust providers accept either.)
 Today `chip0002_chainId` returns the bare string `"mainnet"`. The **proposed** [capability](#capability--version)
 revision standardizes the [CAIP-2](https://chainagnostic.org/CAIPs/caip-2) form `"chia:mainnet"`
 (the value the SDK already uses internally as `DEFAULT_CHAIN`). Dapps that need the chain id SHOULD
-accept both forms until `chiaVersion` ≥ the revision that pins CAIP-2. **(partly proposed)**
+accept both forms until `apiVersion` ≥ the revision that pins CAIP-2. **(partly proposed)**
 :::
 
 ### 4.2 Keys, signing, balances, coins, offers (unlocked + approved) {#core-methods}
@@ -221,71 +253,56 @@ forwarding them. The recovery phrase is reachable only from the wallet's own UI,
 a WalletConnect session, or `window.chia`.
 :::
 
-#### Extended wallet methods **(proposed for the provider surface)** {#extended-methods}
+#### Extended wallet methods {#extended-methods}
 
-The native DIG wallet's underlying method surface is broader than the canonical list above — it also
-serves the Sage-parity set `chia_{signMessageByAddress, send, getTransactions, getNfts, transferNft,
-mintNft, bulkMintNfts, getDids, createDidWallet, transferDid, getOfferSummary, createOffer,
-takeOffer, cancelOffer}` and asset-generic `chip0002_*` (any CAT by `assetId`). These
-are **not yet part of the normative `window.chia` provider contract** — they are not in the shared
-`WALLET_METHODS` list a dapp can rely on across transports, and state-changing methods are
-additionally gated by the wallet's broadcast policy. They are listed here as the **proposed**
-expansion surface; a dapp MUST [feature-detect](#capability--version) any method beyond
-[§4.2](#core-methods) before calling it.
+The DIG provider's `methods` catalogue is broader than the shared list above — it also serves the
+Sage-parity set (`chia_send`, `chia_sendTransaction`, `chia_getNfts`, `chia_createOffer`,
+`chia_takeOffer`, `chia_cancelOffer`, `chip0002_filterUnlockedCoins`, and asset-generic `chip0002_*`
+for any CAT by `assetId`). State-changing methods show an approval prompt. Some Sage-parity names
+(DID management, NFT minting / bulk-minting) are **not implemented** and reject with [`4004`](#errors).
+A dapp MUST [feature-detect](#capability--version) any method against `methods` before calling it. The
+[**provider reference**](../browser/window-chia-reference.md) documents each implemented read and write
+with its params and returns.
 
 ### 4.3 Errors {#errors}
 
-On failure, `request` (and `connect`) MUST reject with an `Error` whose `code` property is a number.
-The reference provider maps the wallet's wire status to `code` as follows:
+On failure, `request` (and `connect`) MUST reject with an `Error` whose numeric `code` property is a
+CHIP-0002 error code. A dapp MUST branch on `code`; the message string is human-facing and MAY change.
 
-| Condition | `code` | `Error` carries |
+| `code` | Name | Condition |
 |---|---|---|
-| User approval still pending (during `connect`) | `4001` | `.pending = true` (the provider polls; a dapp normally never sees this — see [§2](#pending)) |
-| Wallet unreachable / no native bridge | `-1` | `"DIG wallet is not reachable"` |
-| Malformed wallet response | `-1` | `"DIG wallet returned a malformed response"` |
-| Origin not approved (a key/sign method before `connect`) | `403` | the wallet's refusal message |
-| Wallet locked | `401` | `"wallet is locked"` |
-| Bad params (e.g. missing `message`) | `400` | a description of the bad field |
-| Method not implemented | `501` | `"unsupported … method"` |
-| Upstream chain read failed (coinset) | `502` | the underlying error |
-| Any other non-2xx wallet status | that status | the wallet's error string |
+| `4000` | `INVALID_PARAMS` | A parameter is missing or malformed. |
+| `4001` | `UNAUTHORIZED` | The origin is not connected, or the wallet is locked. |
+| `4002` | `USER_REJECTED` | The user declined the prompt, or a `connect` approval timed out. |
+| `4003` | `SPENDABLE_BALANCE_EXCEEDED` | The spend exceeds the spendable balance. |
+| `4004` | `METHOD_NOT_FOUND` | The method is unsupported or not implemented (e.g. DID / mint / bulk-mint). |
+| `4005` | `NO_SECRET_KEY` | No signing key is available for the request. |
+| `4029` | `LIMIT_EXCEEDED` | A rate or size limit was exceeded. |
+| `4900` | `DISCONNECTED` | The provider is not connected to an approved origin. |
 
-The numeric `code` is the load-bearing field; the message string is human-facing and MAY change.
-A `code` ≥ 200 and `< 300` never occurs on the rejected path (success resolves).
-
-:::note Error-code alignment **(proposed)**
-The codes above are HTTP-derived (the wallet's transport status). A future `chiaVersion` revision
-SHOULD align provider error codes with the dig RPC's JSON-RPC `-32xxx` range and the ecosystem-wide
-[error-codes table](../support/error-codes.md) so a dapp has one error vocabulary. Until then, branch
-on the codes above. **(proposed)**
-:::
+`4002` (the user said no) is distinct from `4001` (not authorized) — a dapp SHOULD branch on them
+separately. The provider exposes this enum on `window.chia.errorCodes`. The internal transport status
+([§8](#transport)) is mapped to these dapp-facing codes.
 
 ## 5. Capability & version (feature detection) {#capability--version}
 
-So a dapp can adapt to wallets at different revisions **without a round-trip**, a provider SHOULD
-expose:
+So a dapp can adapt **without a round-trip**, the provider exposes:
 
-- **`chiaVersion`** — the semantic version of the `window.chia` surface this object implements.
-- **`capabilities`** — the array of method names this provider answers (a superset of, or equal to,
-  the canonical [§4.2](#core-methods) list; including any [extended](#extended-methods) methods it
-  actually serves).
+- **`apiVersion`** — the semantic version of the `window.chia` surface this object implements (e.g. `"1.0.0"`).
+- **`methods`** — the array of method names this provider answers. Read it directly, or call
+  [`chip0002_getMethods`](#method-registry) (answered locally, no prompt) for the same list.
 
 ```js
 function supports(method) {
   const p = window.chia;
-  if (p?.capabilities) return p.capabilities.includes(method);
-  // Fallback for providers without the descriptor: assume the canonical set.
-  return WALLET_METHODS.includes(method);
+  if (Array.isArray(p?.methods)) return p.methods.includes(method);
+  return false;
 }
 ```
 
-:::caution Status
-`chiaVersion` and `capabilities` are **proposed** — no provider exposes them yet. Today a dapp MUST
-assume the canonical [§4.2](#core-methods) list for any provider it detects, and treat
-[§4.2.x extended](#extended-methods) methods as unavailable unless probed. This section is the
-forward contract; the [DIG SDK](#recommended-consumer) already centralizes the canonical list in one
-place (`WALLET_METHODS`) so the migration is a one-line change when providers ship the descriptor.
-:::
+A dapp MUST feature-detect any method against `methods` before calling it; unimplemented methods
+(e.g. DID / mint / bulk-mint) reject with [`4004`](#errors). The [DIG SDK](#recommended-consumer)
+centralizes this list so app code is written once.
 
 ## 6. Events {#events}
 
@@ -301,9 +318,9 @@ window.chia.off("connect", onConnect);
 
 | Event | Status | Fires when |
 |---|---|---|
-| `connect` | normative | This origin is approved (including via an eager reconnect). |
-| `accountsChanged` | **proposed** | The active address/keys change (e.g. the user switches accounts). |
-| `chainChanged` | **proposed** | The active chain changes. (Mainnet-only today, so this never fires.) |
+| `connect` | normative | This origin is approved (including via an eager reconnect). Also emitted by `connect()`. |
+| `accountChanged` | normative | The active address changes (also emitted on connect). |
+| `chainChanged` | normative | The active chain changes. (Mainnet-only, so this does not fire in normal use.) |
 | `disconnect` | **proposed** | The user revokes this origin's approval. |
 
 Additionally, the global `window` event `chia#initialized` MUST be dispatched once when the provider

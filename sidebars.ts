@@ -84,6 +84,7 @@ const sidebars: SidebarsConfig = {
             'build-a-dapp/example-gallery',
             'sdk',
             'browser/using-window-chia',
+            'browser/window-chia-reference',
             'rpc/what-is-the-dig-rpc',
             'rpc/methods',
             'rpc/streaming',

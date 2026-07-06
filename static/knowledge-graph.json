@@ -284,6 +284,20 @@
       ]
     },
     {
+      "id": "/docs/browser/window-chia-reference",
+      "type": "doc",
+      "title": "The `window.chia` provider reference",
+      "url": "https://docs.dig.net/docs/browser/window-chia-reference",
+      "tags": [
+        "window-chia",
+        "browser",
+        "chip-0002",
+        "dig-sdk",
+        "chia-protocol",
+        "dighub"
+      ]
+    },
+    {
       "id": "/docs/build-a-dapp/example-gallery",
       "type": "doc",
       "title": "Example gallery",
@@ -640,6 +654,18 @@
         "window-chia",
         "chip-0035",
         "deploy-action"
+      ]
+    },
+    {
+      "id": "/docs/journeys/quests-and-staking",
+      "type": "doc",
+      "title": "How do I… earn and stake badges?",
+      "url": "https://docs.dig.net/docs/journeys/quests-and-staking",
+      "tags": [
+        "dighub",
+        "badges",
+        "staking",
+        "dig-payment"
       ]
     },
     {
@@ -1489,6 +1515,36 @@
       "type": "part-of"
     },
     {
+      "from": "/docs/browser/window-chia-reference",
+      "to": "concept:window-chia",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/browser/window-chia-reference",
+      "to": "concept:browser",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/browser/window-chia-reference",
+      "to": "concept:chip-0002",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/browser/window-chia-reference",
+      "to": "concept:dig-sdk",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/browser/window-chia-reference",
+      "to": "concept:chia-protocol",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/browser/window-chia-reference",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
       "from": "/docs/build-a-dapp/example-gallery",
       "to": "concept:digstore-cli",
       "type": "part-of"
@@ -2236,6 +2292,16 @@
     {
       "from": "/docs/journeys/integrate",
       "to": "concept:deploy-action",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/journeys/quests-and-staking",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/journeys/quests-and-staking",
+      "to": "concept:dig-payment",
       "type": "part-of"
     },
     {
@@ -3065,6 +3131,11 @@
     },
     {
       "from": "/docs/browser/using-window-chia",
+      "to": "/docs/browser/window-chia-reference",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/browser/using-window-chia",
       "to": "/docs/protocol/window-chia-provider",
       "type": "see-also"
     },
@@ -3085,6 +3156,36 @@
     },
     {
       "from": "/docs/browser/using-window-chia",
+      "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/browser/window-chia-reference",
+      "to": "/docs/browser/using-window-chia",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/browser/window-chia-reference",
+      "to": "/docs/protocol/window-chia-provider",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/browser/window-chia-reference",
+      "to": "/docs/sdk",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/browser/window-chia-reference",
+      "to": "/docs/browser/chia-protocol",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/browser/window-chia-reference",
+      "to": "/docs/support/error-codes",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/browser/window-chia-reference",
       "to": "/docs/concepts",
       "type": "see-also"
     },
