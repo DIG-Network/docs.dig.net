@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.3.6] - 2026-07-06
+
+### Documentation
+- **faq:** Note the *.on.dig.net handle discount needs the NFT in-wallet (#143) (#16)
+
 ## [0.3.5] - 2026-07-06
 
 ### Documentation
