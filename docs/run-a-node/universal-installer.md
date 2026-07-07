@@ -6,6 +6,7 @@ keywords:
   - universal installer
   - dig-node install
   - dig.local
+  - dig-dns
   - Windows service
   - launchd
   - systemd
@@ -31,6 +32,24 @@ The installer registers **`dig.local`** for your machine so consumers on the sam
 :::note Pre-release
 The hosted installers (`apt.dig.net`, `dig.net/install.sh`) are still being provisioned. Until they're live, build from source or grab a binary from the [dig-node Releases](https://github.com/DIG-Network/dig-node/releases). The commands here are the real, intended ones.
 :::
+
+## Browse `.dig` names directly
+
+Add `--with-dig-dns` to also install [`dig-dns`](https://github.com/DIG-Network/dig-dns)
+— a local `*.dig` name resolver — as an OS service (Windows Service / macOS
+LaunchDaemon / Linux systemd):
+
+```sh
+curl -fsSL https://dig.net/install.sh | sh -s -- --with-dig-dns
+```
+
+This lets a browser open `http://<storeId>.dig/<path>` directly: dig-dns resolves the
+store's chain-anchored root and serves its content from your dig-node. The installer
+wires OS split-DNS (or an NRPT rule on Windows) and, as a fallback, a PAC proxy file
+for browsers that bypass the OS resolver (e.g. a browser forcing DNS-over-HTTPS) —
+either path alone is enough for `.dig` URLs to load. It never edits `/etc/hosts`,
+never rewrites URLs, and never intercepts TLS. Run `dig-dns doctor` any time to check
+which path is live and get a fix hint for what isn't.
 
 ## On Debian-family systems
 
