@@ -32,7 +32,7 @@ Public content needs only the link. Private content also needs a secret **`?salt
 ## Get the DIG Browser, or the extension
 
 - **[Get the DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)** — a browser with `chia://` and a built-in wallet baked in.
-- **The extension** for Chrome / Edge / Brave / Firefox — adds `chia://` resolution to a browser you already use.
+- **The extension** for Chrome / Edge / Brave / Firefox — adds `chia://` resolution to a browser you already use. Its home screen has an "open a chia:// address or DIG URN" field — paste an address there and it opens, the same as typing it into the DIG Browser's address bar. If you've also installed [dig-dns](../run-a-node/universal-installer.md#browse-dig-names-directly), it opens the address's real `http://<store>.dig/` page directly; otherwise it renders inside the extension.
 
 ## Open `chia://` content — latest vs pinned
 
