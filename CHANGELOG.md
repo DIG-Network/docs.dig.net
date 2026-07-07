@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.3.7] - 2026-07-07
+
+### Documentation
+- **run-a-node:** Document dig-dns install via the universal installer (#18)
+
 ## [0.3.6] - 2026-07-06
 
 ### Documentation
