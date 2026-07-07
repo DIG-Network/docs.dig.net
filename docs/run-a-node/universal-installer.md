@@ -33,7 +33,7 @@ The installer registers **`dig.local`** for your machine so consumers on the sam
 The hosted installers (`apt.dig.net`, `dig.net/install.sh`) are still being provisioned. Until they're live, build from source or grab a binary from the [dig-node Releases](https://github.com/DIG-Network/dig-node/releases). The commands here are the real, intended ones.
 :::
 
-## Browse `.dig` names directly
+## Browse `.dig` names directly {#browse-dig-names-directly}
 
 Add `--with-dig-dns` to also install [`dig-dns`](https://github.com/DIG-Network/dig-dns)
 — a local `*.dig` name resolver — as an OS service (Windows Service / macOS
@@ -50,6 +50,11 @@ for browsers that bypass the OS resolver (e.g. a browser forcing DNS-over-HTTPS)
 either path alone is enough for `.dig` URLs to load. It never edits `/etc/hosts`,
 never rewrites URLs, and never intercepts TLS. Run `dig-dns doctor` any time to check
 which path is live and get a fix hint for what isn't.
+
+The [extension](../audiences/content-consumers.md)'s "open a chia:// address or DIG URN"
+input on its home screen detects `dig-dns` automatically: with it installed and running, opening
+an address navigates straight to its real `http://<storeId>.dig/` page; without it, the same
+address still opens, rendered inside the extension.
 
 ## On Debian-family systems
 
