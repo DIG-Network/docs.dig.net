@@ -25,6 +25,8 @@ Short answers to the questions that come up most. Follow a link to go deep.
 
 A **uniform per-[capsule](../concepts.md#capsule) price**, paid in $DIG at the live rate — the same whether you mint your first one (`init` / first Publish) or ship an update (`commit` / re-Publish) — plus a small XCH transaction fee. A store's lifetime cost is the uniform per-capsule price × the number of capsules. The price is [uniform by design](../digstore/cli/onchain-anchoring.md#why-the-price-is-uniform).
 
+DIG Super Supporters pay **half**: publishing through DIGHUb with a Super Supporter NFT held in your wallet halves the $DIG price shown and charged. DIGHUb checks live ownership across your whole wallet at publish time, so the discount applies only while the NFT is in that wallet — the same live check used for the [handle discount](#can-i-use-my-own-domain) below. Mint a Super Supporter badge (150 $DIG) at [hub.dig.net](https://hub.dig.net) to get one.
+
 ## Can I try it for free?
 
 Yes. **Scaffolding, building, and previewing cost nothing.** You spend DIG only when you publish a capsule on-chain. Start from the [Quickstart](../quickstart.md) — build and preview a draft for free, fund a wallet only at the Publish step.
@@ -60,6 +62,8 @@ Yes — over the **read path**. The moment a capsule confirms on-chain it's read
 ## Can I get a `*.on.dig.net` address or use my own domain? {#can-i-use-my-own-domain}
 
 A store does **not** get a `*.on.dig.net` subdomain automatically. You get one by **registering a handle** for the store in DIGHUb — a paid registration that pins the store to that name. (Your account handle and a store's slug are separate namespaces; they don't auto-expose a subdomain.) DIGHUb also supports custom domains with TLS. Either way, the store is already readable by its URN / `chia://` address without any of this. See [DIGHUb ↗](https://hub.dig.net).
+
+DIG Super Supporters pay **half** for a handle registration. The discount applies only while the Super Supporter NFT is **held in the wallet you're paying from** — DIGHUb checks the live chain across all your wallet's addresses at purchase time. If the NFT is staked, moved, or sold, the discount doesn't apply and DIGHUb shows the full price up front (so the payment is never underfunded). To get the discount, keep the NFT in your wallet when you register.
 
 ## What happens if I lose my seed?
 

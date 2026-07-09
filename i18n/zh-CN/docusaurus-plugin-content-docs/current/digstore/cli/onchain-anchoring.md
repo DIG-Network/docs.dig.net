@@ -75,6 +75,8 @@ The price is **uniform per capsule** — the same whether you mint (`init`) or c
 
 **$DIG** is the DIG Network token (a Chia CAT). The $DIG payment is included **atomically in the same spend bundle** as the mint or deployment root update — there is no separate transaction. The memo on the DIG output is the store id. Before submitting, each command prints the cost and your current balance; if the wallet is short on XCH **or** DIG the command blocks with a clear message rather than broadcasting a partial spend. Use `digstore balance` to check your spendable XCH and DIG at any time:
 
+Publishing through [DIGHUb](https://hub.dig.net) with a **Super Supporter** NFT held in your wallet halves the capsule price. DIGHUb checks live ownership across every address in your wallet at publish time and shows/charges the discounted amount, the same live check used for the [handle discount](../../support/faq.md#can-i-use-my-own-domain). The discount applies only while the NFT is in that wallet; if it's staked, moved, or sold, DIGHUb charges the full price instead. Mint a Super Supporter badge (150 $DIG) at [hub.dig.net](https://hub.dig.net) to get one. The `digstore` CLI's `init`/`commit` always spend the full live price shown above — the discount currently applies only when publishing through DIGHUb.
+
 ```sh
 digstore balance          # shows XCH (mojos), DIG (3-decimal), and receive address
 digstore balance --json
