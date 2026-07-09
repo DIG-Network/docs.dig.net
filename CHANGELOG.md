@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.3.9] - 2026-07-09
+
+### Documentation
+- **browser:** Add a wallet-security page for the extension's self-custody wallet (#20)
+
 ## [0.3.8] - 2026-07-07
 
 ### Documentation
