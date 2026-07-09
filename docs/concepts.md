@@ -157,11 +157,15 @@ from the network, content-addressed and cryptographically verified. → [The chi
 
 ## window.chia {#window-chia}
 
-`window.chia` is the Chia wallet provider the **DIG Browser** injects into every page. It speaks
+`window.chia` is the Chia wallet provider the **DIG Browser** and the **DIG Chrome extension**
+each inject into every page. It speaks
 [CHIP-0002](https://github.com/Chia-Network/chips/blob/main/CHIPs/chip-0002.md), so a web app can
 request the user's address, signatures, and spends with no WalletConnect setup — a drop-in
-alternative for apps that already speak CHIP-0002. → [Using window.chia](./browser/using-window-chia.md)
-· [provider reference](./browser/window-chia-reference.md) · [The window.chia provider spec](./protocol/window-chia-provider.md) (normative, versioned)
+alternative for apps that already speak CHIP-0002. Both wallets are **self-custody**: keys are
+generated and held on the user's device, encrypted at rest, and never leave it. →
+[Using window.chia](./browser/using-window-chia.md)
+· [provider reference](./browser/window-chia-reference.md) · [wallet security](./browser/wallet-security.md)
+· [The window.chia provider spec](./protocol/window-chia-provider.md) (normative, versioned)
 
 ## DIGHUb {#dighub}
 

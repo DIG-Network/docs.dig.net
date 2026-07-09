@@ -44,7 +44,7 @@ The address forms, the clean `chia://<store>/` bar, and when to pin a `rootHash`
 
 `chia://home`, `chia://wallet`, `chia://settings`, and the verified badge / shields that show each resource's inclusion-proof verdict for the active capsule.
 
-→ [Using window.chia](../browser/using-window-chia.md)
+→ [Using window.chia](../browser/using-window-chia.md) · [How the built-in wallet protects your keys](../browser/wallet-security.md)
 
 ## Public vs private — when you need a `?salt=` secret
 
