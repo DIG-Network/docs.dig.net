@@ -226,6 +226,7 @@ async function demo() {
 ## Related
 
 - [Using window.chia](./using-window-chia.md) — the detect → connect → fallback integration guide
+- [Wallet security](./wallet-security.md) — how the built-in wallet protects the user's keys
 - [The window.chia provider spec](../protocol/window-chia-provider.md) — the normative, versioned provider contract
 - [The DIG SDK](../sdk.md) — `ChiaProvider` unifies this surface with the WalletConnect fallback
 - [The chia:// protocol](./chia-protocol.md) — the browser's native content-address scheme

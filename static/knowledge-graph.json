@@ -284,6 +284,18 @@
       ]
     },
     {
+      "id": "/docs/browser/wallet-security",
+      "type": "doc",
+      "title": "Wallet security — how your keys are protected",
+      "url": "https://docs.dig.net/docs/browser/wallet-security",
+      "tags": [
+        "window-chia",
+        "browser",
+        "chip-0002",
+        "dighub"
+      ]
+    },
+    {
       "id": "/docs/browser/window-chia-reference",
       "type": "doc",
       "title": "The `window.chia` provider reference",
@@ -1511,6 +1523,26 @@
     },
     {
       "from": "/docs/browser/using-window-chia",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/browser/wallet-security",
+      "to": "concept:window-chia",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/browser/wallet-security",
+      "to": "concept:browser",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/browser/wallet-security",
+      "to": "concept:chip-0002",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/browser/wallet-security",
       "to": "concept:dighub",
       "type": "part-of"
     },
@@ -3136,6 +3168,11 @@
     },
     {
       "from": "/docs/browser/using-window-chia",
+      "to": "/docs/browser/wallet-security",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/browser/using-window-chia",
       "to": "/docs/protocol/window-chia-provider",
       "type": "see-also"
     },
@@ -3160,8 +3197,38 @@
       "type": "see-also"
     },
     {
+      "from": "/docs/browser/wallet-security",
+      "to": "/docs/browser/using-window-chia",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/browser/wallet-security",
+      "to": "/docs/browser/window-chia-reference",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/browser/wallet-security",
+      "to": "/docs/protocol/window-chia-provider",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/browser/wallet-security",
+      "to": "/docs/browser/chia-protocol",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/browser/wallet-security",
+      "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
       "from": "/docs/browser/window-chia-reference",
       "to": "/docs/browser/using-window-chia",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/browser/window-chia-reference",
+      "to": "/docs/browser/wallet-security",
       "type": "see-also"
     },
     {
