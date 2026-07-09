@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.3.11] - 2026-07-09
+
+### Documentation
+- Dig-dns 13-locale materialization + Super Supporter discount docs
+
 ## [0.3.10] - 2026-07-09
 
 ### Documentation
