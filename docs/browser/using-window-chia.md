@@ -19,7 +19,7 @@ tags:
 
 # Using `window.chia` in your app
 
-**The DIG Browser injects a Chia wallet provider on `window.chia` into every page.** Your web app can ask the browser's built-in wallet for the user's address, request signatures, and submit spends — without WalletConnect, without a QR code, and without a relay. It is a **drop-in WalletConnect alternative** that works automatically for anyone visiting your app inside the DIG Browser.
+**The DIG Browser and the DIG Chrome extension each inject a Chia wallet provider on `window.chia` into every page.** Your web app can ask the built-in wallet for the user's address, request signatures, and submit spends — without WalletConnect, without a QR code, and without a relay. It is a **drop-in WalletConnect alternative** that works automatically for anyone visiting your app inside the DIG Browser or with the extension installed.
 
 The provider speaks [CHIP-0002](https://github.com/Chia-Network/chips/blob/main/CHIPs/chip-0002.md) (the Chia wallet provider interface), so the method names and result shapes match what a CHIP-0002 wallet returns over WalletConnect. If you already integrate Sage over WalletConnect, the same calls work here — you just route them through `window.chia` instead of a WalletConnect session.
 
@@ -164,6 +164,7 @@ Pages served from a `chia://` store run inside the DIG Browser too, so `window.c
 ## Related
 
 - [The window.chia provider reference](./window-chia-reference.md) — every method, param, return, event, and error code
+- [Wallet security](./wallet-security.md) — how the built-in wallet protects the user's keys
 - [The window.chia provider spec](../protocol/window-chia-provider.md) — the normative, versioned provider contract
 - [The chia:// protocol](./chia-protocol.md) — the browser's native content-address scheme
 - [What is the dig RPC?](../rpc/what-is-the-dig-rpc.md) — how the browser reads content from the network

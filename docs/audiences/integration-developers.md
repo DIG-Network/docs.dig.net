@@ -45,7 +45,7 @@ The single thread from scaffold to a wallet-aware app live on your own domain.
 
 Detect the injected provider, call `connect()` (per-origin consent), and use the CHIP-0002 methods.
 
-→ [Using window.chia](../browser/using-window-chia.md) · [provider reference](../browser/window-chia-reference.md) · spec: [the window.chia provider](../protocol/window-chia-provider.md)
+→ [Using window.chia](../browser/using-window-chia.md) · [provider reference](../browser/window-chia-reference.md) · [wallet security](../browser/wallet-security.md) · spec: [the window.chia provider](../protocol/window-chia-provider.md)
 
 ## Read verified content — `DigClient` + the dig RPC methods
 

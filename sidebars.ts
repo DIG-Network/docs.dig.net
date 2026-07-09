@@ -85,6 +85,7 @@ const sidebars: SidebarsConfig = {
             'sdk',
             'browser/using-window-chia',
             'browser/window-chia-reference',
+            'browser/wallet-security',
             'rpc/what-is-the-dig-rpc',
             'rpc/methods',
             'rpc/streaming',
@@ -125,6 +126,7 @@ const sidebars: SidebarsConfig = {
           items: [
             'browser/chia-protocol',
             'browser/using-window-chia',
+            'browser/wallet-security',
             'run-a-node/point-a-consumer',
           ],
         },
