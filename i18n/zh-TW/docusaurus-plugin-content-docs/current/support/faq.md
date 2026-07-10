@@ -39,6 +39,10 @@ No, and that's intentional. Each capsule compiles to a **fixed-size** module (pa
 
 Not to build and preview. You connect a Chia wallet only at the moment you publish. Your **wallet is your account** — no email, no password.
 
+## How do I connect my wallet?
+
+Click **Connect wallet**, then approve the pairing in your wallet app. If you're using **Sage**, its WalletConnect setting is a little hidden the first time — see [Connect your wallet with Sage](../journeys/connect-your-wallet.md) for the exact steps.
+
 ## Where do I get DIG?
 
 DIG is the DIG Network token (a Chia CAT). Swap XCH for it on [TibetSwap ↗](https://v2.tibetswap.io/), [dexie.space ↗](https://dexie.space/offers/XCH/a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367df16832f81), or [9mm.pro ↗](https://xch.9mm.pro/token/a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367df16832f81), then send it to your wallet's receive address. See [Where to get DIG](../digstore/cli/onchain-anchoring.md#where-to-get-dig). DIG asset id: `a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367df16832f81`.

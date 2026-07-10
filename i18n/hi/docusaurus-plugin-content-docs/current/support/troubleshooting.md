@@ -99,6 +99,7 @@ Confirm the store has at least one confirmed capsule; `"latest"` on a brand-new 
 - Make sure **Sage is up to date** — older versions miss some signing methods.
 - A **watch-only** wallet can't sign; connect a wallet that holds the key.
 - Wrong network? Connect a **Chia mainnet** (`xch1…`) wallet.
+- Can't find where to pair in the first place? See [Connect your wallet with Sage](../journeys/connect-your-wallet.md) for exactly where the WalletConnect setting lives.
 
 ### "You declined the request" {#declined}
 

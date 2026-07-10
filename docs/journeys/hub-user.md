@@ -25,6 +25,12 @@ tags:
 
 A **[store](../concepts.md#store)** is your site's permanent, on-chain identity — you control it with your wallet (your wallet *is* your account; no email, no password). Each publish seals the current build into one immutable **[capsule](../concepts.md#capsule)**. Building and previewing are **free**; you pay the uniform [capsule price in $DIG](../digstore/cli/onchain-anchoring.md#costs) only when you publish.
 
+## How do I connect my wallet?
+
+Click **Connect wallet**, then either paste the pairing link into a desktop wallet on the same computer or scan the QR code with your phone. First time using **Sage**? Its WalletConnect setting is easy to miss.
+
+→ [Connect your wallet — step by step (Sage walkthrough)](./connect-your-wallet.md)
+
 ## How do I create a store and publish my first capsule?
 
 [Start a new store in DIGHUb ↗](https://hub.dig.net/new), drop in your built folder (`dist/` or `build/`), preview it free on the real read path, then hit **Publish** and approve the one on-chain spend. That mints your store and publishes its first capsule.
