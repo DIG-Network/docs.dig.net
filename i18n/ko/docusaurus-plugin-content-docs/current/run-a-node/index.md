@@ -53,7 +53,7 @@ tags:
 curl -fsSL https://dig.net/install.sh | sh
 ```
 
-이것은 [Releases 페이지](https://github.com/DIG-Network/dig-installer/releases)에 게시된 동일한 독립형 `dig-installer`입니다 — 셸로 파이프하는 것을 선호하지 않거나 Windows를 사용 중이라면 직접 다운로드하여 실행하세요.
+이것은 [Releases 페이지](https://github.com/DIG-Network/dig-installer/releases)에 게시된 동일한 독립형 `dig-installer`입니다 — 셸로 파이프하는 것을 선호하지 않거나 Windows를 사용 중이라면 직접 다운로드하여 실행하세요. 이렇게 하면 플래그 대신 클릭으로 진행하고 싶은 경우를 위한 안내형 [GUI 마법사](./universal-installer.md#gui-installer)도 열립니다.
 
 :::note 출시 전(Pre-release)
 호스팅된 설치 프로그램(`apt.dig.net`, `dig.net/install.sh`)은 아직 준비 중입니다. 이것들이 활성화되기 전까지는 소스에서 빌드하거나 [dig-node Releases](https://github.com/DIG-Network/dig-node/releases)에서 바이너리를 받으세요. 여기에 나온 명령어들은 실제로 의도된 명령어입니다.

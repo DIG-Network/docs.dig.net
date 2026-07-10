@@ -2,7 +2,7 @@
   "openrpc": "1.2.6",
   "info": {
     "title": "dig RPC — DIG Network Content Interface (network profile)",
-    "version": "0.3.14",
+    "version": "0.3.17",
     "description": "The network-wide read interface for DIG content over JSON-RPC 2.0 — the NETWORK PROFILE served by the canonical node at rpc.dig.net. Blind by construction (the node holds no URN and no key), verifiable without trust (merkle inclusion proofs against the chain-anchored root), and streamable at any size. There is no `decoy` field on the wire and no CDN. See https://docs.dig.net/docs/protocol/dig-rpc.",
     "license": {
       "name": "GPL-2.0",

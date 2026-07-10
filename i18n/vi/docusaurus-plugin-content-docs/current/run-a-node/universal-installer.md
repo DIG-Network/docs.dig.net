@@ -25,6 +25,16 @@ curl -fsSL https://dig.net/install.sh | sh
 
 This is the same self-contained `dig-installer` shipped on the [Releases page](https://github.com/DIG-Network/dig-installer/releases) — download and run it directly if you prefer not to pipe to a shell, or on Windows.
 
+## Trình cài đặt GUI {#gui-installer}
+
+Muốn thiết lập có hướng dẫn thay vì dùng cờ (flag)? Tải xuống và chạy trực tiếp trình cài đặt (thay vì pipe vào shell) sẽ mở một trình hướng dẫn trên desktop — **Welcome → License → Components → Install → Done** — với giao diện tối đồng bộ với các ứng dụng khác của DIG Network.
+
+Ở bước **Components**, mọi thành phần — `digstore`, `dig-node`, `dig-dns`, `dig-relay` và DIG Browser — đều được chọn sẵn theo mặc định, nên nếu tiếp tục mà không thay đổi gì thì mọi thứ sẽ được cài đặt (`digstore` không có ô chọn; nó luôn được cài). Bỏ chọn bất kỳ thành phần nào khác để chỉ cài một phần.
+
+Nếu một thành phần chưa có sẵn cho nền tảng của bạn, nó sẽ tự động được bỏ qua và các thành phần đã chọn còn lại vẫn cài đặt bình thường.
+
+Chạy lại trình cài đặt trên một `dig-node` hoặc `dig-relay` đã được cài đặt trước đó — chẳng hạn để nâng cấp — không cần bất kỳ thao tác thủ công nào: nó dừng dịch vụ đang chạy, thay thế tệp nhị phân bằng phiên bản mới, rồi khởi động lại, để dịch vụ kết thúc ở đúng trạng thái đang chạy/đã dừng như trước đó.
+
 ## `dig.local`
 
 The installer registers **`dig.local`** for your machine so consumers on the same host resolve your node by name (`dig.local` → `localhost`) without hard-coding a port. This is what lets the [DIG Browser](../browser/chia-protocol.md) and extension prefer a local node automatically. → [Point a consumer at your node](./point-a-consumer.md)

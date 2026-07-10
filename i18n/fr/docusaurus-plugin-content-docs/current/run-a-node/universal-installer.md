@@ -25,6 +25,16 @@ curl -fsSL https://dig.net/install.sh | sh
 
 This is the same self-contained `dig-installer` shipped on the [Releases page](https://github.com/DIG-Network/dig-installer/releases) — download and run it directly if you prefer not to pipe to a shell, or on Windows.
 
+## Installateur graphique {#gui-installer}
+
+Vous préférez une configuration guidée plutôt que des options en ligne de commande ? Télécharger et exécuter l'installateur directement (plutôt que de le rediriger vers un shell) ouvre un assistant de bureau — **Bienvenue → Licence → Composants → Installation → Terminé** — avec un thème sombre assorti au reste des applications DIG Network.
+
+À l'étape **Composants**, chaque composant — `digstore`, `dig-node`, `dig-dns`, `dig-relay` et DIG Browser — est coché par défaut, si bien qu'avancer sans rien changer installe tout (`digstore` n'a pas de case à cocher ; il est toujours installé). Décochez n'importe quel autre composant pour n'installer qu'un sous-ensemble.
+
+Si un composant n'est pas encore disponible pour votre plateforme, il est ignoré automatiquement et les autres composants sélectionnés s'installent normalement.
+
+Relancer l'installateur sur un `dig-node` ou un `dig-relay` déjà installé — pour une mise à niveau, par exemple — ne demande aucune étape manuelle : il arrête le service en cours d'exécution, remplace le binaire par la nouvelle version, puis le redémarre, de sorte que le service se retrouve dans le même état (en cours d'exécution ou arrêté) qu'auparavant.
+
 ## `dig.local`
 
 The installer registers **`dig.local`** for your machine so consumers on the same host resolve your node by name (`dig.local` → `localhost`) without hard-coding a port. This is what lets the [DIG Browser](../browser/chia-protocol.md) and extension prefer a local node automatically. → [Point a consumer at your node](./point-a-consumer.md)

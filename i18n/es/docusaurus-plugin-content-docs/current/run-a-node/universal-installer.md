@@ -25,6 +25,16 @@ curl -fsSL https://dig.net/install.sh | sh
 
 This is the same self-contained `dig-installer` shipped on the [Releases page](https://github.com/DIG-Network/dig-installer/releases) — download and run it directly if you prefer not to pipe to a shell, or on Windows.
 
+## Instalador con interfaz gráfica {#gui-installer}
+
+¿Prefieres una configuración guiada en lugar de flags? Descargar y ejecutar el instalador directamente (en vez de canalizarlo a una shell) abre un asistente de escritorio — **Bienvenida → Licencia → Componentes → Instalación → Listo** — con un tema oscuro que combina con el resto de las apps de DIG Network.
+
+En el paso **Componentes**, cada componente — `digstore`, `dig-node`, `dig-dns`, `dig-relay` y DIG Browser — está marcado de forma predeterminada, así que avanzar sin cambios instala todo (`digstore` no tiene casilla; siempre se instala). Desmarca cualquiera de los demás para instalar solo un subconjunto.
+
+Si un componente todavía no está disponible para tu plataforma, se omite automáticamente y el resto de los componentes seleccionados se instalan con normalidad.
+
+Volver a ejecutar el instalador sobre un `dig-node` o `dig-relay` ya instalado — por ejemplo, para actualizar — no requiere ningún paso manual: detiene el servicio en ejecución, reemplaza el binario por la nueva versión y luego lo vuelve a iniciar, de modo que el servicio termina en el mismo estado (en ejecución o detenido) en que estaba antes.
+
 ## `dig.local`
 
 The installer registers **`dig.local`** for your machine so consumers on the same host resolve your node by name (`dig.local` → `localhost`) without hard-coding a port. This is what lets the [DIG Browser](../browser/chia-protocol.md) and extension prefer a local node automatically. → [Point a consumer at your node](./point-a-consumer.md)
