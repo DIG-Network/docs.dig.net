@@ -641,6 +641,18 @@
       ]
     },
     {
+      "id": "/docs/journeys/connect-your-wallet",
+      "type": "doc",
+      "title": "How do I connect my wallet? (Sage walkthrough)",
+      "url": "https://docs.dig.net/docs/journeys/connect-your-wallet",
+      "tags": [
+        "dighub",
+        "wallet",
+        "sage",
+        "walletconnect"
+      ]
+    },
+    {
       "id": "/docs/journeys/digstore-cli",
       "type": "doc",
       "title": "How do I… use the digstore CLI?",
@@ -2276,6 +2288,11 @@
     {
       "from": "/docs",
       "to": "concept:browser",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/journeys/connect-your-wallet",
+      "to": "concept:dighub",
       "type": "part-of"
     },
     {
