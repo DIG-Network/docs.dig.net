@@ -53,7 +53,7 @@ Le chemin multiplateforme — Windows, macOS, et n'importe quel Linux. Il détec
 curl -fsSL https://dig.net/install.sh | sh
 ```
 
-C'est le même `dig-installer` autonome publié sur la [page Releases](https://github.com/DIG-Network/dig-installer/releases) — téléchargez-le et exécutez-le directement si vous préférez ne pas passer par un pipe vers un shell, ou sur Windows.
+C'est le même `dig-installer` autonome publié sur la [page Releases](https://github.com/DIG-Network/dig-installer/releases) — téléchargez-le et exécutez-le directement si vous préférez ne pas passer par un pipe vers un shell, ou sur Windows. Cela ouvre aussi un [assistant graphique](./universal-installer.md#gui-installer) guidé, si vous préférez cliquer plutôt qu'utiliser des options.
 
 :::note Pré-lancement
 Les installateurs hébergés (`apt.dig.net`, `dig.net/install.sh`) sont encore en cours de provisionnement. En attendant qu'ils soient en ligne, construisez depuis les sources ou récupérez un binaire depuis les [Releases de dig-node](https://github.com/DIG-Network/dig-node/releases). Les commandes ici sont les vraies, celles prévues.

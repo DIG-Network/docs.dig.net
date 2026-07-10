@@ -88,4 +88,5 @@ A relay is only useful if other nodes can reach it, so run it somewhere with a p
 
 - [Configure a node](./configure.md) — all node settings, including the relay
 - [Install anywhere — the universal installer](./universal-installer.md)
+- [Install via the GUI wizard](./universal-installer.md#gui-installer) — a guided alternative to the flags above
 - [Run a DIG node](./index.md) — what a node is and why you'd run one

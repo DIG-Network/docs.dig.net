@@ -53,7 +53,7 @@ tags:
 curl -fsSL https://dig.net/install.sh | sh
 ```
 
-Это тот же самодостаточный `dig-installer`, что публикуется на [странице Releases](https://github.com/DIG-Network/dig-installer/releases) — скачайте и запустите его напрямую, если предпочитаете не передавать вывод в shell по конвейеру, либо на Windows.
+Это тот же самодостаточный `dig-installer`, что публикуется на [странице Releases](https://github.com/DIG-Network/dig-installer/releases) — скачайте и запустите его напрямую, если предпочитаете не передавать вывод в shell по конвейеру, либо на Windows. Это также открывает управляемый [графический мастер](./universal-installer.md#gui-installer), если вы предпочитаете кликать, а не использовать флаги.
 
 :::note Пре-релиз
 Размещённые установщики (`apt.dig.net`, `dig.net/install.sh`) всё ещё готовятся к развёртыванию. Пока они не в сети, соберите из исходников или возьмите бинарник со страницы [Releases dig-node](https://github.com/DIG-Network/dig-node/releases). Команды здесь — настоящие, целевые.

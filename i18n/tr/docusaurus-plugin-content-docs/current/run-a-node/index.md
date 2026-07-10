@@ -53,7 +53,7 @@ Yerel yol: `apt.dig.net`'te imzalı bir apt deposu. `dig-node`'u yönetilen bir 
 curl -fsSL https://dig.net/install.sh | sh
 ```
 
-Bu, [Releases sayfasında](https://github.com/DIG-Network/dig-installer/releases) gönderilen aynı kendi kendine yeten `dig-installer`dır — bir kabuğa (shell) yönlendirmek istemiyorsanız veya Windows'taysanız doğrudan indirip çalıştırın.
+Bu, [Releases sayfasında](https://github.com/DIG-Network/dig-installer/releases) gönderilen aynı kendi kendine yeten `dig-installer`dır — bir kabuğa (shell) yönlendirmek istemiyorsanız veya Windows'taysanız doğrudan indirip çalıştırın. Bunu yapmak, bayraklar yerine tıklamayı tercih edenler için rehberli bir [GUI sihirbazı](./universal-installer.md#gui-installer) da açar.
 
 :::note Ön sürüm (pre-release)
 Barındırılan yükleyiciler (`apt.dig.net`, `dig.net/install.sh`) hâlâ hazırlanmaktadır. Yayına girene kadar, kaynaktan derleyin veya [dig-node Releases](https://github.com/DIG-Network/dig-node/releases)'ten bir ikili (binary) alın. Buradaki komutlar gerçek, amaçlanan komutlardır.

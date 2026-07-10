@@ -53,7 +53,7 @@ Lộ trình đa nền tảng — Windows, macOS, và bất kỳ Linux nào. Nó 
 curl -fsSL https://dig.net/install.sh | sh
 ```
 
-Đây là cùng một `dig-installer` tự chứa được phát hành trên [trang Releases](https://github.com/DIG-Network/dig-installer/releases) — tải xuống và chạy trực tiếp nếu bạn không muốn pipe vào một shell, hoặc trên Windows.
+Đây là cùng một `dig-installer` tự chứa được phát hành trên [trang Releases](https://github.com/DIG-Network/dig-installer/releases) — tải xuống và chạy trực tiếp nếu bạn không muốn pipe vào một shell, hoặc trên Windows. Làm như vậy cũng sẽ mở một [trình hướng dẫn GUI](./universal-installer.md#gui-installer), nếu bạn muốn nhấp chuột thay vì dùng cờ.
 
 :::note Trước khi phát hành
 Các trình cài đặt được lưu trữ (`apt.dig.net`, `dig.net/install.sh`) vẫn đang được thiết lập. Cho đến khi chúng trực tuyến, hãy build từ mã nguồn hoặc lấy một binary từ [dig-node Releases](https://github.com/DIG-Network/dig-node/releases). Các lệnh ở đây là những lệnh thực sự, đúng như dự định.

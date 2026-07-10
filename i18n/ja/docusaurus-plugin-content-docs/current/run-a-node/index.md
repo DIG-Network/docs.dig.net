@@ -53,7 +53,7 @@ tags:
 curl -fsSL https://dig.net/install.sh | sh
 ```
 
-これは[Releasesページ](https://github.com/DIG-Network/dig-installer/releases)で配布されているものと同じ自己完結型の`dig-installer`です。シェルにパイプしたくない場合や、Windowsの場合は、直接ダウンロードして実行してください。
+これは[Releasesページ](https://github.com/DIG-Network/dig-installer/releases)で配布されているものと同じ自己完結型の`dig-installer`です。シェルにパイプしたくない場合や、Windowsの場合は、直接ダウンロードして実行してください。そうすることで、フラグの代わりにクリックで進めたい場合向けのガイド付き[GUIウィザード](./universal-installer.md#gui-installer)も開きます。
 
 :::note プレリリース
 ホスト型インストーラー（`apt.dig.net`、`dig.net/install.sh`）はまだ準備中です。それらが公開されるまでは、ソースからビルドするか、[dig-nodeのReleases](https://github.com/DIG-Network/dig-node/releases)からバイナリを入手してください。ここに記載されているコマンドは、実際に意図されているものです。

@@ -53,7 +53,7 @@ tags:
 curl -fsSL https://dig.net/install.sh | sh
 ```
 
-这与 [Releases 页面](https://github.com/DIG-Network/dig-installer/releases)上发布的自包含 `dig-installer` 完全相同 —— 如果你不想通过管道直接执行到 shell 中，或者是在 Windows 上，可以直接下载并运行它。
+这与 [Releases 页面](https://github.com/DIG-Network/dig-installer/releases)上发布的自包含 `dig-installer` 完全相同 —— 如果你不想通过管道直接执行到 shell 中，或者是在 Windows 上，可以直接下载并运行它。这样做还会打开一个有引导的[图形向导](./universal-installer.md#gui-installer)，如果你更喜欢点击操作而不是使用参数的话。
 
 :::note 预发布阶段
 托管的安装程序（`apt.dig.net`、`dig.net/install.sh`）目前仍在筹备中。在它们正式上线之前，可以从源码构建，或从 [dig-node Releases](https://github.com/DIG-Network/dig-node/releases) 获取一个二进制文件。此处给出的命令是真实的、预期最终会使用的命令。

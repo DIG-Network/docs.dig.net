@@ -53,7 +53,7 @@ Jalur lintas-platform — Windows, macOS, dan Linux apa pun. Ia mendeteksi OS An
 curl -fsSL https://dig.net/install.sh | sh
 ```
 
-Ini adalah `dig-installer` mandiri yang sama yang dirilis di [halaman Releases](https://github.com/DIG-Network/dig-installer/releases) — unduh dan jalankan langsung jika Anda lebih suka tidak meng-pipe ke shell, atau di Windows.
+Ini adalah `dig-installer` mandiri yang sama yang dirilis di [halaman Releases](https://github.com/DIG-Network/dig-installer/releases) — unduh dan jalankan langsung jika Anda lebih suka tidak meng-pipe ke shell, atau di Windows. Melakukan ini juga membuka [wizard GUI](./universal-installer.md#gui-installer) terpandu, jika Anda lebih suka mengeklik daripada menggunakan flag.
 
 :::note Pra-rilis
 Installer yang di-hosting (`apt.dig.net`, `dig.net/install.sh`) masih dalam tahap penyediaan. Sampai keduanya live, build dari source atau ambil sebuah binary dari [Releases dig-node](https://github.com/DIG-Network/dig-node/releases). Perintah di sini adalah perintah yang sungguhan dan dimaksudkan.

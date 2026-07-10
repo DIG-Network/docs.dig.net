@@ -4782,6 +4782,11 @@
     },
     {
       "from": "/docs/run-a-node/run-a-relay",
+      "to": "/docs/run-a-node/universal-installer",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/run-a-relay",
       "to": "/docs/run-a-node",
       "type": "see-also"
     },
