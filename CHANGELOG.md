@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.3.13] - 2026-07-10
+
+### Documentation
+- **run-a-node:** Document the wallet-data auto-detect indicator (#23)
+
 ## [0.3.12] - 2026-07-10
 
 ### Documentation
