@@ -37,6 +37,7 @@ The docs are organized in two top-level sections: **Using DIG** (one track per a
 - [CLI quick start](https://docs.dig.net/docs/digstore/cli/quickstart): create a store, commit a file, and read it back in minutes.
 - [Using DigStore in your project](https://docs.dig.net/docs/digstore/cli/project-workflow): capture a build directory, manage staging, run multiple stores in one workspace, the release loop.
 - [Publish from the web (DIGHUb)](https://hub.dig.net/new): deploy a capsule with no CLI.
+- [Connect your wallet (Sage walkthrough)](https://docs.dig.net/docs/journeys/connect-your-wallet): step-by-step wallet pairing for DIGHUb, including exactly where Sage's WalletConnect setting lives (Settings → WalletConnect → Add connection).
 
 ## Build a dapp (integrating developers)
 

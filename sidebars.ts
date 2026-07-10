@@ -43,6 +43,7 @@ const sidebars: SidebarsConfig = {
           link: {type: 'doc', id: 'audiences/app-developers'},
           items: [
             'journeys/hub-user',
+            'journeys/connect-your-wallet',
             'journeys/digstore-cli',
             'quickstart',
             'digstore/cli/install',
