@@ -71,6 +71,7 @@ Você não precisa de um nó. Obtenha o **[DIG Browser ↗](https://github.com/D
 - [Configure o dig-node](./configure.md) — portas, listeners, limite de cache, upstream
 - [Auto-hospede uma origem remota](../rpc/dig-remote.md) — `digstore serve` + clone/pull/push via dig://
 - [Gerencie seu nó](./manage.md) — os RPCs administrativos control.* e a interface My Node
+- [O Painel de Controle](./control-panel.md) — opere seu nó inteiramente pela extensão DIG: status ao vivo, espaço de cache reservado (LRU) e — após o pareamento — upstream/stores hospedados/sincronização/peers
 - [Usando o RPC da rede pública](../rpc/public-network-rpc.md) — o dig RPC que seu nó fala, e como operar um nó na rede
 - [Instalando a CLI](../digstore/cli/install.md) — `digstore` sozinho (publicar, não servir)
 

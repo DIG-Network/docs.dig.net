@@ -71,6 +71,7 @@ No necesitas un nodo. Consigue el **[DIG Browser ↗](https://github.com/DIG-Net
 - [Configura dig-node](./configure.md) — puertos, listeners, límite de caché, upstream
 - [Auto-hospeda un origen remoto](../rpc/dig-remote.md) — `digstore serve` + clone/pull/push por dig://
 - [Gestiona tu nodo](./manage.md) — los RPCs de administración control.* y la UI My Node
+- [El Panel de control](./control-panel.md) — gestiona tu nodo desde la extensión DIG: estado en vivo, espacio de caché reservado (LRU) y — tras el emparejamiento — upstream/stores alojados/sincronización/pares
 - [Usando el RPC de la red pública](../rpc/public-network-rpc.md) — el dig RPC que habla tu nodo, y cómo operar un nodo en la red
 - [Instalar la CLI](../digstore/cli/install.md) — `digstore` por su cuenta (publicar, no servir)
 

@@ -71,6 +71,7 @@ Du brauchst keinen Node. Hol dir den **[DIG Browser ↗](https://github.com/DIG-
 - [dig-node konfigurieren](./configure.md) — Ports, Listener, Cache-Obergrenze, Upstream
 - [Einen Remote-Origin selbst hosten](../rpc/dig-remote.md) — `digstore serve` + dig://-Clone/Pull/Push
 - [Deinen Node verwalten](./manage.md) — die control.*-Admin-RPCs + die My-Node-UI
+- [Das Control Panel](./control-panel.md) — betreibe deinen Node komplett aus der DIG-Erweiterung: Live-Status, reservierter Cache-Speicher (LRU) und — nach dem Pairing — Upstream/gehostete Stores/Sync/Peers
 - [Die öffentliche Netzwerk-RPC nutzen](../rpc/public-network-rpc.md) — die dig RPC, die dein Node spricht, und den Betrieb eines Node im Netzwerk
 - [Die CLI installieren](../digstore/cli/install.md) — `digstore` für sich allein (Veröffentlichen, nicht Servieren)
 

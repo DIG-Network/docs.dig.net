@@ -71,6 +71,7 @@ Bạn không cần một node. Lấy **[DIG Browser ↗](https://github.com/DIG-
 - [Cấu hình dig-node](./configure.md) — cổng, listener, giới hạn bộ nhớ đệm, upstream
 - [Tự lưu trữ một nguồn gốc từ xa](../rpc/dig-remote.md) — `digstore serve` + clone/pull/push qua dig://
 - [Quản lý node của bạn](./manage.md) — các RPC quản trị control.* + giao diện My Node
+- [Bảng điều khiển](./control-panel.md) — vận hành toàn bộ node của bạn từ tiện ích mở rộng DIG: trạng thái trực tiếp, dung lượng bộ nhớ đệm dành riêng (LRU), và — sau khi ghép nối — upstream/kho lưu trữ được lưu trữ/đồng bộ/peer
 - [Sử dụng RPC mạng công khai](../rpc/public-network-rpc.md) — dig RPC mà node của bạn nói, và vận hành một node trên mạng lưới
 - [Cài đặt CLI](../digstore/cli/install.md) — `digstore` một mình (xuất bản, không phải phục vụ)
 

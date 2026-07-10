@@ -71,6 +71,7 @@ curl -fsSL https://dig.net/install.sh | sh
 - [Configure dig-node](./configure.md) — ports, listeners, कैश कैप, upstream
 - [Self-host a remote origin](../rpc/dig-remote.md) — `digstore serve` + dig:// clone/pull/push
 - [Manage your node](./manage.md) — control.* admin RPCs + My Node UI
+- [नियंत्रण पैनल](./control-panel.md) — DIG एक्सटेंशन से अपना node पूरी तरह चलाएँ: लाइव स्थिति, आरक्षित कैश स्पेस (LRU), और — पेयरिंग के बाद — upstream/hosted stores/sync/peers
 - [Using the public network RPC](../rpc/public-network-rpc.md) — dig RPC जो आपका node बोलता है, और नेटवर्क पर एक node ऑपरेट करना
 - [Installing the CLI](../digstore/cli/install.md) — अकेले `digstore` (पब्लिशिंग, सर्विंग नहीं)
 
