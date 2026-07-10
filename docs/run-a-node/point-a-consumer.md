@@ -48,6 +48,8 @@ Beyond reading content, the extension's **wallet** can source its data — balan
 Choose the source under **Settings → Wallet data source** (in the full-window wallet):
 
 - **Automatic** (default) — use your dig-node when it's running, otherwise fall back to `coinset.org`.
+  As soon as a local node answers, the panel shows a **"Local dig-node detected"** note naming its
+  address — no manual setup needed.
 - **My dig-node** — always read from your local node; wallet data is unavailable if it isn't running.
 - **coinset.org** — always use the public service; your node isn't used for wallet data.
 - **Custom node URL** — read from a specific node RPC address you enter.
