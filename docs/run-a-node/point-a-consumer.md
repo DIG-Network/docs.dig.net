@@ -27,7 +27,10 @@ A consumer — the [DIG Browser](../browser/chia-protocol.md), the [extension](.
 Every consumer resolves its node endpoint in the same fixed order, using the first that responds:
 
 1. **An explicit override**, when the consumer has one set — always wins over the automatic steps below.
-2. **`dig.local`** — an installed local dig-node.
+2. **`dig.local`** — an installed local dig-node. Reaching `dig.local` is ensured automatically:
+   both the node itself and the local resolver service keep this address pointed at your
+   running node, so a consumer using the automatic resolution does not need any extra setup for
+   this step to work.
 3. **`localhost`** — a dig-node on the loopback address, its default local port.
 4. **`rpc.dig.net`** — the public gateway, the final fallback when no local node answers.
 
