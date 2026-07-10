@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.3.15] - 2026-07-10
+
+### Documentation
+- **journeys:** Step-by-step Sage wallet-connect guide (#27)
+
 ## [0.3.14] - 2026-07-10
 
 ### Documentation
