@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.3.16] - 2026-07-10
+
+### Documentation
+- **nft:** Document large-collection auto-batching + --batch-size + resume for collection mint (#28)
+
 ## [0.3.15] - 2026-07-10
 
 ### Documentation
