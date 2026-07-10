@@ -33,6 +33,26 @@ The installer registers **`dig.local`** for your machine so consumers on the sam
 The hosted installers (`apt.dig.net`, `dig.net/install.sh`) are still being provisioned. Until they're live, build from source or grab a binary from the [dig-node Releases](https://github.com/DIG-Network/dig-node/releases). The commands here are the real, intended ones.
 :::
 
+## An always-on service, verified after install
+
+`--with-dig-node` registers `dig-node` as an **auto-start** service — it comes up again after a reboot with no manual step, and starts as part of installation. On Linux and macOS it also **auto-restarts if it ever crashes** (Windows recovery-on-crash is still being wired up).
+
+Once the service is started, the installer runs two checks and prints the result of each:
+
+- **`dig.local` resolves** — the OS resolver actually maps `dig.local` to your node's loopback address right now (not just that the hosts entry was written).
+- **Health check** — the node answers a live RPC call on its configured port (default `9778`), proving the service isn't just registered but actually serving.
+
+```sh
+dig-installer --with-dig-node
+#   Registering dig-node as an OS service (port 9778):
+#     ✓ dig-node installed as an OS service and started
+#     ✓ dig.local: 127.0.0.2 dig.local → /etc/hosts
+#     ✓ dig.local resolve check: dig.local → 127.0.0.2
+#     ✓ health check: rpc.discover on http://127.0.0.1:9778/ answered
+```
+
+With the node up and verified, the [extension](../audiences/content-consumers.md) and the [DIG Browser](../browser/chia-protocol.md) find it automatically at `dig.local` (or `localhost:9778`) — no configuration needed on the consumer side. `--uninstall-dig-node` removes the service and the `dig.local` entry cleanly.
+
 ## Browse `.dig` names directly {#browse-dig-names-directly}
 
 Add `--with-dig-dns` to also install [`dig-dns`](https://github.com/DIG-Network/dig-dns)
