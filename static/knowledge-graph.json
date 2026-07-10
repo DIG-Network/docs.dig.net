@@ -310,6 +310,18 @@
       ]
     },
     {
+      "id": "/docs/build-a-dapp/deploy-existing-app",
+      "type": "doc",
+      "title": "Deploy an existing app (web upload)",
+      "url": "https://docs.dig.net/docs/build-a-dapp/deploy-existing-app",
+      "tags": [
+        "dighub",
+        "capsule",
+        "urn",
+        "chia-protocol"
+      ]
+    },
+    {
       "id": "/docs/build-a-dapp/example-gallery",
       "type": "doc",
       "title": "Example gallery",
@@ -1574,6 +1586,26 @@
     {
       "from": "/docs/browser/window-chia-reference",
       "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/deploy-existing-app",
+      "to": "concept:dighub",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/deploy-existing-app",
+      "to": "concept:capsule",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/deploy-existing-app",
+      "to": "concept:urn",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/build-a-dapp/deploy-existing-app",
+      "to": "concept:chia-protocol",
       "type": "part-of"
     },
     {
@@ -3254,6 +3286,41 @@
     {
       "from": "/docs/browser/window-chia-reference",
       "to": "/docs/concepts",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/deploy-existing-app",
+      "to": "/docs/quickstart",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/deploy-existing-app",
+      "to": "/docs/build-a-dapp/tutorial",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/deploy-existing-app",
+      "to": "/docs/audiences/content-consumers",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/deploy-existing-app",
+      "to": "/docs/digstore/format/store-structure",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/deploy-existing-app",
+      "to": "/docs/browser/chia-protocol",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/deploy-existing-app",
+      "to": "/docs/protocol/urn-and-addressing",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/build-a-dapp/deploy-existing-app",
+      "to": "/docs/digstore/cli/deploy-from-github-actions",
       "type": "see-also"
     },
     {
