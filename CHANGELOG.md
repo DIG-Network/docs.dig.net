@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.3.17] - 2026-07-10
+
+### Documentation
+- **run-a-node:** Document the dig-installer GUI wizard (#29)
+
 ## [0.3.16] - 2026-07-10
 
 ### Documentation
