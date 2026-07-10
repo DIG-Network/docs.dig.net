@@ -150,7 +150,7 @@ Build the spend with the canonical CHIP-0035 builders, sign with your wallet, an
 | Command | What it does |
 |---|---|
 | `digstore nft mint\|bulk\|transfer\|list …` | Mint an NFT (media stored permanently in a DIG capsule), bulk-mint, transfer, or list the NFTs the wallet owns. |
-| `digstore collection create\|mint\|show\|list …` | Define a collection (shared id/name/royalty) and bulk-mint its items from a traits manifest, attributed to a creator DID. |
+| `digstore collection create\|mint\|show\|list …` | Define a collection (shared id/name/royalty) and bulk-mint its items from a traits manifest, attributed to a creator DID. Large collections are **auto-split into cost-bounded on-chain batches** (so no bundle exceeds Chia's per-block cost limit) and the mint is **resumable** — re-run to continue after an interruption, skipping already-minted batches. `collection mint --batch-size <n>` forces a smaller batch than the cost-model default. |
 | `digstore did create …` | Create a creator-identity DID (decentralized identifier) owned by the wallet. |
 | `digstore offer make\|take\|show …` | Make, take, and inspect Chia offers (XCH / CAT trades). |
 
