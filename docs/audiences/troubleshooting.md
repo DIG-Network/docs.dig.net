@@ -44,6 +44,12 @@ Connect, re-auth, a declined request, and watch-only sessions that can't sign.
 
 → [Wallet session can't sign](../support/troubleshooting.md#wallet-session)
 
+## Node & extension issues
+
+The browser extension shows your node as offline even though it's running and healthy.
+
+→ [The extension shows my node as offline](../support/troubleshooting.md#extension-offline)
+
 ## Pre-flight & cost checks — don't waste a capsule
 
 `digstore doctor` (environment + readiness), `--dry-run` (preview the cost and the would-be capsule), and `--if-changed` (a byte-identical build is a no-op).

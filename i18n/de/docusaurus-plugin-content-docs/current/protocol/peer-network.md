@@ -1,13 +1,16 @@
 ---
 sidebar_position: 13
 title: "L7 · DIG Node peer network"
-description: "The normative node↔node protocol: mTLS peer identity (peer_id = SHA-256(TLS SPKI DER)), the two RPC tiers (mTLS-authenticated PEER/CONTROL vs anonymous PUBLIC-READ so browsers can retrieve content), the ordered NAT-traversal ladder (direct → UPnP → NAT-PMP → PCP → relay-coordinated hole-punch (signalling only) → relayed/TURN transport), the relay's four roles (STUN, introducer, hole-punch signalling, relayed transport), STUN reflexive-address discovery, introducer + gossip peer discovery, PEX peer-exchange (node↔node stream + the RLY-008 relay introducer binding), the Kademlia DHT with provider records that locate which peers hold content (find_node/find_providers/add_provider/ping over a framed dig-nat mTLS stream; content-key = SHA-256(domain-tag ‖ store_id[‖root[‖retrieval_key]])), the relay RelayMessage wire (RLY-001..RLY-008), the peer RPC methods (dig.getPeers/dig.announce/dig.getNetworkInfo/dig.getAvailability/dig.listInventory/dig.fetchRange), and the relay-last-fallback invariant (prefer hole-punch signalling over full relaying)."
+description: "The normative node↔node protocol: mTLS peer identity (peer_id = SHA-256(TLS SPKI DER)), the two RPC tiers (mTLS-authenticated PEER/CONTROL vs anonymous PUBLIC-READ so browsers can retrieve content), the dual-mode public gateway (rpc.dig.net's mTLS front for node-class clients — the digstore CLI, the SDK, any DIG-identity-key holder — across the full dig.local/localhost/rpc.dig.net ladder, plus its plain-HTTPS+CORS front for browsers, with an ephemeral self-signed client certificate for channel-bound anonymous reads), the ordered NAT-traversal ladder (direct → UPnP → NAT-PMP → PCP → relay-coordinated hole-punch (signalling only) → relayed/TURN transport), the relay's four roles (STUN, introducer, hole-punch signalling, relayed transport), STUN reflexive-address discovery, introducer + gossip peer discovery, PEX peer-exchange (node↔node stream + the RLY-008 relay introducer binding), the Kademlia DHT with provider records that locate which peers hold content (find_node/find_providers/add_provider/ping over a framed dig-nat mTLS stream; content-key = SHA-256(domain-tag ‖ store_id[‖root[‖retrieval_key]])), the relay RelayMessage wire (RLY-001..RLY-008), the peer RPC methods (dig.getPeers/dig.announce/dig.getNetworkInfo/dig.getAvailability/dig.listInventory/dig.fetchRange), and the relay-last-fallback invariant (prefer hole-punch signalling over full relaying)."
 keywords:
   - peer network
   - peer_id
   - mTLS
   - dual transport
   - public read tier
+  - gateway dual-mode
+  - ephemeral client certificate
+  - node-class client
   - CORS
   - NAT traversal
   - STUN
@@ -94,8 +97,8 @@ A `dig-node` runs **two listeners**:
 
 The **recommended endpoint split** (design-first call): the public read tier is the **same JSON-RPC endpoint shape** as the network profile — one `POST` endpoint speaking JSON-RPC 2.0 — but the anonymous serve layer answers **only the read subset**; the peer/write/control methods return `-32601` there. This reuses the existing [node-profile / `dig.methods` gating](./dig-rpc.md#node-profile) (an agent already gates on `dig.methods` rather than assuming one uniform surface) instead of inventing a parallel protocol, and it is exactly what a browser already speaks to `rpc.dig.net`. The peer/control tier is **not** a JSON-RPC-over-HTTPS surface at all — it is the dig-nat mTLS mux — so it cannot be reached by an anonymous HTTP client even by accident.
 
-:::note `rpc.dig.net` IS the public read tier
-Today `rpc.dig.net` ([the dig RPC network profile](./dig-rpc.md)) is exactly this anonymous, CORS-enabled, decoy-on-miss, client-verified public read tier. This section names the tier the browser has always used and states the invariant that keeps the peer/write/control surface off it.
+:::note `rpc.dig.net` is dual-mode: the public read tier plus an mTLS gateway
+`rpc.dig.net` ([the dig RPC network profile](./dig-rpc.md)) is the anonymous, CORS-enabled, decoy-on-miss, client-verified public read tier — the tier a browser has always used, and this section states the invariant that keeps the peer/write/control surface off it. It is also the **public mTLS gateway**: node-class clients, and anonymous readers holding an ephemeral certificate, reach the very same hostname over the mTLS peer/control transport instead. [§0a](#gateway-dual-mode) is the two-front contract.
 :::
 
 ### Browser specifics — fetch + verify without mTLS
@@ -107,6 +110,35 @@ A browser (or an agent with no client certificate) reads content like this, need
 3. **Verify — the server is untrusted.** Verify the first window's `inclusion_proof` against the **caller-supplied chain-anchored root** (the CHIP-0035 singleton's current on-chain `metadata.root_hash`, resolved independently of the serving node), then split by `chunk_lens` and AES-256-GCM-SIV-open each chunk with the client-derived key. A wrong/forged byte fails the proof or the authentication tag and is rejected. This is the same read-crypto every DIG read client runs; the anonymity of the transport does not relax it.
 
 Because the read tier is CORS-`*` + anonymous, the exact same fetch works from a web page, a service worker, the extension, the SDK, or a headless agent — none of which can present a client certificate.
+
+### 0a · `rpc.dig.net` is dual-mode — the public gateway serves both tiers {#gateway-dual-mode}
+
+`rpc.dig.net` is one public, network-wide hostname, but it is not one listener — it is the **public gateway**, answering on two independently-authenticated fronts so a node-class client and a browser both reach it correctly:
+
+| | **mTLS gateway front** | **Public-read front** |
+|---|---|---|
+| Who dials it | node-class clients — any DIG-identity-key holder: the `digstore` CLI, `dig-sdk`, a standalone `dig-node`, DIG Browser in standalone-node mode — plus anonymous readers using an [ephemeral certificate](#ephemeral-read-cert) | browsers, the extension's fetch path, headless agents with no client certificate |
+| Auth | mTLS, `CERT_REQUIRED` — the same handshake as the [peer/control tier](#dual-transport) | none — plain HTTPS, CORS-`*` |
+| Identity carried | the caller's `peer_id` derived from its presented cert ([§1](#peer-identity)) — persistent for a node-class client's own identity-derived cert, disposable for an ephemeral read cert | none |
+| Methods reachable | the full [PEER/CONTROL surface](#tier-map) **and** the PUBLIC-READ methods, all over the mTLS channel | the [PUBLIC-READ surface](#tier-map) only |
+| Write authorization | [§21.9 signed-request](./transport-and-push.md#per-request-auth), checked against the caller's identity | none — this front carries no write route |
+
+**A node-class client never uses the public-read front — not even for reads.** It resolves its endpoint through the fixed three-tier ladder — an explicit override wins outright, then `dig.local`, then `localhost`, then `rpc.dig.net` as the final fallback (see [Point a consumer at your node](../run-a-node/point-a-consumer.md) and [the digstore CLI's ladder](../digstore/cli/command-reference.md#which-node-digstore-talks-to)) — and at **every** tier of that ladder, including `rpc.dig.net`, it dials over mTLS with the client certificate derived from its DIG identity key ([§1](#peer-identity)), layering [§21.9](./transport-and-push.md#per-request-auth) over the channel for any guarded call. This is a hard rule, not an optimization: a node-class client downgraded to the anonymous front would lose its stable `peer_id` (never recognized as a returning peer for allowlisting, PEX, or reputation), lose access to the PEER/CONTROL methods a full read path may need (DHT lookups, availability-for-sync, multi-source [`dig.fetchRange`](#range)), and lose the channel-binding described next.
+
+#### Anonymous reads over the mTLS front — the ephemeral client certificate {#ephemeral-read-cert}
+
+An anonymous reader is not required to use the plain-HTTPS public-read front — it MAY instead dial the mTLS gateway front for **channel-bound** request integrity, at the cost of running a TLS client-cert handshake. The mTLS listener requires *a* certificate (`CERT_REQUIRED`), not a *known* one — peer identity is verified by the `peer_id` hash, not a CA ([§1](#peer-identity)) — so an anonymous caller satisfies the handshake with an **ephemeral, self-signed client certificate**:
+
+1. **Generate a throwaway keypair and a self-signed leaf**, scoped to the TLS session (or a short-lived batch of sessions) about to be opened. No registration and no persisted identity — the certificate exists only to complete the handshake.
+2. **Complete the mTLS handshake** with it. The gateway derives a `peer_id` from it exactly as it would for any peer ([§1](#peer-identity)); this `peer_id` is disposable and carries **no reputation, no allowlisting, and no authorization** — it is a transport artifact, not a claimed identity.
+3. **Issue the read** (`dig.getContent` or another [PUBLIC-READ](#tier-map) method) inside that authenticated channel, optionally carrying the same [§21.9-shaped](./transport-and-push.md#per-request-auth) signed-request headers a node-class client would send.
+4. **The TLS session binds the request.** A signed request that travels inside a channel authenticated by that specific ephemeral certificate cannot be replayed over a *different* TLS session while still inside its [300-second freshness window](./transport-and-push.md#per-request-auth) — the channel itself becomes part of what a verifier can require to match. This is strictly additive integrity over the plain-HTTPS front, which binds a request to nothing.
+
+The read itself is governed by the same rules regardless of which front carried it: read-only, no mutation, [client-side self-verification](#dual-transport) against the chain-anchored root, decoy-on-miss ([§7a](#tier-map)). **Reaching the mTLS front never grants an anonymous caller a PEER/CONTROL method** — the [boundary invariant](#the-boundary-invariant) is enforced by what the request names, not by which front carried it; an ephemeral-cert caller naming a peer/write/config method gets the same [`-32601`](./dig-rpc.md#error-model) a plain-HTTPS caller would.
+
+:::caution Design status — gate on the gateway mTLS endpoint
+The `rpc.dig.net` mTLS front described in this section is a **normative design contract**, not yet a live endpoint — today `rpc.dig.net` serves only the plain-HTTPS public-read front, and existing node-class clients still reach it that way for reads. This is a rollout transition, not a standing exception to the rule above: an implementation MUST NOT hard-break (crash, refuse to run, or treat the gateway as unreachable) merely because the mTLS front does not exist yet. It gates on the front's presence — a capability probe or a handshake attempt — and, only while that probe fails, continues reaching `rpc.dig.net` over the plain-HTTPS front for reads, never for peer/write/config methods (which simply are not reachable there, [§7a](#tier-map)). Once the mTLS front is deployed, every node-class client switches to it at the `rpc.dig.net` tier, closing this transition.
+:::
 
 ## 1 · Peer identity + mTLS {#peer-identity}
 
@@ -128,6 +160,7 @@ peer_id = SHA-256( SubjectPublicKeyInfo DER )        // 32 bytes
 - **The listener requires a client certificate** (`CERT_REQUIRED`). A peer that presents no certificate, or whose TLS handshake fails, is dropped — there is no fallback to a weaker transport.
 - **After the TLS handshake, peers exchange a `Handshake`** carrying the `network_id` (the network genesis challenge as lower-case hex), the protocol version, the node's declared listen port, and its node type + capabilities. A `network_id` mismatch, or a protocol version below the minimum-compatible floor, ends the connection. The `Handshake` is the Chia-streamable message (big-endian) — this layer speaks the Chia peer protocol, not a bespoke framing.
 - **Unauthenticated peer traffic is rejected.** A message received before a completed mTLS handshake + `Handshake` exchange is not processed.
+- **The mainnet genesis challenge is not yet public**, so a stock `dig-node` uses an all-zero placeholder for `network_id` and skips peer bring-up entirely (the read path — serving/fetching capsules — is unaffected). A developer or private deployment that wants the peer network up today can set the `DIG_NETWORK_GENESIS` environment variable to a 64-character hex value (32 bytes); any valid non-zero value brings the gossip peer pool up under that id. See [Configure dig-node](../run-a-node/configure.md).
 
 :::note The relay link is authenticated differently
 A node's link *to the relay* is a standard server-authenticated `wss://` connection (the relay presents a TLS certificate; the node does not present one to the relay). Peer↔peer identity is never delegated to the relay — end-to-end payloads carried over the relay remain authenticated by the peer protocol itself, so a relay cannot forge a peer.
@@ -374,16 +407,19 @@ The implementers' contract for the [dual-transport tiers](#dual-transport). The 
 | `dig.getPeers` / `dig.announce` / `dig.getNetworkInfo` | **PEER / CONTROL** | mTLS | dig-nat mTLS |
 | `dig.getAvailability` / `dig.listInventory` | **PEER / CONTROL** | mTLS | dig-nat mTLS |
 | `dig.fetchRange` (peer sync / multi-source) | **PEER / CONTROL** | mTLS | dig-nat mTLS |
+| `dig.getAnchoredRoot` / `dig.getCollection` / `dig.listCollectionItems` (read) | **PEER / CONTROL** | mTLS | dig-nat mTLS |
 | DHT `find_node` / `find_providers` / `add_provider` / `ping` ([§4c](#dht)) | **PEER / CONTROL** | mTLS | dig-nat mTLS stream |
 | PEX `pex_handshake` / `pex_snapshot` / `pex_delta` / `pex_error` ([§4d](#pex)) | **PEER / CONTROL** | mTLS (node↔node) or registered relay identity (RLY-008) | dig-nat mTLS stream / relay WebSocket |
+| onion circuit cells (`dig.onion` stream: `CREATE`/`EXTEND`/`RELAY`/`DESTROY`) ([onion routing](./onion-routing.md)) | **PEER / CONTROL** | mTLS | dig-nat mTLS stream |
 | §21 PUSH / WRITE: `module/upload` · `module` PUT · `module/complete` · `tombstone` | **PEER / CONTROL** | mTLS + per-request BLS ([§21.9](./transport-and-push.md#per-request-auth)) | authenticated HTTPS |
-| node config / control (`cache.*`, `control.*`, `dig.stage`, `dig.getAnchoredRoot`) | **CONTROL (loopback)** | local authorization (loopback-only) | local FFI / loopback HTTP |
+| node config / control (`cache.*`, `control.*`, `dig.stage`) | **CONTROL (loopback)** | local authorization (loopback-only) | local FFI / loopback HTTP |
 
 Notes:
 
 - **`dig.getAvailability` / `dig.fetchRange` are PEER/CONTROL**, not public read: they are the node↔node **sync/multi-source** surface, ridden over the mTLS mux. The browser/agent public read path is the [dig RPC](./dig-rpc.md) (`dig.getContent` et al.) — a browser does not fan byte-ranges across peers; that is a node-side operation ([multi-source download](#multi-source)).
-- **`dig.getAnchoredRoot` and `cache.*` are local control** (loopback / in-process FFI, [node profile](./dig-rpc.md#node-profile)), not exposed on the public read listener. A browser resolves the anchored root from its own chain source, not from the serving node.
+- **The peer JSON-RPC surface is an allowlist.** Because the mTLS client-cert verifier accepts any well-formed self-signed leaf, "authenticated" means only "some `peer_id`", not "authorized". The peer surface therefore answers ONLY the read / discovery / announce methods above (`dig.getContent`, `dig.getAvailability`, `dig.listInventory`, `dig.fetchRange`, `dig.getNetworkInfo`, `dig.getPeers`, `dig.announce`, `dig.getAnchoredRoot`, `dig.getCollection`, `dig.listCollectionItems`) and returns [`-32601`](./dig-rpc.md#error-model) for every `cache.*` / `control.*` / `dig.stage` method — those are loopback / in-process only. `dig.getAnchoredRoot` / `dig.getCollection` / `dig.listCollectionItems` are read-only, owner-independent chain reads and are peer-reachable; `cache.*` / `control.*` / `dig.stage` mutate or read local state and are not.
 - **The read subset is identical in shape to the [network profile](./dig-rpc.md)** — this is why one JSON-RPC endpoint serves both a browser and the local consumer; only the *set of methods the anonymous listener answers* differs.
+- **`rpc.dig.net` answers on two fronts, not two tiers.** The dual-mode gateway ([§0a](#gateway-dual-mode)) exposes the PEER/CONTROL column over its mTLS front (to node-class clients and ephemeral-cert anonymous readers) alongside the PUBLIC-READ column over its plain-HTTPS front — a method's tier assignment in this table never changes; only which transport a given caller uses to reach it differs.
 
 ## 7 · Peer RPC methods (node profile) {#peer-rpc}
 
@@ -478,7 +514,7 @@ This mirrors the [dig RPC streaming contract](./dig-rpc.md#streaming) (window/of
 
 ## 9 · Byte-range content fetch + multi-source download {#range}
 
-A node can request a specific **byte range** `[offset, offset+length)` of a content resource or an entire `.dig` capsule, and receive **only those bytes**, streamed. This is the primitive behind **multi-source download**: a client splits a resource into ranges and fetches **different ranges from different peers simultaneously**, verifies each independently, and reassembles — the same multisource + range + integrity + resume model implemented by the `dig-download-utility` reference.
+A node can request a specific **byte range** `[offset, offset+length)` of a content resource or an entire `.dig` capsule, and receive **only those bytes**, streamed. This is the primitive behind **multi-source download**: a client splits a resource into ranges and fetches **different ranges from different peers simultaneously**, verifies each independently, and reassembles — the multisource + range + integrity + resume model the node-side download engine implements.
 
 ### Availability first — ask before you fetch {#availability}
 
@@ -684,6 +720,7 @@ The peer network is implemented by several crates that must interoperate byte-fo
 | **`peer_id`** | `SHA-256(SubjectPublicKeyInfo DER)` → `Bytes32`, 64-hex on text surfaces | the identity every peer derives for every other peer; a mismatch means no interop |
 | **mTLS handshake** | `wss://` + client cert required + Chia `Handshake` (hex `network_id`, protocol version, node type) | that a peer link is authenticated and network-scoped before any message is processed |
 | **Two RPC tiers** | PEER/CONTROL = mTLS-authenticated (peer/DHT/PEX/availability-for-sync/write/config); PUBLIC-READ = anonymous, CORS-`*`, read-only, client-verified, decoy-on-miss ([§0](#dual-transport), [tier map §7a](#tier-map)). No peer/write/config method reachable without mTLS; content read requires no mTLS | that a browser can retrieve+verify content with no client cert while every mutation/identity/peer surface stays mTLS-gated — the boundary invariant is uniform across every serve layer + client |
+| **Gateway dual-mode** | `rpc.dig.net` serves a plain-HTTPS anonymous public-read front (CORS-`*`, no client cert) and an mTLS front (`CERT_REQUIRED`) for node-class-client identity certs and ephemeral anonymous read certs ([§0a](#gateway-dual-mode)) | that a node-class client is never silently downgraded to the anonymous path even at the public gateway, and an anonymous mTLS reader gets channel-bound request integrity while carrying no identity or reputation |
 | **RelayMessage wire** | the RLY-001..RLY-008 JSON shapes in [§6](#relayed), `type`-tagged, `payload` as a byte array, `from` re-stamped, `network_id`-scoped; RLY-008 = the additive [PEX](#pex) binding | that any relay + any node speak the same rendezvous/hole-punch/relayed/PEX wire |
 | **PEX** | the four `pex_*` messages ([§4d](#pex)) with the `dig-pex/SPEC.md` shapes; two bindings — dig-nat mux stream (u32-BE+JSON, `PEX_MAX_FRAME` 262144) and the relay [RLY-008](#relayed) (additive WS frames, introducer-only, registration-backed `via:"introducer"`); entries are hints (first-hand rule, `via` provenance, strike-mute); `addresses[]` byte-compatible with `dig.getPeers`/DHT `Contact` | that peer gossip is anti-flood + first-hand across both transports, entries are verified-before-trusted, and PEX-learned contacts drop straight into a dial target |
 | **Relay error codes** | `1..4` (`NOT_REGISTERED`/`BAD_MESSAGE`/`PEER_NOT_FOUND`/`CAPACITY`) | deterministic relay-side failure signalling |
@@ -702,6 +739,8 @@ A reimplementation of any peer crate conforms iff it reproduces these — the sa
 
 ## Related
 
+- [Point a consumer at your node](../run-a-node/point-a-consumer.md) — the three-tier client→node resolution ladder (`dig.local` → `localhost` → `rpc.dig.net`) and how a node-class client dials mTLS across all of it, including the `rpc.dig.net` gateway's [mTLS front](#gateway-dual-mode)
+- [Private retrieval (onion routing)](./onion-routing.md) — the PRIVACY retrieval mode: telescoping onion circuits over these mTLS peer links, the `dig.onion` stream, and the onion-relay directory
 - [The dig RPC](./dig-rpc.md) — the PUBLIC READ tier: what a browser/agent reads over anonymous JSON-RPC; the node profile the peer RPC extends
 - [§21 transport & push](./transport-and-push.md) — the §21 GET (public read) vs PUSH/WRITE (mTLS peer/control) split
 - [BLS signatures & DSTs](./bls-signatures.md) — the node/attestation signatures carried over peer links; the per-request write auth on the control tier

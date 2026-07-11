@@ -1,7 +1,7 @@
 ---
 sidebar_position: 6
 title: Troubleshooting — get unstuck
-description: "Каждый сбой даёт вам стабильный код и request-id, напрямую связанный с логом сервера, on-chain траты защищены от гонок, так что вы никогда не заплатите дважды, а понятные предварительные проверки останавливают напрасные capsule до того, как вы потратите $DIG."
+description: "Every failure gives you a stable code and a request-id that ties straight to the server log, on-chain spends are race-guarded so you never double-pay, and clear pre-flight guards stop wasted capsules before you spend $DIG."
 keywords:
   - DIG troubleshooting
   - error codes
@@ -16,66 +16,72 @@ tags:
   - capsule
 ---
 
-# Troubleshooting {#troubleshooting}
+# Troubleshooting
 
-> Каждый сбой даёт вам **стабильный код** и **request-id**, напрямую связанный с логом сервера, on-chain траты **защищены от гонок**, так что вы никогда не заплатите дважды, а понятные **предварительные проверки** останавливают напрасные capsule до того, как вы потратите $DIG.
+> Every failure gives you a **stable code** and a **request-id** that ties straight to the server log, on-chain spends are **race-guarded** so you never double-pay, and clear **pre-flight guards** stop wasted capsules before you spend $DIG.
 
-## Ментальная модель — находите свой сбой по его коду {#the-mental-model--find-your-failure-by-its-code}
+## The mental model — find your failure by its code
 
-Каждая поверхность — dig RPC, CLI digstore, DIGHUb, загрузчик `chia://`, SDK — сопоставляет сбой с одним **СТАБИЛЬНЫМ кодом**. **Ветвитесь по коду, никогда по тексту сообщения.** Единый сводный каталог охватывает их все и также публикуется в машиночитаемом виде.
+Every surface — the dig RPC, the digstore CLI, DIGHUb, the `chia://` loader, the SDK — maps a failure to one **STABLE code**. **Branch on the code, never the message.** One consolidated catalog covers all of them and is also published machine-readable.
 
-Предварительные проверки (`digstore doctor`, `--dry-run`, `--if-changed`) и возобновляемые закрепления означают, что застрявшая или холостая публикация **никогда не тратит средства втихую**.
+Pre-flight guards (`digstore doctor`, `--dry-run`, `--if-changed`) and resumable anchors mean a stuck or no-op publish **never silently spends**.
 
-## Частые сбои публикации {#common-publishing-failures}
+## Common publishing failures
 
-Недостаток средств, таймаут подтверждения (возобновляемый — ваша трата не потеряна) и non-fast-forward «удалённый корень продвинулся вперёд».
+Insufficient funds, a confirm timeout (resumable — your spend isn't lost), and the non-fast-forward "remote root has advanced".
 
-→ [Устранение неполадок](../support/troubleshooting.md)
+→ [Troubleshooting](../support/troubleshooting.md)
 
-## Сбои чтения и верификации {#read--verify-failures}
+## Read & verify failures
 
-Несовпадение доказательства, ошибки расшифровки/соли и ответы «не найдено» / decoy.
+Proof mismatch, decrypt/salt errors, and not-found / decoy responses.
 
-→ [Сбои чтения и верификации](../support/troubleshooting.md#verification-failed)
+→ [Read & verify failures](../support/troubleshooting.md#verification-failed)
 
-## Проблемы с кошельком и сессией {#wallet--session-issues}
+## Wallet & session issues
 
-Подключение, повторная аутентификация, отклонённый запрос и сессии только для чтения, которые не могут подписывать.
+Connect, re-auth, a declined request, and watch-only sessions that can't sign.
 
-→ [Сессия кошелька не может подписывать](../support/troubleshooting.md#wallet-session)
+→ [Wallet session can't sign](../support/troubleshooting.md#wallet-session)
 
-## Предварительные проверки и проверки стоимости — не тратьте capsule впустую {#pre-flight--cost-checks--dont-waste-a-capsule}
+## Node & extension issues
 
-`digstore doctor` (окружение + готовность), `--dry-run` (предпросмотр стоимости и предполагаемой capsule) и `--if-changed` (байт-идентичная сборка становится no-op).
+The browser extension shows your node as offline even though it's running and healthy.
 
-→ [Деплой из GitHub Actions](../digstore/cli/deploy-from-github-actions.md) · [On-chain закрепление → стоимость и безопасность](../digstore/cli/onchain-anchoring.md#cost-and-safety)
+→ [The extension shows my node as offline](../support/troubleshooting.md#extension-offline)
 
-## Справочник кодов ошибок {#error-codes-reference}
+## Pre-flight & cost checks — don't waste a capsule
 
-Коды выхода CLI · RPC `-32xxx` · DIGHUb · dig-loader · SDK — одна сводная таблица.
+`digstore doctor` (environment + readiness), `--dry-run` (preview the cost and the would-be capsule), and `--if-changed` (a byte-identical build is a no-op).
 
-→ [Коды ошибок](../support/error-codes.md)
+→ [Deploy from GitHub Actions](../digstore/cli/deploy-from-github-actions.md) · [On-chain anchoring → cost & safety](../digstore/cli/onchain-anchoring.md#cost-and-safety)
 
-## FAQ {#faq}
+## Error codes reference
 
-Стоимость, бесплатный пробный период, почему цена единая, где взять $DIG и «есть ли тестовая сеть?».
+CLI exit codes · RPC `-32xxx` · DIGHUb · dig-loader · SDK — one consolidated table.
+
+→ [Error codes](../support/error-codes.md)
+
+## FAQ
+
+Cost, the free trial, why the price is uniform, where to get $DIG, and "is there a testnet?".
 
 → [FAQ](../support/faq.md)
 
-## Получить помощь {#get-help}
+## Get help
 
-Discord + GitHub, и как составить хороший отчёт об ошибке — **никогда не вставляйте секреты**.
+Discord + GitHub, and how to file a good report — **never paste secrets**.
 
-→ [Получить помощь](../support/get-help.md)
+→ [Get help](../support/get-help.md)
 
-## Статус и список изменений {#status--changelog}
+## Status & changelog
 
-→ [Статус](../support/status.md) · [Список изменений](../support/changelog.md)
+→ [Status](../support/status.md) · [Changelog](../support/changelog.md)
 
 ---
 
-## Углубитесь: протокол {#go-deeper-the-protocol}
+## Go deeper: the protocol
 
-- **сбои чтения и верификации** → [Доказательства и безопасность](../digstore/format/proofs-and-security.md) · [URN и шифрование](../digstore/format/urns-and-encryption.md)
-- **коды RPC `-32xxx`** → [методы dig RPC](../rpc/methods.md) · [Соответствие](../rpc/conformance.md)
-- **Всё сразу** → [Глубокое погружение в протокол](../protocol-deep-dive.md) · [Концепции и глоссарий](../concepts.md)
+- **read & verify failures** → [Proofs & security](../digstore/format/proofs-and-security.md) · [URNs & encryption](../digstore/format/urns-and-encryption.md)
+- **RPC `-32xxx` codes** → [the dig RPC methods](../rpc/methods.md) · [Conformance](../rpc/conformance.md)
+- **Everything** → [Protocol deep-dive](../protocol-deep-dive.md) · [Concepts & glossary](../concepts.md)

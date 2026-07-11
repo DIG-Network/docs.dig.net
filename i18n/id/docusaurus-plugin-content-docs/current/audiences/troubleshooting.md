@@ -1,7 +1,7 @@
 ---
 sidebar_position: 6
 title: Troubleshooting — get unstuck
-description: "Setiap kegagalan memberi Anda sebuah kode stabil dan sebuah request-id yang langsung terhubung ke log server, spend on-chain dijaga terhadap race-condition sehingga Anda tak pernah membayar dua kali, dan pemeriksaan pre-flight yang jelas mencegah capsule sia-sia sebelum Anda mengeluarkan $DIG."
+description: "Every failure gives you a stable code and a request-id that ties straight to the server log, on-chain spends are race-guarded so you never double-pay, and clear pre-flight guards stop wasted capsules before you spend $DIG."
 keywords:
   - DIG troubleshooting
   - error codes
@@ -16,66 +16,72 @@ tags:
   - capsule
 ---
 
-# Troubleshooting {#troubleshooting}
+# Troubleshooting
 
-> Setiap kegagalan memberi Anda sebuah **kode stabil** dan sebuah **request-id** yang langsung terhubung ke log server, spend on-chain **dijaga terhadap race-condition** sehingga Anda tak pernah membayar dua kali, dan pemeriksaan **pre-flight** yang jelas mencegah capsule sia-sia sebelum Anda mengeluarkan $DIG.
+> Every failure gives you a **stable code** and a **request-id** that ties straight to the server log, on-chain spends are **race-guarded** so you never double-pay, and clear **pre-flight guards** stop wasted capsules before you spend $DIG.
 
-## Model mental — temukan kegagalan Anda lewat kodenya {#the-mental-model--find-your-failure-by-its-code}
+## The mental model — find your failure by its code
 
-Setiap permukaan — dig RPC, CLI digstore, DIGHUb, loader `chia://`, SDK — memetakan sebuah kegagalan ke satu **kode STABIL**. **Bercabang pada kodenya, jangan pernah pada pesannya.** Satu katalog konsolidasi mencakup semuanya dan juga diterbitkan dalam bentuk machine-readable.
+Every surface — the dig RPC, the digstore CLI, DIGHUb, the `chia://` loader, the SDK — maps a failure to one **STABLE code**. **Branch on the code, never the message.** One consolidated catalog covers all of them and is also published machine-readable.
 
-Pemeriksaan pre-flight (`digstore doctor`, `--dry-run`, `--if-changed`) dan anchor yang dapat dilanjutkan (resumable) berarti sebuah publish yang macet atau no-op **tidak pernah diam-diam mengeluarkan biaya**.
+Pre-flight guards (`digstore doctor`, `--dry-run`, `--if-changed`) and resumable anchors mean a stuck or no-op publish **never silently spends**.
 
-## Kegagalan publish yang umum {#common-publishing-failures}
+## Common publishing failures
 
-Dana tidak cukup, timeout konfirmasi (dapat dilanjutkan — spend Anda tidak hilang), dan "root remote telah maju" yang non-fast-forward.
+Insufficient funds, a confirm timeout (resumable — your spend isn't lost), and the non-fast-forward "remote root has advanced".
 
 → [Troubleshooting](../support/troubleshooting.md)
 
-## Kegagalan baca & verifikasi {#read--verify-failures}
+## Read & verify failures
 
-Ketidakcocokan proof, error dekripsi/salt, dan respons not-found / decoy.
+Proof mismatch, decrypt/salt errors, and not-found / decoy responses.
 
-→ [Kegagalan baca & verifikasi](../support/troubleshooting.md#verification-failed)
+→ [Read & verify failures](../support/troubleshooting.md#verification-failed)
 
-## Masalah wallet & sesi {#wallet--session-issues}
+## Wallet & session issues
 
-Koneksi, re-autentikasi, permintaan yang ditolak, dan sesi watch-only yang tidak bisa menandatangani.
+Connect, re-auth, a declined request, and watch-only sessions that can't sign.
 
-→ [Sesi wallet tidak bisa menandatangani](../support/troubleshooting.md#wallet-session)
+→ [Wallet session can't sign](../support/troubleshooting.md#wallet-session)
 
-## Pemeriksaan pre-flight & biaya — jangan sia-siakan sebuah capsule {#pre-flight--cost-checks--dont-waste-a-capsule}
+## Node & extension issues
 
-`digstore doctor` (lingkungan + kesiapan), `--dry-run` (preview biaya dan capsule yang akan dihasilkan), dan `--if-changed` (build yang identik secara byte adalah no-op).
+The browser extension shows your node as offline even though it's running and healthy.
 
-→ [Deploy dari GitHub Actions](../digstore/cli/deploy-from-github-actions.md) · [Anchoring on-chain → biaya & keamanan](../digstore/cli/onchain-anchoring.md#cost-and-safety)
+→ [The extension shows my node as offline](../support/troubleshooting.md#extension-offline)
 
-## Referensi kode error {#error-codes-reference}
+## Pre-flight & cost checks — don't waste a capsule
 
-Kode exit CLI · RPC `-32xxx` · DIGHUb · dig-loader · SDK — satu tabel konsolidasi.
+`digstore doctor` (environment + readiness), `--dry-run` (preview the cost and the would-be capsule), and `--if-changed` (a byte-identical build is a no-op).
 
-→ [Kode error](../support/error-codes.md)
+→ [Deploy from GitHub Actions](../digstore/cli/deploy-from-github-actions.md) · [On-chain anchoring → cost & safety](../digstore/cli/onchain-anchoring.md#cost-and-safety)
 
-## FAQ {#faq}
+## Error codes reference
 
-Biaya, uji coba gratis, alasan harga bersifat seragam, cara mendapatkan $DIG, dan "apakah ada testnet?".
+CLI exit codes · RPC `-32xxx` · DIGHUb · dig-loader · SDK — one consolidated table.
+
+→ [Error codes](../support/error-codes.md)
+
+## FAQ
+
+Cost, the free trial, why the price is uniform, where to get $DIG, and "is there a testnet?".
 
 → [FAQ](../support/faq.md)
 
-## Dapatkan bantuan {#get-help}
+## Get help
 
-Discord + GitHub, dan cara melaporkan masalah dengan baik — **jangan pernah menempel rahasia**.
+Discord + GitHub, and how to file a good report — **never paste secrets**.
 
-→ [Dapatkan bantuan](../support/get-help.md)
+→ [Get help](../support/get-help.md)
 
-## Status & changelog {#status--changelog}
+## Status & changelog
 
 → [Status](../support/status.md) · [Changelog](../support/changelog.md)
 
 ---
 
-## Mendalami lebih jauh: protokolnya {#go-deeper-the-protocol}
+## Go deeper: the protocol
 
-- **kegagalan baca & verifikasi** → [Proof & keamanan](../digstore/format/proofs-and-security.md) · [URN & enkripsi](../digstore/format/urns-and-encryption.md)
-- **kode RPC `-32xxx`** → [metode dig RPC](../rpc/methods.md) · [Konformansi](../rpc/conformance.md)
-- **Semuanya** → [Pembahasan mendalam protokol](../protocol-deep-dive.md) · [Konsep & glosarium](../concepts.md)
+- **read & verify failures** → [Proofs & security](../digstore/format/proofs-and-security.md) · [URNs & encryption](../digstore/format/urns-and-encryption.md)
+- **RPC `-32xxx` codes** → [the dig RPC methods](../rpc/methods.md) · [Conformance](../rpc/conformance.md)
+- **Everything** → [Protocol deep-dive](../protocol-deep-dive.md) · [Concepts & glossary](../concepts.md)
