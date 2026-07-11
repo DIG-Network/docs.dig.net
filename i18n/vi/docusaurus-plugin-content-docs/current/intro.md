@@ -27,6 +27,10 @@ tags:
 
 Tài liệu này bao quát mạng lưới và các **thành phần cơ bản** của nó: những khối xây dựng có thể kết hợp mà nhà phát triển dùng để xây dựng trên DIG. Mạng lưới vẫn đang mở rộng, và sẽ có thêm nhiều thành phần cơ bản được tài liệu hóa ở đây theo thời gian.
 
+:::info $DIG vận hành mạng lưới
+**$DIG là động cơ và nền kinh tế của DIG Network.** Mọi trao đổi giá trị — xuất bản một capsule, sở hữu một store, tặng tip cho người sáng tạo — đều luân chuyển qua $DIG. Việc tiêu thụ nội dung luôn dễ dàng và miễn phí: bạn không bao giờ phải trả tiền để đọc, chỉ trả tiền để xuất bản và sở hữu.
+:::
+
 ## Capsule {#the-capsule}
 
 Một khái niệm xuyên suốt mọi thành phần cơ bản. Một **capsule** là một thế hệ (generation) store bất biến duy nhất — cặp `(storeId, rootHash)`, được viết theo dạng chuẩn là `storeId:rootHash`. Một **store là một chuỗi các capsule**, mỗi capsule ứng với một lần commit (mỗi commit tiến root on-chain thêm một bước và tạo ra một capsule mới).

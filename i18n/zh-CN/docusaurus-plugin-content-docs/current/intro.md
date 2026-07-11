@@ -27,6 +27,10 @@ tags:
 
 本文档涵盖该网络及其**基础原语（primitives）**：开发者用来在 DIG 之上构建应用的可组合基础构件。网络仍在不断扩展，未来会持续补充更多基础原语的文档。
 
+:::info $DIG 驱动整个网络
+**$DIG 是 DIG Network 的引擎与经济体系。** 发布 capsule、拥有 store、给创作者打赏——每一次价值交换都通过 $DIG 流转。消费内容始终轻松、免费：阅读永远不需要付费，付费只发生在发布与拥有环节。
+:::
+
 ## capsule {#the-capsule}
 
 有一个概念贯穿每一个基础原语。**capsule** 是一次不可变的 store 生成版本 —— 即 `(storeId, rootHash)` 这一对值，规范写法为 `storeId:rootHash`。**store 是一系列 capsule 的集合**，每次提交（commit）对应一个 capsule（每次提交都会推进链上根哈希并产生一个新的 capsule）。

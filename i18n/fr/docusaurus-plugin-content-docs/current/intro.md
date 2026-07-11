@@ -27,6 +27,10 @@ tags:
 
 Cette documentation couvre le réseau et ses **primitives** : les briques composables que les développeurs utilisent pour construire sur DIG. Le réseau est encore en expansion, et d'autres primitives seront documentées ici au fil du temps.
 
+:::info $DIG propulse le réseau
+**$DIG est le moteur et l'économie de DIG Network.** Chaque échange de valeur — publier une capsule, posséder un store, laisser un pourboire à un créateur — circule via $DIG. Consommer du contenu reste simple et gratuit : vous ne payez jamais pour lire, seulement pour publier et posséder.
+:::
+
 ## La capsule {#the-capsule}
 
 Un concept traverse chaque primitive. Une **capsule** est une génération de store immuable unique — la paire `(storeId, rootHash)`, notée canoniquement `storeId:rootHash`. Un **store est une séquence de capsules**, une par commit (chaque commit fait avancer la racine on-chain et produit une nouvelle capsule).
