@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.3.20] - 2026-07-11
+
+### Documentation
+- Local-node SPA serving, local-first caching, omnibox + DIG toolbar (#32)
+
 ## [0.3.19] - 2026-07-11
 
 ### Documentation
