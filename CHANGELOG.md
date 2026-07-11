@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.3.18] - 2026-07-11
+
+### Documentation
+- **run-a-node:** Dig-node control panel user guide (cache/LRU, pairing, live status) (#30)
+
 ## [0.3.17] - 2026-07-10
 
 ### Documentation
