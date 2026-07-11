@@ -27,6 +27,10 @@ tags:
 
 Diese Dokumentation behandelt das Netzwerk und seine **Primitive**: die zusammensetzbaren Bausteine, mit denen Entwickler auf DIG aufbauen. Das Netzwerk wächst weiter, und im Laufe der Zeit werden hier weitere Primitive dokumentiert.
 
+:::info $DIG treibt das Netzwerk an
+**$DIG ist der Motor und die Ökonomie von DIG Network.** Jeder Werttausch — das Veröffentlichen eines capsule, der Besitz eines store, das Trinkgeld an einen Creator — fließt durch $DIG. Inhalte zu konsumieren bleibt mühelos und kostenlos: Du zahlst nie fürs Lesen, sondern nur fürs Veröffentlichen und Besitzen.
+:::
+
 ## Die capsule {#the-capsule}
 
 Ein Konzept zieht sich durch jedes Primitiv. Eine **capsule** ist eine einzelne unveränderliche store-Generation — das Paar `(storeId, rootHash)`, kanonisch geschrieben als `storeId:rootHash`. Ein **store ist eine Sequenz von capsules**, eine pro Commit (jeder Commit bringt den on-chain-Root voran und erzeugt eine neue capsule).

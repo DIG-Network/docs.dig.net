@@ -27,6 +27,10 @@ tags:
 
 Dokumen ini membahas jaringan dan **primitif-primitifnya**: blok bangunan komposabel yang digunakan developer untuk membangun di atas DIG. Jaringan ini masih terus berkembang, dan lebih banyak primitif akan didokumentasikan di sini seiring waktu.
 
+:::info $DIG menggerakkan jaringan
+**$DIG adalah mesin dan ekonomi DIG Network.** Setiap pertukaran nilai — menerbitkan capsule, memiliki store, memberi tip ke kreator — mengalir melalui $DIG. Mengonsumsi konten tetap mudah dan gratis: Anda tidak pernah membayar untuk membaca, hanya untuk menerbitkan dan memiliki.
+:::
+
 ## capsule {#the-capsule}
 
 Satu konsep mengalir melalui setiap primitif. **capsule** adalah satu generasi store yang immutable — pasangan `(storeId, rootHash)`, ditulis secara kanonis sebagai `storeId:rootHash`. **store adalah rangkaian capsule**, satu per commit (setiap commit memajukan root on-chain dan menghasilkan capsule baru).

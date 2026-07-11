@@ -27,6 +27,10 @@ tags:
 
 本文件涵蓋這個網路及其**核心元件（primitives）**：開發者用來在 DIG 之上構建應用的可組合基礎模組。網路仍在持續擴展，未來會有更多核心元件納入本文件。
 
+:::info $DIG 驅動整個網路
+**$DIG 是 DIG Network 的引擎與經濟體系。** 發布 capsule、擁有 store、向創作者打賞——每一次價值交換都透過 $DIG 流動。消費內容始終輕鬆、免費：閱讀永遠不需要付費，付費只發生在發布與擁有環節。
+:::
+
 ## capsule {#the-capsule}
 
 有一個概念貫穿每個核心元件。**capsule** 是單一不可變的 store 世代（generation）——即一對 `(storeId, rootHash)`，以 `storeId:rootHash` 的形式規範表示。**store 是一連串 capsule 的序列**，每次提交（commit）產生一個（每次提交都會推進鏈上的 root 並產生新的 capsule）。

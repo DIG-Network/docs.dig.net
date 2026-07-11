@@ -27,6 +27,10 @@ tags:
 
 Bu dokümantasyon, ağı ve **temel bileşenlerini** (primitives) kapsar: geliştiricilerin DIG üzerine inşa etmek için kullandığı birleştirilebilir yapı taşları. Ağ hâlâ genişlemekte olup zamanla buraya daha fazla temel bileşen belgelenecektir.
 
+:::info $DIG ağı çalıştırır
+**$DIG, DIG Network'ün motoru ve ekonomisidir.** Bir capsule yayınlamak, bir store'a sahip olmak, bir içerik üreticisine bahşiş vermek gibi her değer alışverişi $DIG üzerinden akar. İçerik tüketmek her zaman zahmetsiz ve ücretsiz kalır: okumak için asla ödeme yapmazsınız, yalnızca yayınlamak ve sahip olmak için ödersiniz.
+:::
+
 ## capsule {#the-capsule}
 
 Her temel bileşende geçen tek bir kavram var. Bir **capsule**, tek bir değişmez store nesli (generation) — `(storeId, rootHash)` çifti — olup kanonik olarak `storeId:rootHash` şeklinde yazılır. Bir **store, bir capsule dizisidir** — her commit için bir tane (her commit, zincir üzerindeki kökü ilerletir ve yeni bir capsule üretir).

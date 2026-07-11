@@ -27,6 +27,10 @@ tags:
 
 Esta documentación cubre la red y sus **primitivos**: los bloques de construcción componibles que los desarrolladores usan para crear sobre DIG. La red sigue en expansión, y con el tiempo se documentarán aquí más primitivos.
 
+:::info $DIG impulsa la red
+**$DIG es el motor y la economía de DIG Network.** Cada intercambio de valor — publicar un capsule, ser propietario de un store, dar propina a un creador — fluye a través de $DIG. Consumir contenido sigue siendo sencillo y gratuito: nunca pagas por leer, solo por publicar y poseer.
+:::
+
 ## El capsule {#the-capsule}
 
 Un concepto atraviesa todos los primitivos. Un **capsule** es una generación de store inmutable única — el par `(storeId, rootHash)`, escrito canónicamente como `storeId:rootHash`. Un **store es una secuencia de capsules**, uno por cada commit (cada commit avanza la raíz en la cadena y produce un nuevo capsule).
