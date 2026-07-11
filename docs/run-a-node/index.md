@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: Run a DIG node
-description: "What a dig-node is, why you'd run one, and how to install it — the apt repository for Ubuntu/Debian or the cross-platform universal installer."
+description: "What a dig-node is, why you'd run one, and how to install it — the apt repository for Ubuntu/Debian or the cross-platform DIG Installer."
 keywords:
   - dig-node
   - run a node
@@ -9,6 +9,7 @@ keywords:
   - seedbox
   - dig RPC
   - install dig-node
+  - DIG Installer
 tags:
   - dig-node
   - dig-rpc
@@ -35,9 +36,9 @@ When both are installed, the browser/extension read from your local dig-node; ot
 | Your machine | Use |
 |---|---|
 | **Ubuntu / Debian** | The native **[apt repository](./apt.md)** — `apt install dig-node digstore`, auto-enabled as a systemd service. |
-| **Windows / macOS / Linux (any)** | The cross-platform **[universal installer](#universal-installer-any-os)** — one `curl \| sh` (or download) for every OS. |
+| **Windows / macOS / Linux (any)** | The cross-platform **[DIG Installer](#universal-installer-any-os)** — one `curl \| sh` (or download) installs the full stack for every OS. |
 
-Both install the same `dig-node` service plus the `digstore` CLI. apt is the Debian-native path (signed, `apt upgrade`-able); the universal installer covers everything else.
+Both install `dig-node` plus the `digstore` CLI; the DIG Installer additionally installs `dig-dns` by default. apt is the Debian-native path (signed, `apt upgrade`-able); the DIG Installer covers everything else.
 
 ### apt (Ubuntu / Debian) — recommended on Debian-family systems
 
@@ -45,12 +46,17 @@ The native path: a signed apt repository at `apt.dig.net`. It installs `dig-node
 
 → **[Install on Ubuntu/Debian via apt](./apt.md)**
 
-### Universal installer (any OS) {#universal-installer-any-os}
+### DIG Installer (any OS) {#universal-installer-any-os}
 
-The cross-platform path — Windows, macOS, and any Linux. It detects your OS, installs the `dig-node` service (Windows service / `systemd` / `launchd`) and the `digstore` CLI, and needs no package manager:
+The cross-platform path — Windows, macOS, and any Linux. The **DIG Installer** detects your OS and installs the full DIG stack in one run — the `digstore` CLI, plus the `dig-node` and `dig-dns` boot-start services — with no package manager needed:
 
 ```sh
 curl -fsSL https://dig.net/install.sh | sh
+```
+
+```powershell
+# Windows (PowerShell)
+irm https://dig.net/install.ps1 | iex
 ```
 
 This is the same self-contained `dig-installer` shipped on the [Releases page](https://github.com/DIG-Network/dig-installer/releases) — download and run it directly if you prefer not to pipe to a shell, or on Windows. Doing so also opens a guided [GUI wizard](./universal-installer.md#gui-installer), if you'd rather click through than use flags.

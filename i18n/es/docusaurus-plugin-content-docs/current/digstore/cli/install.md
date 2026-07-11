@@ -1,10 +1,11 @@
 ---
 sidebar_position: 1
 title: Installing the CLI
-description: "Install the DigStore CLI: the self-contained installer for Windows, macOS, and Linux, the raw per-CPU binary (with the macOS Gatekeeper fix), building from source, and the built-in self-updater."
+description: "Install the digstore CLI: the raw per-OS/arch binary from the digstore Releases page (with the macOS Gatekeeper fix), the guided DIG Installer for a full desktop setup, building from source, and the built-in self-updater."
 keywords:
   - digstore install
-  - DigStore CLI installer
+  - digstore CLI installer
+  - DIG Installer
   - macOS Gatekeeper
   - raw binary
   - digstore update
@@ -16,32 +17,11 @@ tags:
 
 # Installing the CLI
 
-DigStore ships **one self-contained installer per operating system**. The download *is* the installer — run it and it installs the `digstore` CLI; there's no second step.
+## Raw binary (Windows / macOS / Linux)
 
-## Windows / macOS / Linux (installer)
+Download the binary for your OS/CPU from the [Releases](https://github.com/DIG-Network/digstore/releases) page:
 
-Download the artifact for your OS from the [Releases](https://github.com/DIG-Network/digstore/releases) page:
-
-| OS | Download | Run |
-|---|---|---|
-| **Windows** | `DigStore-Setup-<version>-windows-x64.exe` | Double-click. Installs **per-user — no admin prompt** — and adds `digstore` to your `PATH`. |
-| **macOS** | `DigStore-Setup-<version>-macos.dmg` | Open the `.dmg`, run the installer. |
-| **Linux** | `DigStore-Setup-<version>-linux-x86_64.AppImage` | `chmod +x` it and run it. |
-
-Then open a **new** terminal and confirm:
-
-```sh
-digstore --version
-```
-
-:::note Single-file installer
-Each installer embeds the `digstore` binary directly, so the download is one self-contained file. On Windows it also registers the DigStore icon for `.dig` files.
-:::
-
-## Raw binary (macOS / Linux)
-
-Prefer the installer above. If you grab the raw per-OS binary from the [Releases](https://github.com/DIG-Network/digstore/releases) page instead, pick the file for your CPU:
-
+- **`digstore-<ver>-windows-x64.exe`** — Windows
 - **`digstore-<ver>-macos-arm64`** — Apple Silicon Mac (M1/M2/M3)
 - **`digstore-<ver>-macos-x64`** — Intel Mac
 - **`digstore-<ver>-linux-x64`** — Linux (x86-64), or the **`digstore-<ver>-aarch64-unknown-linux-gnu.tar.gz`** tarball for ARM Linux
@@ -57,7 +37,17 @@ mv digstore-<ver>-macos-arm64 /opt/homebrew/bin/digstore    # Apple Silicon (no 
 digstore --version
 ```
 
-If you hit **`permission denied`**, it's the exec bit or the quarantine above — not privileges. `sudo` is the wrong fix.
+On Windows, place `digstore-<ver>-windows-x64.exe` in a folder on your `PATH` (renaming it `digstore.exe` is optional but convenient), then open a **new** terminal and confirm:
+
+```sh
+digstore --version
+```
+
+If you hit **`permission denied`** on macOS/Linux, it's the exec bit or the quarantine above — not privileges. `sudo` is the wrong fix.
+
+## Guided setup (DIG Installer)
+
+Prefer a desktop wizard, or want `digstore` alongside a local node in one run? The **[DIG Installer](../../run-a-node/universal-installer.md)** puts `digstore` on your `PATH` with no manual steps, installs `dig-node` and `dig-dns` as boot-start services by default, and — on Windows — registers the DIG brand icon for `.dig` files. Its desktop wizard (`DIG-Installer-Setup-<version>-{windows-x64.exe, macos.dmg, linux-x86_64.AppImage}`) walks Welcome → License → Components → Install → Done.
 
 ## Build from source (any platform)
 
@@ -73,12 +63,14 @@ The binary lands at `target/release/digstore` (`digstore.exe` on Windows). Copy 
 
 ## Keeping up to date
 
-`digstore update` is a built-in self-updater. On macOS and Linux it **downloads and installs the latest release in place** — it detects your OS and CPU, downloads the matching binary, verifies it, makes it executable, clears the macOS quarantine, and atomically replaces the running `digstore`. On Windows it runs the bundled installer. If the install location isn't writable it stops and prints the exact manual steps.
+`digstore update` is a built-in self-updater. On macOS and Linux it **downloads and installs the latest release in place** — it detects your OS and CPU, downloads the matching binary, verifies it, makes it executable, clears the macOS quarantine, and atomically replaces the running `digstore`. If the install location isn't writable it stops and prints the exact manual steps.
 
 ```sh
 digstore update          # download + install the latest release, in place
 digstore update --check  # just report whether a newer release exists
 ```
+
+On Windows, download the latest `digstore-<ver>-windows-x64.exe` from the [Releases](https://github.com/DIG-Network/digstore/releases) page (or re-run the [DIG Installer](../../run-a-node/universal-installer.md)) and use it to replace the binary on your `PATH`.
 
 ## Related
 

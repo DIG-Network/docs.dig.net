@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
-title: Bắt đầu nhanh
-description: "Xuất bản trang web đầu tiên của bạn trên DIG — miễn phí để xây dựng và xem trước, bạn chỉ trả mức giá capsule đồng nhất khi xuất bản. Lộ trình ưu tiên web (không cần ví để bắt đầu) cùng một lộ trình CLI song song."
+title: Quickstart
+description: "Ship your first site on DIG — free to build and preview, you only pay the uniform capsule price when you publish. Web-first path (no wallet to start) plus a parallel CLI track."
 keywords:
   - DIG quickstart
   - deploy on Chia
@@ -17,105 +17,105 @@ tags:
   - anchoring
 ---
 
-# Bắt đầu nhanh {#quickstart}
+# Quickstart
 
-Xuất bản một trang web lên mạng lưới mà không host nào có thể đọc, thay đổi, hay gỡ xuống — trong khoảng mười phút.
+Ship a site to a network no host can read, change, or take down — in about ten minutes.
 
-**Bạn xây dựng và xem trước miễn phí.** Việc dựng khung (scaffolding) và xem trước không tốn gì cả; bạn chỉ trả **mức giá capsule đồng nhất bằng $DIG** vào đúng thời điểm bạn xuất bản một [capsule](./concepts.md#capsule) trên chuỗi. *Lặp lại miễn phí, xuất bản khi đã sẵn sàng.*
+**You build and preview for free.** Scaffolding and previewing cost nothing; you pay the **uniform capsule price in $DIG** only at the moment you publish a [capsule](./concepts.md#capsule) on-chain. *Iterate for free, publish when it's ready.*
 
-Có hai cách để làm điều này. Hầu hết mọi người bắt đầu trên web.
+Two ways to do it. Most people start on the web.
 
-- **[A. Xuất bản từ web](#a-publish-from-the-web)** — trong [DIGHUb](./concepts.md#dighub), kết nối ví ở bước cuối. Phù hợp nhất cho trang web và frontend. ~10 phút.
-- **[B. Xuất bản từ CLI](#b-publish-from-the-cli)** — `digstore` trên máy của bạn, có thể viết script và sẵn sàng cho CI. Phù hợp nhất cho lập trình viên và tự động hóa.
+- **[A. Publish from the web](#a-publish-from-the-web)** — in [DIGHUb](./concepts.md#dighub), connect a wallet at the end. Best for sites and frontends. ~10 min.
+- **[B. Publish from the CLI](#b-publish-from-the-cli)** — `digstore` on your machine, scriptable and CI-ready. Best for devs and automation.
 
 ---
 
-## A. Xuất bản từ web {#a-publish-from-the-web}
+## A. Publish from the web
 
-Lộ trình nhanh nhất: xây dựng và xem trước trong trình duyệt, chỉ nạp tiền vào ví ở bước cuối cùng.
+The fastest path: build and preview in the browser, fund a wallet only at the final step.
 
-### 1. Mở DIGHUb và bắt đầu một bản nháp — miễn phí, không cần ví {#1-open-dighub-and-start-a-draft--free-no-wallet}
+### 1. Open DIGHUb and start a draft — free, no wallet
 
-[**Bắt đầu một store mới trong DIGHUb ↗**](https://hub.dig.net/new). Thả trang web đã build của bạn vào (một thư mục các file tĩnh — `dist/` hoặc `build/` của bạn). DIGHUb cho bạn một **bản xem trước nháp miễn phí** thể hiện chính xác cách nó sẽ được phục vụ, không có gì on-chain và không tốn $DIG nào.
+[**Start a new store in DIGHUb ↗**](https://hub.dig.net/new). Drop in your built site (a folder of static files — your `dist/` or `build/`). DIGHUb gives you a **free draft preview** of exactly how it will serve, with nothing on-chain and no $DIG spent.
 
-Bạn chưa cần ví. Lặp lại bản nháp bao nhiêu lần tùy thích — tải lại, xem trước lại — hoàn toàn miễn phí.
+You don't need a wallet yet. Iterate on the draft as many times as you like — re-upload, re-preview — entirely for free.
 
-### 2. Xem trước trên đường đọc thực tế — vẫn miễn phí {#2-preview-it-on-the-real-read-path--still-free}
+### 2. Preview it on the real read path — still free
 
-Bản xem trước render trang web của bạn qua đúng pipeline DIG thực thụ (mã hóa → biên dịch → xác minh → giải mã), vì vậy những gì bạn thấy chính là những gì khách truy cập nhận được. Nhấp qua lại, kiểm tra tài nguyên và định tuyến. Không có gì được xuất bản và không có gì bị tốn cho đến khi bạn chọn làm vậy.
+The preview renders your site through the genuine DIG pipeline (encrypt → compile → verify → decrypt), so what you see is what visitors get. Click around, check assets and routing. Nothing is published and nothing is spent until you choose to.
 
-### 3. Xuất bản — nạp tiền và kết nối ví {#3-publish--fund-and-connect-a-wallet}
+### 3. Publish — fund and connect a wallet
 
-Khi bản nháp đã ổn, nhấn **Publish**. Đây là bước duy nhất tốn phí:
+When the draft looks right, hit **Publish**. This is the only step that costs anything:
 
-- Kết nối một ví Chia (ví của bạn *chính là* tài khoản của bạn — không cần email, không cần mật khẩu).
-- Chấp thuận giao dịch chi tiêu on-chain: **mức giá capsule đồng nhất bằng $DIG + một khoản phí XCH nhỏ**, trong một chữ ký duy nhất. Màn hình xuất bản hiển thị số lượng $DIG chính xác trước khi bạn ký.
-- DIGHUb mint store của bạn và xuất bản **capsule** đầu tiên trên Chia mainnet.
+- Connect a Chia wallet (your wallet *is* your account — no email, no password).
+- Approve the on-chain spend: the **uniform capsule price in $DIG + a small XCH fee**, in one signature. The publish screen shows the exact $DIG amount before you sign.
+- DIGHUb mints your store and publishes the first **capsule** on Chia mainnet.
 
-Thiếu DIG? Màn hình xuất bản hiển thị số dư của bạn và nơi để nạp thêm. Xem [Lấy DIG ở đâu](./digstore/cli/onchain-anchoring.md#where-to-get-dig) — TibetSwap, dexie.space, hoặc 9mm.pro.
+Short on DIG? The publish screen shows your balance and where to top up. See [Where to get DIG](./digstore/cli/onchain-anchoring.md#where-to-get-dig) — TibetSwap, dexie.space, or 9mm.pro.
 
-### 4. Bạn đã trực tuyến {#4-youre-live}
+### 4. You're live
 
-Capsule của bạn giờ đã được neo (anchored) on-chain và **có thể đọc được ngay lập tức qua [dig RPC](./concepts.md#dig-rpc)** — bất kỳ ai cũng có thể lấy về và xác minh nó bằng [URN `urn:dig:`](./concepts.md#urn) hoặc địa chỉ [`chia://`](./browser/chia-protocol.md), không cần đăng ký và không phải trả thêm gì. URN vừa là địa chỉ *vừa là* khóa; chia sẻ nó là chia sẻ nội dung. Đường đọc là phổ quát và miễn phí; nó trực tuyến ngay khi capsule được xác nhận.
+Your capsule is now anchored on-chain and **immediately readable over the [dig RPC](./concepts.md#dig-rpc)** — anyone can fetch and verify it by its [`urn:dig:` URN](./concepts.md#urn) or [`chia://`](./browser/chia-protocol.md) address, no registration and nothing more to pay. The URN is both the address *and* the key; share it to share the content. The read path is universal and free; it's live the moment the capsule confirms.
 
-**Muốn một địa chỉ `*.on.dig.net` thân thiện với con người?** Đó là tùy chọn. Một store chỉ nhận subdomain `*.on.dig.net` khi bạn **đăng ký một handle** cho nó trong DIGHUb — một đợt đăng ký riêng, có trả phí, gắn store vào tên đó. Cho đến khi bạn đăng ký một handle, sẽ không có URL `*.on.dig.net` nào (địa chỉ URN / `chia://` ở trên luôn là cách chuẩn để truy cập nó). Xem [Tôi có thể dùng tên miền riêng của mình không?](./support/faq.md#can-i-use-my-own-domain).
+**Want a human-friendly `*.on.dig.net` address?** That's optional. A store gets a `*.on.dig.net` subdomain only when you **register a handle** for it in DIGHUb — a separate, paid registration that pins the store to that name. Until you register one, there's no `*.on.dig.net` URL (the URN / `chia://` address above is always the canonical way to reach it). See [Can I use my own domain?](./support/faq.md#can-i-use-my-own-domain).
 
-**Để xuất bản một bản cập nhật sau này:** chỉnh sửa, xem trước bản nháp mới miễn phí, và Publish lại. Mỗi lần cập nhật được xuất bản là một capsule mới và lại tốn **mức giá capsule đồng nhất** một lần nữa — bạn chỉ trả tiền khi nâng cấp một bản nháp thành phiên bản vĩnh viễn trên chuỗi.
+**To ship an update later:** edit, preview the new draft for free, and Publish again. Each published update is a new capsule and costs the **uniform capsule price** again — you only pay when you promote a draft to a permanent on-chain version.
 
-:::tip Tự động hóa nó
-Khi store của bạn đã tồn tại, thiết lập [Triển khai từ GitHub Actions](./digstore/cli/deploy-from-github-actions.md) để mỗi lần push lên `main` sẽ xuất bản một capsule mới — git-push-to-deploy.
+:::tip Automate it
+Once your store exists, wire up [Deploy from GitHub Actions](./digstore/cli/deploy-from-github-actions.md) so every push to `main` publishes a new capsule — git-push-to-deploy.
 :::
 
 ---
 
-## B. Xuất bản từ CLI {#b-publish-from-the-cli}
+## B. Publish from the CLI
 
-Cùng một luồng công việc nhưng từ terminal của bạn — có thể viết script và là nền tảng cho CI. CLI phản chiếu lộ trình web: xây dựng và xem trước không tốn gì; xuất bản một capsule tốn mức giá capsule đồng nhất bằng $DIG.
+The same flow from your terminal — scriptable and the basis for CI. The CLI mirrors the web path: build and preview cost nothing; publishing a capsule costs the uniform capsule price in $DIG.
 
-### 1. Cài đặt {#1-install}
+### 1. Install
 
 ```sh
-# download the installer for your OS from the Releases page, then:
+# download the digstore binary for your OS from the Releases page, then:
 digstore --version
 ```
 
-Xem [Cài đặt CLI](./digstore/cli/install.md) để biết trình cài đặt theo từng hệ điều hành và cách build từ mã nguồn.
+See [Installing the CLI](./digstore/cli/install.md) for per-OS binaries, the guided DIG Installer, and build-from-source.
 
-### 2. Dựng khung và xem trước — miễn phí, không cần chuỗi, không tốn tiền {#2-scaffold-and-preview--free-no-chain-no-spend}
+### 2. Scaffold and preview — free, no chain, no spend
 
-Dựng khung một dự án và xem trước cục bộ — **miễn phí, không mint, không cần chuỗi** — trước khi bạn phải trả bất cứ khoản nào:
+Scaffold a project and preview it locally — **free, no mint, no chain** — before you ever spend:
 
 ```sh
 digstore new <template>   # scaffold a wallet-wired project (static · vite-react · next-static · nft-drop · dapp-window-chia) — free, no mint
 digstore dev              # watch + compile-on-save + serve the real chia:// read path, with an injected window.chia — free, live-reload
 ```
 
-`new` viết ra một dự án chạy được (một `dig.toml` + một ứng dụng khởi đầu); `dev` phục vụ nó qua đường đọc DIG thực thụ (biên dịch → xác minh → giải mã) với live reload. Bạn chỉ trả mức giá capsule đồng nhất khi xuất bản (các bước tiếp theo). Hoặc build bằng toolchain quen thuộc của bạn (`npm run build` → `dist/`) rồi xuất bản kết quả đó.
+`new` writes a runnable project (a `dig.toml` + a starter app); `dev` serves it over the genuine DIG read path (compile → verify → decrypt) with live reload. You pay the uniform capsule price only when you publish (next steps). Or build with your usual toolchain (`npm run build` → `dist/`) and publish that output.
 
-:::tip Thích dùng npm hơn? Dùng `create-dig-app`
-Nếu bạn quen với thế giới Node, `npm create dig-app@latest my-app -- --template vite-react` dựng khung cùng các template đó trực tiếp từ npm — không cần cài `digstore` để bắt đầu. Xem [Dựng khung một ứng dụng](./build-a-dapp/scaffold.md).
+:::tip Prefer npm? Use `create-dig-app`
+If you live in the Node world, `npm create dig-app@latest my-app -- --template vite-react` scaffolds the same templates straight from npm — no `digstore` install needed to start. See [Scaffold an app](./build-a-dapp/scaffold.md).
 :::
 
-### 3. Thiết lập một ví (chỉ cần khi xuất bản) {#3-set-up-a-wallet-only-needed-to-publish}
+### 3. Set up a wallet (only needed to publish)
 
-Xuất bản tốn tiền thật, nên bạn cần một seed và một ví đã nạp tiền trước:
+Publishing spends real funds, so you need a seed and a funded wallet first:
 
 ```sh
 digstore seed generate      # generate a fresh mnemonic (shown once — back it up)
 digstore balance            # show your receive address; fund it with XCH + DIG
 ```
 
-Xem [Neo on-chain](./digstore/cli/onchain-anchoring.md) để biết chi tiết về nhập, nạp tiền, và TTL.
+See [On-chain anchoring](./digstore/cli/onchain-anchoring.md) for import, funding, and TTL details.
 
-### 4. Xuất bản capsule đầu tiên của bạn {#4-publish-your-first-capsule}
+### 4. Publish your first capsule
 
 ```sh
 digstore init site --dir dist     # mint the store's first capsule (uniform capsule price + XCH fee)
 ```
 
-`init` mint một singleton Chia trên mainnet — **launcher id trở thành store id của bạn** — và chờ cho đến khi được xác nhận.
+`init` mints a Chia singleton on mainnet — **the launcher id becomes your store id** — and blocks until confirmed.
 
-### 5. Xuất bản các bản cập nhật {#5-ship-updates}
+### 5. Ship updates
 
 ```sh
 npm run build                      # produce dist/
@@ -123,15 +123,15 @@ digstore add -A                    # stage the whole content root
 digstore commit -m "v1.1"          # publish a new capsule (uniform capsule price + XCH fee)
 ```
 
-Đối với CI, một lệnh duy nhất thực hiện add → commit → push và in ra URL:
+For CI, one command does add → commit → push and prints the URL:
 
 ```sh
 digstore deploy --output-dir dist --json   # advance an existing store from CI; never mints
 ```
 
-Xem [Triển khai từ GitHub Actions](./digstore/cli/deploy-from-github-actions.md).
+See [Deploy from GitHub Actions](./digstore/cli/deploy-from-github-actions.md).
 
-### 6. Đọc lại nội dung {#6-read-it-back}
+### 6. Read it back
 
 ```sh
 digstore cat urn:dig:chia:<storeId>/readme   # a URN both locates AND decrypts
@@ -139,27 +139,27 @@ digstore cat urn:dig:chia:<storeId>/readme   # a URN both locates AND decrypts
 
 ---
 
-## Chi phí là gì {#what-it-costs}
+## What it costs
 
-| Bạn đang làm | Chi phí |
+| You're doing | Cost |
 |---|---|
-| Dựng khung, build, xem trước một bản nháp | **Miễn phí** |
-| Xuất bản capsule đầu tiên (`init` / Publish trong DIGHUb) | **mức giá capsule đồng nhất bằng $DIG** + phí XCH nhỏ |
-| Xuất bản mỗi bản cập nhật (`commit` / Publish lại) | **mức giá capsule đồng nhất bằng $DIG** + phí XCH nhỏ |
+| Scaffolding, building, previewing a draft | **Free** |
+| Publishing your first capsule (`init` / DIGHUb Publish) | **uniform capsule price in $DIG** + small XCH fee |
+| Publishing each update (`commit` / re-Publish) | **uniform capsule price in $DIG** + small XCH fee |
 
-Mức giá **đồng nhất trên mỗi capsule** ở mọi nơi — xem [tại sao mức giá lại đồng nhất](./digstore/cli/onchain-anchoring.md#why-the-price-is-uniform).
+The price is **uniform per capsule** everywhere — see [why the price is uniform](./digstore/cli/onchain-anchoring.md#why-the-price-is-uniform).
 
-## Gặp khó khăn? {#stuck}
+## Stuck?
 
-- [Xử lý sự cố](./support/troubleshooting.md) — các lỗi thường gặp và cách khắc phục.
-- [Câu hỏi thường gặp](./support/faq.md) — câu trả lời nhanh.
-- [Nhận trợ giúp](./support/get-help.md) — cộng đồng và cách gửi báo cáo tốt.
+- [Troubleshooting](./support/troubleshooting.md) — the common failures and their fixes.
+- [FAQ](./support/faq.md) — quick answers.
+- [Get help](./support/get-help.md) — the community and how to file a good report.
 
-## Liên quan {#related}
+## Related
 
-- [Khái niệm & thuật ngữ](./concepts.md) — định nghĩa capsule, store, URN, và thanh toán DIG
-- [Dựng khung một ứng dụng (create-dig-app)](./build-a-dapp/scaffold.md) — bắt đầu một dự án có thể triển khai chỉ trong một lệnh (npm hoặc CLI)
-- [Cài đặt CLI](./digstore/cli/install.md) — cài `digstore` lên máy của bạn
-- [Neo on-chain](./digstore/cli/onchain-anchoring.md) — thiết lập ví, nạp tiền, và chi phí
-- [Triển khai từ GitHub Actions](./digstore/cli/deploy-from-github-actions.md) — xuất bản qua push trong CI
-- [Hướng dẫn CLI](./digstore/cli/quickstart.md) — toàn bộ hành trình create-commit-read
+- [Concepts & glossary](./concepts.md) — capsule, store, URN, and DIG payment defined
+- [Scaffold an app (create-dig-app)](./build-a-dapp/scaffold.md) — start a deployable project in one command (npm or CLI)
+- [Installing the CLI](./digstore/cli/install.md) — get `digstore` on your machine
+- [On-chain anchoring](./digstore/cli/onchain-anchoring.md) — wallet setup, funding, and costs
+- [Deploy from GitHub Actions](./digstore/cli/deploy-from-github-actions.md) — push-to-publish in CI
+- [CLI tutorial](./digstore/cli/quickstart.md) — the full create-commit-read walkthrough

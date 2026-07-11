@@ -28,7 +28,7 @@ The loop mirrors Git: scaffold and preview locally for **free**, then `init` to 
 
 ## How do I install it?
 
-Grab the installer for your OS from the Releases page (or build from source), then confirm with `digstore --version`.
+Grab the `digstore` binary for your OS from the Releases page — or the guided DIG Installer, or build from source — then confirm with `digstore --version`.
 
 → [Installing the CLI](../digstore/cli/install.md)
 
