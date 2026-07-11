@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 title: For content consumers
-description: "打开由你自己的浏览器对照区块链验证的 chia:// 内容 —— 任何主机都无法篡改或伪造它，私密内容对主机保持私密，并且内容永久存在、可在任何地方重新托管，因此没有人能下线它或将你锁定在某个平台上。"
+description: "Open chia:// content that your own browser verifies against the blockchain — no host can alter or fake it, private content stays private from the host, and it's permanent and re-hostable anywhere, so nobody can take it down or lock you in."
 keywords:
   - open chia content
   - DIG Browser
@@ -9,6 +9,9 @@ keywords:
   - verified content
   - private content salt
   - extension
+  - omnibox
+  - local-first reads
+  - DIG toolbar
 tags:
   - browser
   - chia-protocol
@@ -16,59 +19,61 @@ tags:
   - dig-node
 ---
 
-# 面向内容消费者 {#for-content-consumers}
+# For content consumers
 
-> **打开由你自己的浏览器对照区块链验证的 `chia://` 内容** —— 任何主机都无法篡改或伪造它，私密内容对主机保持私密，并且内容永久存在、可在任何地方重新托管，因此没有人能下线它或将你锁定在某个平台上。
+> **Open `chia://` content that your OWN browser verifies against the blockchain** — no host can alter or fake it, private content stays private from the host, and it's permanent and re-hostable anywhere, so nobody can take it down or lock you in.
 
-## 心智模型 {#the-mental-model}
+## The mental model
 
-粘贴一个 `chia://` 链接，内容就会直接从网络中获取 —— **内容可寻址**，并且在渲染之前会在**你自己的设备上**进行加密学验证。它是**失败即拒绝（fail-closed）**的：被篡改或无法解密的字节永远不会显示出来。
+Paste a `chia://` link and the content comes straight from the network — **content-addressed** and **cryptographically verified on YOUR device** before it renders. It is **fail-closed**: tampered or undecryptable bytes never show.
 
-- **省略 `rootHash`** 即获取该 store 的*最新*版本：`chia://<storeId>/`。
-- **包含 `rootHash`** 则可固定到某一个确切的、不可变的 [capsule](../concepts.md#capsule)：`chia://<storeId>:<rootHash>/`。
+- **Omit the `rootHash`** for the store's *latest* version: `chia://<storeId>/`.
+- **Include it** to pin one exact immutable [capsule](../concepts.md#capsule): `chia://<storeId>:<rootHash>/`.
 
-公开内容只需要这个链接即可访问。私密内容还需要一个秘密的 **`?salt=`** —— 类似密码的作用。
+Public content needs only the link. Private content also needs a secret **`?salt=`** — like a password.
 
-## 获取 DIG Browser 或扩展程序 {#get-the-dig-browser-or-the-extension}
+## Get the DIG Browser, or the extension
 
-- **[获取 DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)** —— 一款内置了 `chia://` 支持和钱包的浏览器。
-- **扩展程序**，支持 Chrome / Edge / Brave / Firefox —— 为你已经在使用的浏览器添加 `chia://` 解析能力。
+- **[Get the DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)** — a browser with `chia://` and a built-in wallet baked in.
+- **The extension** for Chrome / Edge / Brave / Firefox — adds `chia://` resolution to a browser you already use. Open an address two ways: paste it into the home screen's "open a chia:// address or DIG URN" field, or type `dig` followed by the address straight into your browser's address bar and press Enter — the same shortcut browsers already offer for a site's own search. With a local [dig-node](../concepts.md#dig-node) reachable, the address opens directly from it as a real page (see [Reading from your own node](#reading-from-your-own-node) below); with no node reachable, it opens inside the extension's own viewer instead, verified and decrypted from the public network.
 
-## 打开 `chia://` 内容 —— 最新版本 vs 固定版本 {#open-chia-content--latest-vs-pinned}
+## Open `chia://` content — latest vs pinned
 
-地址的各种形式、简洁的 `chia://<store>/` 地址栏，以及何时应该固定一个 `rootHash`。
+The address forms, the clean `chia://<store>/` bar, and when to pin a `rootHash`.
 
-→ [chia:// 协议](../browser/chia-protocol.md)
+→ [The chia:// protocol](../browser/chia-protocol.md)
 
-## 内置页面、已验证徽章与防护标识 {#built-in-pages-the-verified-badge--shields}
+## Built-in pages, the verified badge & shields
 
-`chia://home`、`chia://wallet`、`chia://settings`，以及展示当前 capsule 每个资源包含性证明验证结果的已验证徽章 / 防护标识。
+`chia://home`, `chia://wallet`, `chia://settings`, and the verified badge / shields that show each resource's inclusion-proof verdict for the active capsule. When the extension opens a page directly from your node, it overlays a small **DIG toolbar** on the page itself showing whether it's verified on Chia and whether it loaded from your local node — click it to open the fuller wallet or shields views.
 
-→ [使用 window.chia](../browser/using-window-chia.md)
+→ [Using window.chia](../browser/using-window-chia.md) · [How the built-in wallet protects your keys](../browser/wallet-security.md)
 
-## 公开 vs 私密 —— 何时需要 `?salt=` 密钥 {#public-vs-private--when-you-need-a-salt-secret}
+## Public vs private — when you need a `?salt=` secret
 
-公开的 store 只需一个链接即可打开；私密的 store 需要用于派生解密密钥的秘密 salt。
+Public stores open with just the link; private stores require the secret salt that derives the decryption key.
 
-→ [公开与私密 store](../digstore/format/urns-and-encryption.md#public-vs-private-stores) · [公开与私密有什么区别？](../support/faq.md#public-vs-private)
+→ [Public vs private stores](../digstore/format/urns-and-encryption.md#public-vs-private-stores) · [Public vs private — what's the difference?](../support/faq.md#public-vs-private)
 
-## 在本地运行内容（可选） {#run-content-locally-optional}
+## Reading from your own node (optional, faster) {#reading-from-your-own-node}
 
-将你的浏览器/扩展指向一个本地 [dig-node](../concepts.md#dig-node)，以获得更快、更适合离线场景的读取体验 —— 它们共用同一个 `.dig` 缓存。读取内容时你从来*不需要*运行一个节点。
+Point your browser/extension at a local [dig-node](../concepts.md#dig-node) for faster, offline-friendly reads — they share one `.dig` cache. The first time you open a store, your node fetches what it needs and keeps syncing the rest of it in the background; once a store is fully synced, later opens read straight from your machine instead of the network. You never *need* a node to read.
 
-→ [运行一个节点](../run-a-node/index.md)
+With a node reachable, the extension opens a store directly from it as an ordinary website: pages, scripts, images, and links all resolve within that store and version, and a single-page app's own client-side routes keep working — an unmatched route falls back to the store's entry page instead of a dead end. Links elsewhere on the internet go there directly, untouched.
 
-## 获取 $DIG {#get-dig}
+→ [Run a node](../run-a-node/index.md) · [Point a consumer at your node](../run-a-node/point-a-consumer.md#local-first-caching)
 
-*读取*内容不需要 $DIG。如果你想发布内容，可以在 **TibetSwap**、**dexie.space** 或 **9mm.pro** 上获取 $DIG。
+## Get $DIG
 
-→ [我在哪里可以获取 DIG？](../support/faq.md#where-do-i-get-dig)
+You don't need $DIG to *read* content. If you want to publish, get $DIG on **TibetSwap**, **dexie.space**, or **9mm.pro**.
+
+→ [Where do I get DIG?](../support/faq.md#where-do-i-get-dig)
 
 ---
 
-## 深入了解：协议 {#go-deeper-the-protocol}
+## Go deeper: the protocol
 
-- **"对照区块链验证"** → [链上锚定](../digstore/cli/onchain-anchoring.md) · [证明与安全](../digstore/format/proofs-and-security.md)
-- **"公开与私密的 salt"** → [URN 与加密](../digstore/format/urns-and-encryption.md#public-vs-private-stores)
-- **"最新版本 vs 固定版本"** → [Generation 与根哈希](../digstore/format/store-structure.md#generations-and-root-hashes)
-- **完整内容** → [协议深度解析](../protocol-deep-dive.md) · [概念与术语表](../concepts.md)
+- **"verified against the blockchain"** → [On-chain anchoring](../digstore/cli/onchain-anchoring.md) · [Proofs & security](../digstore/format/proofs-and-security.md)
+- **"public vs private salt"** → [URNs & encryption](../digstore/format/urns-and-encryption.md#public-vs-private-stores)
+- **"latest vs pinned"** → [Generations & root hashes](../digstore/format/store-structure.md#generations-and-root-hashes)
+- **Everything** → [Protocol deep-dive](../protocol-deep-dive.md) · [Concepts & glossary](../concepts.md)

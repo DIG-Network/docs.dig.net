@@ -25,15 +25,15 @@ curl -fsSL https://dig.net/install.sh | sh
 
 This is the same self-contained `dig-installer` shipped on the [Releases page](https://github.com/DIG-Network/dig-installer/releases) — download and run it directly if you prefer not to pipe to a shell, or on Windows.
 
-## GUI-Installer {#gui-installer}
+## GUI installer {#gui-installer}
 
-Bevorzugst du eine geführte Einrichtung statt Flags? Wenn du den Installer direkt herunterlädst und ausführst (statt ihn in eine Shell zu piped), öffnet sich ein Desktop-Assistent — **Willkommen → Lizenz → Komponenten → Installation → Fertig** — in einem dunklen Theme, das zum Rest der DIG-Network-Apps passt.
+Prefer a guided setup over flags? Downloading and running the installer directly (instead of piping to a shell) opens a desktop wizard — **Welcome → License → Components → Install → Done** — in a dark theme that matches the rest of DIG Network's apps.
 
-Im Schritt **Komponenten** ist jede Komponente — `digstore`, `dig-node`, `dig-dns`, `dig-relay` und DIG Browser — standardmäßig angehakt, sodass ein einfaches Durchklicken ohne Änderungen alles installiert (`digstore` hat kein Kontrollkästchen; es wird immer installiert). Entferne den Haken bei jeder anderen Komponente, um nur eine Teilmenge zu installieren.
+On the **Components** step, every component — `digstore`, `dig-node`, `dig-dns`, `dig-relay`, and DIG Browser — is checked by default, so clicking through with no changes installs everything (`digstore` has no checkbox; it's always installed). Uncheck any of the others to install just a subset.
 
-Ist eine Komponente für deine Plattform noch nicht verfügbar, wird sie automatisch übersprungen, und die restlichen ausgewählten Komponenten werden trotzdem normal installiert.
+If a component isn't available yet for your platform, it's skipped automatically and the rest of your selected components still install normally.
 
-Den Installer über einen bereits installierten `dig-node` oder `dig-relay` erneut auszuführen — etwa für ein Upgrade — erfordert keine manuellen Schritte: Er stoppt den laufenden Dienst, ersetzt die Binärdatei durch die neue Version und startet ihn anschließend wieder, sodass der Dienst am Ende im selben laufenden oder gestoppten Zustand ist wie zuvor.
+Re-running the installer over an already-installed `dig-node` or `dig-relay` — to upgrade, for example — needs no manual steps: it stops the running service, replaces the binary with the new version, then starts it again, so the service ends up in the same running or stopped state it was in before.
 
 ## `dig.local`
 
@@ -81,10 +81,14 @@ either path alone is enough for `.dig` URLs to load. It never edits `/etc/hosts`
 never rewrites URLs, and never intercepts TLS. Run `dig-dns doctor` any time to check
 which path is live and get a fix hint for what isn't.
 
-The [extension](../audiences/content-consumers.md)'s "open a chia:// address or DIG URN"
-input on its home screen detects `dig-dns` automatically: with it installed and running, opening
-an address navigates straight to its real `http://<storeId>.dig/` page; without it, the same
-address still opens, rendered inside the extension.
+The [extension](../audiences/content-consumers.md) already opens content directly from a
+reachable node as a real page — see [Reading from your own
+node](../audiences/content-consumers.md#reading-from-your-own-node). `dig-dns` layers a
+friendlier, per-store address on top of that: with it installed and running, the same open
+detects `dig-dns` automatically and lands on `http://<storeId>.dig/` instead of the node's own
+address; without `dig-dns`, the page still opens directly from the node, just at the node's own
+local address. Only when **no** node is reachable at all does the address fall back to opening
+inside the extension's own viewer.
 
 ## On Debian-family systems
 

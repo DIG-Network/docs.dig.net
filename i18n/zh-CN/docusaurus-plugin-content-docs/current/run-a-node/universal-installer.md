@@ -25,15 +25,15 @@ curl -fsSL https://dig.net/install.sh | sh
 
 This is the same self-contained `dig-installer` shipped on the [Releases page](https://github.com/DIG-Network/dig-installer/releases) — download and run it directly if you prefer not to pipe to a shell, or on Windows.
 
-## 图形界面安装程序 {#gui-installer}
+## GUI installer {#gui-installer}
 
-比起使用参数，更想要有引导的设置流程？直接下载并运行安装程序（而不是通过管道传给 shell）会打开一个桌面向导 —— **Welcome → License → Components → Install → Done** —— 采用与 DIG Network 其他应用一致的深色主题。
+Prefer a guided setup over flags? Downloading and running the installer directly (instead of piping to a shell) opens a desktop wizard — **Welcome → License → Components → Install → Done** — in a dark theme that matches the rest of DIG Network's apps.
 
-在 **Components** 步骤中，每个组件 —— `digstore`、`dig-node`、`dig-dns`、`dig-relay` 和 DIG Browser —— 默认都是勾选状态，因此不做任何更改直接继续会安装全部组件（`digstore` 没有勾选框；它始终会被安装）。取消勾选其他任意组件即可只安装其中一部分。
+On the **Components** step, every component — `digstore`, `dig-node`, `dig-dns`, `dig-relay`, and DIG Browser — is checked by default, so clicking through with no changes installs everything (`digstore` has no checkbox; it's always installed). Uncheck any of the others to install just a subset.
 
-如果某个组件尚未针对你的平台发布，它会被自动跳过，你所选的其余组件仍会正常安装。
+If a component isn't available yet for your platform, it's skipped automatically and the rest of your selected components still install normally.
 
-在已安装的 `dig-node` 或 `dig-relay` 上重新运行安装程序 —— 例如进行升级 —— 不需要任何手动步骤：它会停止正在运行的服务，将二进制文件替换为新版本，然后重新启动它，使服务恢复到之前相同的运行或停止状态。
+Re-running the installer over an already-installed `dig-node` or `dig-relay` — to upgrade, for example — needs no manual steps: it stops the running service, replaces the binary with the new version, then starts it again, so the service ends up in the same running or stopped state it was in before.
 
 ## `dig.local`
 
@@ -81,10 +81,14 @@ either path alone is enough for `.dig` URLs to load. It never edits `/etc/hosts`
 never rewrites URLs, and never intercepts TLS. Run `dig-dns doctor` any time to check
 which path is live and get a fix hint for what isn't.
 
-The [extension](../audiences/content-consumers.md)'s "open a chia:// address or DIG URN"
-input on its home screen detects `dig-dns` automatically: with it installed and running, opening
-an address navigates straight to its real `http://<storeId>.dig/` page; without it, the same
-address still opens, rendered inside the extension.
+The [extension](../audiences/content-consumers.md) already opens content directly from a
+reachable node as a real page — see [Reading from your own
+node](../audiences/content-consumers.md#reading-from-your-own-node). `dig-dns` layers a
+friendlier, per-store address on top of that: with it installed and running, the same open
+detects `dig-dns` automatically and lands on `http://<storeId>.dig/` instead of the node's own
+address; without `dig-dns`, the page still opens directly from the node, just at the node's own
+local address. Only when **no** node is reachable at all does the address fall back to opening
+inside the extension's own viewer.
 
 ## On Debian-family systems
 

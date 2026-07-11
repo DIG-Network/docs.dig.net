@@ -10,6 +10,8 @@ keywords:
   - root hash
   - retrieval key
   - DIG Browser
+  - SPA history-fallback
+  - local-first serving
 tags:
   - chia-protocol
   - browser
@@ -126,6 +128,18 @@ Parsing rules (from the shared parser):
 
 A private (encrypted) store may carry its secret as a `?salt=<hex>` query parameter; it is preserved through canonicalization and never affects the host.
 
+## For integrating developers — serving from a local node {#serving-from-a-local-node}
+
+When a local [dig-node](../concepts.md#dig-node) answers, the extension opens a `chia://` address by navigating directly to the node's plaintext serve surface instead of its own sandboxed viewer — the store loads as an ordinary website, already decrypted and verified before the node sends any bytes.
+
+- **Rooted at the store.** The response is scoped to `<storeId>[:<rootHash>]`, so the page's own relative links, images, and scripts resolve inside that same store and version with no change to the page's markup.
+- **Root-absolute links (`/foo`) reroot to the same store**, so a page written with root-absolute paths — the default for most SPA build tools — keeps working unmodified.
+- **Client-side routes fall back to the entry page.** A request for a path that isn't one of the store's files, and doesn't look like a static asset, serves the store's `index.html` instead of a dead end — the same **SPA history-fallback** convention every static host uses, so a page's own JavaScript router can render the route. A request for a path that *looks* like a static asset (a known extension the store simply doesn't have) still 404s.
+- **Absolute links to another origin (`https://…`)** are untouched — the browser navigates there directly, off the node entirely.
+- **No reachable node?** The same address still opens fine, verified and decrypted in the browser from the public network — just without the local-serving behavior above.
+
+→ [Reading from your own node](../audiences/content-consumers.md#reading-from-your-own-node) · [Point a consumer at your node](../run-a-node/point-a-consumer.md)
+
 ## For protocol developers {#capsule-the-unit-of-identity}
 
 ### Capsule: the unit of identity
@@ -153,4 +167,5 @@ Getting the canonical string wrong yields a silent cache miss, never corruption 
 - [URNs & Encryption](../digstore/format/urns-and-encryption.md) — the canonical URN the scheme shortens
 - [What is the dig RPC?](../rpc/what-is-the-dig-rpc.md) — how the browser fetches content over the network
 - [Store structure](../digstore/format/store-structure.md) — store id, root hash, and generations
+- [Point a consumer at your node](../run-a-node/point-a-consumer.md) — local-first reads + the shared `.dig` cache
 - [Concepts & glossary](../concepts.md) — the chia:// protocol, URN, and capsule defined

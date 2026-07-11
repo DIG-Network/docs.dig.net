@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 title: For content consumers
-description: "Abra conteúdo chia:// que o seu próprio navegador verifica contra a blockchain — nenhum host pode alterá-lo ou falsificá-lo, o conteúdo privado permanece privado em relação ao host, e ele é permanente e re-hospedável em qualquer lugar, então ninguém pode derrubá-lo ou te prender a um provedor."
+description: "Open chia:// content that your own browser verifies against the blockchain — no host can alter or fake it, private content stays private from the host, and it's permanent and re-hostable anywhere, so nobody can take it down or lock you in."
 keywords:
   - open chia content
   - DIG Browser
@@ -9,6 +9,9 @@ keywords:
   - verified content
   - private content salt
   - extension
+  - omnibox
+  - local-first reads
+  - DIG toolbar
 tags:
   - browser
   - chia-protocol
@@ -16,59 +19,61 @@ tags:
   - dig-node
 ---
 
-# For content consumers {#for-content-consumers}
+# For content consumers
 
-> **Abra conteúdo `chia://` que o SEU PRÓPRIO navegador verifica contra a blockchain** — nenhum host pode alterá-lo ou falsificá-lo, o conteúdo privado permanece privado em relação ao host, e ele é permanente e re-hospedável em qualquer lugar, então ninguém pode derrubá-lo ou te prender a um provedor.
+> **Open `chia://` content that your OWN browser verifies against the blockchain** — no host can alter or fake it, private content stays private from the host, and it's permanent and re-hostable anywhere, so nobody can take it down or lock you in.
 
-## O modelo mental {#the-mental-model}
+## The mental model
 
-Cole um link `chia://` e o conteúdo vem diretamente da rede — **endereçado por conteúdo** e **criptograficamente verificado no SEU dispositivo** antes de ser renderizado. Ele é **fail-closed**: bytes adulterados ou que não podem ser descriptografados nunca são exibidos.
+Paste a `chia://` link and the content comes straight from the network — **content-addressed** and **cryptographically verified on YOUR device** before it renders. It is **fail-closed**: tampered or undecryptable bytes never show.
 
-- **Omita o `rootHash`** para a versão *mais recente* do store: `chia://<storeId>/`.
-- **Inclua-o** para fixar um exato e imutável [capsule](../concepts.md#capsule): `chia://<storeId>:<rootHash>/`.
+- **Omit the `rootHash`** for the store's *latest* version: `chia://<storeId>/`.
+- **Include it** to pin one exact immutable [capsule](../concepts.md#capsule): `chia://<storeId>:<rootHash>/`.
 
-Conteúdo público precisa apenas do link. Conteúdo privado também precisa de um **`?salt=`** secreto — como uma senha.
+Public content needs only the link. Private content also needs a secret **`?salt=`** — like a password.
 
-## Obtenha o DIG Browser, ou a extensão {#get-the-dig-browser-or-the-extension}
+## Get the DIG Browser, or the extension
 
-- **[Obtenha o DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)** — um navegador com `chia://` e uma carteira embutida já integrados.
-- **A extensão** para Chrome / Edge / Brave / Firefox — adiciona resolução `chia://` a um navegador que você já usa.
+- **[Get the DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)** — a browser with `chia://` and a built-in wallet baked in.
+- **The extension** for Chrome / Edge / Brave / Firefox — adds `chia://` resolution to a browser you already use. Open an address two ways: paste it into the home screen's "open a chia:// address or DIG URN" field, or type `dig` followed by the address straight into your browser's address bar and press Enter — the same shortcut browsers already offer for a site's own search. With a local [dig-node](../concepts.md#dig-node) reachable, the address opens directly from it as a real page (see [Reading from your own node](#reading-from-your-own-node) below); with no node reachable, it opens inside the extension's own viewer instead, verified and decrypted from the public network.
 
-## Abrindo conteúdo `chia://` — mais recente vs. fixado {#open-chia-content--latest-vs-pinned}
+## Open `chia://` content — latest vs pinned
 
-As formas de endereço, a barra limpa `chia://<store>/`, e quando fixar um `rootHash`.
+The address forms, the clean `chia://<store>/` bar, and when to pin a `rootHash`.
 
-→ [O protocolo chia://](../browser/chia-protocol.md)
+→ [The chia:// protocol](../browser/chia-protocol.md)
 
-## Páginas embutidas, o selo verificado e os escudos {#built-in-pages-the-verified-badge--shields}
+## Built-in pages, the verified badge & shields
 
-`chia://home`, `chia://wallet`, `chia://settings`, e o selo verificado / escudos que mostram o veredito da prova de inclusão de cada recurso para o capsule ativo.
+`chia://home`, `chia://wallet`, `chia://settings`, and the verified badge / shields that show each resource's inclusion-proof verdict for the active capsule. When the extension opens a page directly from your node, it overlays a small **DIG toolbar** on the page itself showing whether it's verified on Chia and whether it loaded from your local node — click it to open the fuller wallet or shields views.
 
-→ [Usando o window.chia](../browser/using-window-chia.md)
+→ [Using window.chia](../browser/using-window-chia.md) · [How the built-in wallet protects your keys](../browser/wallet-security.md)
 
-## Público vs. privado — quando você precisa de um segredo `?salt=` {#public-vs-private--when-you-need-a-salt-secret}
+## Public vs private — when you need a `?salt=` secret
 
-Stores públicos abrem apenas com o link; stores privados exigem o salt secreto que deriva a chave de descriptografia.
+Public stores open with just the link; private stores require the secret salt that derives the decryption key.
 
-→ [Stores públicos vs. privados](../digstore/format/urns-and-encryption.md#public-vs-private-stores) · [Público vs. privado — qual a diferença?](../support/faq.md#public-vs-private)
+→ [Public vs private stores](../digstore/format/urns-and-encryption.md#public-vs-private-stores) · [Public vs private — what's the difference?](../support/faq.md#public-vs-private)
 
-## Rode o conteúdo localmente (opcional) {#run-content-locally-optional}
+## Reading from your own node (optional, faster) {#reading-from-your-own-node}
 
-Aponte seu navegador/extensão para um [dig-node](../concepts.md#dig-node) local para leituras mais rápidas e amigáveis a modo offline — eles compartilham um único cache `.dig`. Você nunca *precisa* de um nó para ler.
+Point your browser/extension at a local [dig-node](../concepts.md#dig-node) for faster, offline-friendly reads — they share one `.dig` cache. The first time you open a store, your node fetches what it needs and keeps syncing the rest of it in the background; once a store is fully synced, later opens read straight from your machine instead of the network. You never *need* a node to read.
 
-→ [Rode um nó](../run-a-node/index.md)
+With a node reachable, the extension opens a store directly from it as an ordinary website: pages, scripts, images, and links all resolve within that store and version, and a single-page app's own client-side routes keep working — an unmatched route falls back to the store's entry page instead of a dead end. Links elsewhere on the internet go there directly, untouched.
 
-## Consiga $DIG {#get-dig}
+→ [Run a node](../run-a-node/index.md) · [Point a consumer at your node](../run-a-node/point-a-consumer.md#local-first-caching)
 
-Você não precisa de $DIG para *ler* conteúdo. Se quiser publicar, consiga $DIG na **TibetSwap**, **dexie.space**, ou **9mm.pro**.
+## Get $DIG
 
-→ [Onde eu consigo DIG?](../support/faq.md#where-do-i-get-dig)
+You don't need $DIG to *read* content. If you want to publish, get $DIG on **TibetSwap**, **dexie.space**, or **9mm.pro**.
+
+→ [Where do I get DIG?](../support/faq.md#where-do-i-get-dig)
 
 ---
 
-## Aprofunde-se: o protocolo {#go-deeper-the-protocol}
+## Go deeper: the protocol
 
-- **"verificado contra a blockchain"** → [Ancoragem on-chain](../digstore/cli/onchain-anchoring.md) · [Provas e segurança](../digstore/format/proofs-and-security.md)
-- **"salt público vs. privado"** → [URNs e criptografia](../digstore/format/urns-and-encryption.md#public-vs-private-stores)
-- **"mais recente vs. fixado"** → [Generations e root hashes](../digstore/format/store-structure.md#generations-and-root-hashes)
-- **Tudo** → [Aprofundamento no protocolo](../protocol-deep-dive.md) · [Conceitos e glossário](../concepts.md)
+- **"verified against the blockchain"** → [On-chain anchoring](../digstore/cli/onchain-anchoring.md) · [Proofs & security](../digstore/format/proofs-and-security.md)
+- **"public vs private salt"** → [URNs & encryption](../digstore/format/urns-and-encryption.md#public-vs-private-stores)
+- **"latest vs pinned"** → [Generations & root hashes](../digstore/format/store-structure.md#generations-and-root-hashes)
+- **Everything** → [Protocol deep-dive](../protocol-deep-dive.md) · [Concepts & glossary](../concepts.md)

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 title: For content consumers
-description: "Buka konten chia:// yang diverifikasi oleh browser Anda SENDIRI terhadap blockchain — tak ada host yang bisa mengubah atau memalsukannya, konten privat tetap privat dari host, dan bersifat permanen serta dapat di-host ulang di mana saja, sehingga tak seorang pun dapat menurunkannya atau mengunci Anda."
+description: "Open chia:// content that your own browser verifies against the blockchain — no host can alter or fake it, private content stays private from the host, and it's permanent and re-hostable anywhere, so nobody can take it down or lock you in."
 keywords:
   - open chia content
   - DIG Browser
@@ -9,6 +9,9 @@ keywords:
   - verified content
   - private content salt
   - extension
+  - omnibox
+  - local-first reads
+  - DIG toolbar
 tags:
   - browser
   - chia-protocol
@@ -16,59 +19,61 @@ tags:
   - dig-node
 ---
 
-# For content consumers {#for-content-consumers}
+# For content consumers
 
-> **Buka konten `chia://` yang diverifikasi oleh browser Anda SENDIRI terhadap blockchain** — tak ada host yang bisa mengubah atau memalsukannya, konten privat tetap privat dari host, dan bersifat permanen serta dapat di-host ulang di mana saja, sehingga tak seorang pun dapat menurunkannya atau mengunci Anda.
+> **Open `chia://` content that your OWN browser verifies against the blockchain** — no host can alter or fake it, private content stays private from the host, and it's permanent and re-hostable anywhere, so nobody can take it down or lock you in.
 
-## Model mental {#the-mental-model}
+## The mental model
 
-Tempel sebuah tautan `chia://` dan konten langsung datang dari jaringan — **content-addressed** dan **diverifikasi secara kriptografis di PERANGKAT ANDA** sebelum dirender. Sifatnya **fail-closed**: byte yang diutak-atik atau tidak dapat didekripsi tidak akan pernah ditampilkan.
+Paste a `chia://` link and the content comes straight from the network — **content-addressed** and **cryptographically verified on YOUR device** before it renders. It is **fail-closed**: tampered or undecryptable bytes never show.
 
-- **Hilangkan `rootHash`** untuk versi *terbaru* store: `chia://<storeId>/`.
-- **Sertakan** untuk mengunci satu [capsule](../concepts.md#capsule) immutable yang persis: `chia://<storeId>:<rootHash>/`.
+- **Omit the `rootHash`** for the store's *latest* version: `chia://<storeId>/`.
+- **Include it** to pin one exact immutable [capsule](../concepts.md#capsule): `chia://<storeId>:<rootHash>/`.
 
-Konten publik hanya memerlukan tautannya. Konten privat juga memerlukan sebuah **`?salt=`** rahasia — seperti sebuah password.
+Public content needs only the link. Private content also needs a secret **`?salt=`** — like a password.
 
-## Dapatkan DIG Browser, atau ekstensinya {#get-the-dig-browser-or-the-extension}
+## Get the DIG Browser, or the extension
 
-- **[Dapatkan DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)** — sebuah browser dengan `chia://` dan wallet bawaan yang sudah tertanam.
-- **Ekstensi** untuk Chrome / Edge / Brave / Firefox — menambahkan resolusi `chia://` ke browser yang sudah Anda gunakan.
+- **[Get the DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)** — a browser with `chia://` and a built-in wallet baked in.
+- **The extension** for Chrome / Edge / Brave / Firefox — adds `chia://` resolution to a browser you already use. Open an address two ways: paste it into the home screen's "open a chia:// address or DIG URN" field, or type `dig` followed by the address straight into your browser's address bar and press Enter — the same shortcut browsers already offer for a site's own search. With a local [dig-node](../concepts.md#dig-node) reachable, the address opens directly from it as a real page (see [Reading from your own node](#reading-from-your-own-node) below); with no node reachable, it opens inside the extension's own viewer instead, verified and decrypted from the public network.
 
-## Membuka konten `chia://` — terbaru vs terkunci (pinned) {#open-chia-content--latest-vs-pinned}
+## Open `chia://` content — latest vs pinned
 
-Bentuk-bentuk alamat, bilah `chia://<store>/` yang bersih, dan kapan mengunci sebuah `rootHash`.
+The address forms, the clean `chia://<store>/` bar, and when to pin a `rootHash`.
 
-→ [Protokol chia://](../browser/chia-protocol.md)
+→ [The chia:// protocol](../browser/chia-protocol.md)
 
-## Halaman bawaan, badge terverifikasi & shield {#built-in-pages-the-verified-badge--shields}
+## Built-in pages, the verified badge & shields
 
-`chia://home`, `chia://wallet`, `chia://settings`, serta badge terverifikasi / shield yang menunjukkan hasil verifikasi inclusion-proof setiap resource untuk capsule yang aktif.
+`chia://home`, `chia://wallet`, `chia://settings`, and the verified badge / shields that show each resource's inclusion-proof verdict for the active capsule. When the extension opens a page directly from your node, it overlays a small **DIG toolbar** on the page itself showing whether it's verified on Chia and whether it loaded from your local node — click it to open the fuller wallet or shields views.
 
-→ [Menggunakan window.chia](../browser/using-window-chia.md)
+→ [Using window.chia](../browser/using-window-chia.md) · [How the built-in wallet protects your keys](../browser/wallet-security.md)
 
-## Publik vs privat — kapan Anda memerlukan rahasia `?salt=` {#public-vs-private--when-you-need-a-salt-secret}
+## Public vs private — when you need a `?salt=` secret
 
-Store publik terbuka hanya dengan tautannya; store privat memerlukan salt rahasia yang menurunkan decryption key.
+Public stores open with just the link; private stores require the secret salt that derives the decryption key.
 
-→ [Store publik vs privat](../digstore/format/urns-and-encryption.md#public-vs-private-stores) · [Publik vs privat — apa bedanya?](../support/faq.md#public-vs-private)
+→ [Public vs private stores](../digstore/format/urns-and-encryption.md#public-vs-private-stores) · [Public vs private — what's the difference?](../support/faq.md#public-vs-private)
 
-## Jalankan konten secara lokal (opsional) {#run-content-locally-optional}
+## Reading from your own node (optional, faster) {#reading-from-your-own-node}
 
-Arahkan browser/ekstensi Anda ke sebuah [dig-node](../concepts.md#dig-node) lokal untuk pembacaan yang lebih cepat dan ramah-offline — keduanya berbagi satu cache `.dig`. Anda tidak pernah *perlu* sebuah node untuk membaca.
+Point your browser/extension at a local [dig-node](../concepts.md#dig-node) for faster, offline-friendly reads — they share one `.dig` cache. The first time you open a store, your node fetches what it needs and keeps syncing the rest of it in the background; once a store is fully synced, later opens read straight from your machine instead of the network. You never *need* a node to read.
 
-→ [Jalankan sebuah node](../run-a-node/index.md)
+With a node reachable, the extension opens a store directly from it as an ordinary website: pages, scripts, images, and links all resolve within that store and version, and a single-page app's own client-side routes keep working — an unmatched route falls back to the store's entry page instead of a dead end. Links elsewhere on the internet go there directly, untouched.
 
-## Dapatkan $DIG {#get-dig}
+→ [Run a node](../run-a-node/index.md) · [Point a consumer at your node](../run-a-node/point-a-consumer.md#local-first-caching)
 
-Anda tidak memerlukan $DIG untuk *membaca* konten. Jika Anda ingin menerbitkan, dapatkan $DIG di **TibetSwap**, **dexie.space**, atau **9mm.pro**.
+## Get $DIG
 
-→ [Di mana saya bisa mendapatkan DIG?](../support/faq.md#where-do-i-get-dig)
+You don't need $DIG to *read* content. If you want to publish, get $DIG on **TibetSwap**, **dexie.space**, or **9mm.pro**.
+
+→ [Where do I get DIG?](../support/faq.md#where-do-i-get-dig)
 
 ---
 
-## Mendalami lebih jauh: protokolnya {#go-deeper-the-protocol}
+## Go deeper: the protocol
 
-- **"diverifikasi terhadap blockchain"** → [Anchoring on-chain](../digstore/cli/onchain-anchoring.md) · [Proof & keamanan](../digstore/format/proofs-and-security.md)
-- **"salt publik vs privat"** → [URN & enkripsi](../digstore/format/urns-and-encryption.md#public-vs-private-stores)
-- **"terbaru vs terkunci"** → [Generation & root hash](../digstore/format/store-structure.md#generations-and-root-hashes)
-- **Semuanya** → [Pembahasan mendalam protokol](../protocol-deep-dive.md) · [Konsep & glosarium](../concepts.md)
+- **"verified against the blockchain"** → [On-chain anchoring](../digstore/cli/onchain-anchoring.md) · [Proofs & security](../digstore/format/proofs-and-security.md)
+- **"public vs private salt"** → [URNs & encryption](../digstore/format/urns-and-encryption.md#public-vs-private-stores)
+- **"latest vs pinned"** → [Generations & root hashes](../digstore/format/store-structure.md#generations-and-root-hashes)
+- **Everything** → [Protocol deep-dive](../protocol-deep-dive.md) · [Concepts & glossary](../concepts.md)

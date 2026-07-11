@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
-title: コンテンツ消費者向け
-description: "自分のブラウザがブロックチェーンに照らして検証するchia://コンテンツを開く — どのホストもそれを改ざんしたり偽造したりできず、非公開のコンテンツはホストからも非公開のままで、永続的かつどこにでも再ホスト可能なので、誰もそれを停止させたり閉じ込めたりできません。"
+title: For content consumers
+description: "Open chia:// content that your own browser verifies against the blockchain — no host can alter or fake it, private content stays private from the host, and it's permanent and re-hostable anywhere, so nobody can take it down or lock you in."
 keywords:
   - open chia content
   - DIG Browser
@@ -9,6 +9,9 @@ keywords:
   - verified content
   - private content salt
   - extension
+  - omnibox
+  - local-first reads
+  - DIG toolbar
 tags:
   - browser
   - chia-protocol
@@ -16,59 +19,61 @@ tags:
   - dig-node
 ---
 
-# コンテンツ消費者向け {#for-content-consumers}
+# For content consumers
 
-> **自分自身のブラウザがブロックチェーンに照らして検証する`chia://`コンテンツを開きましょう** — どのホストもそれを改ざんしたり偽造したりできず、非公開のコンテンツはホストからも非公開のままで、永続的かつどこにでも再ホスト可能なので、誰もそれを停止させたり閉じ込めたりできません。
+> **Open `chia://` content that your OWN browser verifies against the blockchain** — no host can alter or fake it, private content stays private from the host, and it's permanent and re-hostable anywhere, so nobody can take it down or lock you in.
 
-## メンタルモデル {#the-mental-model}
+## The mental model
 
-`chia://`リンクを貼り付けると、コンテンツはネットワークから直接届き、レンダリングされる前に**コンテンツアドレス指定**され、**あなたのデバイス上で暗号学的に検証**されます。これは**フェイルクローズ**です。改ざんされた、あるいは復号できないバイト列は決して表示されません。
+Paste a `chia://` link and the content comes straight from the network — **content-addressed** and **cryptographically verified on YOUR device** before it renders. It is **fail-closed**: tampered or undecryptable bytes never show.
 
-- **`rootHash`を省略する**と、storeの*最新*バージョンになります：`chia://<storeId>/`。
-- **含める**と、1つの正確な不変[capsule](../concepts.md#capsule)に固定されます：`chia://<storeId>:<rootHash>/`。
+- **Omit the `rootHash`** for the store's *latest* version: `chia://<storeId>/`.
+- **Include it** to pin one exact immutable [capsule](../concepts.md#capsule): `chia://<storeId>:<rootHash>/`.
 
-公開コンテンツはリンクだけで十分です。非公開コンテンツにはパスワードのような秘密の**`?salt=`**も必要です。
+Public content needs only the link. Private content also needs a secret **`?salt=`** — like a password.
 
-## DIG Browser、または拡張機能を入手する {#get-the-dig-browser-or-the-extension}
+## Get the DIG Browser, or the extension
 
-- **[DIG Browserを入手する ↗](https://github.com/DIG-Network/DIG_Browser/releases)** — `chia://`と内蔵ウォレットを備えたブラウザです。
-- **拡張機能**（Chrome / Edge / Brave / Firefox向け） — すでに使っているブラウザに`chia://`の解決機能を追加します。
+- **[Get the DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)** — a browser with `chia://` and a built-in wallet baked in.
+- **The extension** for Chrome / Edge / Brave / Firefox — adds `chia://` resolution to a browser you already use. Open an address two ways: paste it into the home screen's "open a chia:// address or DIG URN" field, or type `dig` followed by the address straight into your browser's address bar and press Enter — the same shortcut browsers already offer for a site's own search. With a local [dig-node](../concepts.md#dig-node) reachable, the address opens directly from it as a real page (see [Reading from your own node](#reading-from-your-own-node) below); with no node reachable, it opens inside the extension's own viewer instead, verified and decrypted from the public network.
 
-## `chia://`コンテンツを開く — 最新版と固定版 {#open-chia-content--latest-vs-pinned}
+## Open `chia://` content — latest vs pinned
 
-アドレスの形式、すっきりした`chia://<store>/`バー、そして`rootHash`を固定すべきタイミング。
+The address forms, the clean `chia://<store>/` bar, and when to pin a `rootHash`.
 
-→ [chia://プロトコル](../browser/chia-protocol.md)
+→ [The chia:// protocol](../browser/chia-protocol.md)
 
-## 組み込みページ、検証バッジ、シールド {#built-in-pages-the-verified-badge--shields}
+## Built-in pages, the verified badge & shields
 
-`chia://home`、`chia://wallet`、`chia://settings`、そして現在有効なcapsuleの包含証明の判定結果を示す検証バッジ／シールド。
+`chia://home`, `chia://wallet`, `chia://settings`, and the verified badge / shields that show each resource's inclusion-proof verdict for the active capsule. When the extension opens a page directly from your node, it overlays a small **DIG toolbar** on the page itself showing whether it's verified on Chia and whether it loaded from your local node — click it to open the fuller wallet or shields views.
 
-→ [window.chiaを使う](../browser/using-window-chia.md)
+→ [Using window.chia](../browser/using-window-chia.md) · [How the built-in wallet protects your keys](../browser/wallet-security.md)
 
-## 公開 vs 非公開 — `?salt=`の秘密が必要なとき {#public-vs-private--when-you-need-a-salt-secret}
+## Public vs private — when you need a `?salt=` secret
 
-公開storeはリンクだけで開けます。非公開storeは復号キーを導出するための秘密のsaltが必要です。
+Public stores open with just the link; private stores require the secret salt that derives the decryption key.
 
-→ [公開storeと非公開store](../digstore/format/urns-and-encryption.md#public-vs-private-stores) · [公開と非公開の違いは？](../support/faq.md#public-vs-private)
+→ [Public vs private stores](../digstore/format/urns-and-encryption.md#public-vs-private-stores) · [Public vs private — what's the difference?](../support/faq.md#public-vs-private)
 
-## コンテンツをローカルで実行する（任意） {#run-content-locally-optional}
+## Reading from your own node (optional, faster) {#reading-from-your-own-node}
 
-より高速でオフラインに強い読み取りのために、ブラウザ／拡張機能をローカルの[dig-node](../concepts.md#dig-node)に向けましょう — これらは1つの`.dig`キャッシュを共有します。コンテンツを読むためにノードが*必要*になることはありません。
+Point your browser/extension at a local [dig-node](../concepts.md#dig-node) for faster, offline-friendly reads — they share one `.dig` cache. The first time you open a store, your node fetches what it needs and keeps syncing the rest of it in the background; once a store is fully synced, later opens read straight from your machine instead of the network. You never *need* a node to read.
 
-→ [ノードを運用する](../run-a-node/index.md)
+With a node reachable, the extension opens a store directly from it as an ordinary website: pages, scripts, images, and links all resolve within that store and version, and a single-page app's own client-side routes keep working — an unmatched route falls back to the store's entry page instead of a dead end. Links elsewhere on the internet go there directly, untouched.
 
-## $DIGを入手する {#get-dig}
+→ [Run a node](../run-a-node/index.md) · [Point a consumer at your node](../run-a-node/point-a-consumer.md#local-first-caching)
 
-コンテンツを*読む*ために$DIGは必要ありません。公開したい場合は、**TibetSwap**、**dexie.space**、**9mm.pro**で$DIGを入手してください。
+## Get $DIG
 
-→ [DIGはどこで入手できますか？](../support/faq.md#where-do-i-get-dig)
+You don't need $DIG to *read* content. If you want to publish, get $DIG on **TibetSwap**, **dexie.space**, or **9mm.pro**.
+
+→ [Where do I get DIG?](../support/faq.md#where-do-i-get-dig)
 
 ---
 
-## さらに深く：プロトコル {#go-deeper-the-protocol}
+## Go deeper: the protocol
 
-- **「ブロックチェーンに照らして検証される」** → [オンチェーンアンカリング](../digstore/cli/onchain-anchoring.md) · [証明とセキュリティ](../digstore/format/proofs-and-security.md)
-- **「公開と非公開のsalt」** → [URNと暗号化](../digstore/format/urns-and-encryption.md#public-vs-private-stores)
-- **「最新版と固定版」** → [Generationとroot hash](../digstore/format/store-structure.md#generations-and-root-hashes)
-- **すべて** → [プロトコル詳解](../protocol-deep-dive.md) · [概念と用語集](../concepts.md)
+- **"verified against the blockchain"** → [On-chain anchoring](../digstore/cli/onchain-anchoring.md) · [Proofs & security](../digstore/format/proofs-and-security.md)
+- **"public vs private salt"** → [URNs & encryption](../digstore/format/urns-and-encryption.md#public-vs-private-stores)
+- **"latest vs pinned"** → [Generations & root hashes](../digstore/format/store-structure.md#generations-and-root-hashes)
+- **Everything** → [Protocol deep-dive](../protocol-deep-dive.md) · [Concepts & glossary](../concepts.md)

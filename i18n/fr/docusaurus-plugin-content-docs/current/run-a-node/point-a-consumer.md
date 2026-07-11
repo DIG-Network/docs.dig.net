@@ -11,6 +11,8 @@ keywords:
   - digstore --node
   - wallet data source
   - extension wallet node
+  - local-first caching
+  - sync-down
 tags:
   - dig-node
   - browser
@@ -56,6 +58,12 @@ Choose the source under **Settings → Wallet data source** (in the full-window 
 
 An explicit choice overrides the automatic `dig.local` → `localhost` → `rpc.dig.net` order. Changing the source re-loads every wallet view from the newly selected source right away.
 
+## Local-first caching {#local-first-caching}
+
+The first time you open a store, your node fetches just enough to answer that request immediately and starts syncing the rest of the store in the background; once it's fully synced, every later read of it comes straight from your disk — no network round-trip. The public network (a peer, or `rpc.dig.net`) is used only for stores your node hasn't synced yet, or ones evicted to stay under [the reserved cache cap](./control-panel.md). If a store you've synced publishes a new version on-chain, your node re-syncs the change automatically. Either way, every byte is still verified against the chain before it reaches you — local-first changes *where* content comes from, never whether it's trusted.
+
+With a local node reachable, the extension also opens a store directly from it as an ordinary website — see [Reading from your own node](../audiences/content-consumers.md#reading-from-your-own-node).
+
 ## The shared cache
 
 The local cache is a set of [capsules](../concepts.md#capsule) keyed by `storeId:rootHash`, written content-addressed with a cross-process lock — so the in-process browser node and a standalone dig-node on the same machine read and write **one** cache without corruption.
@@ -65,5 +73,7 @@ The local cache is a set of [capsules](../concepts.md#capsule) keyed by `storeId
 - [Run a node — overview](./index.md)
 - [Configure dig-node](./configure.md)
 - [Manage your node](./manage.md) — the control.* admin RPCs + the My Node UI
+- [The dig-node Control Panel](./control-panel.md) — reserved cache space + LRU eviction
 - [Command reference — global flags](../digstore/cli/command-reference.md#global-flags) — the CLI's `--node` flag and `digstore config node.url`
 - [The dig:// remote (clone/pull/push)](../rpc/dig-remote.md) — the same ladder as it applies to `dig://` URLs without an explicit host
+- [Reading from your own node](../audiences/content-consumers.md#reading-from-your-own-node) — the extension's node-served SPA reads, from the content-consumer's side

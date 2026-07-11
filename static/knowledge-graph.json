@@ -3228,6 +3228,11 @@
     },
     {
       "from": "/docs/browser/chia-protocol",
+      "to": "/docs/run-a-node/point-a-consumer",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/browser/chia-protocol",
       "to": "/docs/concepts",
       "type": "see-also"
     },
@@ -4808,12 +4813,22 @@
     },
     {
       "from": "/docs/run-a-node/point-a-consumer",
+      "to": "/docs/run-a-node/control-panel",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/point-a-consumer",
       "to": "/docs/digstore/cli/command-reference",
       "type": "see-also"
     },
     {
       "from": "/docs/run-a-node/point-a-consumer",
       "to": "/docs/rpc/dig-remote",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/point-a-consumer",
+      "to": "/docs/audiences/content-consumers",
       "type": "see-also"
     },
     {
