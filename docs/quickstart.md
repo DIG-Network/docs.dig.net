@@ -75,11 +75,11 @@ The same flow from your terminal — scriptable and the basis for CI. The CLI mi
 ### 1. Install
 
 ```sh
-# download the installer for your OS from the Releases page, then:
+# download the digstore binary for your OS from the Releases page, then:
 digstore --version
 ```
 
-See [Installing the CLI](./digstore/cli/install.md) for per-OS installers and build-from-source.
+See [Installing the CLI](./digstore/cli/install.md) for per-OS binaries, the guided DIG Installer, and build-from-source.
 
 ### 2. Scaffold and preview — free, no chain, no spend
 

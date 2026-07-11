@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
-title: Chạy một DIG node
-description: "dig-node là gì, tại sao bạn nên chạy một node, và cách cài đặt nó — kho apt cho Ubuntu/Debian hoặc trình cài đặt phổ dụng đa nền tảng."
+title: Run a DIG node
+description: "What a dig-node is, why you'd run one, and how to install it — the apt repository for Ubuntu/Debian or the cross-platform DIG Installer."
 keywords:
   - dig-node
   - run a node
@@ -9,75 +9,81 @@ keywords:
   - seedbox
   - dig RPC
   - install dig-node
+  - DIG Installer
 tags:
   - dig-node
   - dig-rpc
   - capsule
 ---
 
-# Chạy một DIG node {#run-a-dig-node}
+# Run a DIG node
 
-> **Phục vụ nội dung có thể chứng minh được và ẩn danh nhà cung cấp** — bạn chỉ bao giờ chạm vào ciphertext không thể phân biệt được theo khóa hash, có thể xác thực việc phục vụ trung thực bằng bằng chứng thực thi, và client xác minh mọi thứ dựa trên chuỗi, nên sự tin tưởng không bao giờ dựa vào node của bạn.
+> **Serve content provably and provider-blind** — you only ever touch indistinguishable ciphertext keyed by hashes, can attest faithful serving with execution proofs, and the client verifies everything against the chain, so trust never rests on your node.
 
-Một **dig-node** là **server** nội dung của DIG Network — phía cung của mạng lưới. Nó lưu trữ các capsule, giữ một bộ nhớ đệm `.dig` cục bộ, và phơi bày [dig RPC](../rpc/what-is-the-dig-rpc.md) để bất cứ thứ gì đọc nội dung DIG cũng có thể đọc từ bạn. Nó chạy không đầu (headless, không trình duyệt, không giao diện) như một dịch vụ nền — một seedbox cho nội dung bạn xuất bản hoặc muốn giúp phục vụ.
+A **dig-node** is the DIG Network's content **server** — the supply side of the network. It hosts capsules, keeps a local `.dig` cache, and exposes the [dig RPC](../rpc/what-is-the-dig-rpc.md) so anything that reads DIG content can read it from you. It runs headless (no browser, no UI) as a background service — a seedbox for the content you publish or want to help serve.
 
-Nó là đối tác của các **người tiêu thụ** — [DIG Browser](../browser/chia-protocol.md) và tiện ích mở rộng trình duyệt — những thứ lấy ciphertext + bằng chứng, xác minh dựa trên root on-chain, giải mã cục bộ, và render. Bạn **không cần** một dig-node để đọc nội dung DIG: chỉ riêng một trình tiêu thụ đã hoạt động tốt, dự phòng về node tham chiếu công khai tại `rpc.dig.net`. Bạn chạy một dig-node để **phục vụ** — và khi có một node hiện diện trên cùng máy, trình tiêu thụ đọc từ nó (cục bộ, thân thiện với offline, và đóng góp cho mạng lưới) và chúng chia sẻ chung một bộ nhớ đệm `.dig`.
+It is the counterpart to the **consumers** — the [DIG Browser](../browser/chia-protocol.md) and the browser extension — which fetch ciphertext + proofs, verify against the on-chain root, decrypt locally, and render. You do **not** need a dig-node to read DIG content: a consumer alone works fine, falling back to the public reference node at `rpc.dig.net`. You run a dig-node to **serve** — and when one is present on the same machine, the consumer reads from it (local, offline-friendly, and contributing to the network) and they share one `.dig` cache.
 
-:::info Phục vụ so với tiêu thụ
-- **dig-node** = phục vụ nội dung + phơi bày dig RPC. Dịch vụ nền không đầu.
-- **DIG Browser / tiện ích mở rộng** = tiêu thụ nội dung (xác minh + giải mã cục bộ). Không cần node cục bộ.
+:::info Serving vs. consuming
+- **dig-node** = serves content + exposes the dig RPC. Headless background service.
+- **DIG Browser / extension** = consume content (verify + decrypt locally). No local node required.
 
-Khi cả hai được cài đặt, trình duyệt/tiện ích mở rộng đọc từ dig-node cục bộ của bạn; nếu không, chúng đọc từ `rpc.dig.net`. Dù bằng cách nào, mọi byte đều được xác minh ở phía client dựa trên chuỗi — nguồn không bao giờ được tin tưởng.
+When both are installed, the browser/extension read from your local dig-node; otherwise they read from `rpc.dig.net`. Either way every byte is verified client-side against the chain — the source is never trusted.
 :::
 
-## Cài đặt nó {#install-it}
+## Install it
 
-| Máy của bạn | Dùng |
+| Your machine | Use |
 |---|---|
-| **Ubuntu / Debian** | **[Kho apt](./apt.md)** gốc — `apt install dig-node digstore`, tự động bật như một dịch vụ systemd. |
-| **Windows / macOS / Linux (bất kỳ)** | **[Trình cài đặt phổ dụng](#universal-installer-any-os)** đa nền tảng — một lệnh `curl \| sh` (hoặc tải xuống) cho mọi hệ điều hành. |
+| **Ubuntu / Debian** | The native **[apt repository](./apt.md)** — `apt install dig-node digstore`, auto-enabled as a systemd service. |
+| **Windows / macOS / Linux (any)** | The cross-platform **[DIG Installer](#universal-installer-any-os)** — one `curl \| sh` (or download) installs the full stack for every OS. |
 
-Cả hai đều cài đặt cùng một dịch vụ `dig-node` cộng với CLI `digstore`. apt là lộ trình gốc của Debian (đã ký, có thể `apt upgrade`); trình cài đặt phổ dụng bao quát mọi thứ khác.
+Both install `dig-node` plus the `digstore` CLI; the DIG Installer additionally installs `dig-dns` by default. apt is the Debian-native path (signed, `apt upgrade`-able); the DIG Installer covers everything else.
 
-### apt (Ubuntu / Debian) — khuyến nghị trên các hệ thống dòng Debian {#apt-ubuntu--debian--recommended-on-debian-family-systems}
+### apt (Ubuntu / Debian) — recommended on Debian-family systems
 
-Lộ trình gốc: một kho apt đã ký tại `apt.dig.net`. Nó cài đặt `dig-node` như một **dịch vụ systemd** được quản lý và giữ nó cập nhật bằng `apt upgrade`.
+The native path: a signed apt repository at `apt.dig.net`. It installs `dig-node` as a managed **systemd service** and keeps it updated with `apt upgrade`.
 
-→ **[Cài đặt trên Ubuntu/Debian qua apt](./apt.md)**
+→ **[Install on Ubuntu/Debian via apt](./apt.md)**
 
-### Trình cài đặt phổ dụng (mọi hệ điều hành) {#universal-installer-any-os}
+### DIG Installer (any OS) {#universal-installer-any-os}
 
-Lộ trình đa nền tảng — Windows, macOS, và bất kỳ Linux nào. Nó phát hiện hệ điều hành của bạn, cài đặt dịch vụ `dig-node` (dịch vụ Windows / `systemd` / `launchd`) và CLI `digstore`, và không cần trình quản lý gói:
+The cross-platform path — Windows, macOS, and any Linux. The **DIG Installer** detects your OS and installs the full DIG stack in one run — the `digstore` CLI, plus the `dig-node` and `dig-dns` boot-start services — with no package manager needed:
 
 ```sh
 curl -fsSL https://dig.net/install.sh | sh
 ```
 
-Đây là cùng một `dig-installer` tự chứa được phát hành trên [trang Releases](https://github.com/DIG-Network/dig-installer/releases) — tải xuống và chạy trực tiếp nếu bạn không muốn pipe vào một shell, hoặc trên Windows. Làm như vậy cũng sẽ mở một [trình hướng dẫn GUI](./universal-installer.md#gui-installer), nếu bạn muốn nhấp chuột thay vì dùng cờ.
+```powershell
+# Windows (PowerShell)
+irm https://dig.net/install.ps1 | iex
+```
 
-:::note Trước khi phát hành
-Các trình cài đặt được lưu trữ (`apt.dig.net`, `dig.net/install.sh`) vẫn đang được thiết lập. Cho đến khi chúng trực tuyến, hãy build từ mã nguồn hoặc lấy một binary từ [dig-node Releases](https://github.com/DIG-Network/dig-node/releases). Các lệnh ở đây là những lệnh thực sự, đúng như dự định.
+This is the same self-contained `dig-installer` shipped on the [Releases page](https://github.com/DIG-Network/dig-installer/releases) — download and run it directly if you prefer not to pipe to a shell, or on Windows. Doing so also opens a guided [GUI wizard](./universal-installer.md#gui-installer), if you'd rather click through than use flags.
+
+:::note Pre-release
+The hosted installers (`apt.dig.net`, `dig.net/install.sh`) are still being provisioned. Until they're live, build from source or grab a binary from the [dig-node Releases](https://github.com/DIG-Network/dig-node/releases). The commands here are the real, intended ones.
 :::
 
-## Chỉ muốn đọc nội dung? {#just-want-to-read-content}
+## Just want to read content?
 
-Bạn không cần một node. Lấy **[DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)** và mở bất kỳ địa chỉ `chia://` nào — nó tiêu thụ từ dig-node cục bộ của bạn nếu bạn có một, nếu không thì từ `rpc.dig.net`. Xem [Giao thức `chia://`](../browser/chia-protocol.md).
+You don't need a node. Get the **[DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)** and open any `chia://` address — it consumes from your local dig-node if you have one, else from `rpc.dig.net`. See [The `chia://` protocol](../browser/chia-protocol.md).
 
-## Liên quan {#related}
+## Related
 
-- [Cài đặt trên Ubuntu/Debian qua apt](./apt.md) — lộ trình gốc của Debian + quản lý dịch vụ systemd
-- [Cài đặt ở bất cứ đâu — trình cài đặt phổ dụng](./universal-installer.md) — Windows / macOS / bất kỳ Linux nào + `dig.local`
-- [Trỏ một trình tiêu thụ vào node của bạn](./point-a-consumer.md) — đọc ưu tiên cục bộ + bộ nhớ đệm `.dig` chung
-- [Cấu hình dig-node](./configure.md) — cổng, listener, giới hạn bộ nhớ đệm, upstream
-- [Tự lưu trữ một nguồn gốc từ xa](../rpc/dig-remote.md) — `digstore serve` + clone/pull/push qua dig://
-- [Quản lý node của bạn](./manage.md) — các RPC quản trị control.* + giao diện My Node
-- [Bảng điều khiển](./control-panel.md) — vận hành toàn bộ node của bạn từ tiện ích mở rộng DIG: trạng thái trực tiếp, dung lượng bộ nhớ đệm dành riêng (LRU), và — sau khi ghép nối — upstream/kho lưu trữ được lưu trữ/đồng bộ/peer
-- [Sử dụng RPC mạng công khai](../rpc/public-network-rpc.md) — dig RPC mà node của bạn nói, và vận hành một node trên mạng lưới
-- [Cài đặt CLI](../digstore/cli/install.md) — `digstore` một mình (xuất bản, không phải phục vụ)
+- [Install on Ubuntu/Debian via apt](./apt.md) — the Debian-native path + systemd service management
+- [Install anywhere — the universal installer](./universal-installer.md) — Windows / macOS / any Linux + `dig.local`
+- [Point a consumer at your node](./point-a-consumer.md) — local-first reads + the shared `.dig` cache
+- [Configure dig-node](./configure.md) — ports, listeners, cache cap, upstream
+- [Self-host a remote origin](../rpc/dig-remote.md) — `digstore serve` + dig:// clone/pull/push
+- [Manage your node](./manage.md) — the control.* admin RPCs + the My Node UI
+- [The dig-node Control Panel](./control-panel.md) — run your node from the DIG extension: live status, reserved cache space (LRU), and — once paired — upstream/hosted stores/sync/peers
+- [Using the public network RPC](../rpc/public-network-rpc.md) — the dig RPC your node speaks, and operating a node on the network
+- [Installing the CLI](../digstore/cli/install.md) — `digstore` on its own (publishing, not serving)
 
-## Đi sâu hơn: giao thức {#go-deeper-the-protocol}
+## Go deeper: the protocol
 
-- **"host ẩn danh & decoy"** → [Mô hình phục vụ ẩn danh của dig RPC](../rpc/what-is-the-dig-rpc.md) · [Tuân thủ Node](../rpc/conformance.md)
-- **"chứng thực việc phục vụ trung thực"** → [Bằng chứng bao gồm so với bằng chứng thực thi](../inclusion-vs-execution-proofs.md)
-- **"clone/pull/push qua dig://"** → [Giao thức remote §21/§22](../rpc/dig-remote.md)
-- **Tất cả** → [Đi sâu vào giao thức](../protocol-deep-dive.md) · [Khái niệm & thuật ngữ](../concepts.md)
+- **"blind host & decoys"** → [The dig RPC blind serving model](../rpc/what-is-the-dig-rpc.md) · [Node conformance](../rpc/conformance.md)
+- **"attest faithful serving"** → [Inclusion vs execution proofs](../inclusion-vs-execution-proofs.md)
+- **"dig:// clone/pull/push"** → [The §21/§22 remote protocol](../rpc/dig-remote.md)
+- **Everything** → [Protocol deep-dive](../protocol-deep-dive.md) · [Concepts & glossary](../concepts.md)

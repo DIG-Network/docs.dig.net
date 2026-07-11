@@ -1113,6 +1113,8 @@
       "url": "https://docs.dig.net/docs/run-a-node/universal-installer",
       "tags": [
         "dig-node",
+        "dig-dns",
+        "digstore-cli",
         "dig-rpc"
       ]
     },
@@ -3023,6 +3025,11 @@
     },
     {
       "from": "/docs/run-a-node/universal-installer",
+      "to": "concept:digstore-cli",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/run-a-node/universal-installer",
       "to": "concept:dig-rpc",
       "type": "part-of"
     },
@@ -4854,6 +4861,11 @@
     {
       "from": "/docs/run-a-node/universal-installer",
       "to": "/docs/run-a-node",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/universal-installer",
+      "to": "/docs/digstore/cli/install",
       "type": "see-also"
     },
     {

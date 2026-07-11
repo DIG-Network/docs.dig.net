@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 title: Quickstart
-description: "Опубликуйте свой первый сайт на DIG — сборка и предпросмотр бесплатны, вы платите единую цену capsule только при публикации. Веб-путь в приоритете (кошелёк не нужен для начала) плюс параллельный CLI-путь."
+description: "Ship your first site on DIG — free to build and preview, you only pay the uniform capsule price when you publish. Web-first path (no wallet to start) plus a parallel CLI track."
 keywords:
   - DIG quickstart
   - deploy on Chia
@@ -17,149 +17,149 @@ tags:
   - anchoring
 ---
 
-# Quickstart {#quickstart}
+# Quickstart
 
-Опубликуйте сайт в сети, которую хост не может прочитать, изменить или отключить — примерно за десять минут.
+Ship a site to a network no host can read, change, or take down — in about ten minutes.
 
-**Сборка и предпросмотр бесплатны.** Скаффолдинг и предпросмотр ничего не стоят; вы платите **единую цену capsule в $DIG** только в момент публикации [capsule](./concepts.md#capsule) в блокчейне. *Итерируйте бесплатно, публикуйте, когда всё готово.*
+**You build and preview for free.** Scaffolding and previewing cost nothing; you pay the **uniform capsule price in $DIG** only at the moment you publish a [capsule](./concepts.md#capsule) on-chain. *Iterate for free, publish when it's ready.*
 
-Есть два способа. Большинство начинает с веба.
+Two ways to do it. Most people start on the web.
 
-- **[A. Публикация из веба](#a-publish-from-the-web)** — в [DIGHUb](./concepts.md#dighub) подключите кошелёк в самом конце. Лучше всего подходит для сайтов и фронтендов. ~10 минут.
-- **[B. Публикация из CLI](#b-publish-from-the-cli)** — `digstore` на вашей машине, скриптуемо и готово для CI. Лучше всего для разработчиков и автоматизации.
+- **[A. Publish from the web](#a-publish-from-the-web)** — in [DIGHUb](./concepts.md#dighub), connect a wallet at the end. Best for sites and frontends. ~10 min.
+- **[B. Publish from the CLI](#b-publish-from-the-cli)** — `digstore` on your machine, scriptable and CI-ready. Best for devs and automation.
 
 ---
 
-## A. Публикация из веба {#a-publish-from-the-web}
+## A. Publish from the web
 
-Самый быстрый путь: собирайте и просматривайте в браузере, финансируйте кошелёк только на последнем шаге.
+The fastest path: build and preview in the browser, fund a wallet only at the final step.
 
-### 1. Откройте DIGHUb и начните черновик — бесплатно, без кошелька {#1-open-dighub-and-start-a-draft--free-no-wallet}
+### 1. Open DIGHUb and start a draft — free, no wallet
 
-[**Создайте новый store в DIGHUb ↗**](https://hub.dig.net/new). Загрузите ваш собранный сайт (папку со статическими файлами — ваш `dist/` или `build/`). DIGHUb покажет вам **бесплатный предпросмотр черновика**, точно демонстрирующий, как всё будет обслуживаться, без чего-либо on-chain и без трат $DIG.
+[**Start a new store in DIGHUb ↗**](https://hub.dig.net/new). Drop in your built site (a folder of static files — your `dist/` or `build/`). DIGHUb gives you a **free draft preview** of exactly how it will serve, with nothing on-chain and no $DIG spent.
 
-Кошелёк пока не нужен. Итерируйте черновик сколько угодно раз — перезагружайте, пересматривайте — совершенно бесплатно.
+You don't need a wallet yet. Iterate on the draft as many times as you like — re-upload, re-preview — entirely for free.
 
-### 2. Просмотрите его на реальном пути чтения — всё ещё бесплатно {#2-preview-it-on-the-real-read-path--still-free}
+### 2. Preview it on the real read path — still free
 
-Предпросмотр рендерит ваш сайт через настоящий пайплайн DIG (шифрование → компиляция → верификация → расшифровка), так что вы видите именно то, что получат посетители. Кликайте по ссылкам, проверяйте ресурсы и маршрутизацию. Ничего не публикуется и ничего не тратится, пока вы сами этого не выберете.
+The preview renders your site through the genuine DIG pipeline (encrypt → compile → verify → decrypt), so what you see is what visitors get. Click around, check assets and routing. Nothing is published and nothing is spent until you choose to.
 
-### 3. Публикация — финансирование и подключение кошелька {#3-publish--fund-and-connect-a-wallet}
+### 3. Publish — fund and connect a wallet
 
-Когда черновик выглядит правильно, нажмите **Publish**. Это единственный шаг, который что-то стоит:
+When the draft looks right, hit **Publish**. This is the only step that costs anything:
 
-- Подключите кошелёк Chia (ваш кошелёк *является* вашей учётной записью — без email, без пароля).
-- Подтвердите on-chain трату: **единая цена capsule в $DIG + небольшая комиссия XCH**, одной подписью. Экран публикации показывает точную сумму $DIG перед подписанием.
-- DIGHUb минтит ваш store и публикует первую **capsule** в основной сети Chia.
+- Connect a Chia wallet (your wallet *is* your account — no email, no password).
+- Approve the on-chain spend: the **uniform capsule price in $DIG + a small XCH fee**, in one signature. The publish screen shows the exact $DIG amount before you sign.
+- DIGHUb mints your store and publishes the first **capsule** on Chia mainnet.
 
-Не хватает DIG? Экран публикации показывает ваш баланс и где его пополнить. См. [Где взять DIG](./digstore/cli/onchain-anchoring.md#where-to-get-dig) — TibetSwap, dexie.space или 9mm.pro.
+Short on DIG? The publish screen shows your balance and where to top up. See [Where to get DIG](./digstore/cli/onchain-anchoring.md#where-to-get-dig) — TibetSwap, dexie.space, or 9mm.pro.
 
-### 4. Вы в сети {#4-youre-live}
+### 4. You're live
 
-Ваша capsule теперь закреплена в блокчейне и **сразу доступна для чтения через [dig RPC](./concepts.md#dig-rpc)** — любой может получить и проверить её по [URN `urn:dig:`](./concepts.md#urn) или адресу [`chia://`](./browser/chia-protocol.md), без регистрации и без дополнительных платежей. URN — это одновременно и адрес, и ключ; поделитесь им, чтобы поделиться контентом. Путь чтения универсален и бесплатен; он становится доступен в момент подтверждения capsule.
+Your capsule is now anchored on-chain and **immediately readable over the [dig RPC](./concepts.md#dig-rpc)** — anyone can fetch and verify it by its [`urn:dig:` URN](./concepts.md#urn) or [`chia://`](./browser/chia-protocol.md) address, no registration and nothing more to pay. The URN is both the address *and* the key; share it to share the content. The read path is universal and free; it's live the moment the capsule confirms.
 
-**Хотите удобный адрес `*.on.dig.net`?** Это опционально. Store получает поддомен `*.on.dig.net` только при **регистрации хендла** для него в DIGHUb — отдельная платная регистрация, закрепляющая store за этим именем. Пока хендл не зарегистрирован, URL `*.on.dig.net` не существует (указанный выше URN / адрес `chia://` — всегда канонический способ доступа). См. [Могу ли я использовать свой домен?](./support/faq.md#can-i-use-my-own-domain).
+**Want a human-friendly `*.on.dig.net` address?** That's optional. A store gets a `*.on.dig.net` subdomain only when you **register a handle** for it in DIGHUb — a separate, paid registration that pins the store to that name. Until you register one, there's no `*.on.dig.net` URL (the URN / `chia://` address above is always the canonical way to reach it). See [Can I use my own domain?](./support/faq.md#can-i-use-my-own-domain).
 
-**Чтобы выпустить обновление позже:** отредактируйте, бесплатно просмотрите новый черновик и снова нажмите Publish. Каждое опубликованное обновление — это новая capsule, и оно снова стоит **единую цену capsule** — вы платите только при переводе черновика в постоянную on-chain версию.
+**To ship an update later:** edit, preview the new draft for free, and Publish again. Each published update is a new capsule and costs the **uniform capsule price** again — you only pay when you promote a draft to a permanent on-chain version.
 
-:::tip Автоматизируйте это
-Как только ваш store создан, настройте [деплой из GitHub Actions](./digstore/cli/deploy-from-github-actions.md), чтобы каждый push в `main` публиковал новую capsule — git-push-to-deploy.
+:::tip Automate it
+Once your store exists, wire up [Deploy from GitHub Actions](./digstore/cli/deploy-from-github-actions.md) so every push to `main` publishes a new capsule — git-push-to-deploy.
 :::
 
 ---
 
-## B. Публикация из CLI {#b-publish-from-the-cli}
+## B. Publish from the CLI
 
-Тот же поток из вашего терминала — скриптуемо и это основа для CI. CLI повторяет веб-путь: сборка и предпросмотр ничего не стоят; публикация capsule стоит единую цену capsule в $DIG.
+The same flow from your terminal — scriptable and the basis for CI. The CLI mirrors the web path: build and preview cost nothing; publishing a capsule costs the uniform capsule price in $DIG.
 
-### 1. Установка {#1-install}
+### 1. Install
 
 ```sh
-# скачайте установщик для вашей ОС со страницы Releases, затем:
+# download the digstore binary for your OS from the Releases page, then:
 digstore --version
 ```
 
-См. [Установка CLI](./digstore/cli/install.md) для установщиков по ОС и сборки из исходников.
+See [Installing the CLI](./digstore/cli/install.md) for per-OS binaries, the guided DIG Installer, and build-from-source.
 
-### 2. Скаффолдинг и предпросмотр — бесплатно, без блокчейна, без трат {#2-scaffold-and-preview--free-no-chain-no-spend}
+### 2. Scaffold and preview — free, no chain, no spend
 
-Создайте проект и просмотрите его локально — **бесплатно, без минта, без блокчейна** — прежде чем что-либо тратить:
+Scaffold a project and preview it locally — **free, no mint, no chain** — before you ever spend:
 
 ```sh
-digstore new <template>   # создать проект с готовой интеграцией кошелька (static · vite-react · next-static · nft-drop · dapp-window-chia) — бесплатно, без минта
-digstore dev              # отслеживание + компиляция при сохранении + обслуживание настоящего пути чтения chia://, с внедрённым window.chia — бесплатно, live-reload
+digstore new <template>   # scaffold a wallet-wired project (static · vite-react · next-static · nft-drop · dapp-window-chia) — free, no mint
+digstore dev              # watch + compile-on-save + serve the real chia:// read path, with an injected window.chia — free, live-reload
 ```
 
-`new` создаёт готовый к запуску проект (`dig.toml` + стартовое приложение); `dev` обслуживает его через настоящий путь чтения DIG (компиляция → верификация → расшифровка) с live reload. Вы платите единую цену capsule только при публикации (следующие шаги). Либо соберите проект своим обычным инструментарием (`npm run build` → `dist/`) и опубликуйте этот результат.
+`new` writes a runnable project (a `dig.toml` + a starter app); `dev` serves it over the genuine DIG read path (compile → verify → decrypt) with live reload. You pay the uniform capsule price only when you publish (next steps). Or build with your usual toolchain (`npm run build` → `dist/`) and publish that output.
 
-:::tip Предпочитаете npm? Используйте `create-dig-app`
-Если вы живёте в мире Node, `npm create dig-app@latest my-app -- --template vite-react` создаёт те же шаблоны прямо из npm — установка `digstore` для начала не нужна. См. [Скаффолдинг приложения](./build-a-dapp/scaffold.md).
+:::tip Prefer npm? Use `create-dig-app`
+If you live in the Node world, `npm create dig-app@latest my-app -- --template vite-react` scaffolds the same templates straight from npm — no `digstore` install needed to start. See [Scaffold an app](./build-a-dapp/scaffold.md).
 :::
 
-### 3. Настройте кошелёк (нужен только для публикации) {#3-set-up-a-wallet-only-needed-to-publish}
+### 3. Set up a wallet (only needed to publish)
 
-Публикация тратит реальные средства, поэтому сначала нужны seed-фраза и профинансированный кошелёк:
+Publishing spends real funds, so you need a seed and a funded wallet first:
 
 ```sh
-digstore seed generate      # сгенерировать новую мнемонику (показывается один раз — сохраните её)
-digstore balance            # показать адрес получения; пополните его XCH + DIG
+digstore seed generate      # generate a fresh mnemonic (shown once — back it up)
+digstore balance            # show your receive address; fund it with XCH + DIG
 ```
 
-См. [On-chain закрепление](./digstore/cli/onchain-anchoring.md) для деталей импорта, финансирования и TTL.
+See [On-chain anchoring](./digstore/cli/onchain-anchoring.md) for import, funding, and TTL details.
 
-### 4. Опубликуйте первую capsule {#4-publish-your-first-capsule}
+### 4. Publish your first capsule
 
 ```sh
-digstore init site --dir dist     # минтит первую capsule store (единая цена capsule + комиссия XCH)
+digstore init site --dir dist     # mint the store's first capsule (uniform capsule price + XCH fee)
 ```
 
-`init` минтит синглтон Chia в основной сети — **launcher id становится вашим store id** — и блокируется до подтверждения.
+`init` mints a Chia singleton on mainnet — **the launcher id becomes your store id** — and blocks until confirmed.
 
-### 5. Публикуйте обновления {#5-ship-updates}
+### 5. Ship updates
 
 ```sh
-npm run build                      # собрать dist/
-digstore add -A                    # добавить в индекс весь корень контента
-digstore commit -m "v1.1"          # опубликовать новую capsule (единая цена capsule + комиссия XCH)
+npm run build                      # produce dist/
+digstore add -A                    # stage the whole content root
+digstore commit -m "v1.1"          # publish a new capsule (uniform capsule price + XCH fee)
 ```
 
-Для CI одна команда выполняет add → commit → push и выводит URL:
+For CI, one command does add → commit → push and prints the URL:
 
 ```sh
-digstore deploy --output-dir dist --json   # продвинуть существующий store из CI; никогда не минтит
+digstore deploy --output-dir dist --json   # advance an existing store from CI; never mints
 ```
 
-См. [Деплой из GitHub Actions](./digstore/cli/deploy-from-github-actions.md).
+See [Deploy from GitHub Actions](./digstore/cli/deploy-from-github-actions.md).
 
-### 6. Прочитайте обратно {#6-read-it-back}
+### 6. Read it back
 
 ```sh
-digstore cat urn:dig:chia:<storeId>/readme   # URN одновременно находит И расшифровывает
+digstore cat urn:dig:chia:<storeId>/readme   # a URN both locates AND decrypts
 ```
 
 ---
 
-## Сколько это стоит {#what-it-costs}
+## What it costs
 
-| Вы делаете | Стоимость |
+| You're doing | Cost |
 |---|---|
-| Скаффолдинг, сборка, предпросмотр черновика | **Бесплатно** |
-| Публикация первой capsule (`init` / Publish в DIGHUb) | **единая цена capsule в $DIG** + небольшая комиссия XCH |
-| Публикация каждого обновления (`commit` / повторный Publish) | **единая цена capsule в $DIG** + небольшая комиссия XCH |
+| Scaffolding, building, previewing a draft | **Free** |
+| Publishing your first capsule (`init` / DIGHUb Publish) | **uniform capsule price in $DIG** + small XCH fee |
+| Publishing each update (`commit` / re-Publish) | **uniform capsule price in $DIG** + small XCH fee |
 
-Цена **единая для всех capsule** — см. [почему цена единая](./digstore/cli/onchain-anchoring.md#why-the-price-is-uniform).
+The price is **uniform per capsule** everywhere — see [why the price is uniform](./digstore/cli/onchain-anchoring.md#why-the-price-is-uniform).
 
-## Застряли? {#stuck}
+## Stuck?
 
-- [Устранение неполадок](./support/troubleshooting.md) — распространённые сбои и их решения.
-- [FAQ](./support/faq.md) — быстрые ответы.
-- [Получить помощь](./support/get-help.md) — сообщество и как составить хороший отчёт об ошибке.
+- [Troubleshooting](./support/troubleshooting.md) — the common failures and their fixes.
+- [FAQ](./support/faq.md) — quick answers.
+- [Get help](./support/get-help.md) — the community and how to file a good report.
 
-## Смотрите также {#related}
+## Related
 
-- [Концепции и глоссарий](./concepts.md) — определения capsule, store, URN и платежа DIG
-- [Скаффолдинг приложения (create-dig-app)](./build-a-dapp/scaffold.md) — запустите деплоймый проект одной командой (npm или CLI)
-- [Установка CLI](./digstore/cli/install.md) — установите `digstore` на свою машину
-- [On-chain закрепление](./digstore/cli/onchain-anchoring.md) — настройка кошелька, финансирование и стоимость
-- [Деплой из GitHub Actions](./digstore/cli/deploy-from-github-actions.md) — push-to-publish в CI
-- [CLI-туториал](./digstore/cli/quickstart.md) — полное прохождение create-commit-read
+- [Concepts & glossary](./concepts.md) — capsule, store, URN, and DIG payment defined
+- [Scaffold an app (create-dig-app)](./build-a-dapp/scaffold.md) — start a deployable project in one command (npm or CLI)
+- [Installing the CLI](./digstore/cli/install.md) — get `digstore` on your machine
+- [On-chain anchoring](./digstore/cli/onchain-anchoring.md) — wallet setup, funding, and costs
+- [Deploy from GitHub Actions](./digstore/cli/deploy-from-github-actions.md) — push-to-publish in CI
+- [CLI tutorial](./digstore/cli/quickstart.md) — the full create-commit-read walkthrough

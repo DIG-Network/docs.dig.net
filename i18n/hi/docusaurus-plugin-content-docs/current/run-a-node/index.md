@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: Run a DIG node
-description: "एक dig-node क्या है, आप एक क्यों चलाएंगे, और इसे कैसे इंस्टॉल करें — Ubuntu/Debian के लिए apt repository या क्रॉस-प्लेटफॉर्म यूनिवर्सल इंस्टॉलर।"
+description: "What a dig-node is, why you'd run one, and how to install it — the apt repository for Ubuntu/Debian or the cross-platform DIG Installer."
 keywords:
   - dig-node
   - run a node
@@ -9,75 +9,81 @@ keywords:
   - seedbox
   - dig RPC
   - install dig-node
+  - DIG Installer
 tags:
   - dig-node
   - dig-rpc
   - capsule
 ---
 
-# Run a DIG node {#run-a-dig-node}
+# Run a DIG node
 
-> **प्रमाणित रूप से और प्रोवाइडर-ब्लाइंड कंटेंट सर्व करें** — आप केवल कभी hashes द्वारा keyed अप्रभेद्य ciphertext को छूते हैं, execution proofs के साथ विश्वसनीय सर्विंग की पुष्टि कर सकते हैं, और क्लाइंट सब कुछ चेन के विरुद्ध सत्यापित करता है, इसलिए भरोसा कभी आपके node पर नहीं टिकता।
+> **Serve content provably and provider-blind** — you only ever touch indistinguishable ciphertext keyed by hashes, can attest faithful serving with execution proofs, and the client verifies everything against the chain, so trust never rests on your node.
 
-एक **dig-node**, DIG Network का कंटेंट **सर्वर** है — नेटवर्क का सप्लाई साइड। यह capsules होस्ट करता है, एक लोकल `.dig` कैश रखता है, और [dig RPC](../rpc/what-is-the-dig-rpc.md) एक्सपोज़ करता है ताकि कोई भी चीज़ जो DIG कंटेंट पढ़ती है वह आपसे पढ़ सके। यह headless चलता है (कोई ब्राउज़र नहीं, कोई UI नहीं) एक बैकग्राउंड सर्विस के रूप में — उस कंटेंट के लिए एक seedbox जिसे आप पब्लिश करते हैं या सर्व करने में मदद करना चाहते हैं।
+A **dig-node** is the DIG Network's content **server** — the supply side of the network. It hosts capsules, keeps a local `.dig` cache, and exposes the [dig RPC](../rpc/what-is-the-dig-rpc.md) so anything that reads DIG content can read it from you. It runs headless (no browser, no UI) as a background service — a seedbox for the content you publish or want to help serve.
 
-यह **उपभोक्ताओं** — [DIG Browser](../browser/chia-protocol.md) और browser extension — का समकक्ष है, जो ciphertext + proofs fetch करते हैं, ऑन-चेन root के विरुद्ध सत्यापित करते हैं, लोकली डिक्रिप्ट करते हैं, और रेंडर करते हैं। DIG कंटेंट पढ़ने के लिए आपको एक dig-node की **ज़रूरत नहीं** है: अकेला एक उपभोक्ता ठीक काम करता है, `rpc.dig.net` पर पब्लिक रेफरेंस node पर फॉलबैक करते हुए। आप **सर्व** करने के लिए एक dig-node चलाते हैं — और जब एक ही मशीन पर मौजूद हो, उपभोक्ता इससे पढ़ता है (लोकल, ऑफ़लाइन-फ्रेंडली, और नेटवर्क में योगदान करते हुए) और वे एक `.dig` कैश शेयर करते हैं।
+It is the counterpart to the **consumers** — the [DIG Browser](../browser/chia-protocol.md) and the browser extension — which fetch ciphertext + proofs, verify against the on-chain root, decrypt locally, and render. You do **not** need a dig-node to read DIG content: a consumer alone works fine, falling back to the public reference node at `rpc.dig.net`. You run a dig-node to **serve** — and when one is present on the same machine, the consumer reads from it (local, offline-friendly, and contributing to the network) and they share one `.dig` cache.
 
-:::info सर्विंग बनाम उपभोग
-- **dig-node** = कंटेंट सर्व करता है + dig RPC एक्सपोज़ करता है। headless बैकग्राउंड सर्विस।
-- **DIG Browser / extension** = कंटेंट का उपभोग करते हैं (लोकली सत्यापित + डिक्रिप्ट करते हैं)। किसी लोकल node की ज़रूरत नहीं।
+:::info Serving vs. consuming
+- **dig-node** = serves content + exposes the dig RPC. Headless background service.
+- **DIG Browser / extension** = consume content (verify + decrypt locally). No local node required.
 
-जब दोनों इंस्टॉल हों, ब्राउज़र/extension आपके लोकल dig-node से पढ़ते हैं; अन्यथा वे `rpc.dig.net` से पढ़ते हैं। किसी भी तरह हर byte क्लाइंट-साइड पर चेन के विरुद्ध सत्यापित होता है — सोर्स पर कभी भरोसा नहीं किया जाता।
+When both are installed, the browser/extension read from your local dig-node; otherwise they read from `rpc.dig.net`. Either way every byte is verified client-side against the chain — the source is never trusted.
 :::
 
-## इसे इंस्टॉल करें {#install-it}
+## Install it
 
-| आपकी मशीन | उपयोग करें |
+| Your machine | Use |
 |---|---|
-| **Ubuntu / Debian** | नेटिव **[apt repository](./apt.md)** — `apt install dig-node digstore`, systemd सर्विस के रूप में ऑटो-इनेबल्ड। |
-| **Windows / macOS / Linux (कोई भी)** | क्रॉस-प्लेटफॉर्म **[universal installer](#universal-installer-any-os)** — हर OS के लिए एक `curl \| sh` (या डाउनलोड)। |
+| **Ubuntu / Debian** | The native **[apt repository](./apt.md)** — `apt install dig-node digstore`, auto-enabled as a systemd service. |
+| **Windows / macOS / Linux (any)** | The cross-platform **[DIG Installer](#universal-installer-any-os)** — one `curl \| sh` (or download) installs the full stack for every OS. |
 
-दोनों एक ही `dig-node` सर्विस साथ ही `digstore` CLI इंस्टॉल करते हैं। apt, Debian-नेटिव पथ है (signed, `apt upgrade`-योग्य); universal installer बाकी सब कुछ कवर करता है।
+Both install `dig-node` plus the `digstore` CLI; the DIG Installer additionally installs `dig-dns` by default. apt is the Debian-native path (signed, `apt upgrade`-able); the DIG Installer covers everything else.
 
-### apt (Ubuntu / Debian) — Debian-family सिस्टम्स पर अनुशंसित {#apt-ubuntu--debian--recommended-on-debian-family-systems}
+### apt (Ubuntu / Debian) — recommended on Debian-family systems
 
-नेटिव पथ: `apt.dig.net` पर एक signed apt repository। यह `dig-node` को एक managed **systemd सर्विस** के रूप में इंस्टॉल करता है और इसे `apt upgrade` से अपडेटेड रखता है।
+The native path: a signed apt repository at `apt.dig.net`. It installs `dig-node` as a managed **systemd service** and keeps it updated with `apt upgrade`.
 
-→ **[apt के ज़रिए Ubuntu/Debian पर इंस्टॉल करें](./apt.md)**
+→ **[Install on Ubuntu/Debian via apt](./apt.md)**
 
-### Universal installer (कोई भी OS) {#universal-installer-any-os}
+### DIG Installer (any OS) {#universal-installer-any-os}
 
-क्रॉस-प्लेटफॉर्म पथ — Windows, macOS, और कोई भी Linux। यह आपका OS पता लगाता है, `dig-node` सर्विस (Windows service / `systemd` / `launchd`) और `digstore` CLI इंस्टॉल करता है, और किसी पैकेज मैनेजर की ज़रूरत नहीं है:
+The cross-platform path — Windows, macOS, and any Linux. The **DIG Installer** detects your OS and installs the full DIG stack in one run — the `digstore` CLI, plus the `dig-node` and `dig-dns` boot-start services — with no package manager needed:
 
 ```sh
 curl -fsSL https://dig.net/install.sh | sh
 ```
 
-यह वही सेल्फ-कंटेन्ड `dig-installer` है जो [Releases page](https://github.com/DIG-Network/dig-installer/releases) पर शिप किया गया है — अगर आप shell में पाइप नहीं करना चाहते, या Windows पर, इसे सीधे डाउनलोड और चलाएं। ऐसा करने पर एक गाइडेड [GUI विज़ार्ड](./universal-installer.md#gui-installer) भी खुलता है, अगर आप फ़्लैग्स के बजाय क्लिक करना पसंद करते हैं।
+```powershell
+# Windows (PowerShell)
+irm https://dig.net/install.ps1 | iex
+```
+
+This is the same self-contained `dig-installer` shipped on the [Releases page](https://github.com/DIG-Network/dig-installer/releases) — download and run it directly if you prefer not to pipe to a shell, or on Windows. Doing so also opens a guided [GUI wizard](./universal-installer.md#gui-installer), if you'd rather click through than use flags.
 
 :::note Pre-release
-होस्टेड इंस्टॉलर्स (`apt.dig.net`, `dig.net/install.sh`) अभी भी प्रोविज़न किए जा रहे हैं। जब तक वे लाइव न हों, सोर्स से बिल्ड करें या [dig-node Releases](https://github.com/DIG-Network/dig-node/releases) से एक बाइनरी लें। यहां दिए गए कमांड्स असली, इच्छित कमांड्स हैं।
+The hosted installers (`apt.dig.net`, `dig.net/install.sh`) are still being provisioned. Until they're live, build from source or grab a binary from the [dig-node Releases](https://github.com/DIG-Network/dig-node/releases). The commands here are the real, intended ones.
 :::
 
-## बस कंटेंट पढ़ना चाहते हैं? {#just-want-to-read-content}
+## Just want to read content?
 
-आपको एक node की ज़रूरत नहीं है। **[DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)** पाएं और कोई भी `chia://` एड्रेस खोलें — यह आपके लोकल dig-node से उपभोग करता है अगर आपके पास एक है, नहीं तो `rpc.dig.net` से। देखें [The `chia://` protocol](../browser/chia-protocol.md)।
+You don't need a node. Get the **[DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)** and open any `chia://` address — it consumes from your local dig-node if you have one, else from `rpc.dig.net`. See [The `chia://` protocol](../browser/chia-protocol.md).
 
-## संबंधित {#related}
+## Related
 
-- [Install on Ubuntu/Debian via apt](./apt.md) — Debian-नेटिव पथ + systemd सर्विस प्रबंधन
-- [Install anywhere — the universal installer](./universal-installer.md) — Windows / macOS / कोई भी Linux + `dig.local`
-- [Point a consumer at your node](./point-a-consumer.md) — लोकल-फर्स्ट reads + साझा `.dig` कैश
-- [Configure dig-node](./configure.md) — ports, listeners, कैश कैप, upstream
+- [Install on Ubuntu/Debian via apt](./apt.md) — the Debian-native path + systemd service management
+- [Install anywhere — the universal installer](./universal-installer.md) — Windows / macOS / any Linux + `dig.local`
+- [Point a consumer at your node](./point-a-consumer.md) — local-first reads + the shared `.dig` cache
+- [Configure dig-node](./configure.md) — ports, listeners, cache cap, upstream
 - [Self-host a remote origin](../rpc/dig-remote.md) — `digstore serve` + dig:// clone/pull/push
-- [Manage your node](./manage.md) — control.* admin RPCs + My Node UI
-- [नियंत्रण पैनल](./control-panel.md) — DIG एक्सटेंशन से अपना node पूरी तरह चलाएँ: लाइव स्थिति, आरक्षित कैश स्पेस (LRU), और — पेयरिंग के बाद — upstream/hosted stores/sync/peers
-- [Using the public network RPC](../rpc/public-network-rpc.md) — dig RPC जो आपका node बोलता है, और नेटवर्क पर एक node ऑपरेट करना
-- [Installing the CLI](../digstore/cli/install.md) — अकेले `digstore` (पब्लिशिंग, सर्विंग नहीं)
+- [Manage your node](./manage.md) — the control.* admin RPCs + the My Node UI
+- [The dig-node Control Panel](./control-panel.md) — run your node from the DIG extension: live status, reserved cache space (LRU), and — once paired — upstream/hosted stores/sync/peers
+- [Using the public network RPC](../rpc/public-network-rpc.md) — the dig RPC your node speaks, and operating a node on the network
+- [Installing the CLI](../digstore/cli/install.md) — `digstore` on its own (publishing, not serving)
 
-## गहराई में जाएं: प्रोटोकॉल {#go-deeper-the-protocol}
+## Go deeper: the protocol
 
-- **"ब्लाइंड host और decoys"** → [The dig RPC blind serving model](../rpc/what-is-the-dig-rpc.md) · [Node conformance](../rpc/conformance.md)
-- **"विश्वसनीय सर्विंग की पुष्टि"** → [Inclusion vs execution proofs](../inclusion-vs-execution-proofs.md)
+- **"blind host & decoys"** → [The dig RPC blind serving model](../rpc/what-is-the-dig-rpc.md) · [Node conformance](../rpc/conformance.md)
+- **"attest faithful serving"** → [Inclusion vs execution proofs](../inclusion-vs-execution-proofs.md)
 - **"dig:// clone/pull/push"** → [The §21/§22 remote protocol](../rpc/dig-remote.md)
-- **सब कुछ** → [Protocol deep-dive](../protocol-deep-dive.md) · [Concepts & glossary](../concepts.md)
+- **Everything** → [Protocol deep-dive](../protocol-deep-dive.md) · [Concepts & glossary](../concepts.md)

@@ -1,33 +1,48 @@
 ---
 sidebar_position: 3
 title: Install anywhere — the universal installer
-description: "The cross-platform dig-node installer for Windows, macOS, and any Linux: one curl | sh (or a direct download), installs the service and the digstore CLI, and registers dig.local."
+description: "The DIG Installer — the cross-platform installer for Windows, macOS, and any Linux. One curl | sh (or irm | iex, or a direct download) installs the full DIG stack by default: the digstore CLI plus the dig-node and dig-dns boot-start services, and registers dig.local."
 keywords:
+  - DIG Installer
   - universal installer
   - dig-node install
   - dig.local
   - dig-dns
+  - boot-start service
   - Windows service
   - launchd
   - systemd
 tags:
   - dig-node
+  - dig-dns
+  - digstore-cli
   - dig-rpc
 ---
 
 # Install anywhere — the universal installer
 
-The cross-platform path — **Windows, macOS, and any Linux**. It detects your OS, installs the `dig-node` service (Windows service / `systemd` / `launchd`) and the `digstore` CLI, and needs no package manager.
+The cross-platform path — **Windows, macOS, and any Linux**. The **DIG Installer** detects your OS and installs the full DIG stack in one run: the `digstore` CLI, plus the `dig-node` and `dig-dns` services, both registered to start automatically on every boot. It needs no package manager.
 
 ```sh
+# macOS / Linux
 curl -fsSL https://dig.net/install.sh | sh
 ```
 
-This is the same self-contained `dig-installer` shipped on the [Releases page](https://github.com/DIG-Network/dig-installer/releases) — download and run it directly if you prefer not to pipe to a shell, or on Windows.
+```powershell
+# Windows (PowerShell)
+irm https://dig.net/install.ps1 | iex
+```
+
+This is the same self-contained `dig-installer` shipped on the [Releases page](https://github.com/DIG-Network/dig-installer/releases) — download `dig-installer-<version>-<os_arch>` and run it directly if you prefer not to pipe to a shell, or on Windows.
+
+Every component installs by default — `digstore`, `dig-node`, and `dig-dns`. Skip any one of them with its `--no-<component>` flag (`--no-digstore`, `--no-dig-node`, `--no-dig-dns`); the advanced `dig-relay` and the DIG Browser stay opt-in via `--with-relay` / `--with-browser`.
 
 ## GUI installer {#gui-installer}
 
-Prefer a guided setup over flags? Downloading and running the installer directly (instead of piping to a shell) opens a desktop wizard — **Welcome → License → Components → Install → Done** — in a dark theme that matches the rest of DIG Network's apps.
+Prefer a guided setup over flags? Download the desktop wizard —
+**`DIG-Installer-Setup-<version>-{windows-x64.exe, macos.dmg, linux-x86_64.AppImage}`** from the
+[Releases page](https://github.com/DIG-Network/dig-installer/releases) — in a dark theme that
+matches the rest of DIG Network's apps: **Welcome → License → Components → Install → Done**.
 
 On the **Components** step, every component — `digstore`, `dig-node`, `dig-dns`, `dig-relay`, and DIG Browser — is checked by default, so clicking through with no changes installs everything (`digstore` has no checkbox; it's always installed). Uncheck any of the others to install just a subset.
 
@@ -45,7 +60,7 @@ The hosted installers (`apt.dig.net`, `dig.net/install.sh`) are still being prov
 
 ## An always-on service, verified after install
 
-`--with-dig-node` registers `dig-node` as an **auto-start** service — it comes up again after a reboot with no manual step, and starts as part of installation. On Linux and macOS it also **auto-restarts if it ever crashes** (Windows recovery-on-crash is still being wired up).
+`dig-node` installs **by default** and registers as an **auto-start** service — it comes up again after a reboot with no manual step, and starts as part of installation. Skip it with `--no-dig-node`. On Linux and macOS it also **auto-restarts if it ever crashes** (Windows recovery-on-crash is still being wired up).
 
 Once the service is started, the installer runs two checks and prints the result of each:
 
@@ -53,7 +68,7 @@ Once the service is started, the installer runs two checks and prints the result
 - **Health check** — the node answers a live RPC call on its configured port (default `9778`), proving the service isn't just registered but actually serving.
 
 ```sh
-dig-installer --with-dig-node
+dig-installer
 #   Registering dig-node as an OS service (port 9778):
 #     ✓ dig-node installed as an OS service and started
 #     ✓ dig.local: 127.0.0.2 dig.local → /etc/hosts
@@ -65,12 +80,12 @@ With the node up and verified, the [extension](../audiences/content-consumers.md
 
 ## Browse `.dig` names directly {#browse-dig-names-directly}
 
-Add `--with-dig-dns` to also install [`dig-dns`](https://github.com/DIG-Network/dig-dns)
-— a local `*.dig` name resolver — as an OS service (Windows Service / macOS
-LaunchDaemon / Linux systemd):
+[`dig-dns`](https://github.com/DIG-Network/dig-dns) — a local `*.dig` name resolver — installs
+**by default** too, registered as an OS service (Windows Service / macOS LaunchDaemon / Linux
+systemd) alongside `dig-node`. Skip it with `--no-dig-dns`:
 
 ```sh
-curl -fsSL https://dig.net/install.sh | sh -s -- --with-dig-dns
+curl -fsSL https://dig.net/install.sh | sh -s -- --no-dig-dns
 ```
 
 This lets a browser open `http://<storeId>.dig/<path>` directly: dig-dns resolves the
@@ -97,5 +112,6 @@ Prefer the signed, `apt upgrade`-able native path: → [Install on Ubuntu/Debian
 ## Related
 
 - [Run a node — overview](./index.md)
+- [Installing the CLI](../digstore/cli/install.md) — the raw `digstore` binary on its own
 - [Configure dig-node](./configure.md) — ports, listeners, cache cap, upstream
 - [Point a consumer at your node](./point-a-consumer.md) — shared `.dig` cache

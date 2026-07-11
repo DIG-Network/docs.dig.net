@@ -93,7 +93,7 @@ sudo systemctl disable dig-node            # don't start on boot
 
 ## Other operating systems
 
-apt is the **Ubuntu/Debian-native** path. For Windows, macOS, or non-Debian Linux, use the cross-platform **[universal installer](./index.md#universal-installer-any-os)** (`curl … | sh`), which installs the same `dig-node` service (as a Windows service / `systemd` / `launchd`) and the `digstore` CLI on every OS. To **read** DIG content without running a node, just get the **[DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)**.
+apt is the **Ubuntu/Debian-native** path. For Windows, macOS, or non-Debian Linux, use the cross-platform **[DIG Installer](./index.md#universal-installer-any-os)** (`curl … | sh`), which installs the `dig-node` and `dig-dns` services (as a Windows service / `systemd` / `launchd`) plus the `digstore` CLI on every OS, all by default in one run. To **read** DIG content without running a node, just get the **[DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)**.
 
 ## Related
 

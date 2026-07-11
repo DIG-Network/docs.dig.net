@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: Run a DIG node
-description: "Qué es un dig-node, por qué querrías ejecutar uno, y cómo instalarlo — el repositorio apt para Ubuntu/Debian o el instalador universal multiplataforma."
+description: "What a dig-node is, why you'd run one, and how to install it — the apt repository for Ubuntu/Debian or the cross-platform DIG Installer."
 keywords:
   - dig-node
   - run a node
@@ -9,75 +9,81 @@ keywords:
   - seedbox
   - dig RPC
   - install dig-node
+  - DIG Installer
 tags:
   - dig-node
   - dig-rpc
   - capsule
 ---
 
-# Run a DIG node {#run-a-dig-node}
+# Run a DIG node
 
-> **Sirve contenido de forma demostrable y ciega al proveedor** — solo tocas texto cifrado indistinguible identificado por hashes, puedes certificar un servicio fiel con pruebas de ejecución, y el cliente verifica todo contra la cadena, así que la confianza nunca recae en tu nodo.
+> **Serve content provably and provider-blind** — you only ever touch indistinguishable ciphertext keyed by hashes, can attest faithful serving with execution proofs, and the client verifies everything against the chain, so trust never rests on your node.
 
-Un **dig-node** es el **servidor** de contenido de DIG Network — el lado de la oferta de la red. Hospeda capsules, mantiene una caché local `.dig`, y expone el [dig RPC](../rpc/what-is-the-dig-rpc.md) para que cualquier cosa que lea contenido de DIG pueda leerlo desde ti. Se ejecuta sin interfaz gráfica (sin navegador, sin UI) como un servicio en segundo plano — un seedbox para el contenido que publicas o que quieres ayudar a servir.
+A **dig-node** is the DIG Network's content **server** — the supply side of the network. It hosts capsules, keeps a local `.dig` cache, and exposes the [dig RPC](../rpc/what-is-the-dig-rpc.md) so anything that reads DIG content can read it from you. It runs headless (no browser, no UI) as a background service — a seedbox for the content you publish or want to help serve.
 
-Es la contraparte de los **consumidores** — el [DIG Browser](../browser/chia-protocol.md) y la extensión de navegador — que obtienen texto cifrado + pruebas, verifican contra la raíz en cadena, descifran localmente y renderizan. **No** necesitas un dig-node para leer contenido de DIG: un consumidor solo funciona bien, recurriendo al nodo de referencia público en `rpc.dig.net`. Ejecutas un dig-node para **servir** — y cuando hay uno presente en la misma máquina, el consumidor lee de él (local, amigable sin conexión, y contribuyendo a la red) y comparten una caché `.dig`.
+It is the counterpart to the **consumers** — the [DIG Browser](../browser/chia-protocol.md) and the browser extension — which fetch ciphertext + proofs, verify against the on-chain root, decrypt locally, and render. You do **not** need a dig-node to read DIG content: a consumer alone works fine, falling back to the public reference node at `rpc.dig.net`. You run a dig-node to **serve** — and when one is present on the same machine, the consumer reads from it (local, offline-friendly, and contributing to the network) and they share one `.dig` cache.
 
-:::info Servir vs. consumir
-- **dig-node** = sirve contenido + expone el dig RPC. Servicio en segundo plano sin interfaz gráfica.
-- **DIG Browser / extensión** = consumen contenido (verifican + descifran localmente). No requieren un nodo local.
+:::info Serving vs. consuming
+- **dig-node** = serves content + exposes the dig RPC. Headless background service.
+- **DIG Browser / extension** = consume content (verify + decrypt locally). No local node required.
 
-Cuando ambos están instalados, el navegador/extensión lee de tu dig-node local; de lo contrario lee de `rpc.dig.net`. De cualquier manera, cada byte se verifica del lado del cliente contra la cadena — nunca se confía en la fuente.
+When both are installed, the browser/extension read from your local dig-node; otherwise they read from `rpc.dig.net`. Either way every byte is verified client-side against the chain — the source is never trusted.
 :::
 
-## Instálalo {#install-it}
+## Install it
 
-| Tu máquina | Usa |
+| Your machine | Use |
 |---|---|
-| **Ubuntu / Debian** | El **[repositorio apt](./apt.md)** nativo — `apt install dig-node digstore`, auto-habilitado como servicio systemd. |
-| **Windows / macOS / Linux (cualquiera)** | El **[instalador universal](#universal-installer-any-os)** multiplataforma — un `curl \| sh` (o descarga) para cualquier sistema operativo. |
+| **Ubuntu / Debian** | The native **[apt repository](./apt.md)** — `apt install dig-node digstore`, auto-enabled as a systemd service. |
+| **Windows / macOS / Linux (any)** | The cross-platform **[DIG Installer](#universal-installer-any-os)** — one `curl \| sh` (or download) installs the full stack for every OS. |
 
-Ambos instalan el mismo servicio `dig-node` más la CLI de `digstore`. apt es el camino nativo de Debian (firmado, actualizable con `apt upgrade`); el instalador universal cubre todo lo demás.
+Both install `dig-node` plus the `digstore` CLI; the DIG Installer additionally installs `dig-dns` by default. apt is the Debian-native path (signed, `apt upgrade`-able); the DIG Installer covers everything else.
 
-### apt (Ubuntu / Debian) — recomendado en sistemas de la familia Debian {#apt-ubuntu--debian--recommended-on-debian-family-systems}
+### apt (Ubuntu / Debian) — recommended on Debian-family systems
 
-El camino nativo: un repositorio apt firmado en `apt.dig.net`. Instala `dig-node` como un **servicio systemd** gestionado y lo mantiene actualizado con `apt upgrade`.
+The native path: a signed apt repository at `apt.dig.net`. It installs `dig-node` as a managed **systemd service** and keeps it updated with `apt upgrade`.
 
-→ **[Instalar en Ubuntu/Debian vía apt](./apt.md)**
+→ **[Install on Ubuntu/Debian via apt](./apt.md)**
 
-### Instalador universal (cualquier SO) {#universal-installer-any-os}
+### DIG Installer (any OS) {#universal-installer-any-os}
 
-El camino multiplataforma — Windows, macOS y cualquier Linux. Detecta tu sistema operativo, instala el servicio `dig-node` (servicio de Windows / `systemd` / `launchd`) y la CLI de `digstore`, y no necesita ningún gestor de paquetes:
+The cross-platform path — Windows, macOS, and any Linux. The **DIG Installer** detects your OS and installs the full DIG stack in one run — the `digstore` CLI, plus the `dig-node` and `dig-dns` boot-start services — with no package manager needed:
 
 ```sh
 curl -fsSL https://dig.net/install.sh | sh
 ```
 
-Este es el mismo `dig-installer` autocontenido publicado en la [página de Releases](https://github.com/DIG-Network/dig-installer/releases) — descárgalo y ejecútalo directamente si prefieres no canalizarlo a un shell, o en Windows. Hacerlo también abre un [asistente gráfico](./universal-installer.md#gui-installer) guiado, por si prefieres hacer clic en lugar de usar flags.
+```powershell
+# Windows (PowerShell)
+irm https://dig.net/install.ps1 | iex
+```
 
-:::note Pre-lanzamiento
-Los instaladores hospedados (`apt.dig.net`, `dig.net/install.sh`) todavía se están aprovisionando. Hasta que estén en vivo, compila desde el código fuente u obtén un binario de los [Releases de dig-node](https://github.com/DIG-Network/dig-node/releases). Los comandos aquí son los reales, los previstos.
+This is the same self-contained `dig-installer` shipped on the [Releases page](https://github.com/DIG-Network/dig-installer/releases) — download and run it directly if you prefer not to pipe to a shell, or on Windows. Doing so also opens a guided [GUI wizard](./universal-installer.md#gui-installer), if you'd rather click through than use flags.
+
+:::note Pre-release
+The hosted installers (`apt.dig.net`, `dig.net/install.sh`) are still being provisioned. Until they're live, build from source or grab a binary from the [dig-node Releases](https://github.com/DIG-Network/dig-node/releases). The commands here are the real, intended ones.
 :::
 
-## ¿Solo quieres leer contenido? {#just-want-to-read-content}
+## Just want to read content?
 
-No necesitas un nodo. Consigue el **[DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)** y abre cualquier dirección `chia://` — consume de tu dig-node local si tienes uno, si no, de `rpc.dig.net`. Consulta [El protocolo chia://](../browser/chia-protocol.md).
+You don't need a node. Get the **[DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)** and open any `chia://` address — it consumes from your local dig-node if you have one, else from `rpc.dig.net`. See [The `chia://` protocol](../browser/chia-protocol.md).
 
-## Relacionado {#related}
+## Related
 
-- [Instalar en Ubuntu/Debian vía apt](./apt.md) — el camino nativo de Debian + gestión del servicio systemd
-- [Instalar en cualquier lugar — el instalador universal](./universal-installer.md) — Windows / macOS / cualquier Linux + `dig.local`
-- [Apunta un consumidor a tu nodo](./point-a-consumer.md) — lecturas locales por defecto + la caché `.dig` compartida
-- [Configura dig-node](./configure.md) — puertos, listeners, límite de caché, upstream
-- [Auto-hospeda un origen remoto](../rpc/dig-remote.md) — `digstore serve` + clone/pull/push por dig://
-- [Gestiona tu nodo](./manage.md) — los RPCs de administración control.* y la UI My Node
-- [El Panel de control](./control-panel.md) — gestiona tu nodo desde la extensión DIG: estado en vivo, espacio de caché reservado (LRU) y — tras el emparejamiento — upstream/stores alojados/sincronización/pares
-- [Usando el RPC de la red pública](../rpc/public-network-rpc.md) — el dig RPC que habla tu nodo, y cómo operar un nodo en la red
-- [Instalar la CLI](../digstore/cli/install.md) — `digstore` por su cuenta (publicar, no servir)
+- [Install on Ubuntu/Debian via apt](./apt.md) — the Debian-native path + systemd service management
+- [Install anywhere — the universal installer](./universal-installer.md) — Windows / macOS / any Linux + `dig.local`
+- [Point a consumer at your node](./point-a-consumer.md) — local-first reads + the shared `.dig` cache
+- [Configure dig-node](./configure.md) — ports, listeners, cache cap, upstream
+- [Self-host a remote origin](../rpc/dig-remote.md) — `digstore serve` + dig:// clone/pull/push
+- [Manage your node](./manage.md) — the control.* admin RPCs + the My Node UI
+- [The dig-node Control Panel](./control-panel.md) — run your node from the DIG extension: live status, reserved cache space (LRU), and — once paired — upstream/hosted stores/sync/peers
+- [Using the public network RPC](../rpc/public-network-rpc.md) — the dig RPC your node speaks, and operating a node on the network
+- [Installing the CLI](../digstore/cli/install.md) — `digstore` on its own (publishing, not serving)
 
-## Profundiza: el protocolo {#go-deeper-the-protocol}
+## Go deeper: the protocol
 
-- **"host ciego y decoys"** → [El modelo de servicio ciego del dig RPC](../rpc/what-is-the-dig-rpc.md) · [Conformidad de nodo](../rpc/conformance.md)
-- **"certificar un servicio fiel"** → [Pruebas de inclusión vs. de ejecución](../inclusion-vs-execution-proofs.md)
-- **"clone/pull/push por dig://"** → [El protocolo remoto §21/§22](../rpc/dig-remote.md)
-- **Todo** → [Inmersión profunda en el protocolo](../protocol-deep-dive.md) · [Conceptos y glosario](../concepts.md)
+- **"blind host & decoys"** → [The dig RPC blind serving model](../rpc/what-is-the-dig-rpc.md) · [Node conformance](../rpc/conformance.md)
+- **"attest faithful serving"** → [Inclusion vs execution proofs](../inclusion-vs-execution-proofs.md)
+- **"dig:// clone/pull/push"** → [The §21/§22 remote protocol](../rpc/dig-remote.md)
+- **Everything** → [Protocol deep-dive](../protocol-deep-dive.md) · [Concepts & glossary](../concepts.md)
