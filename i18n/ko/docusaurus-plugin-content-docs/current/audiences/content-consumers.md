@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 title: For content consumers
-description: "여러분의 브라우저가 블록체인을 기준으로 직접 검증하는 chia:// 콘텐츠를 여세요 — 어떤 호스트도 이를 변조하거나 위조할 수 없고, 비공개 콘텐츠는 호스트로부터도 비공개로 유지되며, 영구적이고 어디서든 재호스팅할 수 있으므로 아무도 이를 내리거나 여러분을 가둘 수 없습니다."
+description: "Open chia:// content that your own browser verifies against the blockchain — no host can alter or fake it, private content stays private from the host, and it's permanent and re-hostable anywhere, so nobody can take it down or lock you in."
 keywords:
   - open chia content
   - DIG Browser
@@ -9,6 +9,9 @@ keywords:
   - verified content
   - private content salt
   - extension
+  - omnibox
+  - local-first reads
+  - DIG toolbar
 tags:
   - browser
   - chia-protocol
@@ -16,59 +19,61 @@ tags:
   - dig-node
 ---
 
-# For content consumers {#for-content-consumers}
+# For content consumers
 
-> **여러분의 OWN 브라우저가 블록체인을 기준으로 검증하는 `chia://` 콘텐츠를 여세요** — 어떤 호스트도 이를 변조하거나 위조할 수 없고, 비공개 콘텐츠는 호스트로부터도 비공개로 유지되며, 영구적이고 어디서든 재호스팅할 수 있으므로 아무도 이를 내리거나 여러분을 가둘 수 없습니다.
+> **Open `chia://` content that your OWN browser verifies against the blockchain** — no host can alter or fake it, private content stays private from the host, and it's permanent and re-hostable anywhere, so nobody can take it down or lock you in.
 
-## 핵심 개념 {#the-mental-model}
+## The mental model
 
-`chia://` 링크를 붙여넣으면 콘텐츠가 네트워크에서 곧바로 도착합니다 — **콘텐츠 주소 기반(content-addressed)**이며 렌더링되기 전에 **여러분의 기기에서 암호학적으로 검증**됩니다. 이는 **폐쇄 실패(fail-closed)** 방식입니다: 변조되었거나 복호화할 수 없는 바이트는 절대 표시되지 않습니다.
+Paste a `chia://` link and the content comes straight from the network — **content-addressed** and **cryptographically verified on YOUR device** before it renders. It is **fail-closed**: tampered or undecryptable bytes never show.
 
-- **`rootHash`를 생략**하면 store의 *최신* 버전을 가리킵니다: `chia://<storeId>/`.
-- **`rootHash`를 포함**하면 하나의 불변 [capsule](../concepts.md#capsule)을 정확히 고정합니다: `chia://<storeId>:<rootHash>/`.
+- **Omit the `rootHash`** for the store's *latest* version: `chia://<storeId>/`.
+- **Include it** to pin one exact immutable [capsule](../concepts.md#capsule): `chia://<storeId>:<rootHash>/`.
 
-공개 콘텐츠는 링크만 있으면 됩니다. 비공개 콘텐츠는 비밀번호와 같은 **`?salt=`** 비밀 값도 필요합니다.
+Public content needs only the link. Private content also needs a secret **`?salt=`** — like a password.
 
-## DIG Browser 또는 확장 프로그램 받기 {#get-the-dig-browser-or-the-extension}
+## Get the DIG Browser, or the extension
 
-- **[DIG Browser 받기 ↗](https://github.com/DIG-Network/DIG_Browser/releases)** — `chia://`와 내장 지갑이 기본 탑재된 브라우저입니다.
-- **확장 프로그램**은 Chrome / Edge / Brave / Firefox용이며, 여러분이 이미 사용 중인 브라우저에 `chia://` 해석 기능을 추가합니다.
+- **[Get the DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)** — a browser with `chia://` and a built-in wallet baked in.
+- **The extension** for Chrome / Edge / Brave / Firefox — adds `chia://` resolution to a browser you already use. Open an address two ways: paste it into the home screen's "open a chia:// address or DIG URN" field, or type `dig` followed by the address straight into your browser's address bar and press Enter — the same shortcut browsers already offer for a site's own search. With a local [dig-node](../concepts.md#dig-node) reachable, the address opens directly from it as a real page (see [Reading from your own node](#reading-from-your-own-node) below); with no node reachable, it opens inside the extension's own viewer instead, verified and decrypted from the public network.
 
-## `chia://` 콘텐츠 열기 — 최신 버전 vs 고정 버전 {#open-chia-content--latest-vs-pinned}
+## Open `chia://` content — latest vs pinned
 
-주소 형식, 깔끔한 `chia://<store>/` 주소창, 그리고 `rootHash`를 언제 고정해야 하는지에 대해 설명합니다.
+The address forms, the clean `chia://<store>/` bar, and when to pin a `rootHash`.
 
-→ [chia:// 프로토콜](../browser/chia-protocol.md)
+→ [The chia:// protocol](../browser/chia-protocol.md)
 
-## 내장 페이지, 검증 배지 및 실드 {#built-in-pages-the-verified-badge--shields}
+## Built-in pages, the verified badge & shields
 
-`chia://home`, `chia://wallet`, `chia://settings`, 그리고 활성 capsule에 대한 각 리소스의 포함 증명(inclusion-proof) 결과를 보여주는 검증 배지 / 실드입니다.
+`chia://home`, `chia://wallet`, `chia://settings`, and the verified badge / shields that show each resource's inclusion-proof verdict for the active capsule. When the extension opens a page directly from your node, it overlays a small **DIG toolbar** on the page itself showing whether it's verified on Chia and whether it loaded from your local node — click it to open the fuller wallet or shields views.
 
-→ [window.chia 사용하기](../browser/using-window-chia.md)
+→ [Using window.chia](../browser/using-window-chia.md) · [How the built-in wallet protects your keys](../browser/wallet-security.md)
 
-## 공개 vs 비공개 — `?salt=` 비밀 값이 필요한 경우 {#public-vs-private--when-you-need-a-salt-secret}
+## Public vs private — when you need a `?salt=` secret
 
-공개 store는 링크만으로 열리지만, 비공개 store는 복호화 키를 파생하는 비밀 salt 값이 필요합니다.
+Public stores open with just the link; private stores require the secret salt that derives the decryption key.
 
-→ [공개 vs 비공개 store](../digstore/format/urns-and-encryption.md#public-vs-private-stores) · [공개 vs 비공개 — 차이가 무엇인가요?](../support/faq.md#public-vs-private)
+→ [Public vs private stores](../digstore/format/urns-and-encryption.md#public-vs-private-stores) · [Public vs private — what's the difference?](../support/faq.md#public-vs-private)
 
-## 콘텐츠를 로컬에서 실행하기(선택 사항) {#run-content-locally-optional}
+## Reading from your own node (optional, faster) {#reading-from-your-own-node}
 
-더 빠르고 오프라인에서도 편리한 읽기를 위해 브라우저/확장 프로그램을 로컬 [dig-node](../concepts.md#dig-node)에 연결하세요 — 이들은 하나의 `.dig` 캐시를 공유합니다. 콘텐츠를 읽기 위해 노드가 *반드시* 필요한 것은 아닙니다.
+Point your browser/extension at a local [dig-node](../concepts.md#dig-node) for faster, offline-friendly reads — they share one `.dig` cache. The first time you open a store, your node fetches what it needs and keeps syncing the rest of it in the background; once a store is fully synced, later opens read straight from your machine instead of the network. You never *need* a node to read.
 
-→ [노드 실행하기](../run-a-node/index.md)
+With a node reachable, the extension opens a store directly from it as an ordinary website: pages, scripts, images, and links all resolve within that store and version, and a single-page app's own client-side routes keep working — an unmatched route falls back to the store's entry page instead of a dead end. Links elsewhere on the internet go there directly, untouched.
 
-## $DIG 구하기 {#get-dig}
+→ [Run a node](../run-a-node/index.md) · [Point a consumer at your node](../run-a-node/point-a-consumer.md#local-first-caching)
 
-콘텐츠를 *읽기* 위해 $DIG가 필요하지는 않습니다. 게시하고 싶다면 **TibetSwap**, **dexie.space**, **9mm.pro**에서 $DIG를 구할 수 있습니다.
+## Get $DIG
 
-→ [DIG는 어디서 구하나요?](../support/faq.md#where-do-i-get-dig)
+You don't need $DIG to *read* content. If you want to publish, get $DIG on **TibetSwap**, **dexie.space**, or **9mm.pro**.
+
+→ [Where do I get DIG?](../support/faq.md#where-do-i-get-dig)
 
 ---
 
-## 더 깊이 알아보기: 프로토콜 {#go-deeper-the-protocol}
+## Go deeper: the protocol
 
-- **"블록체인을 기준으로 검증됨"** → [온체인 앵커링](../digstore/cli/onchain-anchoring.md) · [증명 및 보안](../digstore/format/proofs-and-security.md)
-- **"공개 vs 비공개 salt"** → [URN 및 암호화](../digstore/format/urns-and-encryption.md#public-vs-private-stores)
-- **"최신 버전 vs 고정 버전"** → [세대(generation) 및 root 해시](../digstore/format/store-structure.md#generations-and-root-hashes)
-- **모든 것** → [프로토콜 심화](../protocol-deep-dive.md) · [개념 및 용어집](../concepts.md)
+- **"verified against the blockchain"** → [On-chain anchoring](../digstore/cli/onchain-anchoring.md) · [Proofs & security](../digstore/format/proofs-and-security.md)
+- **"public vs private salt"** → [URNs & encryption](../digstore/format/urns-and-encryption.md#public-vs-private-stores)
+- **"latest vs pinned"** → [Generations & root hashes](../digstore/format/store-structure.md#generations-and-root-hashes)
+- **Everything** → [Protocol deep-dive](../protocol-deep-dive.md) · [Concepts & glossary](../concepts.md)

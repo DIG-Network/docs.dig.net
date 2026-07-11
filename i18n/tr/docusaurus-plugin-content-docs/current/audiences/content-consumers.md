@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
-title: İçerik tüketicileri için
-description: "KENDİ tarayıcınızın blockchain'e karşı doğruladığı chia:// içeriğini açın — hiçbir host onu değiştiremez veya sahtesini yapamaz, özel içerik host'tan gizli kalır ve kalıcı ve her yerde yeniden barındırılabilirdir, böylece kimse kaldıramaz veya sizi kilitleyemez."
+title: For content consumers
+description: "Open chia:// content that your own browser verifies against the blockchain — no host can alter or fake it, private content stays private from the host, and it's permanent and re-hostable anywhere, so nobody can take it down or lock you in."
 keywords:
   - open chia content
   - DIG Browser
@@ -9,6 +9,9 @@ keywords:
   - verified content
   - private content salt
   - extension
+  - omnibox
+  - local-first reads
+  - DIG toolbar
 tags:
   - browser
   - chia-protocol
@@ -16,59 +19,61 @@ tags:
   - dig-node
 ---
 
-# İçerik tüketicileri için {#for-content-consumers}
+# For content consumers
 
-> **KENDİ tarayıcınızın blockchain'e karşı doğruladığı `chia://` içeriğini açın** — hiçbir host onu değiştiremez veya sahtesini yapamaz, özel içerik host'tan gizli kalır ve kalıcı ve her yerde yeniden barındırılabilirdir, böylece kimse kaldıramaz veya sizi kilitleyemez.
+> **Open `chia://` content that your OWN browser verifies against the blockchain** — no host can alter or fake it, private content stays private from the host, and it's permanent and re-hostable anywhere, so nobody can take it down or lock you in.
 
-## Zihinsel model {#the-mental-model}
+## The mental model
 
-Bir `chia://` bağlantısı yapıştırın ve içerik doğrudan ağdan gelir — render edilmeden önce **CİHAZINIZDA** **içerik adresli** ve **kriptografik olarak doğrulanmış**. **Başarısızlıkta kapanır**: kurcalanmış veya şifresi çözülemeyen baytlar asla gösterilmez.
+Paste a `chia://` link and the content comes straight from the network — **content-addressed** and **cryptographically verified on YOUR device** before it renders. It is **fail-closed**: tampered or undecryptable bytes never show.
 
-- Store'un *en son* sürümü için **`rootHash`'i atlayın**: `chia://<storeId>/`.
-- Tek bir tam değişmez [capsule](../concepts.md#capsule)'ü sabitlemek için **dahil edin**: `chia://<storeId>:<rootHash>/`.
+- **Omit the `rootHash`** for the store's *latest* version: `chia://<storeId>/`.
+- **Include it** to pin one exact immutable [capsule](../concepts.md#capsule): `chia://<storeId>:<rootHash>/`.
 
-Genel içerik yalnızca bağlantıya ihtiyaç duyar. Özel içerik ayrıca gizli bir **`?salt=`**'a — bir şifre gibi — ihtiyaç duyar.
+Public content needs only the link. Private content also needs a secret **`?salt=`** — like a password.
 
-## DIG Browser'ı veya uzantıyı edinin {#get-the-dig-browser-or-the-extension}
+## Get the DIG Browser, or the extension
 
-- **[DIG Browser'ı edinin ↗](https://github.com/DIG-Network/DIG_Browser/releases)** — `chia://` ve yerleşik bir cüzdanı gömülü olarak içeren bir tarayıcı.
-- Chrome / Edge / Brave / Firefox için **uzantı** — zaten kullandığınız bir tarayıcıya `chia://` çözümlemesi ekler.
+- **[Get the DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)** — a browser with `chia://` and a built-in wallet baked in.
+- **The extension** for Chrome / Edge / Brave / Firefox — adds `chia://` resolution to a browser you already use. Open an address two ways: paste it into the home screen's "open a chia:// address or DIG URN" field, or type `dig` followed by the address straight into your browser's address bar and press Enter — the same shortcut browsers already offer for a site's own search. With a local [dig-node](../concepts.md#dig-node) reachable, the address opens directly from it as a real page (see [Reading from your own node](#reading-from-your-own-node) below); with no node reachable, it opens inside the extension's own viewer instead, verified and decrypted from the public network.
 
-## `chia://` içeriğini açma — en son ile sabitlenmiş {#open-chia-content--latest-vs-pinned}
+## Open `chia://` content — latest vs pinned
 
-Adres biçimleri, temiz `chia://<store>/` çubuğu ve bir `rootHash`'i ne zaman sabitlemeniz gerektiği.
+The address forms, the clean `chia://<store>/` bar, and when to pin a `rootHash`.
 
-→ [chia:// protokolü](../browser/chia-protocol.md)
+→ [The chia:// protocol](../browser/chia-protocol.md)
 
-## Yerleşik sayfalar, doğrulanmış rozet & kalkanlar {#built-in-pages-the-verified-badge--shields}
+## Built-in pages, the verified badge & shields
 
-`chia://home`, `chia://wallet`, `chia://settings` ve aktif capsule için her kaynağın dahil etme kanıtı hükmünü gösteren doğrulanmış rozet / kalkanlar.
+`chia://home`, `chia://wallet`, `chia://settings`, and the verified badge / shields that show each resource's inclusion-proof verdict for the active capsule. When the extension opens a page directly from your node, it overlays a small **DIG toolbar** on the page itself showing whether it's verified on Chia and whether it loaded from your local node — click it to open the fuller wallet or shields views.
 
-→ [window.chia kullanımı](../browser/using-window-chia.md)
+→ [Using window.chia](../browser/using-window-chia.md) · [How the built-in wallet protects your keys](../browser/wallet-security.md)
 
-## Genel ile özel — bir `?salt=` sırrına ne zaman ihtiyacınız var {#public-vs-private--when-you-need-a-salt-secret}
+## Public vs private — when you need a `?salt=` secret
 
-Genel store'lar yalnızca bağlantıyla açılır; özel store'lar, şifre çözme anahtarını türeten gizli tuzu (salt) gerektirir.
+Public stores open with just the link; private stores require the secret salt that derives the decryption key.
 
-→ [Genel ile özel store'lar](../digstore/format/urns-and-encryption.md#public-vs-private-stores) · [Genel ile özel — fark nedir?](../support/faq.md#public-vs-private)
+→ [Public vs private stores](../digstore/format/urns-and-encryption.md#public-vs-private-stores) · [Public vs private — what's the difference?](../support/faq.md#public-vs-private)
 
-## İçeriği yerel olarak çalıştırın (isteğe bağlı) {#run-content-locally-optional}
+## Reading from your own node (optional, faster) {#reading-from-your-own-node}
 
-Daha hızlı, çevrimdışı dostu okumalar için tarayıcınızı/uzantınızı yerel bir [dig-node](../concepts.md#dig-node)'a yönlendirin — bir `.dig` önbelleğini paylaşırlar. İçeriği okumak için asla bir düğüme *ihtiyacınız* yoktur.
+Point your browser/extension at a local [dig-node](../concepts.md#dig-node) for faster, offline-friendly reads — they share one `.dig` cache. The first time you open a store, your node fetches what it needs and keeps syncing the rest of it in the background; once a store is fully synced, later opens read straight from your machine instead of the network. You never *need* a node to read.
 
-→ [Bir düğüm çalıştırın](../run-a-node/index.md)
+With a node reachable, the extension opens a store directly from it as an ordinary website: pages, scripts, images, and links all resolve within that store and version, and a single-page app's own client-side routes keep working — an unmatched route falls back to the store's entry page instead of a dead end. Links elsewhere on the internet go there directly, untouched.
 
-## $DIG edinin {#get-dig}
+→ [Run a node](../run-a-node/index.md) · [Point a consumer at your node](../run-a-node/point-a-consumer.md#local-first-caching)
 
-İçerik *okumak* için $DIG'e ihtiyacınız yoktur. Yayınlamak isterseniz, **TibetSwap**, **dexie.space** veya **9mm.pro**'da $DIG edinin.
+## Get $DIG
 
-→ [DIG'i nereden alırım?](../support/faq.md#where-do-i-get-dig)
+You don't need $DIG to *read* content. If you want to publish, get $DIG on **TibetSwap**, **dexie.space**, or **9mm.pro**.
+
+→ [Where do I get DIG?](../support/faq.md#where-do-i-get-dig)
 
 ---
 
-## Daha derine inin: protokol {#go-deeper-the-protocol}
+## Go deeper: the protocol
 
-- **"blockchain'e karşı doğrulanmış"** → [Zincir üzeri sabitleme](../digstore/cli/onchain-anchoring.md) · [Kanıtlar & güvenlik](../digstore/format/proofs-and-security.md)
-- **"genel ile özel tuz (salt)"** → [URN'ler & şifreleme](../digstore/format/urns-and-encryption.md#public-vs-private-stores)
-- **"en son ile sabitlenmiş"** → [Generation'lar & kök karmalar](../digstore/format/store-structure.md#generations-and-root-hashes)
-- **Her şey** → [Protokol derinlemesine inceleme](../protocol-deep-dive.md) · [Kavramlar & sözlük](../concepts.md)
+- **"verified against the blockchain"** → [On-chain anchoring](../digstore/cli/onchain-anchoring.md) · [Proofs & security](../digstore/format/proofs-and-security.md)
+- **"public vs private salt"** → [URNs & encryption](../digstore/format/urns-and-encryption.md#public-vs-private-stores)
+- **"latest vs pinned"** → [Generations & root hashes](../digstore/format/store-structure.md#generations-and-root-hashes)
+- **Everything** → [Protocol deep-dive](../protocol-deep-dive.md) · [Concepts & glossary](../concepts.md)

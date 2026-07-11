@@ -81,10 +81,14 @@ either path alone is enough for `.dig` URLs to load. It never edits `/etc/hosts`
 never rewrites URLs, and never intercepts TLS. Run `dig-dns doctor` any time to check
 which path is live and get a fix hint for what isn't.
 
-The [extension](../audiences/content-consumers.md)'s "open a chia:// address or DIG URN"
-input on its home screen detects `dig-dns` automatically: with it installed and running, opening
-an address navigates straight to its real `http://<storeId>.dig/` page; without it, the same
-address still opens, rendered inside the extension.
+The [extension](../audiences/content-consumers.md) already opens content directly from a
+reachable node as a real page — see [Reading from your own
+node](../audiences/content-consumers.md#reading-from-your-own-node). `dig-dns` layers a
+friendlier, per-store address on top of that: with it installed and running, the same open
+detects `dig-dns` automatically and lands on `http://<storeId>.dig/` instead of the node's own
+address; without `dig-dns`, the page still opens directly from the node, just at the node's own
+local address. Only when **no** node is reachable at all does the address fall back to opening
+inside the extension's own viewer.
 
 ## On Debian-family systems
 

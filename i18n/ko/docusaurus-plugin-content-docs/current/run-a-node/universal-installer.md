@@ -25,15 +25,15 @@ curl -fsSL https://dig.net/install.sh | sh
 
 This is the same self-contained `dig-installer` shipped on the [Releases page](https://github.com/DIG-Network/dig-installer/releases) — download and run it directly if you prefer not to pipe to a shell, or on Windows.
 
-## GUI 설치 프로그램 {#gui-installer}
+## GUI installer {#gui-installer}
 
-플래그 대신 안내형 설정을 선호하시나요? 설치 프로그램을 셸로 파이프하는 대신 직접 다운로드하여 실행하면 데스크톱 마법사가 열립니다 — **Welcome → License → Components → Install → Done** — DIG Network의 다른 앱과 어울리는 다크 테마로요.
+Prefer a guided setup over flags? Downloading and running the installer directly (instead of piping to a shell) opens a desktop wizard — **Welcome → License → Components → Install → Done** — in a dark theme that matches the rest of DIG Network's apps.
 
-**Components** 단계에서는 `digstore`, `dig-node`, `dig-dns`, `dig-relay`, DIG Browser 등 모든 구성 요소가 기본적으로 체크되어 있어, 아무것도 바꾸지 않고 진행하면 전부 설치됩니다(`digstore`에는 체크박스가 없으며 항상 설치됩니다). 일부만 설치하려면 다른 구성 요소의 체크를 해제하세요.
+On the **Components** step, every component — `digstore`, `dig-node`, `dig-dns`, `dig-relay`, and DIG Browser — is checked by default, so clicking through with no changes installs everything (`digstore` has no checkbox; it's always installed). Uncheck any of the others to install just a subset.
 
-구성 요소가 사용 중인 플랫폼에 아직 제공되지 않는 경우 자동으로 건너뛰며, 선택한 나머지 구성 요소는 정상적으로 설치됩니다.
+If a component isn't available yet for your platform, it's skipped automatically and the rest of your selected components still install normally.
 
-이미 설치된 `dig-node` 또는 `dig-relay` 위에 설치 프로그램을 다시 실행하는 경우(예: 업그레이드) 별도의 수동 작업이 필요 없습니다. 실행 중인 서비스를 중지하고, 바이너리를 새 버전으로 교체한 다음 다시 시작하므로, 서비스는 이전과 동일한 실행/중지 상태로 돌아옵니다.
+Re-running the installer over an already-installed `dig-node` or `dig-relay` — to upgrade, for example — needs no manual steps: it stops the running service, replaces the binary with the new version, then starts it again, so the service ends up in the same running or stopped state it was in before.
 
 ## `dig.local`
 
@@ -81,10 +81,14 @@ either path alone is enough for `.dig` URLs to load. It never edits `/etc/hosts`
 never rewrites URLs, and never intercepts TLS. Run `dig-dns doctor` any time to check
 which path is live and get a fix hint for what isn't.
 
-The [extension](../audiences/content-consumers.md)'s "open a chia:// address or DIG URN"
-input on its home screen detects `dig-dns` automatically: with it installed and running, opening
-an address navigates straight to its real `http://<storeId>.dig/` page; without it, the same
-address still opens, rendered inside the extension.
+The [extension](../audiences/content-consumers.md) already opens content directly from a
+reachable node as a real page — see [Reading from your own
+node](../audiences/content-consumers.md#reading-from-your-own-node). `dig-dns` layers a
+friendlier, per-store address on top of that: with it installed and running, the same open
+detects `dig-dns` automatically and lands on `http://<storeId>.dig/` instead of the node's own
+address; without `dig-dns`, the page still opens directly from the node, just at the node's own
+local address. Only when **no** node is reachable at all does the address fall back to opening
+inside the extension's own viewer.
 
 ## On Debian-family systems
 
