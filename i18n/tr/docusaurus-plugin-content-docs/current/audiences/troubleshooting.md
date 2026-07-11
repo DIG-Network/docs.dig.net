@@ -1,7 +1,7 @@
 ---
 sidebar_position: 6
-title: Sorun giderme — takılmayı aşın
-description: "Her hata, sunucu günlüğüne doğrudan bağlanan kararlı bir kod ve bir istek kimliği verir, zincir üzeri harcamalar asla iki kez ödeme yapmamanız için yarış korumalıdır ve net ön uçuş korumaları $DIG harcamadan önce boşa giden capsule'leri durdurur."
+title: Troubleshooting — get unstuck
+description: "Every failure gives you a stable code and a request-id that ties straight to the server log, on-chain spends are race-guarded so you never double-pay, and clear pre-flight guards stop wasted capsules before you spend $DIG."
 keywords:
   - DIG troubleshooting
   - error codes
@@ -16,66 +16,72 @@ tags:
   - capsule
 ---
 
-# Sorun giderme {#troubleshooting}
+# Troubleshooting
 
-> Her hata, sunucu günlüğüne doğrudan bağlanan bir **kararlı kod** ve bir **istek kimliği** verir, zincir üzeri harcamalar asla iki kez ödeme yapmamanız için **yarış korumalıdır** ve net **ön uçuş korumaları**, $DIG harcamadan önce boşa giden capsule'leri durdurur.
+> Every failure gives you a **stable code** and a **request-id** that ties straight to the server log, on-chain spends are **race-guarded** so you never double-pay, and clear **pre-flight guards** stop wasted capsules before you spend $DIG.
 
-## Zihinsel model — hatanızı koduyla bulun {#the-mental-model--find-your-failure-by-its-code}
+## The mental model — find your failure by its code
 
-Her yüzey — dig RPC, digstore CLI, DIGHUb, `chia://` yükleyicisi, SDK — bir hatayı tek bir **KARARLI koda** eşler. **Kodda dallanın, asla mesajda değil.** Tek bir birleştirilmiş katalog hepsini kapsar ve ayrıca makine tarafından okunabilir olarak yayınlanır.
+Every surface — the dig RPC, the digstore CLI, DIGHUb, the `chia://` loader, the SDK — maps a failure to one **STABLE code**. **Branch on the code, never the message.** One consolidated catalog covers all of them and is also published machine-readable.
 
-Ön uçuş korumaları (`digstore doctor`, `--dry-run`, `--if-changed`) ve devam ettirilebilir sabitlemeler, takılan veya hiçbir işlem yapmayan bir yayınlamanın **asla sessizce harcama yapmaması** anlamına gelir.
+Pre-flight guards (`digstore doctor`, `--dry-run`, `--if-changed`) and resumable anchors mean a stuck or no-op publish **never silently spends**.
 
-## Yaygın yayınlama hataları {#common-publishing-failures}
+## Common publishing failures
 
-Yetersiz fon, bir onay zaman aşımı (devam ettirilebilir — harcamanız kaybolmaz) ve ileriye-sarma-olmayan (non-fast-forward) "uzak kök ilerledi" hatası.
+Insufficient funds, a confirm timeout (resumable — your spend isn't lost), and the non-fast-forward "remote root has advanced".
 
-→ [Sorun giderme](../support/troubleshooting.md)
+→ [Troubleshooting](../support/troubleshooting.md)
 
-## Okuma & doğrulama hataları {#read--verify-failures}
+## Read & verify failures
 
-Kanıt uyuşmazlığı, şifre çözme/tuz (salt) hataları ve bulunamadı / decoy yanıtları.
+Proof mismatch, decrypt/salt errors, and not-found / decoy responses.
 
-→ [Okuma & doğrulama hataları](../support/troubleshooting.md#verification-failed)
+→ [Read & verify failures](../support/troubleshooting.md#verification-failed)
 
-## Cüzdan & oturum sorunları {#wallet--session-issues}
+## Wallet & session issues
 
-Bağlanma, yeniden kimlik doğrulama, reddedilen bir istek ve imzalayamayan yalnızca-izleme oturumları.
+Connect, re-auth, a declined request, and watch-only sessions that can't sign.
 
-→ [Cüzdan oturumu imzalayamıyor](../support/troubleshooting.md#wallet-session)
+→ [Wallet session can't sign](../support/troubleshooting.md#wallet-session)
 
-## Ön uçuş & maliyet kontrolleri — bir capsule'ü boşa harcamayın {#pre-flight--cost-checks--dont-waste-a-capsule}
+## Node & extension issues
 
-`digstore doctor` (ortam + hazır olma), `--dry-run` (maliyeti ve olası capsule'ü önizler) ve `--if-changed` (bayt-özdeş bir build hiçbir işlem yapmaz).
+The browser extension shows your node as offline even though it's running and healthy.
 
-→ [GitHub Actions'tan dağıtım](../digstore/cli/deploy-from-github-actions.md) · [Zincir üzeri sabitleme → maliyet & güvenlik](../digstore/cli/onchain-anchoring.md#cost-and-safety)
+→ [The extension shows my node as offline](../support/troubleshooting.md#extension-offline)
 
-## Hata kodları referansı {#error-codes-reference}
+## Pre-flight & cost checks — don't waste a capsule
 
-CLI çıkış kodları · RPC `-32xxx` · DIGHUb · dig-loader · SDK — tek bir birleştirilmiş tablo.
+`digstore doctor` (environment + readiness), `--dry-run` (preview the cost and the would-be capsule), and `--if-changed` (a byte-identical build is a no-op).
 
-→ [Hata kodları](../support/error-codes.md)
+→ [Deploy from GitHub Actions](../digstore/cli/deploy-from-github-actions.md) · [On-chain anchoring → cost & safety](../digstore/cli/onchain-anchoring.md#cost-and-safety)
 
-## SSS {#faq}
+## Error codes reference
 
-Maliyet, ücretsiz deneme, fiyat neden tek tip, $DIG nereden alınır ve "bir testnet var mı?".
+CLI exit codes · RPC `-32xxx` · DIGHUb · dig-loader · SDK — one consolidated table.
 
-→ [SSS](../support/faq.md)
+→ [Error codes](../support/error-codes.md)
 
-## Yardım alın {#get-help}
+## FAQ
 
-Discord + GitHub ve iyi bir rapor nasıl dosyalanır — **asla sır yapıştırmayın**.
+Cost, the free trial, why the price is uniform, where to get $DIG, and "is there a testnet?".
 
-→ [Yardım alın](../support/get-help.md)
+→ [FAQ](../support/faq.md)
 
-## Durum & değişiklik günlüğü {#status--changelog}
+## Get help
 
-→ [Durum](../support/status.md) · [Değişiklik günlüğü](../support/changelog.md)
+Discord + GitHub, and how to file a good report — **never paste secrets**.
+
+→ [Get help](../support/get-help.md)
+
+## Status & changelog
+
+→ [Status](../support/status.md) · [Changelog](../support/changelog.md)
 
 ---
 
-## Daha derine inin: protokol {#go-deeper-the-protocol}
+## Go deeper: the protocol
 
-- **okuma & doğrulama hataları** → [Kanıtlar & güvenlik](../digstore/format/proofs-and-security.md) · [URN'ler & şifreleme](../digstore/format/urns-and-encryption.md)
-- **RPC `-32xxx` kodları** → [dig RPC metotları](../rpc/methods.md) · [Uygunluk](../rpc/conformance.md)
-- **Her şey** → [Protokol derinlemesine inceleme](../protocol-deep-dive.md) · [Kavramlar & sözlük](../concepts.md)
+- **read & verify failures** → [Proofs & security](../digstore/format/proofs-and-security.md) · [URNs & encryption](../digstore/format/urns-and-encryption.md)
+- **RPC `-32xxx` codes** → [the dig RPC methods](../rpc/methods.md) · [Conformance](../rpc/conformance.md)
+- **Everything** → [Protocol deep-dive](../protocol-deep-dive.md) · [Concepts & glossary](../concepts.md)

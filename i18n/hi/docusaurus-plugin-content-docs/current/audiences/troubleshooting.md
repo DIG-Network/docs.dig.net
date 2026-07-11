@@ -1,7 +1,7 @@
 ---
 sidebar_position: 6
 title: Troubleshooting — get unstuck
-description: "हर विफलता आपको एक स्थिर कोड और एक request-id देती है जो सीधे सर्वर लॉग से जुड़ती है, ऑन-चेन spends रेस-गार्डेड हैं ताकि आप कभी दोगुना भुगतान न करें, और स्पष्ट pre-flight गार्ड्स $DIG खर्च करने से पहले बर्बाद capsules को रोकते हैं।"
+description: "Every failure gives you a stable code and a request-id that ties straight to the server log, on-chain spends are race-guarded so you never double-pay, and clear pre-flight guards stop wasted capsules before you spend $DIG."
 keywords:
   - DIG troubleshooting
   - error codes
@@ -16,66 +16,72 @@ tags:
   - capsule
 ---
 
-# Troubleshooting {#troubleshooting}
+# Troubleshooting
 
-> हर विफलता आपको एक **स्थिर कोड** और एक **request-id** देती है जो सीधे सर्वर लॉग से जुड़ती है, ऑन-चेन spends **रेस-गार्डेड** हैं ताकि आप कभी दोगुना भुगतान न करें, और स्पष्ट **pre-flight गार्ड्स** $DIG खर्च करने से पहले बर्बाद capsules को रोकते हैं।
+> Every failure gives you a **stable code** and a **request-id** that ties straight to the server log, on-chain spends are **race-guarded** so you never double-pay, and clear **pre-flight guards** stop wasted capsules before you spend $DIG.
 
-## मेंटल मॉडल — अपनी विफलता को उसके कोड से खोजें {#the-mental-model--find-your-failure-by-its-code}
+## The mental model — find your failure by its code
 
-हर सतह — dig RPC, digstore CLI, DIGHUb, `chia://` loader, SDK — एक विफलता को एक **स्थिर कोड** से मैप करती है। **कोड पर branch करें, कभी मैसेज पर नहीं।** एक समेकित कैटलॉग इन सभी को कवर करता है और मशीन-रीडेबल रूप में भी पब्लिश होता है।
+Every surface — the dig RPC, the digstore CLI, DIGHUb, the `chia://` loader, the SDK — maps a failure to one **STABLE code**. **Branch on the code, never the message.** One consolidated catalog covers all of them and is also published machine-readable.
 
-Pre-flight गार्ड्स (`digstore doctor`, `--dry-run`, `--if-changed`) और resumable anchors का मतलब है कि एक अटका हुआ या no-op publish **कभी चुपचाप खर्च नहीं करता**।
+Pre-flight guards (`digstore doctor`, `--dry-run`, `--if-changed`) and resumable anchors mean a stuck or no-op publish **never silently spends**.
 
-## सामान्य publishing विफलताएं {#common-publishing-failures}
+## Common publishing failures
 
-अपर्याप्त फंड, एक confirm टाइमआउट (resumable — आपका spend खोया नहीं है), और non-fast-forward "remote root has advanced"।
+Insufficient funds, a confirm timeout (resumable — your spend isn't lost), and the non-fast-forward "remote root has advanced".
 
 → [Troubleshooting](../support/troubleshooting.md)
 
-## Read और verify विफलताएं {#read--verify-failures}
+## Read & verify failures
 
-Proof मिसमैच, decrypt/salt एरर्स, और not-found / decoy responses।
+Proof mismatch, decrypt/salt errors, and not-found / decoy responses.
 
 → [Read & verify failures](../support/troubleshooting.md#verification-failed)
 
-## वॉलेट और सेशन समस्याएं {#wallet--session-issues}
+## Wallet & session issues
 
-Connect, re-auth, एक अस्वीकृत रिक्वेस्ट, और watch-only सेशन्स जो साइन नहीं कर सकते।
+Connect, re-auth, a declined request, and watch-only sessions that can't sign.
 
 → [Wallet session can't sign](../support/troubleshooting.md#wallet-session)
 
-## Pre-flight और लागत जांच — एक capsule बर्बाद न करें {#pre-flight--cost-checks--dont-waste-a-capsule}
+## Node & extension issues
 
-`digstore doctor` (environment + तैयारी), `--dry-run` (लागत और होने वाले capsule का पूर्वावलोकन), और `--if-changed` (एक byte-identical बिल्ड एक no-op है)।
+The browser extension shows your node as offline even though it's running and healthy.
+
+→ [The extension shows my node as offline](../support/troubleshooting.md#extension-offline)
+
+## Pre-flight & cost checks — don't waste a capsule
+
+`digstore doctor` (environment + readiness), `--dry-run` (preview the cost and the would-be capsule), and `--if-changed` (a byte-identical build is a no-op).
 
 → [Deploy from GitHub Actions](../digstore/cli/deploy-from-github-actions.md) · [On-chain anchoring → cost & safety](../digstore/cli/onchain-anchoring.md#cost-and-safety)
 
-## एरर कोड्स संदर्भ {#error-codes-reference}
+## Error codes reference
 
-CLI exit codes · RPC `-32xxx` · DIGHUb · dig-loader · SDK — एक समेकित तालिका।
+CLI exit codes · RPC `-32xxx` · DIGHUb · dig-loader · SDK — one consolidated table.
 
 → [Error codes](../support/error-codes.md)
 
-## FAQ {#faq}
+## FAQ
 
-लागत, फ्री ट्रायल, कीमत यूनिफॉर्म क्यों है, $DIG कहां पाएं, और "क्या कोई testnet है?"।
+Cost, the free trial, why the price is uniform, where to get $DIG, and "is there a testnet?".
 
 → [FAQ](../support/faq.md)
 
-## मदद पाएं {#get-help}
+## Get help
 
-Discord + GitHub, और एक अच्छी रिपोर्ट कैसे फाइल करें — **कभी सीक्रेट्स पेस्ट न करें**।
+Discord + GitHub, and how to file a good report — **never paste secrets**.
 
-→ [मदद पाएं](../support/get-help.md)
+→ [Get help](../support/get-help.md)
 
-## Status और changelog {#status--changelog}
+## Status & changelog
 
 → [Status](../support/status.md) · [Changelog](../support/changelog.md)
 
 ---
 
-## गहराई में जाएं: प्रोटोकॉल {#go-deeper-the-protocol}
+## Go deeper: the protocol
 
-- **read और verify विफलताएं** → [Proofs & security](../digstore/format/proofs-and-security.md) · [URNs & encryption](../digstore/format/urns-and-encryption.md)
-- **RPC `-32xxx` कोड्स** → [the dig RPC methods](../rpc/methods.md) · [Conformance](../rpc/conformance.md)
-- **सब कुछ** → [Protocol deep-dive](../protocol-deep-dive.md) · [Concepts & glossary](../concepts.md)
+- **read & verify failures** → [Proofs & security](../digstore/format/proofs-and-security.md) · [URNs & encryption](../digstore/format/urns-and-encryption.md)
+- **RPC `-32xxx` codes** → [the dig RPC methods](../rpc/methods.md) · [Conformance](../rpc/conformance.md)
+- **Everything** → [Protocol deep-dive](../protocol-deep-dive.md) · [Concepts & glossary](../concepts.md)

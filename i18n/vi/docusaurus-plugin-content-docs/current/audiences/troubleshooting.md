@@ -1,7 +1,7 @@
 ---
 sidebar_position: 6
-title: Xử lý sự cố — thoát khỏi bế tắc
-description: "Mỗi lỗi đều cho bạn một mã ổn định và một request-id gắn thẳng vào log server, các giao dịch chi tiêu on-chain được bảo vệ khỏi tình trạng đua (race-guarded) nên bạn không bao giờ trả tiền hai lần, và các bảo vệ tiền kiểm rõ ràng ngăn lãng phí capsule trước khi bạn chi $DIG."
+title: Troubleshooting — get unstuck
+description: "Every failure gives you a stable code and a request-id that ties straight to the server log, on-chain spends are race-guarded so you never double-pay, and clear pre-flight guards stop wasted capsules before you spend $DIG."
 keywords:
   - DIG troubleshooting
   - error codes
@@ -16,66 +16,72 @@ tags:
   - capsule
 ---
 
-# Xử lý sự cố {#troubleshooting}
+# Troubleshooting
 
-> Mỗi lỗi đều cho bạn một **mã ổn định** và một **request-id** gắn thẳng vào log server, các giao dịch chi tiêu on-chain được **bảo vệ khỏi tình trạng đua (race-guarded)** nên bạn không bao giờ trả tiền hai lần, và các **bảo vệ tiền kiểm** rõ ràng ngăn lãng phí capsule trước khi bạn chi $DIG.
+> Every failure gives you a **stable code** and a **request-id** that ties straight to the server log, on-chain spends are **race-guarded** so you never double-pay, and clear **pre-flight guards** stop wasted capsules before you spend $DIG.
 
-## Mô hình tư duy — tìm lỗi của bạn qua mã của nó {#the-mental-model--find-your-failure-by-its-code}
+## The mental model — find your failure by its code
 
-Mọi bề mặt — dig RPC, digstore CLI, DIGHUb, trình tải `chia://`, SDK — đều ánh xạ một lỗi thành một **mã ỔN ĐỊNH** duy nhất. **Rẽ nhánh dựa trên mã, không bao giờ dựa vào thông điệp.** Một danh mục hợp nhất bao quát tất cả và cũng được công bố dưới dạng máy đọc được.
+Every surface — the dig RPC, the digstore CLI, DIGHUb, the `chia://` loader, the SDK — maps a failure to one **STABLE code**. **Branch on the code, never the message.** One consolidated catalog covers all of them and is also published machine-readable.
 
-Các bảo vệ tiền kiểm (`digstore doctor`, `--dry-run`, `--if-changed`) và các điểm neo có thể tiếp tục lại nghĩa là một lần xuất bản bị kẹt hoặc no-op **không bao giờ âm thầm tốn tiền**.
+Pre-flight guards (`digstore doctor`, `--dry-run`, `--if-changed`) and resumable anchors mean a stuck or no-op publish **never silently spends**.
 
-## Các lỗi xuất bản thường gặp {#common-publishing-failures}
+## Common publishing failures
 
-Thiếu tiền, hết thời gian chờ xác nhận (có thể tiếp tục lại — giao dịch chi tiêu của bạn không bị mất), và lỗi "root từ xa đã tiến thêm" không-fast-forward.
+Insufficient funds, a confirm timeout (resumable — your spend isn't lost), and the non-fast-forward "remote root has advanced".
 
-→ [Xử lý sự cố](../support/troubleshooting.md)
+→ [Troubleshooting](../support/troubleshooting.md)
 
-## Lỗi đọc & xác minh {#read--verify-failures}
+## Read & verify failures
 
-Bằng chứng không khớp, lỗi giải mã/salt, và các phản hồi không tìm thấy / decoy.
+Proof mismatch, decrypt/salt errors, and not-found / decoy responses.
 
-→ [Lỗi đọc & xác minh](../support/troubleshooting.md#verification-failed)
+→ [Read & verify failures](../support/troubleshooting.md#verification-failed)
 
-## Sự cố ví & phiên làm việc {#wallet--session-issues}
+## Wallet & session issues
 
-Kết nối, xác thực lại, một yêu cầu bị từ chối, và các phiên chỉ-xem không thể ký.
+Connect, re-auth, a declined request, and watch-only sessions that can't sign.
 
-→ [Phiên ví không thể ký](../support/troubleshooting.md#wallet-session)
+→ [Wallet session can't sign](../support/troubleshooting.md#wallet-session)
 
-## Kiểm tra tiền kiểm & chi phí — đừng lãng phí một capsule {#pre-flight--cost-checks--dont-waste-a-capsule}
+## Node & extension issues
 
-`digstore doctor` (môi trường + sự sẵn sàng), `--dry-run` (xem trước chi phí và capsule sẽ được tạo), và `--if-changed` (một bản build giống hệt byte-for-byte là no-op).
+The browser extension shows your node as offline even though it's running and healthy.
 
-→ [Triển khai từ GitHub Actions](../digstore/cli/deploy-from-github-actions.md) · [Neo on-chain → chi phí & an toàn](../digstore/cli/onchain-anchoring.md#cost-and-safety)
+→ [The extension shows my node as offline](../support/troubleshooting.md#extension-offline)
 
-## Tham khảo mã lỗi {#error-codes-reference}
+## Pre-flight & cost checks — don't waste a capsule
 
-Mã thoát CLI · RPC `-32xxx` · DIGHUb · dig-loader · SDK — một bảng hợp nhất duy nhất.
+`digstore doctor` (environment + readiness), `--dry-run` (preview the cost and the would-be capsule), and `--if-changed` (a byte-identical build is a no-op).
 
-→ [Mã lỗi](../support/error-codes.md)
+→ [Deploy from GitHub Actions](../digstore/cli/deploy-from-github-actions.md) · [On-chain anchoring → cost & safety](../digstore/cli/onchain-anchoring.md#cost-and-safety)
 
-## Câu hỏi thường gặp {#faq}
+## Error codes reference
 
-Chi phí, bản dùng thử miễn phí, tại sao mức giá lại đồng nhất, lấy $DIG ở đâu, và "có testnet không?".
+CLI exit codes · RPC `-32xxx` · DIGHUb · dig-loader · SDK — one consolidated table.
 
-→ [Câu hỏi thường gặp](../support/faq.md)
+→ [Error codes](../support/error-codes.md)
 
-## Nhận trợ giúp {#get-help}
+## FAQ
 
-Discord + GitHub, và cách gửi một báo cáo tốt — **không bao giờ dán bí mật**.
+Cost, the free trial, why the price is uniform, where to get $DIG, and "is there a testnet?".
 
-→ [Nhận trợ giúp](../support/get-help.md)
+→ [FAQ](../support/faq.md)
 
-## Trạng thái & nhật ký thay đổi {#status--changelog}
+## Get help
 
-→ [Trạng thái](../support/status.md) · [Nhật ký thay đổi](../support/changelog.md)
+Discord + GitHub, and how to file a good report — **never paste secrets**.
+
+→ [Get help](../support/get-help.md)
+
+## Status & changelog
+
+→ [Status](../support/status.md) · [Changelog](../support/changelog.md)
 
 ---
 
-## Đi sâu hơn: giao thức {#go-deeper-the-protocol}
+## Go deeper: the protocol
 
-- **lỗi đọc & xác minh** → [Bằng chứng & bảo mật](../digstore/format/proofs-and-security.md) · [URN & mã hóa](../digstore/format/urns-and-encryption.md)
-- **mã RPC `-32xxx`** → [các phương thức dig RPC](../rpc/methods.md) · [Tuân thủ](../rpc/conformance.md)
-- **Tất cả** → [Đi sâu vào giao thức](../protocol-deep-dive.md) · [Khái niệm & thuật ngữ](../concepts.md)
+- **read & verify failures** → [Proofs & security](../digstore/format/proofs-and-security.md) · [URNs & encryption](../digstore/format/urns-and-encryption.md)
+- **RPC `-32xxx` codes** → [the dig RPC methods](../rpc/methods.md) · [Conformance](../rpc/conformance.md)
+- **Everything** → [Protocol deep-dive](../protocol-deep-dive.md) · [Concepts & glossary](../concepts.md)

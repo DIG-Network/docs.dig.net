@@ -1,7 +1,7 @@
 ---
 sidebar_position: 6
 title: Troubleshooting — get unstuck
-description: "Toda falha te dá um código estável e um request-id que se conecta diretamente ao log do servidor, os gastos on-chain são protegidos contra race conditions para que você nunca pague em duplicidade, e proteções pré-voo claras evitam capsules desperdiçados antes de você gastar $DIG."
+description: "Every failure gives you a stable code and a request-id that ties straight to the server log, on-chain spends are race-guarded so you never double-pay, and clear pre-flight guards stop wasted capsules before you spend $DIG."
 keywords:
   - DIG troubleshooting
   - error codes
@@ -16,66 +16,72 @@ tags:
   - capsule
 ---
 
-# Troubleshooting {#troubleshooting}
+# Troubleshooting
 
-> Toda falha te dá um **código estável** e um **request-id** que se conecta diretamente ao log do servidor, os gastos on-chain são **protegidos contra race conditions** para que você nunca pague em duplicidade, e proteções **pré-voo** claras evitam capsules desperdiçados antes de você gastar $DIG.
+> Every failure gives you a **stable code** and a **request-id** that ties straight to the server log, on-chain spends are **race-guarded** so you never double-pay, and clear **pre-flight guards** stop wasted capsules before you spend $DIG.
 
-## O modelo mental — encontre sua falha pelo código {#the-mental-model--find-your-failure-by-its-code}
+## The mental model — find your failure by its code
 
-Toda superfície — o dig RPC, a CLI digstore, a DIGHUb, o loader `chia://`, o SDK — mapeia uma falha para um **código ESTÁVEL**. **Faça branch pelo código, nunca pela mensagem.** Um catálogo consolidado cobre todos eles e também é publicado de forma legível por máquina.
+Every surface — the dig RPC, the digstore CLI, DIGHUb, the `chia://` loader, the SDK — maps a failure to one **STABLE code**. **Branch on the code, never the message.** One consolidated catalog covers all of them and is also published machine-readable.
 
-Proteções pré-voo (`digstore doctor`, `--dry-run`, `--if-changed`) e âncoras retomáveis significam que uma publicação travada ou sem efeito **nunca gasta silenciosamente**.
+Pre-flight guards (`digstore doctor`, `--dry-run`, `--if-changed`) and resumable anchors mean a stuck or no-op publish **never silently spends**.
 
-## Falhas comuns de publicação {#common-publishing-failures}
+## Common publishing failures
 
-Fundos insuficientes, um timeout de confirmação (retomável — seu gasto não é perdido), e o "a raiz remota avançou" de não-fast-forward.
+Insufficient funds, a confirm timeout (resumable — your spend isn't lost), and the non-fast-forward "remote root has advanced".
 
-→ [Solução de problemas](../support/troubleshooting.md)
+→ [Troubleshooting](../support/troubleshooting.md)
 
-## Falhas de leitura e verificação {#read--verify-failures}
+## Read & verify failures
 
-Incompatibilidade de prova, erros de descriptografia/salt, e respostas de não encontrado / decoy.
+Proof mismatch, decrypt/salt errors, and not-found / decoy responses.
 
-→ [Falhas de leitura e verificação](../support/troubleshooting.md#verification-failed)
+→ [Read & verify failures](../support/troubleshooting.md#verification-failed)
 
-## Problemas de carteira e sessão {#wallet--session-issues}
+## Wallet & session issues
 
-Conexão, reautenticação, uma requisição recusada, e sessões somente-leitura que não podem assinar.
+Connect, re-auth, a declined request, and watch-only sessions that can't sign.
 
-→ [A sessão da carteira não consegue assinar](../support/troubleshooting.md#wallet-session)
+→ [Wallet session can't sign](../support/troubleshooting.md#wallet-session)
 
-## Checagens pré-voo e de custo — não desperdice um capsule {#pre-flight--cost-checks--dont-waste-a-capsule}
+## Node & extension issues
 
-`digstore doctor` (ambiente + prontidão), `--dry-run` (pré-visualize o custo e o capsule que seria criado), e `--if-changed` (um build byte-a-byte idêntico é um no-op).
+The browser extension shows your node as offline even though it's running and healthy.
 
-→ [Deploy a partir do GitHub Actions](../digstore/cli/deploy-from-github-actions.md) · [Ancoragem on-chain → custo e segurança](../digstore/cli/onchain-anchoring.md#cost-and-safety)
+→ [The extension shows my node as offline](../support/troubleshooting.md#extension-offline)
 
-## Referência de códigos de erro {#error-codes-reference}
+## Pre-flight & cost checks — don't waste a capsule
 
-Códigos de saída da CLI · RPC `-32xxx` · DIGHUb · dig-loader · SDK — uma tabela consolidada.
+`digstore doctor` (environment + readiness), `--dry-run` (preview the cost and the would-be capsule), and `--if-changed` (a byte-identical build is a no-op).
 
-→ [Códigos de erro](../support/error-codes.md)
+→ [Deploy from GitHub Actions](../digstore/cli/deploy-from-github-actions.md) · [On-chain anchoring → cost & safety](../digstore/cli/onchain-anchoring.md#cost-and-safety)
 
-## FAQ {#faq}
+## Error codes reference
 
-Custo, o teste gratuito, por que o preço é uniforme, onde conseguir $DIG, e "existe uma testnet?".
+CLI exit codes · RPC `-32xxx` · DIGHUb · dig-loader · SDK — one consolidated table.
+
+→ [Error codes](../support/error-codes.md)
+
+## FAQ
+
+Cost, the free trial, why the price is uniform, where to get $DIG, and "is there a testnet?".
 
 → [FAQ](../support/faq.md)
 
-## Obtenha ajuda {#get-help}
+## Get help
 
-Discord + GitHub, e como registrar um bom relatório — **nunca cole segredos**.
+Discord + GitHub, and how to file a good report — **never paste secrets**.
 
-→ [Obtenha ajuda](../support/get-help.md)
+→ [Get help](../support/get-help.md)
 
-## Status e changelog {#status--changelog}
+## Status & changelog
 
 → [Status](../support/status.md) · [Changelog](../support/changelog.md)
 
 ---
 
-## Aprofunde-se: o protocolo {#go-deeper-the-protocol}
+## Go deeper: the protocol
 
-- **falhas de leitura e verificação** → [Provas e segurança](../digstore/format/proofs-and-security.md) · [URNs e criptografia](../digstore/format/urns-and-encryption.md)
-- **códigos `-32xxx` do RPC** → [os métodos do dig RPC](../rpc/methods.md) · [Conformidade](../rpc/conformance.md)
-- **Tudo** → [Aprofundamento no protocolo](../protocol-deep-dive.md) · [Conceitos e glossário](../concepts.md)
+- **read & verify failures** → [Proofs & security](../digstore/format/proofs-and-security.md) · [URNs & encryption](../digstore/format/urns-and-encryption.md)
+- **RPC `-32xxx` codes** → [the dig RPC methods](../rpc/methods.md) · [Conformance](../rpc/conformance.md)
+- **Everything** → [Protocol deep-dive](../protocol-deep-dive.md) · [Concepts & glossary](../concepts.md)

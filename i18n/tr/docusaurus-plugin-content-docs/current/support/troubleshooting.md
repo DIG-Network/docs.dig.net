@@ -107,6 +107,18 @@ Confirm the store has at least one confirmed capsule; `"latest"` on a brand-new 
 
 Not an error — you cancelled the signature in your wallet. Nothing was signed or broadcast. Re-try and approve if you meant to publish.
 
+## Node & browser extension
+
+### "The extension shows my node as offline" {#extension-offline}
+
+Your `dig-node` is running and `/health` answers fine, but the DIG browser extension still reports it offline.
+
+Modern Chrome enforces **Private Network Access**: it blocks a page/extension request to a private address (127.0.0.1 included) unless the node's CORS preflight response allows it. Older `dig-node` builds didn't send that allowance.
+
+- Update to the latest `dig-node` release (v0.13.0 or later) and restart the service.
+- Reload the extension after the node restarts.
+- Still offline? Confirm you're hitting the node directly at its configured port, not a stale cached connection — reload the extension's own background/service-worker context too.
+
 ## CLI setup
 
 ### "no seed found" {#no-seed}
