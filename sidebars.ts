@@ -116,6 +116,7 @@ const sidebars: SidebarsConfig = {
             'rpc/dig-remote',
             'rpc/conformance',
             'run-a-node/manage',
+            'run-a-node/control-panel',
           ],
         },
         {

@@ -71,6 +71,7 @@ curl -fsSL https://dig.net/install.sh | sh
 - [設定 dig-node](./configure.md)——連接埠、監聽器、快取上限、上游來源
 - [自行託管遠端來源](../rpc/dig-remote.md)——`digstore serve` 加上 dig:// clone/pull/push
 - [管理你的節點](./manage.md)——control.* 管理用 RPC 與「我的節點」介面
+- [控制面板](./control-panel.md)——完全透過 DIG 擴充功能執行你的節點：即時狀態、保留快取空間(LRU)，配對後還可管理上游/託管倉庫/同步/節點
 - [使用公開網路 RPC](../rpc/public-network-rpc.md)——你的節點所提供的 dig RPC，以及如何在網路上運行一個節點
 - [安裝 CLI](../digstore/cli/install.md)——單獨安裝 `digstore`（用於發布，而非提供服務）
 

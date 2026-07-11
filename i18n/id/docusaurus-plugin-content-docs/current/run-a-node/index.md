@@ -71,6 +71,7 @@ Anda tidak memerlukan sebuah node. Dapatkan **[DIG Browser ↗](https://github.c
 - [Konfigurasikan dig-node](./configure.md) — port, listener, batas cache, upstream
 - [Self-host sebuah origin remote](../rpc/dig-remote.md) — `digstore serve` + clone/pull/push dig://
 - [Kelola node Anda](./manage.md) — RPC admin control.* dan UI My Node
+- [Panel Kontrol](./control-panel.md) — jalankan node Anda sepenuhnya dari ekstensi DIG: status langsung, ruang cache yang dicadangkan (LRU), dan — setelah pemasangan (pairing) — upstream/hosted stores/sinkronisasi/peer
 - [Menggunakan RPC jaringan publik](../rpc/public-network-rpc.md) — dig RPC yang diucapkan node Anda, dan cara mengoperasikan sebuah node di jaringan
 - [Menginstal CLI](../digstore/cli/install.md) — `digstore` sendiri (menerbitkan, bukan menyajikan)
 

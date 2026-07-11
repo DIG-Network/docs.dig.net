@@ -71,6 +71,7 @@ curl -fsSL https://dig.net/install.sh | sh
 - [dig-node 설정하기](./configure.md) — 포트, 리스너, 캐시 한도, 업스트림
 - [원격 origin 셀프 호스팅하기](../rpc/dig-remote.md) — `digstore serve` + dig:// clone/pull/push
 - [노드 관리하기](./manage.md) — control.* 관리 RPC + My Node UI
+- [컨트롤 패널](./control-panel.md) — DIG 확장 프로그램에서 노드를 완전히 운영하기: 실시간 상태, 예약된 캐시 공간(LRU), 그리고 페어링 후에는 업스트림/호스팅 스토어/동기화/피어
 - [공개 네트워크 RPC 사용하기](../rpc/public-network-rpc.md) — 노드가 사용하는 dig RPC, 그리고 네트워크에서 노드 운영하기
 - [CLI 설치하기](../digstore/cli/install.md) — `digstore` 단독 설치(게시용, 서비스용 아님)
 

@@ -71,6 +71,7 @@ curl -fsSL https://dig.net/install.sh | sh
 - [dig-nodeを設定する](./configure.md) — ポート、リスナー、キャッシュ上限、アップストリーム
 - [リモートオリジンをセルフホストする](../rpc/dig-remote.md) — `digstore serve` + dig://のclone/pull/push
 - [ノードを管理する](./manage.md) — control.*管理RPCとMy Node UI
+- [コントロールパネル](./control-panel.md) — DIG拡張機能からノードをまるごと運用する：ライブステータス、予約キャッシュ容量（LRU）、そしてペアリング後はアップストリーム／ホストするストア／同期／ピア
 - [公開ネットワークRPCを使う](../rpc/public-network-rpc.md) — あなたのノードが話すdig RPCと、ネットワーク上でのノード運用
 - [CLIのインストール](../digstore/cli/install.md) — `digstore`単体（配信ではなく公開のため）
 

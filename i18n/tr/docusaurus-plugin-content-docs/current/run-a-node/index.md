@@ -71,6 +71,7 @@ Bir düğüme ihtiyacınız yok. **[DIG Browser'ı ↗](https://github.com/DIG-N
 - [dig-node'u yapılandırın](./configure.md) — bağlantı noktaları, dinleyiciler, önbellek sınırı, yukarı akış
 - [Uzak bir kaynağı kendiniz barındırın](../rpc/dig-remote.md) — `digstore serve` + dig:// clone/pull/push
 - [Düğümünüzü yönetin](./manage.md) — control.* yönetim RPC'leri + Düğümüm arayüzü
+- [Kontrol Paneli](./control-panel.md) — düğümünüzü tamamen DIG uzantısından yönetin: canlı durum, ayrılmış önbellek alanı (LRU) ve — eşleştirmeden sonra — yukarı akış/barındırılan depolar/senkronizasyon/eşler
 - [Genel ağ RPC'sini kullanma](../rpc/public-network-rpc.md) — düğümünüzün konuştuğu dig RPC ve ağda bir düğüm işletme
 - [CLI'yı kurma](../digstore/cli/install.md) — kendi başına `digstore` (yayınlama, sunma değil)
 

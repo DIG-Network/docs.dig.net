@@ -84,6 +84,7 @@ The docs are organized in two top-level sections: **Using DIG** (one track per a
 - [Point a consumer at your node](https://docs.dig.net/docs/run-a-node/point-a-consumer): make the DIG Browser/extension read local-first (dig.local→localhost, else rpc.dig.net) and share one .dig cache; every byte is still verified client-side.
 - [Configure dig-node](https://docs.dig.net/docs/run-a-node/configure): listeners/ports, the cache cap, and the upstream the node blind-fetches from, via config + DIGNODE_* env vars.
 - [Manage your node](https://docs.dig.net/docs/run-a-node/manage): the control.* admin RPCs (status, cache, peers/upstream) and the DIG Browser My Node UI that drives them — distinct from the public read RPC.
+- [The dig-node Control Panel](https://docs.dig.net/docs/run-a-node/control-panel): manage a local dig-node from the DIG Chrome extension — reserved .dig cache space + LRU eviction (view used/cap, set the reserved cap, evict/clear), upstream, hosted stores, sync, peers, live status, and the control-token pairing step.
 
 ## Protocol spec (protocol developers — the authoritative protocol reference; implementation is the source of truth)
 

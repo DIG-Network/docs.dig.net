@@ -71,6 +71,7 @@ Vous n'avez pas besoin d'un nœud. Obtenez le **[DIG Browser ↗](https://github
 - [Configurer dig-node](./configure.md) — ports, écouteurs, plafond de cache, amont
 - [Auto-héberger une origine distante](../rpc/dig-remote.md) — `digstore serve` + clone/pull/push dig://
 - [Gérer votre nœud](./manage.md) — les RPC d'administration control.* et l'UI My Node
+- [Le panneau de contrôle](./control-panel.md) — pilotez votre nœud depuis l'extension DIG : statut en direct, espace de cache réservé (LRU) et — une fois l'appairage effectué — amont/stores hébergés/synchronisation/pairs
 - [Utiliser le RPC du réseau public](../rpc/public-network-rpc.md) — le dig RPC que parle votre nœud, et faire tourner un nœud sur le réseau
 - [Installer la CLI](../digstore/cli/install.md) — `digstore` seul (publication, pas service)
 

@@ -41,6 +41,7 @@ Open it from the **Control Pane button in the toolbar** (next to the wallet and 
 
 ## Related
 
+- [The dig-node Control Panel](./control-panel.md) — manage the node from the extension: reserved cache + LRU, upstream, hosted stores, sync, peers, pairing
 - [Configure dig-node](./configure.md) — ports, cache cap, upstream
 - [Node conformance](../rpc/conformance.md) — the public serving contract (distinct from control.*)
 - [Self-host a remote origin](../rpc/dig-remote.md) — `digstore serve` + dig:// clone/pull/push

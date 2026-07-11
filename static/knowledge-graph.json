@@ -1052,6 +1052,17 @@
       ]
     },
     {
+      "id": "/docs/run-a-node/control-panel",
+      "type": "doc",
+      "title": "The dig-node Control Panel",
+      "url": "https://docs.dig.net/docs/run-a-node/control-panel",
+      "tags": [
+        "dig-node",
+        "browser",
+        "dig-rpc"
+      ]
+    },
+    {
       "id": "/docs/run-a-node",
       "type": "doc",
       "title": "Run a DIG node",
@@ -2966,6 +2977,16 @@
       "type": "part-of"
     },
     {
+      "from": "/docs/run-a-node/control-panel",
+      "to": "concept:browser",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/run-a-node/control-panel",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
       "from": "/docs/run-a-node",
       "to": "concept:dig-rpc",
       "type": "part-of"
@@ -4691,6 +4712,21 @@
       "type": "see-also"
     },
     {
+      "from": "/docs/run-a-node/control-panel",
+      "to": "/docs/run-a-node/manage",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/control-panel",
+      "to": "/docs/run-a-node/point-a-consumer",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/control-panel",
+      "to": "/docs/run-a-node/configure",
+      "type": "see-also"
+    },
+    {
       "from": "/docs/run-a-node",
       "to": "/docs/run-a-node/apt",
       "type": "see-also"
@@ -4722,12 +4758,22 @@
     },
     {
       "from": "/docs/run-a-node",
+      "to": "/docs/run-a-node/control-panel",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node",
       "to": "/docs/rpc/public-network-rpc",
       "type": "see-also"
     },
     {
       "from": "/docs/run-a-node",
       "to": "/docs/digstore/cli/install",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/manage",
+      "to": "/docs/run-a-node/control-panel",
       "type": "see-also"
     },
     {
