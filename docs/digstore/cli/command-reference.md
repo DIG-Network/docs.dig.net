@@ -21,7 +21,7 @@ tags:
 
 # Command reference
 
-Every `digstore` command. Run `digstore <command> --help` for full flags and examples.
+Every `digstore` command. Run `digstore <command> --help` for full flags and examples. Every command below also works via `digs`, a first-class shorthand — `digs` and `digstore` are the same program.
 
 > **On-chain by default.** `init` mints the store's singleton on **Chia mainnet** and `commit` anchors each new deployment root on-chain (both block until confirmed and spend real XCH). Each publishes one **capsule** and costs the **uniform capsule price in $DIG** (mint or commit) — paid to the DIG treasury in the same spend bundle (memo = store id). Both commands disclose the cost and check your balance before submitting; they block if the wallet is short on XCH **or** DIG. You need an unlocked wallet seed and a funded wallet first — see [On-chain anchoring](./onchain-anchoring.md).
 
