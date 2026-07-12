@@ -2,7 +2,7 @@
   "openrpc": "1.2.6",
   "info": {
     "title": "dig RPC — node profile (local dig-node / in-process DIG Browser)",
-    "version": "0.3.22",
+    "version": "0.4.0",
     "description": "The NODE PROFILE: a distinct, smaller surface than the network profile. Of the byte methods it implements ONLY dig.getContent (local-first, else proxy); everything else proxies upstream or returns -32601. It ADDS node-only methods the security model depends on — chiefly dig.getAnchoredRoot (the CHIP-0035 on-chain head, the trusted root for mandatory root-pinning), dig.stage, and cache.*. Gate on dig.methods rather than assuming one uniform surface. See https://docs.dig.net/docs/protocol/dig-rpc#node-profile.",
     "license": {
       "name": "GPL-2.0",

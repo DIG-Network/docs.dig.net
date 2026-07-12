@@ -17,6 +17,8 @@ tags:
 
 # Installing the CLI
 
+Every install method below places two binaries on your `PATH`: `digstore` and its shorthand `digs`. They're the same program — `digs <args>` behaves identically to `digstore <args>` (same commands, flags, and `--json` output) — so use whichever you prefer. For example, `digs new my-app` and `digstore new my-app` do exactly the same thing.
+
 ## Raw binary (Windows / macOS / Linux)
 
 Download the binary for your OS/CPU from the [Releases](https://github.com/DIG-Network/digstore/releases) page:
