@@ -177,7 +177,7 @@ const config: Config = {
             url: "https://dig.net",
             sameAs: [
               "https://github.com/DIG-Network",
-              "https://discord.gg/dignetwork",
+              "https://discord.gg/v78aygUZt",
               "https://x.com/digdotnet",
             ],
           },
@@ -297,7 +297,7 @@ const config: Config = {
           position: "right",
         },
         {
-          href: "https://discord.gg/dignetwork",
+          href: "https://discord.gg/v78aygUZt",
           position: "right",
           className: "navbar-discord-link",
           "aria-label": "DIG Network Discord",
@@ -346,7 +346,7 @@ const config: Config = {
             // than the internal /docs/support/status reference so the footer has
             // exactly one canonical "Status" link to the live page.
             { label: "Status", href: "https://status.dig.net/" },
-            { label: "Discord", href: "https://discord.gg/dignetwork" },
+            { label: "Discord", href: "https://discord.gg/v78aygUZt" },
             { label: "@digdotnet", href: "https://x.com/digdotnet" },
           ],
         },
