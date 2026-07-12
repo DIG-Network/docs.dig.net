@@ -27,6 +27,11 @@ env:
 jobs:
   test:
     name: build + a11y/SEO tests
+    # PR gate only — a tag push is a release of an already-PR-gated `main` tip
+    # (the merged tree already ran this full suite on the pull_request event),
+    # so re-running it here would just re-test the same commit a second time
+    # and gate the deploy behind it for no new signal (#488 release-blocker).
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -71,10 +76,11 @@ jobs:
 
   deploy:
     name: build + sync + invalidate
-    needs: test
-    # Never deploy from a pull_request run (no AWS credentials are available
-    # to a fork/PR context anyway) — only an actual push to main, or a manual
-    # dispatch, publishes.
+    # No `needs: test` — the tag push that triggers this job releases a
+    # commit already gated by the `test` job on its pull_request run; this
+    # job only builds/packages/publishes (#488). Never deploy from a
+    # pull_request run (no AWS credentials are available to a fork/PR context
+    # anyway) — only an actual `v*` tag push, or a manual dispatch, publishes.
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment: production

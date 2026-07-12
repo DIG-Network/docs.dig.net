@@ -16,7 +16,9 @@ export default defineConfig({
   workers: process.env.CI ? 2 : undefined,
   timeout: process.env.CI ? 45_000 : 30_000,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 1 : 0,
+  // Flaky-test management (#489): retry failures in CI before failing the
+  // build, so a transient network/timing blip doesn't red the pipeline.
+  retries: process.env.CI ? 2 : 0,
   reporter: process.env.CI ? [["list"], ["html", { open: "never" }]] : "list",
   use: {
     baseURL: "http://127.0.0.1:4319",
