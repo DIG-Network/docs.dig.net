@@ -20,13 +20,13 @@ Stuck on something? Start here.
 
 | Where | Best for |
 |---|---|
-| [**Discord ↗**](https://discord.gg/dignetwork) | Quick questions, deploy help, talking to other builders and the team. |
+| [**Discord ↗**](https://discord.gg/v78aygUZt) | Quick questions, deploy help, talking to other builders and the team. |
 | [**digstore issues ↗**](https://github.com/DIG-Network/digstore/issues) | CLI bugs, feature requests, anything `digstore`. |
 | [**DIGHUb issues ↗**](https://github.com/DIG-Network/hub.dig.net/issues) | Web app / publish / domain problems. |
 | [Troubleshooting](./troubleshooting.md) · [FAQ](./faq.md) · [Error codes](./error-codes.md) | Answers you can find without waiting. |
 
 :::tip Pre-release — expect rough edges
-DIG is pre-release. If something is broken or confusing, that's worth reporting — it's how the rough edges get filed down. There are no dumb questions in [Discord ↗](https://discord.gg/dignetwork).
+DIG is pre-release. If something is broken or confusing, that's worth reporting — it's how the rough edges get filed down. There are no dumb questions in [Discord ↗](https://discord.gg/v78aygUZt).
 :::
 
 ## Before you ask

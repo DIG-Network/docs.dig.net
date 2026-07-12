@@ -20,7 +20,7 @@ tags:
 The health of the services your dapp depends on at runtime.
 
 :::tip Live status dashboard
-Check **[status.dig.net ↗](https://status.dig.net/)** for the live health of all DIG services — the dig RPC, DIGHUb, the resolver, coinset, and Chia mainnet — with per-service status, uptime, and latency. DIG is pre-release, so expect occasional downtime; if something looks down, also check [Discord ↗](https://discord.gg/dignetwork).
+Check **[status.dig.net ↗](https://status.dig.net/)** for the live health of all DIG services — the dig RPC, DIGHUb, the resolver, coinset, and Chia mainnet — with per-service status, uptime, and latency. DIG is pre-release, so expect occasional downtime; if something looks down, also check [Discord ↗](https://discord.gg/v78aygUZt).
 :::
 
 The dashboard is **agent-readable** — poll these documents instead of scraping the page:
