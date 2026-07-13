@@ -12,6 +12,12 @@ keywords:
   - Windows service
   - launchd
   - systemd
+  - native OS package
+  - msi
+  - pkg
+  - deb
+  - chia:// scheme handler
+  - dig-node open
 tags:
   - dig-node
   - dig-dns
@@ -49,6 +55,48 @@ On the **Components** step, every component — `digstore`, `dig-node`, `dig-dns
 If a component isn't available yet for your platform, it's skipped automatically and the rest of your selected components still install normally.
 
 Re-running the installer over an already-installed `dig-node` or `dig-relay` — to upgrade, for example — needs no manual steps: it stops the running service, replaces the binary with the new version, then starts it again, so the service ends up in the same running or stopped state it was in before.
+
+## Native OS packages {#native-os-packages}
+
+Under the hood, the install is a set of **native OS packages** — a Windows **`.msi`**, a macOS **`.pkg`**, and a Linux **`.deb`** for `dig-node`, and the same three for `dig-dns`. The DIG Installer above just downloads and runs the right one for your machine; you can also install a package directly with your OS's own tooling:
+
+| OS | Install a package directly |
+|---|---|
+| **Windows** | Double-click `dig-node-<version>-windows-x64.msi`, or `msiexec /i dig-node-<version>-windows-x64.msi`. |
+| **macOS** | Double-click the `.pkg`, or `sudo installer -pkg dig-node-<version>.pkg -target /`. |
+| **Linux** | `sudo apt install ./dig-node-<version>.deb` — the same `.deb` the [apt repository](./apt.md) serves. |
+
+Installing a package **registers the background service and starts it immediately and on every boot** — no extra step. The services are registered under stable ids so you can find them in your OS's service manager:
+
+| Service | Id | Display name |
+|---|---|---|
+| `dig-node` | `net.dignetwork.dig-node` | **DIG NETWORK: NODE** |
+| `dig-dns` | `net.dignetwork.dig-dns` | **DIG NETWORK: DNS** |
+
+Each runs as a Windows service / macOS LaunchDaemon / Linux systemd unit. Download the packages from the [dig-node](https://github.com/DIG-Network/dig-node/releases) and [dig-dns](https://github.com/DIG-Network/dig-dns/releases) Releases pages.
+
+## Open `chia://` links from anywhere {#chia-scheme-handler}
+
+Installing `dig-node` also registers **`chia://`** (and **`urn:`**) as an operating-system URL-scheme handler — on by default. With it registered, opening a `chia://…` or `urn:dig:chia:…` link **anywhere on your computer** — from an email, a chat, or an ordinary browser — routes it through your local dig-node, which resolves and verifies the content and opens it in your default browser. Nothing else needs to be installed for the click to work; if you also run the [DIG Browser](../browser/chia-protocol.md) or the extension, it still verifies the page.
+
+Prefer not to register the handler? Choose the guided [GUI installer](#gui-installer) and decline it during setup.
+
+### `dig-node open`
+
+The handler runs one command, which you can also use yourself to open a DIG address:
+
+```sh
+dig-node open chia://<storeId>[:<rootHash>]/<path>
+dig-node open urn:dig:chia:<storeId>[:<rootHash>]/<path>
+```
+
+It **validates the link strictly** — only `chia://` and `urn:dig:chia:` are accepted, the store id must be a valid 64-hex value, and every other scheme (`file:`, `javascript:`, `http:`, …) is rejected — then opens your local node's address for it in the default browser. Add `--json` for a machine-readable result:
+
+```sh
+dig-node open --json chia://<storeId>/
+# { "ok": true, "action": "open", "opened": true,
+#   "url": "http://localhost:9778/s/<storeId>/", "store_id": "<storeId>", … }
+```
 
 ## `dig.local`
 
@@ -112,6 +160,8 @@ Prefer the signed, `apt upgrade`-able native path: → [Install on Ubuntu/Debian
 ## Related
 
 - [Run a node — overview](./index.md)
+- [Install on Ubuntu/Debian via apt](./apt.md) — the same `.deb`, signed and `apt upgrade`-able
+- [The chia:// protocol](../browser/chia-protocol.md) — what a `chia://` address is and how it resolves
 - [Installing the CLI](../digstore/cli/install.md) — the raw `digstore` binary on its own
 - [Configure dig-node](./configure.md) — ports, listeners, cache cap, upstream
 - [Point a consumer at your node](./point-a-consumer.md) — shared `.dig` cache

@@ -71,6 +71,10 @@ The remaining sections change the node's configuration, so they require your exp
 
 The pairing code **expires after a few minutes**; if yours does before you approve it, choose **Pair** again for a fresh one.
 
+:::note Approve from a normal terminal
+Even though the node runs as a system background service, `dig-node pair approve <pairing-id>` reaches its credential from your own terminal: the node keeps its control state in a **shared, machine-wide location** (not a per-user profile), so the shell you approve from and the service read the same token. When you install with the [DIG Installer](./universal-installer.md), your user account is granted read access to it, so **no elevation is needed** — and it stays locked down to just your account plus system administrators, so this isn't a security trade-off. On a setup where the node runs as **root** (for example the Linux systemd service from the `.deb`), run the command with `sudo`. If approval reports `control.* requires the local control token`, the command prints the exact fix for your setup — see [Troubleshooting](../support/troubleshooting.md#control-token).
+:::
+
 To stop using the credential, choose **Unpair** in the panel (this forgets it locally). To revoke it on the node itself, run `dig-node pair revoke <token-id>` on that computer — the panel returns to the unpaired state on its next action.
 
 :::note

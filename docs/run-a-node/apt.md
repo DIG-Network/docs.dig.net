@@ -48,22 +48,20 @@ sudo apt update && sudo apt install dig-node digstore
 - **`dig-node`** — the headless node service (serves the [dig RPC](../rpc/what-is-the-dig-rpc.md), hosts capsules, keeps the local `.dig` cache).
 - **`digstore`** — the CLI for creating, committing, and reading stores. Optional if you only want to serve, but usually wanted alongside.
 
-## 4. Start and enable the service
+## 4. Check the service
 
-Installing `dig-node` registers a **systemd** unit. Enable it (start now **and** on every boot):
-
-```sh
-sudo systemctl enable --now dig-node
-```
+Installing `dig-node` registers a **systemd** unit — `net.dignetwork.dig-node.service` (shown as **"DIG NETWORK: NODE"**) — and **enables + starts it for you**, so it's already running and will come back on every boot. No manual enable step is needed.
 
 Check it's running and watch its logs:
 
 ```sh
-systemctl status dig-node      # is it active? when did it start?
-journalctl -u dig-node -f      # follow the node's logs live
+systemctl status net.dignetwork.dig-node     # is it active? when did it start?
+journalctl -u net.dignetwork.dig-node -f      # follow the node's logs live
 ```
 
-`systemctl status dig-node` should report `active (running)`. The node now serves the dig RPC on its local endpoint and begins hosting/caching content.
+`systemctl status` should report `active (running)`. The node now serves the dig RPC on its local endpoint and begins hosting/caching content.
+
+The package also registers the OS **`chia://` scheme handler**, so clicking a `chia://…` link opens it through your node — see [Open `chia://` links from anywhere](./universal-installer.md#chia-scheme-handler). (`apt.dig.net` serves the same native `.deb` described in [Native OS packages](./universal-installer.md#native-os-packages).)
 
 ## What dig-node does once it's running
 
@@ -86,9 +84,9 @@ sudo apt update && sudo apt upgrade        # picks up new dig-node / digstore re
 To restart after a config change, or stop the service:
 
 ```sh
-sudo systemctl restart dig-node
-sudo systemctl stop dig-node               # stop serving (does not uninstall)
-sudo systemctl disable dig-node            # don't start on boot
+sudo systemctl restart net.dignetwork.dig-node
+sudo systemctl stop net.dignetwork.dig-node       # stop serving (does not uninstall)
+sudo systemctl disable net.dignetwork.dig-node    # don't start on boot
 ```
 
 ## Other operating systems
