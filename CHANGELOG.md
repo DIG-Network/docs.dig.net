@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.4.3] - 2026-07-13
+
+### Documentation
+- Native OS packages, chia:// scheme handler, and service-node pairing (#38)
+
 ## [0.4.2] - 2026-07-12
 
 ### CI
