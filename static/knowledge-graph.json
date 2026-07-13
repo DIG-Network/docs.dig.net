@@ -4865,6 +4865,16 @@
     },
     {
       "from": "/docs/run-a-node/universal-installer",
+      "to": "/docs/run-a-node/apt",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/universal-installer",
+      "to": "/docs/browser/chia-protocol",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/universal-installer",
       "to": "/docs/digstore/cli/install",
       "type": "see-also"
     },

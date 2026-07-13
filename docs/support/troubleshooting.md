@@ -119,6 +119,16 @@ Modern Chrome enforces **Private Network Access**: it blocks a page/extension re
 - Reload the extension after the node restarts.
 - Still offline? Confirm you're hitting the node directly at its configured port, not a stale cached connection — reload the extension's own background/service-worker context too.
 
+### "control.* requires the local control token" {#control-token}
+
+You ran `dig-node pair approve …` (or another `control.*`/management command) and it was rejected with this message.
+
+This means the terminal you ran it from can't read the node's control token. The node stores that token in a shared, machine-wide location; if your shell can't read it, the two don't line up. The command itself prints the exact remedy for your setup — the common fixes:
+
+- **Install with the [DIG Installer](../run-a-node/universal-installer.md)** (or a native package / apt). It puts the control state in the machine-wide location and grants your user account read access, so `dig-node pair approve <pairing-id>` then works from an ordinary, non-elevated terminal.
+- **On Linux, if the node runs as `root`** (the systemd service from the `.deb`), the control state is root-only — run the command with **`sudo`**: `sudo dig-node pair approve <pairing-id>`.
+- Make sure the node is actually **running** (`dig-node status`) before approving — pairing talks to the live service.
+
 ## CLI setup
 
 ### "no seed found" {#no-seed}

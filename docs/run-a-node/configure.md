@@ -30,7 +30,7 @@ The node only ever stores and relays **ciphertext** keyed by hashes — configur
 
 ## Apply settings
 
-Set values in the config file or as `DIGNODE_*` environment variables (env overrides file). After changing settings, restart the service (the Windows service / `systemctl restart dig-node` / `launchctl`).
+Set values in the config file or as `DIGNODE_*` environment variables (env overrides file). After changing settings, restart the service (the Windows service / `systemctl restart net.dignetwork.dig-node` / `launchctl`).
 
 ## Related
 

@@ -55,6 +55,10 @@ Everything else after `chia://` is a **store id** — that is the difference bet
 [**Get the DIG Browser ↗**](https://github.com/DIG-Network/DIG_Browser/releases) and open `chia://home` in the address bar to see these built-in pages live.
 :::
 
+:::note Open `chia://` links from any app
+You don't need the DIG Browser to follow a `chia://` link. When you install a [dig-node](../run-a-node/universal-installer.md), it registers `chia://` (and `urn:`) as an operating-system handler, so clicking one in an email, a chat, or an ordinary browser routes it through your local node and opens the content in your default browser. See [Open `chia://` links from anywhere](../run-a-node/universal-installer.md#chia-scheme-handler).
+:::
+
 ## Addressing content
 
 A DIG address has up to three parts: **which store**, **which version of it**, and **which file inside it**.
