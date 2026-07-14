@@ -1063,6 +1063,16 @@
       ]
     },
     {
+      "id": "/docs/run-a-node/dns",
+      "type": "doc",
+      "title": "DIG and your DNS",
+      "url": "https://docs.dig.net/docs/run-a-node/dns",
+      "tags": [
+        "dig-dns",
+        "privacy"
+      ]
+    },
+    {
       "id": "/docs/run-a-node",
       "type": "doc",
       "title": "Run a DIG node",
@@ -4739,6 +4749,21 @@
       "type": "see-also"
     },
     {
+      "from": "/docs/run-a-node/dns",
+      "to": "/docs/run-a-node/universal-installer",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/dns",
+      "to": "/docs/run-a-node/configure",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/dns",
+      "to": "/docs/support/troubleshooting",
+      "type": "see-also"
+    },
+    {
       "from": "/docs/run-a-node",
       "to": "/docs/run-a-node/apt",
       "type": "see-also"
@@ -4746,6 +4771,11 @@
     {
       "from": "/docs/run-a-node",
       "to": "/docs/run-a-node/universal-installer",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node",
+      "to": "/docs/run-a-node/dns",
       "type": "see-also"
     },
     {
@@ -4871,6 +4901,11 @@
     {
       "from": "/docs/run-a-node/universal-installer",
       "to": "/docs/browser/chia-protocol",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/universal-installer",
+      "to": "/docs/run-a-node/dns",
       "type": "see-also"
     },
     {
