@@ -73,6 +73,7 @@ You don't need a node. Get the **[DIG Browser ↗](https://github.com/DIG-Networ
 
 - [Install on Ubuntu/Debian via apt](./apt.md) — the Debian-native path + systemd service management
 - [Install anywhere — the universal installer](./universal-installer.md) — Windows / macOS / any Linux + `dig.local`
+- [DIG and your DNS](./dns.md) — dig-dns's split-DNS scope + its own encrypted upstream lookup
 - [Point a consumer at your node](./point-a-consumer.md) — local-first reads + the shared `.dig` cache
 - [Configure dig-node](./configure.md) — ports, listeners, cache cap, upstream
 - [Self-host a remote origin](../rpc/dig-remote.md) — `digstore serve` + dig:// clone/pull/push

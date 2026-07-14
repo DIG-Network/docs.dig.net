@@ -110,6 +110,7 @@ const sidebars: SidebarsConfig = {
             'run-a-node/index',
             'run-a-node/apt',
             'run-a-node/universal-installer',
+            'run-a-node/dns',
             'run-a-node/point-a-consumer',
             'run-a-node/configure',
             'run-a-node/run-a-relay',

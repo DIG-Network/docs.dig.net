@@ -18,6 +18,8 @@ keywords:
   - deb
   - chia:// scheme handler
   - dig-node open
+  - dign
+  - digd
 tags:
   - dig-node
   - dig-dns
@@ -42,6 +44,10 @@ irm https://dig.net/install.ps1 | iex
 This is the same self-contained `dig-installer` shipped on the [Releases page](https://github.com/DIG-Network/dig-installer/releases) — download `dig-installer-<version>-<os_arch>` and run it directly if you prefer not to pipe to a shell, or on Windows.
 
 Every component installs by default — `digstore`, `dig-node`, and `dig-dns`. Skip any one of them with its `--no-<component>` flag (`--no-digstore`, `--no-dig-node`, `--no-dig-dns`); the advanced `dig-relay` and the DIG Browser stay opt-in via `--with-relay` / `--with-browser`.
+
+## Short aliases: `dign` and `digd` {#short-aliases}
+
+Every install also places two short aliases on your `PATH`: **`dign`** for `dig-node` and **`digd`** for `dig-dns`. Each is a real installed binary — not a shell alias — and behaves identically to its primary: the same subcommands (including every service verb — `install`/`uninstall`/`start`/`stop`/`status`/`serve`), the same flags and `--json` output, and the same exit codes. `dign --help`/`--version` reports `dign`, and `digd --help`/`--version` reports `digd`; the primaries keep reporting their own names. For example, `dign open chia://<storeId>/` and `dig-node open chia://<storeId>/` do exactly the same thing. This mirrors [`digs`](../digstore/cli/install.md), the first-class alias for `digstore`.
 
 ## GUI installer {#gui-installer}
 
@@ -142,7 +148,9 @@ wires OS split-DNS (or an NRPT rule on Windows) and, as a fallback, a PAC proxy 
 for browsers that bypass the OS resolver (e.g. a browser forcing DNS-over-HTTPS) —
 either path alone is enough for `.dig` URLs to load. It never edits `/etc/hosts`,
 never rewrites URLs, and never intercepts TLS. Run `dig-dns doctor` any time to check
-which path is live and get a fix hint for what isn't.
+which path is live and get a fix hint for what isn't. → See [DIG and your
+DNS](./dns.md) for what dig-dns does and doesn't touch, and how it protects its own
+lookup.
 
 The [extension](../audiences/content-consumers.md) already opens content directly from a
 reachable node as a real page — see [Reading from your own
@@ -162,6 +170,7 @@ Prefer the signed, `apt upgrade`-able native path: → [Install on Ubuntu/Debian
 - [Run a node — overview](./index.md)
 - [Install on Ubuntu/Debian via apt](./apt.md) — the same `.deb`, signed and `apt upgrade`-able
 - [The chia:// protocol](../browser/chia-protocol.md) — what a `chia://` address is and how it resolves
+- [DIG and your DNS](./dns.md) — dig-dns's split-DNS scope + its own encrypted upstream lookup
 - [Installing the CLI](../digstore/cli/install.md) — the raw `digstore` binary on its own
 - [Configure dig-node](./configure.md) — ports, listeners, cache cap, upstream
 - [Point a consumer at your node](./point-a-consumer.md) — shared `.dig` cache
