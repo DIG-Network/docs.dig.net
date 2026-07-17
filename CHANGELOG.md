@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.4.5] - 2026-07-17
+
+### Documentation
+- Rename digstore->dig-store product/repo/binary refs + regen machine artifacts (#40)
+
 ## [0.4.4] - 2026-07-14
 
 ### Documentation
