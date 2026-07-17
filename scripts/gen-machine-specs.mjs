@@ -10,7 +10,7 @@
  *                             referenced by every other module.
  *   static/error-codes.json — the ecosystem cross-surface error catalog:
  *                             dig RPC -32xxx, dig-store CLI exit codes 0..16,
- *                             DIGHUb user-facing codes, and the dig:// loader codes,
+ *                             DIGHUb user-facing codes, and the chia:// loader codes,
  *                             as a flat [{surface, code, http_or_exit, description}]
  *                             list plus a `bySurface` index.
  *
@@ -105,7 +105,7 @@ function buildErrorCatalog() {
       'dig-rpc': 'JSON-RPC 2.0 codes for the dig RPC (rpc.dig.net). http_or_exit is the transport status (always 200; the error rides in the JSON envelope).',
       'digstore-cli': 'dig-store CLI process exit codes (0..16). http_or_exit is the process exit code.',
       dighub: 'DIGHUb (hub.dig.net) user-facing codes. http_or_exit is the HTTP status where one exists.',
-      'dig-loader': 'dig:// content-loader failure codes (DIG Browser / extension). http_or_exit is null (surfaced on the error page).',
+      'dig-loader': 'chia:// content-loader failure codes (DIG Browser / extension). http_or_exit is null (surfaced on the error page).',
     },
     errors: all,
     bySurface,
@@ -176,11 +176,11 @@ function driftGate(catalog) {
     tableCodes(md, 'DIGHUb (web app)'),
   );
 
-  // dig:// loader: prose first column is the DIG_ERR_* code.
+  // chia:// loader: prose first column is the DIG_ERR_* code.
   assertSetEqual(
     'dig-loader',
     catalog.bySurface['dig-loader'].map((e) => e.code),
-    tableCodes(md, 'dig:// content loader'),
+    tableCodes(md, 'chia:// content loader'),
   );
 }
 

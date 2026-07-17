@@ -183,7 +183,7 @@ Her `deploy`, tek tip capsule fiyatı için yeni, değişmez bir capsule yayınl
 
 ## 6. Kendi alan adınıza koyun {#6-put-it-on-your-own-domain}
 
-Store'unuz zaten URN / `dig://` adresiyle erişilebilir durumdadır — ama dostane bir web URL'si için bir ad kaydedersiniz. Bir store, DIGHUb'da onun için bir **handle kaydettiğinizde** — store'u o isme sabitleyen ayrı, ücretli bir kayıt (kayıt yoksa `*.on.dig.net` adresi olmaz) — bir `*.on.dig.net` alt alan adı alır. Onu sahip olduğunuz bir alan adından sunmak için, [DIGHUb ↗](https://hub.dig.net)'da TLS'li bir **özel alan adı** ekleyin — alan adınızı store'a işaret edin ve DIGHUb sertifikayı halleder. Her iki durumda da dapp'iniz, altta tamamen merkeziyetsiz kalırken insan dostu bir URL'den yüklenir.
+Store'unuz zaten URN / `chia://` adresiyle erişilebilir durumdadır — ama dostane bir web URL'si için bir ad kaydedersiniz. Bir store, DIGHUb'da onun için bir **handle kaydettiğinizde** — store'u o isme sabitleyen ayrı, ücretli bir kayıt (kayıt yoksa `*.on.dig.net` adresi olmaz) — bir `*.on.dig.net` alt alan adı alır. Onu sahip olduğunuz bir alan adından sunmak için, [DIGHUb ↗](https://hub.dig.net)'da TLS'li bir **özel alan adı** ekleyin — alan adınızı store'a işaret edin ve DIGHUb sertifikayı halleder. Her iki durumda da dapp'iniz, altta tamamen merkeziyetsiz kalırken insan dostu bir URL'den yüklenir.
 
 CHIP-54 `.dig` handle'ları geldiğinde, bir store ayrıca insan tarafından okunabilir bir `.dig` adıyla adreslenebilir olacak; o zamana kadar, DIGHUb üzerinden özel alan adları bir dağıtımı markalama yoludur.
 

@@ -105,7 +105,7 @@ If the repo isn't bound, the Action fails with a clear `403` pointing you here.
 
 With `comment-on-pr` at its default `true`, the Action:
 
-- **Upserts a PR comment** with the published capsule (or preview address), its URLs (`dig://` + the DIGHUb URL), and the cost.
+- **Upserts a PR comment** with the published capsule (or preview address), its URLs (`chia://` + the DIGHUb URL), and the cost.
 - **Creates a GitHub Deployment** for the commit (marked transient for a preview).
 - **Sets a commit status** — a red X if the on-chain anchor or hub push failed or timed out, so a broken deploy can block merge.
 
@@ -191,18 +191,19 @@ All credentials should be passed from **repo secrets**, never inline.
 | `capsule` | The published capsule: `storeId:rootHash`. |
 | `root` | The new on-chain root hash. |
 | `store-id` | The store id that was advanced. |
-| `dig-url` | The `dig://` URL of the deployment (rootless = latest tip). |
+| `chia-url` | The `chia://` content-open address of the deployment (rootless = latest tip) — the user-facing scheme the DIG Browser/extension register. |
+| `dig-url` | Deprecated alias of `chia-url` (now also a `chia://` content-open address). Use `chia-url`. |
 | `urn` | The root-pinned URN permalink (`urn:dig:chia:<store>:<root>`). |
 | `hub-url` | The DIGHUb URL for the store (`https://hub.dig.net/stores/<id>`). |
 | `coin-id` | The on-chain coin id of the anchored root. |
-| `content-address` | On a `--preview` build: the shareable root-pinned `dig://` address. Empty on a real deploy. |
+| `content-address` | On a `--preview` build: the shareable root-pinned `chia://` content-open address of the preview capsule. Empty on a real deploy. |
 | `preview` | `true` when this run produced a free preview (a PR), not a real on-chain deploy. |
 | `skipped` | `true` when `--if-changed` skipped a no-op deploy. |
 | `spent` | `true` when the deploy spent DIG (a real publish). |
 | `pushed` | `true` when the capsule was published to the hub. |
 
 :::note Your `*.on.dig.net` address isn't a deploy output
-A `*.on.dig.net` address is an **optional, paid** handle you register for a store — it isn't derivable from a deploy (and a store has none until you register one), so the Action surfaces the always-available `dig-url` (`dig://`), `urn`, and `hub-url` instead. The capsule is readable over the dig RPC by those the moment it confirms; if you've registered a handle, your site is *also* served at `<your-name>.on.dig.net`.
+A `*.on.dig.net` address is an **optional, paid** handle you register for a store — it isn't derivable from a deploy (and a store has none until you register one), so the Action surfaces the always-available `chia-url` (`chia://`), `urn`, and `hub-url` instead. The capsule is readable over the dig RPC by those the moment it confirms; if you've registered a handle, your site is *also* served at `<your-name>.on.dig.net`.
 :::
 
 ## Using the CLI directly

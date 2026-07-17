@@ -231,8 +231,8 @@ Pagination is applied over `launcher_ids` **before** resolution, so a page only 
       "owner_puzzle_hash": "33…",
       "metadata": {
         "edition_number": 1, "edition_total": 100,
-        "data_uris": ["dig://…", "https://…"], "data_hash": "44…",
-        "metadata_uris": ["dig://…"], "metadata_hash": "55…",
+        "data_uris": ["urn:dig:chia:<storeId>:<root>/<key>", "https://…"], "data_hash": "44…",
+        "metadata_uris": ["urn:dig:chia:<storeId>:<root>/<key>"], "metadata_hash": "55…",
         "license_uris": [], "license_hash": null } }
   ],
   "offset": 0, "limit": 50, "total": 2, "next_offset": 1 }

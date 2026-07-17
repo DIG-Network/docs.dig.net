@@ -20,7 +20,7 @@
  *   - DIGHUb user-facing codes: docs/support/error-codes.md (the friendly codes
  *     the web app shows); the underlying wire enum is hub
  *     packages/dighub-core/src/error.rs (ErrorCode, snake_case + http_status).
- *   - dig:// loader codes: the DIG content loader's catalogued failure taxonomy
+ *   - chia:// loader codes: the DIG content loader's catalogued failure taxonomy
  *     (DIG content scheme — the browser/extension chia:// loader), per the
  *     ecosystem agent-friendly plan.
  */
@@ -695,7 +695,7 @@ export const dighubCatalog = [
   { code: 'UNEXPECTED', http: 500, wire: null, description: 'An unclassified error.' },
 ].map((e) => ({ surface: 'dighub', code: e.code, http: e.http, wire: e.wire, http_or_exit: e.http, description: e.description }));
 
-/** dig:// content loader codes (the chia:// loader in the DIG Browser / extension).
+/** chia:// content loader codes (the loader in the DIG Browser / extension).
  *  The fail-closed loader's catalogued failure taxonomy, surfaced on the error
  *  page so an agent can branch on the cause. Per the ecosystem agent-friendly
  *  plan for dig-browser / dig-chrome-extension. */

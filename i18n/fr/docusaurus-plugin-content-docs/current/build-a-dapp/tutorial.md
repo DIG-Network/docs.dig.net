@@ -183,7 +183,7 @@ Chaque `deploy` publie une nouvelle capsule immuable pour le prix uniforme de ca
 
 ## 6. Mettez-le sur votre propre domaine {#6-put-it-on-your-own-domain}
 
-Votre store est déjà accessible via son adresse URN / `dig://` — mais pour une URL web conviviale, vous enregistrez un nom. Un store obtient un sous-domaine `*.on.dig.net` quand vous **enregistrez un handle** pour lui dans DIGHUb : un enregistrement payant séparé qui épingle le store à ce nom (pas d'enregistrement → pas d'adresse `*.on.dig.net`). Pour le servir depuis un domaine que vous possédez à la place, ajoutez un **domaine personnalisé avec TLS dans [DIGHUb ↗](https://hub.dig.net)** — pointez votre domaine vers le store et DIGHUb gère le certificat. Dans les deux cas, votre dapp se charge depuis une URL conviviale tout en restant entièrement décentralisée en dessous.
+Votre store est déjà accessible via son adresse URN / `chia://` — mais pour une URL web conviviale, vous enregistrez un nom. Un store obtient un sous-domaine `*.on.dig.net` quand vous **enregistrez un handle** pour lui dans DIGHUb : un enregistrement payant séparé qui épingle le store à ce nom (pas d'enregistrement → pas d'adresse `*.on.dig.net`). Pour le servir depuis un domaine que vous possédez à la place, ajoutez un **domaine personnalisé avec TLS dans [DIGHUb ↗](https://hub.dig.net)** — pointez votre domaine vers le store et DIGHUb gère le certificat. Dans les deux cas, votre dapp se charge depuis une URL conviviale tout en restant entièrement décentralisée en dessous.
 
 Quand les handles `.dig` CHIP-54 arriveront, un store sera aussi adressable par un nom `.dig` lisible par un humain ; en attendant, les domaines personnalisés via DIGHUb sont le moyen de marquer un déploiement.
 

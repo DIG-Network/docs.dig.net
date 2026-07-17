@@ -183,7 +183,7 @@ digs deploy --json                # runs build-command, stages dist/, advances t
 
 ## 6. 자신의 도메인에 연결하기 {#6-put-it-on-your-own-domain}
 
-여러분의 store는 이미 URN / `dig://` 주소로 접근할 수 있지만, 친숙한 웹 URL을 위해서는 이름을 등록해야 합니다. DIGHUb에서 **핸들을 등록**하면 store가 `*.on.dig.net` 서브도메인을 갖게 됩니다 — 이는 해당 이름에 store를 고정하는 별도의 유료 등록입니다(등록하지 않으면 `*.on.dig.net` 주소도 없습니다). 대신 자신이 소유한 도메인에서 서비스하려면, [DIGHUb ↗](https://hub.dig.net)에서 **TLS를 포함한 커스텀 도메인**을 추가하세요 — 도메인을 store로 연결하면 DIGHUb가 인증서를 처리합니다. 어느 쪽이든, 내부적으로는 완전히 탈중앙화된 상태를 유지하면서 여러분의 dapp은 사람이 읽기 쉬운 URL에서 로드됩니다.
+여러분의 store는 이미 URN / `chia://` 주소로 접근할 수 있지만, 친숙한 웹 URL을 위해서는 이름을 등록해야 합니다. DIGHUb에서 **핸들을 등록**하면 store가 `*.on.dig.net` 서브도메인을 갖게 됩니다 — 이는 해당 이름에 store를 고정하는 별도의 유료 등록입니다(등록하지 않으면 `*.on.dig.net` 주소도 없습니다). 대신 자신이 소유한 도메인에서 서비스하려면, [DIGHUb ↗](https://hub.dig.net)에서 **TLS를 포함한 커스텀 도메인**을 추가하세요 — 도메인을 store로 연결하면 DIGHUb가 인증서를 처리합니다. 어느 쪽이든, 내부적으로는 완전히 탈중앙화된 상태를 유지하면서 여러분의 dapp은 사람이 읽기 쉬운 URL에서 로드됩니다.
 
 CHIP-54 `.dig` 핸들이 도입되면, store는 사람이 읽을 수 있는 `.dig` 이름으로도 주소 지정이 가능해집니다. 그때까지는 DIGHUb를 통한 커스텀 도메인이 배포에 브랜드를 입히는 방법입니다.
 

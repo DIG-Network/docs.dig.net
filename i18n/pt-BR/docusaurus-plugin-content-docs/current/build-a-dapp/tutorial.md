@@ -183,7 +183,7 @@ Cada `deploy` publica um novo capsule imutável pelo preço uniforme de capsule.
 
 ## 6. Coloque no seu próprio domínio {#6-put-it-on-your-own-domain}
 
-Seu store já é acessível pelo seu endereço URN / `dig://` — mas para uma URL web amigável você registra um nome. Um store recebe um subdomínio `*.on.dig.net` quando você **registra um handle** para ele na DIGHUb: um registro separado e pago que fixa o store a esse nome (sem registro → sem endereço `*.on.dig.net`). Para servi-lo a partir de um domínio que você possui, adicione um **domínio personalizado com TLS na [DIGHUb ↗](https://hub.dig.net)** — aponte seu domínio para o store e a DIGHUb cuida do certificado. De qualquer forma, seu dapp carrega a partir de uma URL amigável enquanto permanece totalmente descentralizado por baixo.
+Seu store já é acessível pelo seu endereço URN / `chia://` — mas para uma URL web amigável você registra um nome. Um store recebe um subdomínio `*.on.dig.net` quando você **registra um handle** para ele na DIGHUb: um registro separado e pago que fixa o store a esse nome (sem registro → sem endereço `*.on.dig.net`). Para servi-lo a partir de um domínio que você possui, adicione um **domínio personalizado com TLS na [DIGHUb ↗](https://hub.dig.net)** — aponte seu domínio para o store e a DIGHUb cuida do certificado. De qualquer forma, seu dapp carrega a partir de uma URL amigável enquanto permanece totalmente descentralizado por baixo.
 
 Quando os handles `.dig` do CHIP-54 chegarem, um store também será endereçável por um nome `.dig` legível por humanos; até lá, domínios personalizados via DIGHUb são a forma de dar identidade a um deployment.
 

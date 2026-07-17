@@ -183,7 +183,7 @@ Each `deploy` publishes a new immutable capsule for the uniform capsule price. T
 
 ## 6. Put it on your own domain
 
-Your store is already reachable by its URN / `dig://` address — but for a friendly web URL you register a name. A store gets a `*.on.dig.net` subdomain when you **register a handle** for it in DIGHUb: a separate, paid registration that pins the store to that name (no registration → no `*.on.dig.net` address). To serve it from a domain you own instead, add a **custom domain with TLS in [DIGHUb ↗](https://hub.dig.net)** — point your domain at the store and DIGHUb handles the certificate. Either way your dapp loads from a human-friendly URL while staying fully decentralized underneath.
+Your store is already reachable by its URN / `chia://` address — but for a friendly web URL you register a name. A store gets a `*.on.dig.net` subdomain when you **register a handle** for it in DIGHUb: a separate, paid registration that pins the store to that name (no registration → no `*.on.dig.net` address). To serve it from a domain you own instead, add a **custom domain with TLS in [DIGHUb ↗](https://hub.dig.net)** — point your domain at the store and DIGHUb handles the certificate. Either way your dapp loads from a human-friendly URL while staying fully decentralized underneath.
 
 When CHIP-54 `.dig` handles land, a store will also be addressable by a human-readable `.dig` name; until then, custom domains via DIGHUb are the way to brand a deployment.
 
