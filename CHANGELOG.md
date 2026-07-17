@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.4.6] - 2026-07-17
+
+### Documentation
+- Align resource-ID/URN examples to canonical form + add URN-format lint (#691) (#41)
+
 ## [0.4.5] - 2026-07-17
 
 ### Documentation
