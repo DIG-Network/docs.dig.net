@@ -183,7 +183,7 @@ Setiap `deploy` menerbitkan capsule immutable baru dengan harga capsule seragam.
 
 ## 6. Letakkan di domain Anda sendiri {#6-put-it-on-your-own-domain}
 
-Store Anda sudah dapat dijangkau lewat alamat URN / `dig://`-nya — tetapi untuk URL web yang ramah Anda mendaftarkan sebuah nama. Sebuah store mendapatkan subdomain `*.on.dig.net` ketika Anda **mendaftarkan sebuah handle** untuknya di DIGHUb: sebuah registrasi berbayar terpisah yang mengikat store ke nama tersebut (tanpa registrasi → tanpa alamat `*.on.dig.net`). Untuk menyajikannya dari domain yang Anda miliki sendiri, tambahkan **domain kustom dengan TLS di [DIGHUb ↗](https://hub.dig.net)** — arahkan domain Anda ke store dan DIGHUb yang mengurus sertifikatnya. Baik satu maupun lainnya, dapp Anda dimuat dari URL yang ramah manusia sambil tetap sepenuhnya terdesentralisasi di baliknya.
+Store Anda sudah dapat dijangkau lewat alamat URN / `chia://`-nya — tetapi untuk URL web yang ramah Anda mendaftarkan sebuah nama. Sebuah store mendapatkan subdomain `*.on.dig.net` ketika Anda **mendaftarkan sebuah handle** untuknya di DIGHUb: sebuah registrasi berbayar terpisah yang mengikat store ke nama tersebut (tanpa registrasi → tanpa alamat `*.on.dig.net`). Untuk menyajikannya dari domain yang Anda miliki sendiri, tambahkan **domain kustom dengan TLS di [DIGHUb ↗](https://hub.dig.net)** — arahkan domain Anda ke store dan DIGHUb yang mengurus sertifikatnya. Baik satu maupun lainnya, dapp Anda dimuat dari URL yang ramah manusia sambil tetap sepenuhnya terdesentralisasi di baliknya.
 
 Ketika handle CHIP-54 `.dig` hadir, sebuah store juga akan dapat dialamatkan dengan nama `.dig` yang mudah dibaca manusia; sampai saat itu, domain kustom melalui DIGHUb adalah cara untuk mem-branding sebuah deployment.
 

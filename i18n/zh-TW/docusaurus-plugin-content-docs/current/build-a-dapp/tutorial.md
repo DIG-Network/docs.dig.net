@@ -183,7 +183,7 @@ digs deploy --json                # 執行 build-command、暫存 dist/、推進
 
 ## 6. 放到你自己的網域上 {#6-put-it-on-your-own-domain}
 
-你的 store 早已能透過它的 URN／`dig://` 地址存取——但若想要一個友善的網址，你可以註冊一個名稱。當你在 DIGHUb 中為一個 store **註冊代稱**時，它就會取得一個 `*.on.dig.net` 子網域：這是一項另外付費的獨立註冊，將 store 綁定到該名稱（沒有註冊 → 沒有 `*.on.dig.net` 地址）。若想改用你自己擁有的網域提供服務，可以在 [DIGHUb ↗](https://hub.dig.net) 中加上帶有 TLS 的**自訂網域**——把你的網域指向該 store，DIGHUb 會負責處理憑證。無論哪種方式，你的 dapp 都能以人性化的網址載入，底層依然完全去中心化。
+你的 store 早已能透過它的 URN／`chia://` 地址存取——但若想要一個友善的網址，你可以註冊一個名稱。當你在 DIGHUb 中為一個 store **註冊代稱**時，它就會取得一個 `*.on.dig.net` 子網域：這是一項另外付費的獨立註冊，將 store 綁定到該名稱（沒有註冊 → 沒有 `*.on.dig.net` 地址）。若想改用你自己擁有的網域提供服務，可以在 [DIGHUb ↗](https://hub.dig.net) 中加上帶有 TLS 的**自訂網域**——把你的網域指向該 store，DIGHUb 會負責處理憑證。無論哪種方式，你的 dapp 都能以人性化的網址載入，底層依然完全去中心化。
 
 當 CHIP-54 的 `.dig` 代稱正式推出後，一個 store 也能以人類可讀的 `.dig` 名稱定址；在此之前，透過 DIGHUb 使用自訂網域是為部署品牌化的方式。
 

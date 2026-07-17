@@ -183,7 +183,7 @@ digs deploy --json                # runs build-command, stages dist/, advances t
 
 ## 6. 部署到你自己的域名 {#6-put-it-on-your-own-domain}
 
-你的 store 已经可以通过它的 URN / `dig://` 地址访问 —— 但如果想要一个友好的网址，你需要注册一个名字。当你在 DIGHUb 中为 store **注册一个 handle** 时，它就会获得一个 `*.on.dig.net` 子域名：这是一项单独的付费注册，用于将该 store 固定到那个名称上（不注册 → 就没有 `*.on.dig.net` 地址）。如果想改用你自己拥有的域名提供服务，可以在 [DIGHUb ↗](https://hub.dig.net) 中添加一个**带 TLS 的自定义域名** —— 将你的域名指向该 store，DIGHUb 会自动处理证书。无论哪种方式，你的 dapp 都会从一个人类友好的网址加载，同时底层依然完全去中心化。
+你的 store 已经可以通过它的 URN / `chia://` 地址访问 —— 但如果想要一个友好的网址，你需要注册一个名字。当你在 DIGHUb 中为 store **注册一个 handle** 时，它就会获得一个 `*.on.dig.net` 子域名：这是一项单独的付费注册，用于将该 store 固定到那个名称上（不注册 → 就没有 `*.on.dig.net` 地址）。如果想改用你自己拥有的域名提供服务，可以在 [DIGHUb ↗](https://hub.dig.net) 中添加一个**带 TLS 的自定义域名** —— 将你的域名指向该 store，DIGHUb 会自动处理证书。无论哪种方式，你的 dapp 都会从一个人类友好的网址加载，同时底层依然完全去中心化。
 
 当 CHIP-54 的 `.dig` handle 落地后，一个 store 也将可以通过人类可读的 `.dig` 名称被寻址；在那之前，通过 DIGHUb 使用自定义域名是为一次部署打上品牌标识的方式。
 

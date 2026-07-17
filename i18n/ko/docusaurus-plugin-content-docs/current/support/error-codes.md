@@ -17,7 +17,7 @@ tags:
 
 # Error codes
 
-A consolidated reference for every error code you might see, across the surfaces: the **dig RPC** (JSON-RPC), the **`dig-store` CLI** (process exit codes), **DIGHUb** (the web app's user-facing codes), and the **dig:// content loader** (the DIG Browser / extension). Look up the code you got; each row says what it means and what to do.
+A consolidated reference for every error code you might see, across the surfaces: the **dig RPC** (JSON-RPC), the **`dig-store` CLI** (process exit codes), **DIGHUb** (the web app's user-facing codes), and the **chia:// content loader** (the DIG Browser / extension). Look up the code you got; each row says what it means and what to do.
 
 For step-by-step fixes, see [Troubleshooting](./troubleshooting.md).
 
@@ -103,7 +103,7 @@ When a publish or account action fails, DIGHUb shows a plain-language message **
 The **code** is the stable identifier — quote it in a [report](./get-help.md). The wording of a message may change as the copy gets clearer.
 :::
 
-## dig:// content loader
+## chia:// content loader
 
 When you open `chia://` content (in the DIG Browser, or via the extension) and it can't be served, the loader is **fail-closed** — it never shows unverified bytes — and surfaces a stable code so an agent can branch on *why*. These are catalogued in [`error-codes.json`](https://docs.dig.net/error-codes.json) under the `dig-loader` surface.
 
