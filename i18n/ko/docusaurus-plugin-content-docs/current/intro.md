@@ -2,13 +2,13 @@
 sidebar_position: 1
 slug: /
 title: DIG Network
-description: "콘텐츠 주소 지정 방식 게시를 위한 DigStore, 블라인드 호스팅 및 검색을 위한 dig RPC, 콘텐츠 접근을 위한 DIG Browser 등 DIG Network 프리미티브 개요."
+description: "콘텐츠 주소 지정 방식 게시를 위한 dig-store, 블라인드 호스팅 및 검색을 위한 dig RPC, 콘텐츠 접근을 위한 DIG Browser 등 DIG Network 프리미티브 개요."
 keywords:
   - DIG Network
   - Proof-of-Stake Layer 2
   - Chia
   - capsule
-  - DigStore
+  - dig-store
   - dig RPC
   - DIG Browser
 tags:
@@ -43,7 +43,7 @@ capsule은 다음 사항들의 네트워크 단위입니다:
 - **캐싱** — 호스트나 브라우저는 `storeId:rootHash`를 키로 하여 capsule을 캐싱합니다. 로컬 캐시는 capsule들의 집합입니다.
 - **출처 증명(Provenance)** — 각 capsule의 root는 게시자의 BLS 서명과 Merkle root를 담고 있습니다.
 
-이는 생태계 전반의 정의입니다: "capsule = `(storeId, rootHash)`"는 DigStore, dig RPC, DIG Browser에서 모두 동일한 의미를 갖습니다.
+이는 생태계 전반의 정의입니다: "capsule = `(storeId, rootHash)`"는 dig-store, dig RPC, DIG Browser에서 모두 동일한 의미를 갖습니다.
 
 :::tip 직접 해보기
 [**DIGHUb에서 첫 번째 capsule 만들기 ↗**](https://hub.dig.net/new) — CLI 없이 브라우저에서 사이트를 게시하세요. 각 capsule(mint 또는 commit)은 **$DIG로 균일한 capsule 가격**이 듭니다.
@@ -51,21 +51,21 @@ capsule은 다음 사항들의 네트워크 단위입니다:
 
 ## 프리미티브 {#primitives}
 
-### 🗄️ DigStore {#️-digstore}
+### 🗄️ dig-store {#️-digstore}
 
 가장 먼저이자 가장 근본적인 프리미티브: **콘텐츠 주소 지정 방식의 암호화된 WASM 프로젝트 포맷**입니다. 빌드 디렉터리를 지정하면 Git처럼 배포를 커밋할 수 있고, 결과물로 데이터이자 접근을 통제하는 서버 역할을 동시에 하는 단일 자기방어형 `.wasm` 파일을 얻습니다. URN 자체가 *곧* 키입니다 — 위치를 찾아내는 동시에 복호화도 수행합니다.
 
-→ **[DigStore 살펴보기](./digstore/what-is-digstore.md)**
+→ **[dig-store 살펴보기](./digstore/what-is-digstore.md)**
 
 | | |
 |---|---|
-| **[DigStore란?](./digstore/what-is-digstore.md)** | 한마디로 정리한 단일 파일 아이디어 |
+| **[dig-store란?](./digstore/what-is-digstore.md)** | 한마디로 정리한 단일 파일 아이디어 |
 | **[포맷](./digstore/format/overview.md)** | 프로젝트, 배포, URN, 암호화, 증명 |
-| **[CLI 튜토리얼](./digstore/cli/quickstart.md)** | 프로젝트에서 `digstore` 설치 및 사용하기 |
+| **[CLI 튜토리얼](./digstore/cli/quickstart.md)** | 프로젝트에서 `dig-store` 설치 및 사용하기 |
 
 ### 🛰️ dig RPC {#️-dig-rpc}
 
-네트워킹 프리미티브: **호스팅된 DigStore 배포에서 콘텐츠를 읽기 위한 표준 인터페이스**입니다. HTTPS `POST` 위의 JSON-RPC 2.0으로, 모든 호스팅 노드가 동일하게 구현하므로 콘텐츠는 이식 가능하고 클라이언트는 노드에 구애받지 않습니다. retrieval key로 암호문 + 포함 증명(inclusion proof)을 서빙하고, `(store_id, root)`로 전체 배포를 서빙하며, 공개 검색용 매니페스트도 제공합니다 — 청크 단위로 스트리밍되고, 구조적으로 블라인드이며, 검증과 복호화는 전적으로 클라이언트 측에서 이루어집니다.
+네트워킹 프리미티브: **호스팅된 dig-store 배포에서 콘텐츠를 읽기 위한 표준 인터페이스**입니다. HTTPS `POST` 위의 JSON-RPC 2.0으로, 모든 호스팅 노드가 동일하게 구현하므로 콘텐츠는 이식 가능하고 클라이언트는 노드에 구애받지 않습니다. retrieval key로 암호문 + 포함 증명(inclusion proof)을 서빙하고, `(store_id, root)`로 전체 배포를 서빙하며, 공개 검색용 매니페스트도 제공합니다 — 청크 단위로 스트리밍되고, 구조적으로 블라인드이며, 검증과 복호화는 전적으로 클라이언트 측에서 이루어집니다.
 
 → **[dig RPC 살펴보기](./rpc/what-is-the-dig-rpc.md)**
 
@@ -106,7 +106,7 @@ capsule은 다음 사항들의 네트워크 단위입니다:
 용어가 낯설다면? [개념 & 용어집](./concepts.md)을 훑어보세요. 전체 설계를 알고 싶다면 [프로토콜 심층 분석](./protocol-deep-dive.md)을 읽어보세요.
 
 :::note
-DIG Network와 그 프리미티브는 오픈 소스입니다. DigStore는 GPL-2.0 라이선스로 배포됩니다. [digstore 저장소](https://github.com/DIG-Network/digstore)를 참고하세요.
+DIG Network와 그 프리미티브는 오픈 소스입니다. dig-store는 GPL-2.0 라이선스로 배포됩니다. [dig-store 저장소](https://github.com/DIG-Network/dig-store)를 참고하세요.
 :::
 
 ## 관련 문서 {#related}
@@ -114,7 +114,7 @@ DIG Network와 그 프리미티브는 오픈 소스입니다. DigStore는 GPL-2.
 - [빠른 시작](./quickstart.md) — 첫 번째 사이트를 게시하세요. 빌드와 미리보기는 무료입니다
 - [Chia에서 dapp 빌드하기](./build-a-dapp/tutorial.md) — 하나의 엔드투엔드 튜토리얼에 담긴 모든 프리미티브
 - [개념 & 용어집](./concepts.md) — DIG의 핵심 엔티티를 정의하고 연결한 문서
-- [DigStore란?](./digstore/what-is-digstore.md) — 콘텐츠 주소 지정 방식의 store 포맷
+- [dig-store란?](./digstore/what-is-digstore.md) — 콘텐츠 주소 지정 방식의 store 포맷
 - [dig RPC란?](./rpc/what-is-the-dig-rpc.md) — 네트워크 전역 읽기 인터페이스
 - [chia:// 프로토콜](./browser/chia-protocol.md) — DIG Browser에서 콘텐츠 열기
 - [도움 받기](./support/get-help.md) — 커뮤니티, 문제 해결, 오류 코드

@@ -67,7 +67,7 @@ tags:
 - **`dig://`**——§21 的**傳輸**定位器（CLI／對等網路層面），*同時*也是 DIG Browser 內部的頁面配置方案——兩種用途各自獨立，都不是內容地址。
 - **`urn:dig:`**——上述兩者共同衍生出的 URN 命名空間。
 - **store／capsule**——身分識別碼及其不可變的世代（generation）。
-- **$DIG**——每個 capsule 需支付的 CAT；**DigStore**——store 格式本身。
+- **$DIG**——每個 capsule 需支付的 CAT；**dig-store**——store 格式本身。
 
 ## 相關文件 {#related}
 

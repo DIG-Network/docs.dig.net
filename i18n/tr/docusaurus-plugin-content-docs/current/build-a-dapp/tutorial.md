@@ -8,7 +8,7 @@ keywords:
   - window.chia
   - dig-sdk
   - chip35 spend
-  - digstore deploy
+  - dig-store deploy
   - custom domain
 tags:
   - digstore-cli
@@ -33,7 +33,7 @@ new ──▶ dev ──▶ wire wallet (dig-sdk) ──▶ build a spend (chip3
 
 ## İhtiyacınız olanlar {#what-youll-need}
 
-- Kurulu [`digstore` CLI](../digstore/cli/install.md).
+- Kurulu [`dig-store` CLI](../digstore/cli/install.md).
 - Node 18+ ve `npm`.
 - Fonlanmış bir Chia cüzdanı — **yalnızca dağıtım adımında** ($DIG cinsinden tek tip capsule fiyatı + küçük bir XCH ücreti). Ondan öncesi ücretsizdir.
 
@@ -41,23 +41,23 @@ new ──▶ dev ──▶ wire wallet (dig-sdk) ──▶ build a spend (chip3
 
 ## 1. Bir React uygulaması iskeleleyin — ücretsiz, zincir yok {#1-scaffold-a-react-app--free-no-chain}
 
-`digstore new`, çalıştırılabilir, cüzdana bağlı bir proje yazar. React şablonunu seçin:
+`dig-store new`, çalıştırılabilir, cüzdana bağlı bir proje yazar. React şablonunu seçin:
 
 ```sh
-digstore new vite-react my-dapp
+dig-store new vite-react my-dapp
 cd my-dapp
 ```
 
 Bir Vite + React uygulaması, bir `dig.toml` (`output-dir = "dist"`, `build-command = "npm install && npm run build"`) ve zaten sayfa içi cüzdana bağlanmış bir `App.jsx` alırsınız. Hiçbir store basılmaz ve hiçbir şey harcanmaz — `new` tamamen yereldir.
 
 :::tip npm mi tercih edersiniz? `npm create dig-app`
-`npm create dig-app@latest my-dapp -- --template vite-react`, aynı şablonu doğrudan npm'den iskeleler — JS ön kapısı, başlamak için `digstore` kurulumu gerekmez. Beş şablonun tümü ve iki ön kapının nasıl karşılaştırıldığı için bkz. [Bir uygulama iskeleleyin](./scaffold.md).
+`npm create dig-app@latest my-dapp -- --template vite-react`, aynı şablonu doğrudan npm'den iskeleler — JS ön kapısı, başlamak için `dig-store` kurulumu gerekmez. Beş şablonun tümü ve iki ön kapının nasıl karşılaştırıldığı için bkz. [Bir uygulama iskeleleyin](./scaffold.md).
 :::
 
 ## 2. Gerçek okuma yoluna karşı geliştirin — ücretsiz {#2-develop-against-the-real-read-path--free}
 
 ```sh
-digstore dev
+dig-store dev
 ```
 
 `dev`, build'inizi çalıştırır, çıktıyı **gerçek `chia://` okuma yolu** (derle → doğrula → şifre çöz) üzerinden sunar ve gerçek bir cüzdan olmadan cüzdan akışını inşa edebilmeniz için bir **`window.chia` geliştirme şimi (shim)** enjekte eder. `src/App.jsx`'i düzenleyin, kaydedin ve sayfa canlı olarak yeniden yüklenir — sıfır zincir etkileşimi ve sıfır harcamayla ziyaretçilerin tam olarak alacağı şey.
@@ -170,13 +170,13 @@ if (await paywall.verifyReceipt(receipt)) { /* unlock the content */ }
 Ücretsiz inşa eder ve önizlersiniz; bu, harcama yapan tek adımdır. Önce store'u **bir kez** oluşturun:
 
 ```sh
-digstore init my-dapp --dir dist      # mint the store's first capsule (uniform capsule price + XCH fee)
+dig-store init my-dapp --dir dist      # mint the store's first capsule (uniform capsule price + XCH fee)
 ```
 
 `init`, mainnet üzerinde bir Chia singleton'ı basar — **başlatıcı (launcher) id'si store id'niz olur**. Bunu `dig.toml`'a kopyalayın (`store-id = "<64-hex>"`). O andan itibaren, tek bir komut yeni bir capsule inşa eder ve yayınlar:
 
 ```sh
-digstore deploy --json                # runs build-command, stages dist/, advances the root
+dig-store deploy --json                # runs build-command, stages dist/, advances the root
 ```
 
 Her `deploy`, tek tip capsule fiyatı için yeni, değişmez bir capsule yayınlar. Onaylandığı anda, dapp'iniz kayıt gerekmeden ve ödenecek başka bir şey olmadan, şifrelenmiş, doğrulanmış ve kaldırılması imkansız şekilde, [URN](../concepts.md#urn)'i / `chia://` adresiyle **[dig RPC](../rpc/what-is-the-dig-rpc.md) üzerinden okunabilir** hale gelir. (Dostane bir `*.on.dig.net` web adresi ayrı, isteğe bağlı bir adımdır — bkz. [sonraki bölüm](#6-put-it-on-your-own-domain).) Her commit'te push-ile-dağıtım için [GitHub Actions'tan dağıtım](../digstore/cli/deploy-from-github-actions.md)'ı bağlayın.

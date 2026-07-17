@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 title: Error codes
-description: "Every DIG error code in one place: dig RPC JSON-RPC codes, digstore CLI exit codes, and DIGHUb user-facing codes — each with what it means and what to do."
+description: "Every DIG error code in one place: dig RPC JSON-RPC codes, dig-store CLI exit codes, and DIGHUb user-facing codes — each with what it means and what to do."
 keywords:
   - DIG error codes
   - JSON-RPC error codes
@@ -17,7 +17,7 @@ tags:
 
 # Error codes
 
-A consolidated reference for every error code you might see, across the surfaces: the **dig RPC** (JSON-RPC), the **`digstore` CLI** (process exit codes), **DIGHUb** (the web app's user-facing codes), and the **dig:// content loader** (the DIG Browser / extension). Look up the code you got; each row says what it means and what to do.
+A consolidated reference for every error code you might see, across the surfaces: the **dig RPC** (JSON-RPC), the **`dig-store` CLI** (process exit codes), **DIGHUb** (the web app's user-facing codes), and the **dig:// content loader** (the DIG Browser / extension). Look up the code you got; each row says what it means and what to do.
 
 For step-by-step fixes, see [Troubleshooting](./troubleshooting.md).
 
@@ -53,27 +53,27 @@ The [dig RPC](../protocol/dig-rpc.md) uses the standard [JSON-RPC 2.0](https://w
 | `-32031` | **Not supported (control)** — a control operation this build/pin cannot perform (e.g. §21 whole-store sync with no loaded identity). | Ensure the required capability/identity is present, or use a build that supports it. |
 | `-32032` | **Control error** — a control operation failed at runtime (distinct from bad input or an absent capability). | Retry; check the node's logs; report if it persists. |
 
-## digstore CLI (exit codes)
+## dig-store CLI (exit codes) {#digstore-cli-exit-codes}
 
-`digstore` exits `0` on success and a distinct non-zero code per error kind, so scripts and CI can branch on the cause. Re-run with `--verbose` to see the full message; many errors also print a one-line fix hint.
+`dig-store` exits `0` on success and a distinct non-zero code per error kind, so scripts and CI can branch on the cause. Re-run with `--verbose` to see the full message; many errors also print a one-line fix hint.
 
 | Exit | Code | Meaning | What to do |
 |---|---|---|---|
 | `0` | success | The command completed. | — |
 | `1` | other | An unclassified error. | Re-run with `--verbose`; see the printed message. |
-| `2` | invalid-argument | A flag or argument was invalid. | Check `digstore <command> --help`. |
-| `3` | no-store | No store found here. | Run `digstore init` (or `cd` into a store's directory). |
-| `4` | not-found | A resource/URN/root wasn't found. | Run `digstore log` to list generations and keys. |
+| `2` | invalid-argument | A flag or argument was invalid. | Check `dig-store <command> --help`. |
+| `3` | no-store | No store found here. | Run `dig-store init` (or `cd` into a store's directory). |
+| `4` | not-found | A resource/URN/root wasn't found. | Run `dig-store log` to list generations and keys. |
 | `5` | verification-failed | Content failed cryptographic verification. | Wrong `salt`/key, or the data was tampered with — recheck your URN/salt. |
-| `6` | network | A network/transport failure. | Check your connection and that the remote is reachable (`digstore remote list`). |
-| `7` | non-fast-forward | The remote root has advanced past yours. | Run `digstore pull` first, then push. |
+| `6` | network | A network/transport failure. | Check your connection and that the remote is reachable (`dig-store remote list`). |
+| `7` | non-fast-forward | The remote root has advanced past yours. | Run `dig-store pull` first, then push. |
 | `8` | unauthorized | Not authorized for this action. | Check your credentials / the store's signing key. |
-| `9` | no-seed | No wallet seed is set up. | Run `digstore seed import` or `digstore seed generate`. |
+| `9` | no-seed | No wallet seed is set up. | Run `dig-store seed import` or `dig-store seed generate`. |
 | `10` | bad-passphrase | Wrong passphrase for the seed. | Re-run and enter the correct passphrase. |
 | `11` | invalid-mnemonic | The mnemonic is invalid. | Check the word list and word count (12/24). |
 | `12` | insufficient-funds | Not enough XCH **or** DIG to cover the spend. | Fund the printed receive address (you need the uniform capsule price in $DIG + an XCH fee per capsule), then retry. |
 | `13` | chain | A Chia chain/coinset error. | Check your connection to coinset.org and retry. |
-| `14` | confirm-timeout | The on-chain confirmation timed out. | The tx may still confirm — run `digstore anchor status`. |
+| `14` | confirm-timeout | The on-chain confirmation timed out. | The tx may still confirm — run `dig-store anchor status`. |
 | `15` | mint-failed | Minting the store singleton failed. | Retry; if it persists, check wallet funds and coinset.org. |
 | `16` | update-failed | Anchoring the new root failed. | Retry; if it persists, check wallet funds and coinset.org. |
 

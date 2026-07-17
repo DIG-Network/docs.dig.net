@@ -49,7 +49,7 @@ tags:
 размера), [ценообразования](./digstore/cli/onchain-anchoring.md) (единая цена за capsule для mint или
 commit, оплачиваемая в $DIG), получения (один [URN](#urn) именует одну capsule), кэширования и
 происхождения. [Store](#store) — это *последовательность capsule*, по одной на коммит. Это определение
-идентично в DigStore, dig RPC и DIG Browser. → [Capsule подробно](./intro.md#the-capsule)
+идентично в dig-store, dig RPC и DIG Browser. → [Capsule подробно](./intro.md#the-capsule)
 
 ## Store {#store}
 
@@ -67,7 +67,7 @@ launcher id его on-chain синглтона Chia — синглтон в бл
 
 ## URN {#urn}
 
-**URN** — это адрес *и* ключ DigStore в одной строке:
+**URN** — это адрес *и* ключ dig-store в одной строке:
 `urn:dig:chia:<storeId>[:<rootHash>][/<resource>]`. Он одновременно **находит** ресурс и **выводит
 ключ, расшифровывающий его** — обладание URN необходимо и достаточно для чтения публичного ресурса.
 Сокращённая форма для браузера — [протокол `chia://`](#chia-protocol). → [URN и шифрование](./digstore/format/urns-and-encryption.md)
@@ -89,8 +89,8 @@ launcher id его on-chain синглтона Chia — синглтон в бл
 
 ## On-chain закрепление {#anchoring}
 
-Каждый store — это **синглтон в основной сети Chia**. `digstore init` минтит его (launcher id
-*становится* store id), а каждый `digstore commit` закрепляет новый корень [generation](#generation)
+Каждый store — это **синглтон в основной сети Chia**. `dig-store init` минтит его (launcher id
+*становится* store id), а каждый `dig-store commit` закрепляет новый корень [generation](#generation)
 в блокчейне как обновление синглтона CHIP-0035. Обе операции блокируются до подтверждения и тратят
 реальные средства. Блокчейн является источником истины для последнего корня store. → [On-chain закрепление](./digstore/cli/onchain-anchoring.md)
 
@@ -100,16 +100,16 @@ launcher id его on-chain синглтона Chia — синглтон в бл
 **единую цену за capsule в $DIG**, включённую **атомарно в ту же on-chain трату**, что и закрепление —
 отдельной транзакции нет, а memo несёт store id. → [Стоимость](./digstore/cli/onchain-anchoring.md#costs)
 
-## DigStore CLI {#digstore-cli}
+## dig-store CLI {#digstore-cli}
 
-`digstore` — это инструмент командной строки, который создаёт, коммитит, делится и читает store —
+`dig-store` — это инструмент командной строки, который создаёт, коммитит, делится и читает store —
 рабочий процесс в стиле Git (`init`, `add`, `commit`, `log`, `clone`, `push`, `pull`) поверх
 зашифрованного, on-chain формата store. → [Справочник команд](./digstore/cli/command-reference.md) · [CLI-туториал](./digstore/cli/quickstart.md)
 
 ## dig.toml {#dig-toml}
 
 `dig.toml` — это **коммитимый манифест проекта** в корне проекта — `store-id`, `output-dir`,
-`build-command` и другая конфигурация проекта, общая для `digstore dev`, `digstore deploy` и шаблонов
+`build-command` и другая конфигурация проекта, общая для `dig-store dev`, `dig-store deploy` и шаблонов
 скаффолдинга. Он **не содержит секретов** (они берутся из окружения), поэтому его безопасно коммитить.
 → [Конфигурация проекта и значения времени сборки](./digstore/cli/configuration.md)
 
@@ -120,12 +120,12 @@ launcher id его on-chain синглтона Chia — синглтон в бл
 кошельком) подключённый [DIG SDK](#dig-sdk) — на основе одного из пяти шаблонов (`static`, `vite-react`,
 `next-static`, `nft-drop`, `dapp-window-chia`). Скаффолдинг **бесплатен** — без минта, без блокчейна, без
 трат; вы платите единую цену capsule только при публикации [capsule](#capsule). Это npm-аналог CLI на
-Rust — команды `digstore new`. → [Скаффолдинг приложения](./build-a-dapp/scaffold.md)
+Rust — команды `dig-store new`. → [Скаффолдинг приложения](./build-a-dapp/scaffold.md)
 
 ## GitHub deploy Action {#deploy-action}
 
 `dig-network/deploy-action` — это GitHub Action для **git-push-to-deploy**: он устанавливает
-[CLI `digstore`](#digstore-cli) на раннере, запускает `digstore deploy` для продвижения вашего store
+[CLI `dig-store`](#digstore-cli) на раннере, запускает `dig-store deploy` для продвижения вашего store
 (никогда не минтит) и сообщает об опубликованной [capsule](#capsule) + URL + стоимости обратно как
 выходные данные шага, комментарий к PR, GitHub Deployment и статус коммита. С `if-changed`
 (по умолчанию) байт-идентичная сборка становится no-op — без трат. → [Деплой из GitHub Actions](./digstore/cli/deploy-from-github-actions.md)
@@ -196,7 +196,7 @@ ZK-доказательств выполнения.
 - [Обзор DIG Network](./intro.md) — примитивы одним взглядом
 - [Quickstart](./quickstart.md) — соберите и просмотрите бесплатно, опубликуйте capsule в конце
 - [Создание dapp на Chia](./build-a-dapp/tutorial.md) — все примитивы сшиты в одном выпущенном dapp
-- [Что такое DigStore?](./digstore/what-is-digstore.md) — формат store в один файл
+- [Что такое dig-store?](./digstore/what-is-digstore.md) — формат store в один файл
 - [Что такое dig RPC?](./rpc/what-is-the-dig-rpc.md) — путь чтения сети
 - [Протокол chia://](./browser/chia-protocol.md) — адресация контента в браузере
 - [Получить помощь](./support/get-help.md) — каналы сообщества и как сообщить об ошибке

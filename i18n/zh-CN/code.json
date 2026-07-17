@@ -319,7 +319,7 @@
     "message": "DIG Network 是一个用于发布和提供内容的开发者平台，托管方永远看不到它所承载的内容。从{digstore}开始——加密的、内容寻址的存储，编译为单一的自我防护 WebAssembly 模块。"
   },
   "homepage.hero.lead.digstore": {
-    "message": "DigStore"
+    "message": "dig-store"
   },
   "homepage.hero.cta.docs": {
     "message": "浏览文档 →"
@@ -364,7 +364,7 @@
     "message": "可组合的构建模块"
   },
   "homepage.primitives.subtitle": {
-    "message": "DigStore 现已推出。更多 DIG Network 基础组件即将到来。"
+    "message": "dig-store 现已推出。更多 DIG Network 基础组件即将到来。"
   },
   "homepage.primitives.available": {
     "message": "已推出"
@@ -373,7 +373,7 @@
     "message": "一个类似 Git 的加密内容寻址存储。将其指向构建目录，提交生成版本，并通过 URN 寻址一切。"
   },
   "homepage.primitives.digstore.link": {
-    "message": "阅读 DigStore 文档 →"
+    "message": "阅读 dig-store 文档 →"
   },
   "homepage.steps.capture.title": {
     "message": "捕获"
@@ -403,7 +403,7 @@
     "message": "针对构建输出的 Git 风格工作流——从第一次提交起就已加密且可寻址。"
   },
   "homepage.cta.title": {
-    "message": "开始使用 DigStore 构建"
+    "message": "开始使用 dig-store 构建"
   },
   "homepage.cta.subtitle": {
     "message": "安装 CLI，并在一分钟内发布你的第一个加密存储。"
@@ -418,6 +418,6 @@
     "message": "DIG Network — 去中心化数据层"
   },
   "homepage.meta.description": {
-    "message": "DIG Network 是 Chia 上的权益证明二层网络。为该网络及其基础组件（包括 DigStore——加密的内容寻址存储）提供的开发者文档。"
+    "message": "DIG Network 是 Chia 上的权益证明二层网络。为该网络及其基础组件（包括 dig-store——加密的内容寻址存储）提供的开发者文档。"
   }
 }

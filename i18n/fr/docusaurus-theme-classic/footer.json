@@ -3,9 +3,9 @@
     "message": "Documentation",
     "description": "The title of the footer links column with title=Documentation in the footer"
   },
-  "link.title.DigStore": {
-    "message": "DigStore",
-    "description": "The title of the footer links column with title=DigStore in the footer"
+  "link.title.dig-store": {
+    "message": "dig-store",
+    "description": "The title of the footer links column with title=dig-store in the footer"
   },
   "link.title.Community & support": {
     "message": "Communauté et assistance",
@@ -19,9 +19,9 @@
     "message": "DIG Network",
     "description": "The label of footer link with label=DIG Network linking to https://dig.net"
   },
-  "link.item.label.DigStore": {
-    "message": "DigStore",
-    "description": "The label of footer link with label=DigStore linking to /docs/digstore/what-is-digstore"
+  "link.item.label.dig-store": {
+    "message": "dig-store",
+    "description": "The label of footer link with label=dig-store linking to /docs/digstore/what-is-digstore"
   },
   "link.item.label.The Format": {
     "message": "Le format",
@@ -63,20 +63,20 @@
     "message": "@digdotnet",
     "description": "The label of footer link with label=@digdotnet linking to https://x.com/digdotnet"
   },
-  "link.item.label.digstore on GitHub": {
-    "message": "digstore sur GitHub",
-    "description": "The label of footer link with label=digstore on GitHub linking to https://github.com/DIG-Network/digstore"
+  "link.item.label.dig-store on GitHub": {
+    "message": "dig-store sur GitHub",
+    "description": "The label of footer link with label=dig-store on GitHub linking to https://github.com/DIG-Network/dig-store"
   },
   "link.item.label.Releases": {
     "message": "Versions publiées",
-    "description": "The label of footer link with label=Releases linking to https://github.com/DIG-Network/digstore/releases"
+    "description": "The label of footer link with label=Releases linking to https://github.com/DIG-Network/dig-store/releases"
   },
   "copyright": {
-    "message": "Copyright © 2026 DIG Network. DigStore is open source under GPL-2.0.",
+    "message": "Copyright © 2026 DIG Network. dig-store is open source under GPL-2.0.",
     "description": "The footer copyright"
   },
   "logo.alt": {
-    "message": "DigStore — by DIG Network",
+    "message": "dig-store — by DIG Network",
     "description": "The alt text of footer logo"
   }
 }

@@ -28,7 +28,7 @@ The failures you're most likely to hit, and how to fix them. Each one names the 
 
 Publishing a capsule costs the **uniform capsule price in $DIG + a small XCH fee**, and your wallet is short on one of them.
 
-- Check your balance: `digstore balance` (or the DIGHUb publish screen).
+- Check your balance: `dig-store balance` (or the DIGHUb publish screen).
 - Fund the **receive address** it shows. You need both: XCH for the fee and enough $DIG for the capsule price. DIG arrives as a Chia CAT at the same `xch1…` address.
 - Need DIG? Swap XCH for it on [TibetSwap ↗](https://v2.tibetswap.io/), [dexie.space ↗](https://dexie.space/offers/XCH/a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367df16832f81), or [9mm.pro ↗](https://xch.9mm.pro/token/a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367df16832f81), then send it to your receive address.
 
@@ -41,8 +41,8 @@ See [Where to get DIG](../digstore/cli/onchain-anchoring.md#where-to-get-dig) an
 `init`/`commit` block until Chia confirms the spend. On a slow block the wait can time out **even though the transaction will still confirm**. Nothing is lost.
 
 ```sh
-digstore anchor status      # see whether the chain has confirmed it
-digstore anchor             # poll and flip the project to confirmed once seen
+dig-store anchor status      # see whether the chain has confirmed it
+dig-store anchor             # poll and flip the project to confirmed once seen
 ```
 
 A failure *before* the spend (missing seed, insufficient funds) leaves nothing on disk — just fix it and re-run. **Do not pay again** while a spend is pending.
@@ -54,13 +54,13 @@ A failure *before* the spend (missing seed, insufficient funds) leaves nothing o
 Someone (or another machine) published a newer capsule than your local copy, so your push isn't a fast-forward.
 
 ```sh
-digstore pull               # bring your local store up to the current root
-digstore push               # then push
+dig-store pull               # bring your local store up to the current root
+dig-store push               # then push
 ```
 
 ### CI deploy fails or double-spends
 
-- The Action **never mints** — the store must already exist (`digstore init` once). If you see a mint attempt, you're pointing at a missing/empty store; check `store-id` in `dig.toml`.
+- The Action **never mints** — the store must already exist (`dig-store init` once). If you see a mint attempt, you're pointing at a missing/empty store; check `store-id` in `dig.toml`.
 - Fund the **dedicated deploy wallet** with enough $DIG for your expected deploys (the uniform capsule price each). See [Deploy from GitHub Actions](../digstore/cli/deploy-from-github-actions.md).
 - Use `--if-changed` so a no-op build doesn't spend the capsule price on an identical capsule.
 
@@ -72,7 +72,7 @@ digstore push               # then push
 
 The served bytes didn't verify against the on-chain root, or couldn't be decrypted. Almost always one of:
 
-- **Wrong or missing `salt`** for a **private** store — a private URN needs its `?salt=<hex>`. Pass `--salt <hex>` to `digstore cat`/`checkout`.
+- **Wrong or missing `salt`** for a **private** store — a private URN needs its `?salt=<hex>`. Pass `--salt <hex>` to `dig-store cat`/`checkout`.
 - **Wrong URN** — the URN *is* the key; a typo yields the wrong decryption key.
 - Genuine tampering — the host returned bytes that don't match the signed root. DIG fails closed by design: nothing is written.
 
@@ -83,8 +83,8 @@ The served bytes didn't verify against the on-chain root, or couldn't be decrypt
 The store id, root, or path doesn't resolve to a committed resource.
 
 ```sh
-digstore log                # list generations (each root hash is a capsule)
-digstore keys               # list every committed resource's URN + retrieval key
+dig-store log                # list generations (each root hash is a capsule)
+dig-store keys               # list every committed resource's URN + retrieval key
 ```
 
 Confirm the store has at least one confirmed capsule; `"latest"` on a brand-new store with no confirmed generation is invalid.
@@ -126,9 +126,9 @@ Modern Chrome enforces **Private Network Access**: it blocks a page/extension re
 *CLI exit `9`*
 
 ```sh
-digstore seed generate      # create a wallet (mnemonic shown once — back it up)
+dig-store seed generate      # create a wallet (mnemonic shown once — back it up)
 # or
-digstore seed import        # import an existing BIP-39 mnemonic
+dig-store seed import        # import an existing BIP-39 mnemonic
 ```
 
 ### "wrong passphrase" {#bad-passphrase}
@@ -137,9 +137,9 @@ digstore seed import        # import an existing BIP-39 mnemonic
 
 Re-run and enter the correct passphrase. For CI/scripts, set `DIGSTORE_PASSPHRASE` in the environment. Lost the passphrase? You'll need to re-import from your mnemonic.
 
-### "command not found: digstore" {#not-installed}
+### "command not found: dig-store" {#not-installed}
 
-Open a **new** terminal after installing (so `PATH` refreshes), then `digstore --version`. See [Installing the CLI](../digstore/cli/install.md).
+Open a **new** terminal after installing (so `PATH` refreshes), then `dig-store --version`. See [Installing the CLI](../digstore/cli/install.md).
 
 ## Still stuck?
 

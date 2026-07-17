@@ -184,7 +184,7 @@ WalletConnect) and **rejects** on error.
 
 These are the methods a compliant provider MUST implement. They are the single canonical
 `WALLET_METHODS` list shared, byte-for-byte, by the hub (`apps/web/lib/wallet-methods.js`), the SDK
-(`@dignetwork/dig-sdk` `src/methods.ts`), and the native wallet (`digstore` `crates/dig-wallet`), so
+(`@dignetwork/dig-sdk` `src/methods.ts`), and the native wallet (`dig-store` `crates/dig-wallet`), so
 that the injected transport and the WalletConnect → Sage transport can never drift. A method present
 in one transport but not the other is a defect.
 

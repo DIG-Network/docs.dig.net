@@ -8,7 +8,7 @@ keywords:
   - window.chia
   - dig-sdk
   - chip35 spend
-  - digstore deploy
+  - dig-store deploy
   - custom domain
 tags:
   - digstore-cli
@@ -33,7 +33,7 @@ free    free              free                            free              це
 
 ## Что вам понадобится {#what-youll-need}
 
-- Установленный [CLI `digstore`](../digstore/cli/install.md).
+- Установленный [CLI `dig-store`](../digstore/cli/install.md).
 - Node 18+ и `npm`.
 - Профинансированный кошелёк Chia — **только на шаге деплоя** (единая цена capsule в $DIG + небольшая комиссия XCH). Всё до этого бесплатно.
 
@@ -41,23 +41,23 @@ free    free              free                            free              це
 
 ## 1. Скаффолдинг приложения на React — бесплатно, без блокчейна {#1-scaffold-a-react-app--free-no-chain}
 
-`digstore new` создаёт готовый к запуску проект с интеграцией кошелька. Выберите шаблон React:
+`dig-store new` создаёт готовый к запуску проект с интеграцией кошелька. Выберите шаблон React:
 
 ```sh
-digstore new vite-react my-dapp
+dig-store new vite-react my-dapp
 cd my-dapp
 ```
 
 Вы получаете приложение Vite + React, `dig.toml` (`output-dir = "dist"`, `build-command = "npm install && npm run build"`) и `App.jsx`, уже подключённый к встроенному кошельку. Store не минтится, и ничего не тратится — `new` работает исключительно локально.
 
 :::tip Предпочитаете npm? `npm create dig-app`
-`npm create dig-app@latest my-dapp -- --template vite-react` создаёт тот же шаблон прямо из npm — входная точка на JS, установка `digstore` для начала не нужна. См. [Скаффолдинг приложения](./scaffold.md) для всех пяти шаблонов и сравнения двух входных точек.
+`npm create dig-app@latest my-dapp -- --template vite-react` создаёт тот же шаблон прямо из npm — входная точка на JS, установка `dig-store` для начала не нужна. См. [Скаффолдинг приложения](./scaffold.md) для всех пяти шаблонов и сравнения двух входных точек.
 :::
 
 ## 2. Разработка на настоящем пути чтения — бесплатно {#2-develop-against-the-real-read-path--free}
 
 ```sh
-digstore dev
+dig-store dev
 ```
 
 `dev` запускает вашу сборку, обслуживает результат через **настоящий путь чтения `chia://`** (компиляция → верификация → расшифровка) и внедряет **dev-заглушку `window.chia`**, чтобы вы могли строить поток работы с кошельком без реального кошелька. Отредактируйте `src/App.jsx`, сохраните — и страница перезагрузится вживую — именно то, что получат посетители, без взаимодействия с блокчейном и без трат.
@@ -170,13 +170,13 @@ if (await paywall.verifyReceipt(receipt)) { /* разблокировать ко
 Сборка и предпросмотр бесплатны; это единственный шаг, который тратит средства. Сначала создайте store **один раз**:
 
 ```sh
-digstore init my-dapp --dir dist      # минтит первую capsule store (единая цена capsule + комиссия XCH)
+dig-store init my-dapp --dir dist      # минтит первую capsule store (единая цена capsule + комиссия XCH)
 ```
 
 `init` минтит синглтон Chia в основной сети — **launcher id становится вашим store id**. Скопируйте его в `dig.toml` (`store-id = "<64-hex>"`). С этого момента одна команда собирает и публикует новую capsule:
 
 ```sh
-digstore deploy --json                # выполняет build-command, добавляет в индекс dist/, продвигает корень
+dig-store deploy --json                # выполняет build-command, добавляет в индекс dist/, продвигает корень
 ```
 
 Каждый `deploy` публикует новую неизменяемую capsule за единую цену capsule. В момент подтверждения ваш dapp становится **доступным для чтения через [dig RPC](../rpc/what-is-the-dig-rpc.md)** по своему [URN](../concepts.md#urn) / адресу `chia://` — зашифрованным, верифицированным и невозможным для удаления, без регистрации и без дополнительной платы. (Удобный веб-адрес `*.on.dig.net` — это отдельный, опциональный шаг — см. [следующий раздел](#6-put-it-on-your-own-domain).) Для push-to-deploy при каждом коммите настройте [Деплой из GitHub Actions](../digstore/cli/deploy-from-github-actions.md).

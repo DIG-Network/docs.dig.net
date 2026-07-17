@@ -6,7 +6,7 @@ keywords:
   - publish a site
   - own your app
   - DIGHUb
-  - digstore
+  - dig-store
   - free until publish
   - capsule
 tags:
@@ -29,7 +29,7 @@ tags:
 有兩道前門，通向**同一個**「免費建置 → 付費發布」循環：
 
 - **網頁路徑**——[hub.dig.net](https://hub.dig.net) 上的 [DIGHUb](../concepts.md#dighub)：拖曳放入已建置的資料夾、免費預覽，只有在發布時才連接錢包。
-- **CLI／CI 路徑**——[`digstore`](../concepts.md#digstore-cli) CLI + [`create-dig-app`](../concepts.md#create-dig-app) + [GitHub 部署 Action](../concepts.md#deploy-action)。
+- **CLI／CI 路徑**——[`dig-store`](../concepts.md#digstore-cli) CLI + [`create-dig-app`](../concepts.md#create-dig-app) + [GitHub 部署 Action](../concepts.md#deploy-action)。
 
 建立骨架、建置與預覽都**不花任何費用**。你只有在發布一個 capsule 時才需付費。
 
@@ -47,34 +47,34 @@ tags:
 
 [**在 DIGHUb 建立新的 store ↗**](https://hub.dig.net/new)。拖曳放入你建置好的網站（你的 `dist/` 或 `build/` 資料夾），在真實的讀取路徑上取得**免費的草稿預覽**，只有在**發布**步驟才需要連接錢包。完整的網頁流程請參見[快速入門 → 從網頁發布](../quickstart.md#a-publish-from-the-web)。
 
-## 從 CLI 發布——digstore {#publish-from-the-cli--digstore}
+## 從 CLI 發布——dig-store {#publish-from-the-cli--digstore}
 
 Git 風格的流程：`new` → `dev` → `init` → `commit`。
 
 ```sh
-digstore new vite-react   # 建立一個可直接執行的專案骨架——免費，不鑄造
-digstore dev              # 在真實的 chia:// 讀取路徑上預覽，即時重新載入——免費
-digstore init site --dir dist   # 鑄造該 store 的第一個 capsule（統一價格加上 XCH 手續費）
-digstore commit -m "v1.1"       # 發布一次更新——一個新的 capsule
+dig-store new vite-react   # 建立一個可直接執行的專案骨架——免費，不鑄造
+dig-store dev              # 在真實的 chia:// 讀取路徑上預覽，即時重新載入——免費
+dig-store init site --dir dist   # 鑄造該 store 的第一個 capsule（統一價格加上 XCH 手續費）
+dig-store commit -m "v1.1"       # 發布一次更新——一個新的 capsule
 ```
 
 → [CLI 快速入門](../digstore/cli/quickstart.md)．[完整的專案工作流程](../digstore/cli/project-workflow.md)
 
 ## 建立應用骨架——5 種範本 {#scaffold-an-app--5-templates}
 
-從一個可直接執行、已接好錢包的起始專案開始——`static`、`vite-react`、`next-static`、`nft-drop` 或 `dapp-window-chia`——透過 `digstore new <template>` 或 `npm create dig-app`。
+從一個可直接執行、已接好錢包的起始專案開始——`static`、`vite-react`、`next-static`、`nft-drop` 或 `dapp-window-chia`——透過 `dig-store new <template>` 或 `npm create dig-app`。
 
 → [建立應用骨架](../build-a-dapp/scaffold.md)
 
-## 使用 `digstore dev` 免費預覽 {#preview-free-with-digstore-dev}
+## 使用 `dig-store dev` 免費預覽 {#preview-free-with-digstore-dev}
 
-`digstore dev` 會透過**真實的** DIG 讀取路徑（加密 → 編譯 → 驗證 → 解密）提供你的專案，附帶即時重新載入以及注入的開發版 `window.chia`。你所看到的畫面就是訪客會看到的畫面——而且不會鑄造任何東西，也不會有任何花費。
+`dig-store dev` 會透過**真實的** DIG 讀取路徑（加密 → 編譯 → 驗證 → 解密）提供你的專案，附帶即時重新載入以及注入的開發版 `window.chia`。你所看到的畫面就是訪客會看到的畫面——而且不會鑄造任何東西，也不會有任何花費。
 
 → [CLI 快速入門 → 開發與預覽](../digstore/cli/quickstart.md)
 
 ## `dig.toml`——可提交的設定檔 {#digtoml--the-committable-manifest}
 
-專案根目錄的 `dig.toml` 存放 `store-id`、`output-dir`、`build-command`、`remote` 以及其他設定，由 `digstore dev`、`digstore deploy` 與骨架範本共用。它**不含任何機密資訊**（那些來自環境變數），因此可以提交它。
+專案根目錄的 `dig.toml` 存放 `store-id`、`output-dir`、`build-command`、`remote` 以及其他設定，由 `dig-store dev`、`dig-store deploy` 與骨架範本共用。它**不含任何機密資訊**（那些來自環境變數），因此可以提交它。
 
 → [專案設定與建置時期的數值](../digstore/cli/configuration.md)
 

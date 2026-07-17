@@ -35,10 +35,10 @@ When both are installed, the browser/extension read from your local dig-node; ot
 
 | Your machine | Use |
 |---|---|
-| **Ubuntu / Debian** | The native **[apt repository](./apt.md)** — `apt install dig-node digstore`, auto-enabled as a systemd service. |
+| **Ubuntu / Debian** | The native **[apt repository](./apt.md)** — `apt install dig-node dig-store`, auto-enabled as a systemd service. |
 | **Windows / macOS / Linux (any)** | The cross-platform **[DIG Installer](#universal-installer-any-os)** — one `curl \| sh` (or download) installs the full stack for every OS. |
 
-Both install `dig-node` plus the `digstore` CLI; the DIG Installer additionally installs `dig-dns` by default. apt is the Debian-native path (signed, `apt upgrade`-able); the DIG Installer covers everything else.
+Both install `dig-node` plus the `dig-store` CLI; the DIG Installer additionally installs `dig-dns` by default. apt is the Debian-native path (signed, `apt upgrade`-able); the DIG Installer covers everything else.
 
 ### apt (Ubuntu / Debian) — recommended on Debian-family systems
 
@@ -48,7 +48,7 @@ The native path: a signed apt repository at `apt.dig.net`. It installs `dig-node
 
 ### DIG Installer (any OS) {#universal-installer-any-os}
 
-The cross-platform path — Windows, macOS, and any Linux. The **DIG Installer** detects your OS and installs the full DIG stack in one run — the `digstore` CLI, plus the `dig-node` and `dig-dns` boot-start services — with no package manager needed:
+The cross-platform path — Windows, macOS, and any Linux. The **DIG Installer** detects your OS and installs the full DIG stack in one run — the `dig-store` CLI, plus the `dig-node` and `dig-dns` boot-start services — with no package manager needed:
 
 ```sh
 curl -fsSL https://dig.net/install.sh | sh
@@ -76,11 +76,11 @@ You don't need a node. Get the **[DIG Browser ↗](https://github.com/DIG-Networ
 - [DIG and your DNS](./dns.md) — dig-dns's split-DNS scope + its own encrypted upstream lookup
 - [Point a consumer at your node](./point-a-consumer.md) — local-first reads + the shared `.dig` cache
 - [Configure dig-node](./configure.md) — ports, listeners, cache cap, upstream
-- [Self-host a remote origin](../rpc/dig-remote.md) — `digstore serve` + dig:// clone/pull/push
+- [Self-host a remote origin](../rpc/dig-remote.md) — `dig-store serve` + dig:// clone/pull/push
 - [Manage your node](./manage.md) — the control.* admin RPCs + the My Node UI
 - [The dig-node Control Panel](./control-panel.md) — run your node from the DIG extension: live status, reserved cache space (LRU), and — once paired — upstream/hosted stores/sync/peers
 - [Using the public network RPC](../rpc/public-network-rpc.md) — the dig RPC your node speaks, and operating a node on the network
-- [Installing the CLI](../digstore/cli/install.md) — `digstore` on its own (publishing, not serving)
+- [Installing the CLI](../digstore/cli/install.md) — `dig-store` on its own (publishing, not serving)
 
 ## Go deeper: the protocol
 

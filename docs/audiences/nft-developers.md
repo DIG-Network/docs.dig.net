@@ -34,7 +34,7 @@ Minting a **store is free** of $DIG — you pay the **uniform capsule price** on
 Start from a wallet-wired drop page in one command:
 
 ```sh
-digstore new nft-drop
+dig-store new nft-drop
 # or
 npm create dig-app@latest my-drop -- --template nft-drop
 ```
@@ -46,17 +46,17 @@ npm create dig-app@latest my-drop -- --template nft-drop
 The asset CLI builds the spend via the `digstore-chain` builders, signs with your wallet seed, and pushes — all `--dry-run` / `--json` CI-safe:
 
 ```sh
-digstore did create                          # an issuer DID for attribution
-digstore collection create --name "My Drop"  # a CHIP-0007 collection
-digstore nft mint --data ./art.png --metadata ./meta.json --dry-run
-digstore offer make ...                       # XCH / CAT trades
+dig-store did create                          # an issuer DID for attribution
+dig-store collection create --name "My Drop"  # a CHIP-0007 collection
+dig-store nft mint --data ./art.png --metadata ./meta.json --dry-run
+dig-store offer make ...                       # XCH / CAT trades
 ```
 
 The `nft mint` **capsule-media** path writes the art + CHIP-0007 metadata into a capsule, computes the data/metadata hashes from the real bytes, and sets the URIs to the capsule's `chia://` address (with an https gateway fallback). → [Command reference](../digstore/cli/command-reference.md)
 
 ### Large collections mint themselves — auto-batching + resume
 
-`digstore collection mint` bulk-mints an entire traits manifest attributed to one creator DID. A large collection (hundreds of items) can't fit in a single on-chain transaction — Chia caps the CLVM cost per block — so `collection mint` **automatically splits the mint into cost-bounded batches**, each a self-contained wallet-signed bundle that stays safely under the block limit. The batch size is **computed from the cost model**, not a fixed number; pass `--batch-size <n>` only to force a smaller batch. Batches broadcast sequentially, all attributed to the same DID.
+`dig-store collection mint` bulk-mints an entire traits manifest attributed to one creator DID. A large collection (hundreds of items) can't fit in a single on-chain transaction — Chia caps the CLVM cost per block — so `collection mint` **automatically splits the mint into cost-bounded batches**, each a self-contained wallet-signed bundle that stays safely under the block limit. The batch size is **computed from the cost model**, not a fixed number; pass `--batch-size <n>` only to force a smaller batch. Batches broadcast sequentially, all attributed to the same DID.
 
 Because each batch spends real XCH, the mint is **resumable**: progress is saved per batch, so if a run is interrupted after some batches land, just re-run the same `collection mint` command — already-minted batches are skipped and the mint continues where it left off, with no double-spend. If a batch bundle would ever exceed the block cost limit, you get a clear "split into smaller batches" error — never a misleading "check your connection to coinset.org".
 
@@ -84,7 +84,7 @@ The SDK's `Paywall` composes the provider with the spend builder for **pay-to-un
 
 ## Offers — make / take / show
 
-Trade NFTs for XCH or CATs with `digstore offer make | take | show` (each `--dry-run` / `--json`). → [Command reference](../digstore/cli/command-reference.md)
+Trade NFTs for XCH or CATs with `dig-store offer make | take | show` (each `--dry-run` / `--json`). → [Command reference](../digstore/cli/command-reference.md)
 
 ---
 

@@ -67,7 +67,7 @@ Bir yayıncı içeriği **parçalar + şifreler** (K1) bir **capsule formatına*
 - **`dig://`** — §21 **aktarım** konumlandırıcısı (CLI/eş düzlemi) *ve* DIG Browser'ın dahili sayfa şeması — iki ayrı kullanım, asla içerik adresi değil.
 - **`urn:dig:`** — her ikisinin de türediği URN ad alanı.
 - **store / capsule** — kimlik ve onun değişmez generation'ı.
-- **$DIG** — capsule başına ödenen CAT; **DigStore** — store formatı.
+- **$DIG** — capsule başına ödenen CAT; **dig-store** — store formatı.
 
 ## İlgili {#related}
 

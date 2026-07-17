@@ -134,7 +134,7 @@ Stream an **entire compiled capsule** — the whole `.dig` module for one genera
 | `root` | hex(32) or `"latest"` | no | The generation (capsule) to download. Absent ≡ `"latest"`. |
 | `offset`, `length` | uint | no | Chunk window. See [Streaming](./streaming.md). |
 
-**Result** — a chunk object carrying capsule bytes. The capsule is the public, self-verifying module (its own store id and signed root are checked on install per DigStore), so `inclusion_proof` is `null`/empty here; integrity comes from the capsule's structure and the on-chain root. A module genuinely absent at the requested root yields [`-32004`](#errors).
+**Result** — a chunk object carrying capsule bytes. The capsule is the public, self-verifying module (its own store id and signed root are checked on install per dig-store), so `inclusion_proof` is `null`/empty here; integrity comes from the capsule's structure and the on-chain root. A module genuinely absent at the requested root yields [`-32004`](#errors).
 
 ---
 
@@ -156,7 +156,7 @@ A convenience over `dig.getContent` for the store's **public discovery manifest*
 
 ## dig.getMetadata
 
-Read the store's **metadata manifest** (name, version, description, authors, license, links, …) directly from the `.dig`. Unlike content, the metadata manifest is **plaintext, ungated public discovery info** embedded in the compiled module's data section (Digstore §8.4) — it is *not* a content resource, carries *no* inclusion proof, and is never encrypted. Its on-chain binding is the module's **`program_hash`** (= `sha256` of the `.dig` bytes), which the node returns so the caller can verify the served capsule against the chain. `program_hash` is **capsule-bound** — one program per capsule, since each `(store_id, root)` compiles to exactly one module.
+Read the store's **metadata manifest** (name, version, description, authors, license, links, …) directly from the `.dig`. Unlike content, the metadata manifest is **plaintext, ungated public discovery info** embedded in the compiled module's data section (dig-store §8.4) — it is *not* a content resource, carries *no* inclusion proof, and is never encrypted. Its on-chain binding is the module's **`program_hash`** (= `sha256` of the `.dig` bytes), which the node returns so the caller can verify the served capsule against the chain. `program_hash` is **capsule-bound** — one program per capsule, since each `(store_id, root)` compiles to exactly one module.
 
 **Params**
 

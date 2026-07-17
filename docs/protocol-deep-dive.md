@@ -67,7 +67,7 @@ A publisher **chunks + encrypts** (L1) content into a **capsule format** (L2) th
 - **`dig://`** — the §21 **transport** locator (CLI/peer plane) *and* the DIG Browser's internal page scheme — two distinct uses, never the content address.
 - **`urn:dig:`** — the URN namespace both derive from.
 - **store / capsule** — the identity and its immutable generation.
-- **$DIG** — the CAT paid per capsule; **DigStore** — the store format.
+- **$DIG** — the CAT paid per capsule; **dig-store** — the store format.
 
 ## Related
 

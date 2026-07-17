@@ -67,7 +67,7 @@ Seorang penerbit **melakukan chunking + enkripsi** (L1) konten menjadi sebuah **
 - **`dig://`** — locator **transport** §21 (bidang CLI/peer) *dan* skema halaman internal DIG Browser — dua penggunaan yang berbeda, tidak pernah menjadi alamat konten.
 - **`urn:dig:`** — namespace URN yang menjadi asal keduanya.
 - **store / capsule** — identitas dan generation-nya yang immutable.
-- **$DIG** — CAT yang dibayarkan per capsule; **DigStore** — format store-nya.
+- **$DIG** — CAT yang dibayarkan per capsule; **dig-store** — format store-nya.
 
 ## Terkait {#related}
 

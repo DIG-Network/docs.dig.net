@@ -34,7 +34,7 @@ tags:
 一個指令即可從已接好錢包的發行頁面開始：
 
 ```sh
-digstore new nft-drop
+dig-store new nft-drop
 # 或者
 npm create dig-app@latest my-drop -- --template nft-drop
 ```
@@ -46,10 +46,10 @@ npm create dig-app@latest my-drop -- --template nft-drop
 資產 CLI 透過 `digstore-chain` 建構器建構花費、以你的錢包助記詞簽署，然後推送——全部都支援 `--dry-run`／`--json`，適合在 CI 中安全執行：
 
 ```sh
-digstore did create                          # 建立一個用於歸屬的發行者 DID
-digstore collection create --name "My Drop"  # 建立一個 CHIP-0007 收藏系列
-digstore nft mint --data ./art.png --metadata ./meta.json --dry-run
-digstore offer make ...                       # XCH／CAT 交易
+dig-store did create                          # 建立一個用於歸屬的發行者 DID
+dig-store collection create --name "My Drop"  # 建立一個 CHIP-0007 收藏系列
+dig-store nft mint --data ./art.png --metadata ./meta.json --dry-run
+dig-store offer make ...                       # XCH／CAT 交易
 ```
 
 `nft mint` 的 **capsule-media** 路徑會將藝術作品加上 CHIP-0007 中繼資料寫入一個 capsule，依真實位元組計算資料／中繼資料雜湊值，並將 URI 設為該 capsule 的 `chia://` 地址（附帶 https 閘道作為備援）。→ [指令參考](../digstore/cli/command-reference.md)
@@ -78,7 +78,7 @@ SDK 的 `Paywall` 結合了 provider 與花費建構器，用於**付費解鎖**
 
 ## Offer——建立／接受／展示 {#offers--make--take--show}
 
-透過 `digstore offer make | take | show`（各自支援 `--dry-run`／`--json`）以 XCH 或 CAT 交易 NFT。→ [指令參考](../digstore/cli/command-reference.md)
+透過 `dig-store offer make | take | show`（各自支援 `--dry-run`／`--json`）以 XCH 或 CAT 交易 NFT。→ [指令參考](../digstore/cli/command-reference.md)
 
 ---
 

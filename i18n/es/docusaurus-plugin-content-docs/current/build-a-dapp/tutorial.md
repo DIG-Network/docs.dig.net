@@ -8,7 +8,7 @@ keywords:
   - window.chia
   - dig-sdk
   - chip35 spend
-  - digstore deploy
+  - dig-store deploy
   - custom domain
 tags:
   - digstore-cli
@@ -33,7 +33,7 @@ gratis  gratis          gratis                       gratis          precio del 
 
 ## Lo que necesitarás {#what-youll-need}
 
-- La [CLI de `digstore`](../digstore/cli/install.md) instalada.
+- La [CLI de `dig-store`](../digstore/cli/install.md) instalada.
 - Node 18+ y `npm`.
 - Una wallet de Chia financiada — **solo en el paso de deploy** (el precio uniforme del capsule en $DIG + una pequeña comisión de XCH). Todo lo anterior es gratis.
 
@@ -41,23 +41,23 @@ gratis  gratis          gratis                       gratis          precio del 
 
 ## 1. Genera una app React — gratis, sin cadena {#1-scaffold-a-react-app--free-no-chain}
 
-`digstore new` escribe un proyecto ejecutable y conectado a la wallet. Elige la plantilla de React:
+`dig-store new` escribe un proyecto ejecutable y conectado a la wallet. Elige la plantilla de React:
 
 ```sh
-digstore new vite-react my-dapp
+dig-store new vite-react my-dapp
 cd my-dapp
 ```
 
 Obtienes una app Vite + React, un `dig.toml` (`output-dir = "dist"`, `build-command = "npm install && npm run build"`), y un `App.jsx` ya conectado a la wallet integrada en la página. No se acuña ningún store y no se gasta nada — `new` es puramente local.
 
 :::tip ¿Prefieres npm? `npm create dig-app`
-`npm create dig-app@latest my-dapp -- --template vite-react` genera la misma plantilla directamente desde npm — la puerta de entrada en JS, sin necesidad de instalar `digstore` para empezar. Consulta [Genera una app](./scaffold.md) para las cinco plantillas y cómo se comparan las dos puertas de entrada.
+`npm create dig-app@latest my-dapp -- --template vite-react` genera la misma plantilla directamente desde npm — la puerta de entrada en JS, sin necesidad de instalar `dig-store` para empezar. Consulta [Genera una app](./scaffold.md) para las cinco plantillas y cómo se comparan las dos puertas de entrada.
 :::
 
 ## 2. Desarrolla contra la vía de lectura real — gratis {#2-develop-against-the-real-read-path--free}
 
 ```sh
-digstore dev
+dig-store dev
 ```
 
 `dev` ejecuta tu build, sirve el resultado sobre la vía de lectura **genuina** `chia://` (compilar → verificar → descifrar), e inyecta un **shim de desarrollo `window.chia`** para que puedas construir el flujo de wallet sin una wallet real. Edita `src/App.jsx`, guarda, y la página se recarga en vivo — exactamente lo que obtendrán los visitantes, con cero interacción con la cadena y cero gasto.
@@ -170,13 +170,13 @@ if (await paywall.verifyReceipt(receipt)) { /* unlock the content */ }
 Construyes y previsualizas gratis; este es el único paso que gasta. Primero crea el store **una vez**:
 
 ```sh
-digstore init my-dapp --dir dist      # acuña el primer capsule del store (precio uniforme del capsule + comisión de XCH)
+dig-store init my-dapp --dir dist      # acuña el primer capsule del store (precio uniforme del capsule + comisión de XCH)
 ```
 
 `init` acuña un singleton de Chia en la mainnet — **el launcher id se convierte en el id de tu store**. Cópialo en `dig.toml` (`store-id = "<64-hex>"`). A partir de ahí, un solo comando construye y publica un nuevo capsule:
 
 ```sh
-digstore deploy --json                # ejecuta build-command, prepara dist/, avanza la raíz
+dig-store deploy --json                # ejecuta build-command, prepara dist/, avanza la raíz
 ```
 
 Cada `deploy` publica un nuevo capsule inmutable por el precio uniforme del capsule. En el momento en que se confirma, tu dapp es **legible a través del [dig RPC](../rpc/what-is-the-dig-rpc.md)** por su dirección [URN](../concepts.md#urn) / `chia://` — cifrada, verificada, e imposible de dar de baja, sin registro y sin nada más que pagar. (Una dirección web amigable `*.on.dig.net` es un paso separado y opcional — consulta [la siguiente sección](#6-put-it-on-your-own-domain).) Para push-to-deploy en cada commit, configura [Deploy desde GitHub Actions](../digstore/cli/deploy-from-github-actions.md).

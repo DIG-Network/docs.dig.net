@@ -54,7 +54,7 @@ Use the SDK's `Paywall` — a high-level pay-to-unlock / NFT-or-collection-owner
 
 ## How do I deploy from CI?
 
-Wire `dig-network/deploy-action` for push-to-publish with free PR previews, or drive `digstore deploy` yourself. Authorize CI with a revocable **deploy key**, not your wallet seed.
+Wire `dig-network/deploy-action` for push-to-publish with free PR previews, or drive `dig-store deploy` yourself. Authorize CI with a revocable **deploy key**, not your wallet seed.
 
 → [Deploy from GitHub Actions](../digstore/cli/deploy-from-github-actions.md) · [Deploy keys](../automation/deploy-keys.md)
 

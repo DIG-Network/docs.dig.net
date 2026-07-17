@@ -116,7 +116,7 @@ Entries are ordered **ascending by `path`** (UTF-8 byte order), so the encoding 
 | `sha256_latest` | 32 bytes | SHA-256 of the latest version's content — the per-resource [merkle leaf, D5](./merkle-proofs.md): `SHA-256` over the concatenated ordered chunk ciphertext bodies of the latest version (the same leaf the verifier checks). |
 | `version_count` | u32 | How many versions of this path exist across the whole store history (the number of capsules whose file set includes the path). |
 
-`schema_version` starts at `1`; future fields are only appended, so a reader dispatches on the version and older bodies stay readable. In JSON (the CLI `digstore manifest --json`, the JSON-RPC `dig.getManifest`, and the browser reader `readPublicManifest`) the byte fields are 64-char lowercase hex and the shape is `{ "schema_version", "entries": [ { "path", "latest_root", "generation_index", "sha256_latest", "version_count" } ] }`.
+`schema_version` starts at `1`; future fields are only appended, so a reader dispatches on the version and older bodies stay readable. In JSON (the CLI `dig-store manifest --json`, the JSON-RPC `dig.getManifest`, and the browser reader `readPublicManifest`) the byte fields are 64-char lowercase hex and the shape is `{ "schema_version", "entries": [ { "path", "latest_root", "generation_index", "sha256_latest", "version_count" } ] }`.
 
 ## Body codec note
 

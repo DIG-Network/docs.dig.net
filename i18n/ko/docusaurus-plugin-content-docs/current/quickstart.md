@@ -8,7 +8,7 @@ keywords:
   - free preview
   - publish capsule
   - DIGHUb
-  - digstore deploy
+  - dig-store deploy
 tags:
   - dighub
   - capsule
@@ -26,7 +26,7 @@ Ship a site to a network no host can read, change, or take down — in about ten
 Two ways to do it. Most people start on the web.
 
 - **[A. Publish from the web](#a-publish-from-the-web)** — in [DIGHUb](./concepts.md#dighub), connect a wallet at the end. Best for sites and frontends. ~10 min.
-- **[B. Publish from the CLI](#b-publish-from-the-cli)** — `digstore` on your machine, scriptable and CI-ready. Best for devs and automation.
+- **[B. Publish from the CLI](#b-publish-from-the-cli)** — `dig-store` on your machine, scriptable and CI-ready. Best for devs and automation.
 
 ---
 
@@ -75,8 +75,8 @@ The same flow from your terminal — scriptable and the basis for CI. The CLI mi
 ### 1. Install
 
 ```sh
-# download the digstore binary for your OS from the Releases page, then:
-digstore --version
+# download the dig-store binary for your OS from the Releases page, then:
+dig-store --version
 ```
 
 See [Installing the CLI](./digstore/cli/install.md) for per-OS binaries, the guided DIG Installer, and build-from-source.
@@ -86,14 +86,14 @@ See [Installing the CLI](./digstore/cli/install.md) for per-OS binaries, the gui
 Scaffold a project and preview it locally — **free, no mint, no chain** — before you ever spend:
 
 ```sh
-digstore new <template>   # scaffold a wallet-wired project (static · vite-react · next-static · nft-drop · dapp-window-chia) — free, no mint
-digstore dev              # watch + compile-on-save + serve the real chia:// read path, with an injected window.chia — free, live-reload
+dig-store new <template>   # scaffold a wallet-wired project (static · vite-react · next-static · nft-drop · dapp-window-chia) — free, no mint
+dig-store dev              # watch + compile-on-save + serve the real chia:// read path, with an injected window.chia — free, live-reload
 ```
 
 `new` writes a runnable project (a `dig.toml` + a starter app); `dev` serves it over the genuine DIG read path (compile → verify → decrypt) with live reload. You pay the uniform capsule price only when you publish (next steps). Or build with your usual toolchain (`npm run build` → `dist/`) and publish that output.
 
 :::tip Prefer npm? Use `create-dig-app`
-If you live in the Node world, `npm create dig-app@latest my-app -- --template vite-react` scaffolds the same templates straight from npm — no `digstore` install needed to start. See [Scaffold an app](./build-a-dapp/scaffold.md).
+If you live in the Node world, `npm create dig-app@latest my-app -- --template vite-react` scaffolds the same templates straight from npm — no `dig-store` install needed to start. See [Scaffold an app](./build-a-dapp/scaffold.md).
 :::
 
 ### 3. Set up a wallet (only needed to publish)
@@ -101,8 +101,8 @@ If you live in the Node world, `npm create dig-app@latest my-app -- --template v
 Publishing spends real funds, so you need a seed and a funded wallet first:
 
 ```sh
-digstore seed generate      # generate a fresh mnemonic (shown once — back it up)
-digstore balance            # show your receive address; fund it with XCH + DIG
+dig-store seed generate      # generate a fresh mnemonic (shown once — back it up)
+dig-store balance            # show your receive address; fund it with XCH + DIG
 ```
 
 See [On-chain anchoring](./digstore/cli/onchain-anchoring.md) for import, funding, and TTL details.
@@ -110,7 +110,7 @@ See [On-chain anchoring](./digstore/cli/onchain-anchoring.md) for import, fundin
 ### 4. Publish your first capsule
 
 ```sh
-digstore init site --dir dist     # mint the store's first capsule (uniform capsule price + XCH fee)
+dig-store init site --dir dist     # mint the store's first capsule (uniform capsule price + XCH fee)
 ```
 
 `init` mints a Chia singleton on mainnet — **the launcher id becomes your store id** — and blocks until confirmed.
@@ -119,14 +119,14 @@ digstore init site --dir dist     # mint the store's first capsule (uniform caps
 
 ```sh
 npm run build                      # produce dist/
-digstore add -A                    # stage the whole content root
-digstore commit -m "v1.1"          # publish a new capsule (uniform capsule price + XCH fee)
+dig-store add -A                    # stage the whole content root
+dig-store commit -m "v1.1"          # publish a new capsule (uniform capsule price + XCH fee)
 ```
 
 For CI, one command does add → commit → push and prints the URL:
 
 ```sh
-digstore deploy --output-dir dist --json   # advance an existing store from CI; never mints
+dig-store deploy --output-dir dist --json   # advance an existing store from CI; never mints
 ```
 
 See [Deploy from GitHub Actions](./digstore/cli/deploy-from-github-actions.md).
@@ -134,7 +134,7 @@ See [Deploy from GitHub Actions](./digstore/cli/deploy-from-github-actions.md).
 ### 6. Read it back
 
 ```sh
-digstore cat urn:dig:chia:<storeId>/readme   # a URN both locates AND decrypts
+dig-store cat urn:dig:chia:<storeId>/readme   # a URN both locates AND decrypts
 ```
 
 ---
@@ -159,7 +159,7 @@ The price is **uniform per capsule** everywhere — see [why the price is unifor
 
 - [Concepts & glossary](./concepts.md) — capsule, store, URN, and DIG payment defined
 - [Scaffold an app (create-dig-app)](./build-a-dapp/scaffold.md) — start a deployable project in one command (npm or CLI)
-- [Installing the CLI](./digstore/cli/install.md) — get `digstore` on your machine
+- [Installing the CLI](./digstore/cli/install.md) — get `dig-store` on your machine
 - [On-chain anchoring](./digstore/cli/onchain-anchoring.md) — wallet setup, funding, and costs
 - [Deploy from GitHub Actions](./digstore/cli/deploy-from-github-actions.md) — push-to-publish in CI
 - [CLI tutorial](./digstore/cli/quickstart.md) — the full create-commit-read walkthrough

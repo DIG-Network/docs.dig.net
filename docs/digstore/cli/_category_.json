@@ -4,6 +4,6 @@
   "link": {
     "type": "generated-index",
     "title": "CLI Tutorial",
-    "description": "Install the digstore CLI and use it in a real project: initialize a store, capture a build directory, commit generations, share over a remote, and stream content back out."
+    "description": "Install the dig-store CLI and use it in a real project: initialize a store, capture a build directory, commit generations, share over a remote, and stream content back out."
   }
 }

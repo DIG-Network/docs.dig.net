@@ -44,7 +44,7 @@ Un **capsule** es una generación de store inmutable: el par `(storeId, rootHash
 como `storeId:rootHash`. Es la unidad atómica de la red — de compilación (un módulo WASM de tamaño fijo),
 [precio](./digstore/cli/onchain-anchoring.md) (un precio uniforme por capsule para mint o commit, pagado
 en $DIG), recuperación (una [URN](#urn) nombra un capsule), caché y procedencia. Un [store](#store) es una *secuencia de
-capsules*, uno por cada commit. Esta definición es idéntica en DigStore, el dig RPC y el DIG
+capsules*, uno por cada commit. Esta definición es idéntica en dig-store, el dig RPC y el DIG
 Browser. → [El capsule, en detalle](./intro.md#the-capsule)
 
 ## Store {#store}
@@ -63,7 +63,7 @@ monótonamente, como el historial de Git. → [Generations y root hashes](./digs
 
 ## URN {#urn}
 
-Una **URN** es la dirección *y* la clave de DigStore en una sola cadena:
+Una **URN** es la dirección *y* la clave de dig-store en una sola cadena:
 `urn:dig:chia:<storeId>[:<rootHash>][/<resource>]`. A la vez **localiza** un recurso y **deriva la
 clave que lo descifra** — poseer la URN es necesario y suficiente para leer un recurso público.
 La abreviatura orientada al navegador es el [protocolo `chia://`](#chia-protocol). → [URNs y cifrado](./digstore/format/urns-and-encryption.md)
@@ -85,8 +85,8 @@ descifrado, y nunca se confía en que un nodo haya devuelto bytes genuinos. → 
 
 ## On-chain anchoring {#anchoring}
 
-Todo store es un **singleton en la mainnet de Chia**. `digstore init` lo acuña (el launcher id *se convierte* en
-el store id) y cada `digstore commit` ancla en cadena una nueva raíz de [generation](#generation) como una
+Todo store es un **singleton en la mainnet de Chia**. `dig-store init` lo acuña (el launcher id *se convierte* en
+el store id) y cada `dig-store commit` ancla en cadena una nueva raíz de [generation](#generation) como una
 actualización de singleton CHIP-0035. Ambos bloquean hasta la confirmación y gastan fondos reales. La cadena es la
 autoridad para la raíz más reciente de un store. → [Anclaje en cadena](./digstore/cli/onchain-anchoring.md)
 
@@ -96,16 +96,16 @@ autoridad para la raíz más reciente de un store. → [Anclaje en cadena](./dig
 cuesta un **precio uniforme por capsule en $DIG**, incluido **atómicamente en el mismo gasto en cadena** que el
 anclaje — no hay una transacción separada, y el memo lleva el store id. → [Costos](./digstore/cli/onchain-anchoring.md#costs)
 
-## DigStore CLI {#digstore-cli}
+## dig-store CLI {#digstore-cli}
 
-`digstore` es la herramienta de línea de comandos que crea, hace commit, comparte y lee stores — un flujo
+`dig-store` es la herramienta de línea de comandos que crea, hace commit, comparte y lee stores — un flujo
 de trabajo con forma de Git (`init`, `add`, `commit`, `log`, `clone`, `push`, `pull`) sobre el formato de
 store cifrado y en cadena. → [Referencia de comandos](./digstore/cli/command-reference.md) · [Tutorial de la CLI](./digstore/cli/quickstart.md)
 
 ## dig.toml {#dig-toml}
 
 `dig.toml` es el **manifiesto de proyecto commiteable** en la raíz de un proyecto — `store-id`, `output-dir`,
-`build-command`, y otra configuración del proyecto, compartida por `digstore dev`, `digstore deploy` y las
+`build-command`, y otra configuración del proyecto, compartida por `dig-store dev`, `dig-store deploy` y las
 plantillas de scaffolding. No contiene **ningún secreto** (esos vienen del entorno), así que es seguro
 commitearlo. → [Configuración del proyecto y valores en tiempo de compilación](./digstore/cli/configuration.md)
 
@@ -116,12 +116,12 @@ un proyecto de partida ejecutable — una app, un [`dig.toml`](#dig-toml) y (par
 [DIG SDK](#dig-sdk) ya conectado — a partir de una de cinco plantillas (`static`, `vite-react`, `next-static`,
 `nft-drop`, `dapp-window-chia`). El scaffolding es **gratis** — sin mint, sin cadena, sin gasto; pagas el
 precio uniforme del capsule solo cuando publicas un [capsule](#capsule). Es el equivalente en npm de la CLI en Rust
-`digstore new`. → [Genera una app](./build-a-dapp/scaffold.md)
+`dig-store new`. → [Genera una app](./build-a-dapp/scaffold.md)
 
 ## The GitHub deploy Action {#deploy-action}
 
 `dig-network/deploy-action` es la GitHub Action de **git-push-to-deploy**: instala la
-[CLI de `digstore`](#digstore-cli) en el runner, ejecuta `digstore deploy` para avanzar tu store (nunca
+[CLI de `dig-store`](#digstore-cli) en el runner, ejecuta `dig-store deploy` para avanzar tu store (nunca
 acuña) y reporta el [capsule](#capsule) publicado + las URLs + el costo de vuelta como salidas del paso, un
 comentario en el PR, un GitHub Deployment y un estado de commit. Con `if-changed` (por defecto), una
 build idéntica byte a byte es un no-op — sin gasto. → [Deploy desde GitHub Actions](./digstore/cli/deploy-from-github-actions.md)
@@ -189,7 +189,7 @@ exponen automáticamente un subdominio.) → [¿Puedo obtener una dirección `*.
 - [Resumen de DIG Network](./intro.md) — los primitivos de un vistazo
 - [Quickstart](./quickstart.md) — construye y previsualiza gratis, publica un capsule al final
 - [Construye una dapp en Chia](./build-a-dapp/tutorial.md) — todos los primitivos combinados en una dapp desplegada
-- [¿Qué es DigStore?](./digstore/what-is-digstore.md) — el formato de store de un solo archivo
+- [¿Qué es dig-store?](./digstore/what-is-digstore.md) — el formato de store de un solo archivo
 - [¿Qué es el dig RPC?](./rpc/what-is-the-dig-rpc.md) — la vía de lectura de la red
 - [El protocolo chia://](./browser/chia-protocol.md) — direccionar contenido en el navegador
 - [Obtener ayuda](./support/get-help.md) — canales de la comunidad y cómo reportar

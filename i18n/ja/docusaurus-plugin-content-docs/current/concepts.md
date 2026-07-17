@@ -40,7 +40,7 @@ tags:
 
 ## capsule {#capsule}
 
-**capsule**とは、1つの不変なstore世代（generation）のことで、`(storeId, rootHash)`のペアであり、正規表記では`storeId:rootHash`と書かれます。これはネットワークの原子単位であり、コンパイル（1つの固定サイズWASMモジュール）、[価格設定](./digstore/cli/onchain-anchoring.md)（mintまたはcommitに対する$DIGでの均一なcapsuleごとの価格）、取得（[URN](#urn)は1つのcapsuleを指します）、キャッシュ、来歴のそれぞれの単位です。[store](#store)は*capsuleの並び*であり、コミットごとに1つです。この定義はDigStore、dig RPC、DIG Browserの間で同一です。→ [capsuleの詳細](./intro.md#the-capsule)
+**capsule**とは、1つの不変なstore世代（generation）のことで、`(storeId, rootHash)`のペアであり、正規表記では`storeId:rootHash`と書かれます。これはネットワークの原子単位であり、コンパイル（1つの固定サイズWASMモジュール）、[価格設定](./digstore/cli/onchain-anchoring.md)（mintまたはcommitに対する$DIGでの均一なcapsuleごとの価格）、取得（[URN](#urn)は1つのcapsuleを指します）、キャッシュ、来歴のそれぞれの単位です。[store](#store)は*capsuleの並び*であり、コミットごとに1つです。この定義はdig-store、dig RPC、DIG Browserの間で同一です。→ [capsuleの詳細](./intro.md#the-capsule)
 
 ## store {#store}
 
@@ -52,7 +52,7 @@ tags:
 
 ## URN {#urn}
 
-**URN**は、DigStoreのアドレスと鍵を1つの文字列にまとめたものです。
+**URN**は、dig-storeのアドレスと鍵を1つの文字列にまとめたものです。
 `urn:dig:chia:<storeId>[:<rootHash>][/<resource>]`という形式です。これはリソースの**場所を示す**と同時に、**それを復号する鍵を導出**します — URNを保持していることが、公開されたリソースを読むための必要十分条件です。ブラウザ向けの短縮形は[`chia://`プロトコル](#chia-protocol)です。→ [URNと暗号化](./digstore/format/urns-and-encryption.md)
 
 ## retrieval key（取得キー） {#retrieval-key}
@@ -65,27 +65,27 @@ tags:
 
 ## オンチェーンアンカリング {#anchoring}
 
-すべてのstoreは**Chiaメインネット上のシングルトン**です。`digstore init`はそれをmintし（ランチャーIDが*そのまま*store idになります）、`digstore commit`のたびに新しい[generation](#generation)のrootがCHIP-0035シングルトン更新としてオンチェーンに固定されます。どちらも確定するまでブロックし、実際の資金を消費します。チェーンはstoreの最新rootに対する権威です。→ [オンチェーンアンカリング](./digstore/cli/onchain-anchoring.md)
+すべてのstoreは**Chiaメインネット上のシングルトン**です。`dig-store init`はそれをmintし（ランチャーIDが*そのまま*store idになります）、`dig-store commit`のたびに新しい[generation](#generation)のrootがCHIP-0035シングルトン更新としてオンチェーンに固定されます。どちらも確定するまでブロックし、実際の資金を消費します。チェーンはstoreの最新rootに対する権威です。→ [オンチェーンアンカリング](./digstore/cli/onchain-anchoring.md)
 
 ## DIG決済 {#dig-payment}
 
 **$DIG**はDIG Networkのトークン（Chia CAT）です。[capsule](#capsule)をmint（`init`）またはcommitするには、**$DIGでの均一なcapsuleごとの価格**がかかり、これはアンカーと**同じオンチェーン支出にアトミックに含まれます** — 別のトランザクションは存在せず、メモにはstore idが記録されます。→ [費用](./digstore/cli/onchain-anchoring.md#costs)
 
-## DigStore CLI {#digstore-cli}
+## dig-store CLI {#digstore-cli}
 
-`digstore`は、storeを作成・コミット・共有・読み取るコマンドラインツールであり、暗号化されたオンチェーンのstoreフォーマットに対するGit形式のワークフロー（`init`、`add`、`commit`、`log`、`clone`、`push`、`pull`）を提供します。→ [コマンドリファレンス](./digstore/cli/command-reference.md) · [CLIチュートリアル](./digstore/cli/quickstart.md)
+`dig-store`は、storeを作成・コミット・共有・読み取るコマンドラインツールであり、暗号化されたオンチェーンのstoreフォーマットに対するGit形式のワークフロー（`init`、`add`、`commit`、`log`、`clone`、`push`、`pull`）を提供します。→ [コマンドリファレンス](./digstore/cli/command-reference.md) · [CLIチュートリアル](./digstore/cli/quickstart.md)
 
 ## dig.toml {#dig-toml}
 
-`dig.toml`は、プロジェクトのルートにある**コミット可能なプロジェクトマニフェスト**であり、`store-id`、`output-dir`、`build-command`、その他のプロジェクト設定を保持し、`digstore dev`、`digstore deploy`、および足場作りテンプレートで共有されます。これには**秘密情報が一切含まれません**（それらは環境から取得されます）ので、安全にコミットできます。→ [プロジェクト設定とビルド時の値](./digstore/cli/configuration.md)
+`dig.toml`は、プロジェクトのルートにある**コミット可能なプロジェクトマニフェスト**であり、`store-id`、`output-dir`、`build-command`、その他のプロジェクト設定を保持し、`dig-store dev`、`dig-store deploy`、および足場作りテンプレートで共有されます。これには**秘密情報が一切含まれません**（それらは環境から取得されます）ので、安全にコミットできます。→ [プロジェクト設定とビルド時の値](./digstore/cli/configuration.md)
 
 ## create-dig-app {#create-dig-app}
 
-`create-dig-app`（`npm create dig-app`）は、DIGプロジェクトを開始するための**JSの入口**であり、実行可能なスターター — アプリ、[`dig.toml`](#dig-toml)、そして（ウォレットテンプレートについては）[DIG SDK](#dig-sdk)が組み込まれたもの — を5つのテンプレート（`static`、`vite-react`、`next-static`、`nft-drop`、`dapp-window-chia`）のいずれかから足場作りします。足場作りは**無料**です — mintもチェーンも支出もありません。[capsule](#capsule)を公開するときにのみ均一なcapsule価格を支払います。これはRust CLIの`digstore new`に対するnpm側の相棒です。→ [アプリを足場作りする](./build-a-dapp/scaffold.md)
+`create-dig-app`（`npm create dig-app`）は、DIGプロジェクトを開始するための**JSの入口**であり、実行可能なスターター — アプリ、[`dig.toml`](#dig-toml)、そして（ウォレットテンプレートについては）[DIG SDK](#dig-sdk)が組み込まれたもの — を5つのテンプレート（`static`、`vite-react`、`next-static`、`nft-drop`、`dapp-window-chia`）のいずれかから足場作りします。足場作りは**無料**です — mintもチェーンも支出もありません。[capsule](#capsule)を公開するときにのみ均一なcapsule価格を支払います。これはRust CLIの`dig-store new`に対するnpm側の相棒です。→ [アプリを足場作りする](./build-a-dapp/scaffold.md)
 
 ## GitHubデプロイAction {#deploy-action}
 
-`dig-network/deploy-action`は、**git-push-to-deploy**を実現するGitHub Actionであり、ランナー上に[`digstore` CLI](#digstore-cli)をインストールし、`digstore deploy`を実行してあなたのstoreを進め（決してmintはしません）、公開された[capsule](#capsule)、URL、費用をステップ出力、PRコメント、GitHub Deployment、コミットステータスとして報告します。`if-changed`（デフォルト）を使えば、バイト単位で同一のビルドは何もしません — 支出も発生しません。→ [GitHub Actionsからデプロイする](./digstore/cli/deploy-from-github-actions.md)
+`dig-network/deploy-action`は、**git-push-to-deploy**を実現するGitHub Actionであり、ランナー上に[`dig-store` CLI](#digstore-cli)をインストールし、`dig-store deploy`を実行してあなたのstoreを進め（決してmintはしません）、公開された[capsule](#capsule)、URL、費用をステップ出力、PRコメント、GitHub Deployment、コミットステータスとして報告します。`if-changed`（デフォルト）を使えば、バイト単位で同一のビルドは何もしません — 支出も発生しません。→ [GitHub Actionsからデプロイする](./digstore/cli/deploy-from-github-actions.md)
 
 ## DIG SDK {#dig-sdk}
 
@@ -123,7 +123,7 @@ tags:
 - [DIG Network概要](./intro.md) — プリミティブの全体像
 - [クイックスタート](./quickstart.md) — 無料でビルド・プレビューし、最後にcapsuleを公開する
 - [Chiaでdappを構築する](./build-a-dapp/tutorial.md) — すべてのプリミティブを1つの出荷済みdappに組み込む
-- [DigStoreとは？](./digstore/what-is-digstore.md) — ワンファイルのstoreフォーマット
+- [dig-storeとは？](./digstore/what-is-digstore.md) — ワンファイルのstoreフォーマット
 - [dig RPCとは？](./rpc/what-is-the-dig-rpc.md) — ネットワークの読み取りパス
 - [chia://プロトコル](./browser/chia-protocol.md) — ブラウザでのコンテンツのアドレス指定
 - [ヘルプを得る](./support/get-help.md) — コミュニティチャンネルと報告方法

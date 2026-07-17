@@ -34,7 +34,7 @@ Melakukan mint sebuah **store bersifat gratis** dari $DIG — Anda hanya membaya
 Mulai dari sebuah halaman drop yang terhubung wallet dalam satu perintah:
 
 ```sh
-digstore new nft-drop
+dig-store new nft-drop
 # atau
 npm create dig-app@latest my-drop -- --template nft-drop
 ```
@@ -46,10 +46,10 @@ npm create dig-app@latest my-drop -- --template nft-drop
 CLI aset membangun spend melalui builder `digstore-chain`, menandatangani dengan seed wallet Anda, dan melakukan push — semuanya aman untuk CI dengan `--dry-run` / `--json`:
 
 ```sh
-digstore did create                          # sebuah DID penerbit untuk atribusi
-digstore collection create --name "My Drop"  # sebuah koleksi CHIP-0007
-digstore nft mint --data ./art.png --metadata ./meta.json --dry-run
-digstore offer make ...                       # perdagangan XCH / CAT
+dig-store did create                          # sebuah DID penerbit untuk atribusi
+dig-store collection create --name "My Drop"  # sebuah koleksi CHIP-0007
+dig-store nft mint --data ./art.png --metadata ./meta.json --dry-run
+dig-store offer make ...                       # perdagangan XCH / CAT
 ```
 
 Jalur **capsule-media** dari `nft mint` menulis seni + metadata CHIP-0007 ke dalam sebuah capsule, menghitung hash data/metadata dari byte yang asli, dan menetapkan URI ke alamat `chia://` capsule tersebut (dengan fallback gateway https). → [Referensi perintah](../digstore/cli/command-reference.md)
@@ -78,7 +78,7 @@ Setiap spend coin dibangun oleh wasm CHIP-0035 kanonis dan diekspor ulang di `@d
 
 ## Offer — make / take / show {#offers--make--take--show}
 
-Perdagangkan NFT untuk XCH atau CAT dengan `digstore offer make | take | show` (masing-masing dengan `--dry-run` / `--json`). → [Referensi perintah](../digstore/cli/command-reference.md)
+Perdagangkan NFT untuk XCH atau CAT dengan `dig-store offer make | take | show` (masing-masing dengan `--dry-run` / `--json`). → [Referensi perintah](../digstore/cli/command-reference.md)
 
 ---
 

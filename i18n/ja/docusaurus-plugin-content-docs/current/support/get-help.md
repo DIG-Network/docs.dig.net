@@ -21,7 +21,7 @@ Stuck on something? Start here.
 | Where | Best for |
 |---|---|
 | [**Discord ↗**](https://discord.gg/v78aygUZt) | Quick questions, deploy help, talking to other builders and the team. |
-| [**digstore issues ↗**](https://github.com/DIG-Network/digstore/issues) | CLI bugs, feature requests, anything `digstore`. |
+| [**dig-store issues ↗**](https://github.com/DIG-Network/dig-store/issues) | CLI bugs, feature requests, anything `dig-store`. |
 | [**DIGHUb issues ↗**](https://github.com/DIG-Network/hub.dig.net/issues) | Web app / publish / domain problems. |
 | [Troubleshooting](./troubleshooting.md) · [FAQ](./faq.md) · [Error codes](./error-codes.md) | Answers you can find without waiting. |
 
@@ -41,9 +41,9 @@ You'll get an answer faster if you check these first:
 
 A report that gets answered fast includes:
 
-- **What you ran** — the exact `digstore` command (or the DIGHUb step), and what you expected.
+- **What you ran** — the exact `dig-store` command (or the DIGHUb step), and what you expected.
 - **What happened** — the full error message and any **error code** (e.g. exit code `12`, RPC `-32602`, or `DIG_INSUFFICIENT`). See [Error codes](./error-codes.md).
-- **Versions** — `digstore --version`, your OS; for the web, your browser and wallet.
+- **Versions** — `dig-store --version`, your OS; for the web, your browser and wallet.
 - **Reproduce it** — the smallest set of steps that triggers it.
 
 For CLI issues, re-run with `--verbose` (and `--json` if scripting) and include the output.

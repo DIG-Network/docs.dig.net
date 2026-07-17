@@ -40,7 +40,7 @@ tags:
 
 ## capsule {#capsule}
 
-**capsule** 是單一不可變的 store 世代（generation）：一對 `(storeId, rootHash)`，以 `storeId:rootHash` 的形式規範表示。它是這個網路的原子單位——涵蓋編譯（一個固定大小的 WASM 模組）、[定價](./digstore/cli/onchain-anchoring.md)（鑄造或提交時統一的每 capsule 價格，以 $DIG 支付）、取回（一個 [URN](#urn) 指向一個 capsule）、快取與來源證明。一個 [store](#store) 是*一連串 capsule 的序列*，每次提交產生一個。這個定義在 DigStore、dig RPC 與 DIG Browser 中完全一致。→ [完整了解 capsule](./intro.md#the-capsule)
+**capsule** 是單一不可變的 store 世代（generation）：一對 `(storeId, rootHash)`，以 `storeId:rootHash` 的形式規範表示。它是這個網路的原子單位——涵蓋編譯（一個固定大小的 WASM 模組）、[定價](./digstore/cli/onchain-anchoring.md)（鑄造或提交時統一的每 capsule 價格，以 $DIG 支付）、取回（一個 [URN](#urn) 指向一個 capsule）、快取與來源證明。一個 [store](#store) 是*一連串 capsule 的序列*，每次提交產生一個。這個定義在 dig-store、dig RPC 與 DIG Browser 中完全一致。→ [完整了解 capsule](./intro.md#the-capsule)
 
 ## store {#store}
 
@@ -52,7 +52,7 @@ tags:
 
 ## URN {#urn}
 
-**URN** 是 DigStore 集地址與金鑰於一身的字串：
+**URN** 是 dig-store 集地址與金鑰於一身的字串：
 `urn:dig:chia:<storeId>[:<rootHash>][/<resource>]`。它同時**定位**某個資源，並**衍生出用來解密它的金鑰**——持有這個 URN 即是讀取一項公開資源的充分必要條件。面向瀏覽器的簡寫形式是 [`chia://` 協定](#chia-protocol)。→ [URN 與加密](./digstore/format/urns-and-encryption.md)
 
 ## retrieval key {#retrieval-key}
@@ -65,27 +65,27 @@ tags:
 
 ## 鏈上錨定 {#anchoring}
 
-每個 store 都是 **Chia 主網上的一個單例（singleton）**。`digstore init` 會鑄造它（launcher id *即成為* store id），而每一次 `digstore commit` 都會以 CHIP-0035 單例更新的形式，將新的 [generation](#generation) root 錨定到鏈上。兩者都會阻塞執行直到確認完成，且都會花費真實資金。鏈上狀態是 store 最新 root 的權威來源。→ [鏈上錨定](./digstore/cli/onchain-anchoring.md)
+每個 store 都是 **Chia 主網上的一個單例（singleton）**。`dig-store init` 會鑄造它（launcher id *即成為* store id），而每一次 `dig-store commit` 都會以 CHIP-0035 單例更新的形式，將新的 [generation](#generation) root 錨定到鏈上。兩者都會阻塞執行直到確認完成，且都會花費真實資金。鏈上狀態是 store 最新 root 的權威來源。→ [鏈上錨定](./digstore/cli/onchain-anchoring.md)
 
 ## DIG payment {#dig-payment}
 
 **$DIG** 是 DIG Network 的代幣（一種 Chia CAT）。鑄造一個 [capsule](#capsule)（`init`）或提交一個 capsule，都需要支付**統一的每 capsule 價格（以 $DIG 計價）**，這筆費用會**原子性地包含在與錨定相同的鏈上花費之中**——不會有另一筆獨立交易，且該筆花費的 memo 會攜帶 store id。→ [費用](./digstore/cli/onchain-anchoring.md#costs)
 
-## DigStore CLI {#digstore-cli}
+## dig-store CLI {#digstore-cli}
 
-`digstore` 是用來建立、提交、分享並讀取 store 的命令列工具——以 Git 風格的工作流程（`init`、`add`、`commit`、`log`、`clone`、`push`、`pull`）操作這個經過加密、上鏈的 store 格式。→ [指令參考](./digstore/cli/command-reference.md)．[CLI 教學](./digstore/cli/quickstart.md)
+`dig-store` 是用來建立、提交、分享並讀取 store 的命令列工具——以 Git 風格的工作流程（`init`、`add`、`commit`、`log`、`clone`、`push`、`pull`）操作這個經過加密、上鏈的 store 格式。→ [指令參考](./digstore/cli/command-reference.md)．[CLI 教學](./digstore/cli/quickstart.md)
 
 ## dig.toml {#dig-toml}
 
-`dig.toml` 是位於專案根目錄的**可提交專案設定檔（manifest）**——包含 `store-id`、`output-dir`、`build-command` 以及其他專案設定，由 `digstore dev`、`digstore deploy` 與骨架範本共用。它**不含任何機密資訊**（那些來自環境變數），因此可以安全地提交進版本控制。→ [專案設定與建置時期的數值](./digstore/cli/configuration.md)
+`dig.toml` 是位於專案根目錄的**可提交專案設定檔（manifest）**——包含 `store-id`、`output-dir`、`build-command` 以及其他專案設定，由 `dig-store dev`、`dig-store deploy` 與骨架範本共用。它**不含任何機密資訊**（那些來自環境變數），因此可以安全地提交進版本控制。→ [專案設定與建置時期的數值](./digstore/cli/configuration.md)
 
 ## create-dig-app {#create-dig-app}
 
-`create-dig-app`（`npm create dig-app`）是啟動 DIG 專案的 **JS 前門**：它會從五種範本之一（`static`、`vite-react`、`next-static`、`nft-drop`、`dapp-window-chia`）建立一個可直接執行的起始專案——包含一個應用程式、一個 [`dig.toml`](#dig-toml)，並且（對於錢包相關範本）已接好 [DIG SDK](#dig-sdk)。建立骨架是**免費**的——不鑄造、不上鏈、不花費；只有在你發布一個 [capsule](#capsule) 時才需支付統一的 capsule 價格。它是 Rust CLI 的 `digstore new` 在 npm 端的對應工具。→ [建立應用骨架](./build-a-dapp/scaffold.md)
+`create-dig-app`（`npm create dig-app`）是啟動 DIG 專案的 **JS 前門**：它會從五種範本之一（`static`、`vite-react`、`next-static`、`nft-drop`、`dapp-window-chia`）建立一個可直接執行的起始專案——包含一個應用程式、一個 [`dig.toml`](#dig-toml)，並且（對於錢包相關範本）已接好 [DIG SDK](#dig-sdk)。建立骨架是**免費**的——不鑄造、不上鏈、不花費；只有在你發布一個 [capsule](#capsule) 時才需支付統一的 capsule 價格。它是 Rust CLI 的 `dig-store new` 在 npm 端的對應工具。→ [建立應用骨架](./build-a-dapp/scaffold.md)
 
 ## GitHub 部署 Action {#deploy-action}
 
-`dig-network/deploy-action` 是實現 **git-push-to-deploy** 的 GitHub Action：它會在執行器（runner）上安裝 [`digstore` CLI](#digstore-cli)，執行 `digstore deploy` 以推進你的 store（絕不進行鑄造），並將已發布的 [capsule](#capsule)、網址與費用回報為步驟輸出、PR 留言、GitHub Deployment 以及提交狀態（commit status）。搭配 `if-changed`（預設啟用），若建置結果與前次位元組完全相同則不會有任何動作——不會產生花費。→ [從 GitHub Actions 部署](./digstore/cli/deploy-from-github-actions.md)
+`dig-network/deploy-action` 是實現 **git-push-to-deploy** 的 GitHub Action：它會在執行器（runner）上安裝 [`dig-store` CLI](#digstore-cli)，執行 `dig-store deploy` 以推進你的 store（絕不進行鑄造），並將已發布的 [capsule](#capsule)、網址與費用回報為步驟輸出、PR 留言、GitHub Deployment 以及提交狀態（commit status）。搭配 `if-changed`（預設啟用），若建置結果與前次位元組完全相同則不會有任何動作——不會產生花費。→ [從 GitHub Actions 部署](./digstore/cli/deploy-from-github-actions.md)
 
 ## DIG SDK {#dig-sdk}
 
@@ -123,7 +123,7 @@ tags:
 - [DIG Network 總覽](./intro.md)——核心元件一覽
 - [快速入門](./quickstart.md)——免費建置與預覽，最後發布一個 capsule
 - [在 Chia 上建置 dapp](./build-a-dapp/tutorial.md)——把每個核心元件串接成一個上線的 dapp
-- [什麼是 DigStore？](./digstore/what-is-digstore.md)——單一檔案的 store 格式
+- [什麼是 dig-store？](./digstore/what-is-digstore.md)——單一檔案的 store 格式
 - [什麼是 dig RPC？](./rpc/what-is-the-dig-rpc.md)——網路的讀取路徑
 - [chia:// 協定](./browser/chia-protocol.md)——在瀏覽器中定址內容
 - [取得協助](./support/get-help.md)——社群管道與回報方式

@@ -6,7 +6,7 @@ keywords:
   - publish a site
   - own your app
   - DIGHUb
-  - digstore
+  - dig-store
   - free until publish
   - capsule
 tags:
@@ -29,7 +29,7 @@ tags:
 두 개의 입구가 **동일한** 무료 빌드 → 유료 게시 흐름으로 이어집니다.
 
 - **웹 경로** — [hub.dig.net](https://hub.dig.net)의 [DIGHUb](../concepts.md#dighub): 빌드된 폴더를 드롭하고, 무료로 미리보고, Publish 시점에만 지갑을 연결합니다.
-- **CLI / CI 경로** — [`digstore`](../concepts.md#digstore-cli) CLI + [`create-dig-app`](../concepts.md#create-dig-app) + [GitHub 배포 Action](../concepts.md#deploy-action).
+- **CLI / CI 경로** — [`dig-store`](../concepts.md#digstore-cli) CLI + [`create-dig-app`](../concepts.md#create-dig-app) + [GitHub 배포 Action](../concepts.md#deploy-action).
 
 스캐폴딩, 빌드, 미리보기는 **비용이 들지 않습니다**. 비용은 capsule을 게시할 때만 발생합니다.
 
@@ -47,34 +47,34 @@ tags:
 
 [**DIGHUb에서 새 store 시작하기 ↗**](https://hub.dig.net/new). 빌드된 사이트(`dist/` 또는 `build/` 폴더)를 드롭하면 실제 읽기 경로에서 **무료 초안 미리보기**를 받을 수 있고, **Publish** 단계에서만 지갑을 연결합니다. 웹 진행 과정은 [퀵스타트 → 웹에서 게시하기](../quickstart.md#a-publish-from-the-web)에서 확인하세요.
 
-## CLI에서 게시하기 — digstore {#publish-from-the-cli--digstore}
+## CLI에서 게시하기 — dig-store {#publish-from-the-cli--digstore}
 
 Git과 유사한 흐름입니다: `new` → `dev` → `init` → `commit`.
 
 ```sh
-digstore new vite-react   # 실행 가능한 프로젝트 스캐폴딩 — 무료, 민팅 없음
-digstore dev              # 실제 chia:// 읽기 경로에서 미리보기, 라이브 리로드 — 무료
-digstore init site --dir dist   # store의 첫 capsule 민팅(균일 가격 + XCH 수수료)
-digstore commit -m "v1.1"       # 업데이트 게시 — 새 capsule
+dig-store new vite-react   # 실행 가능한 프로젝트 스캐폴딩 — 무료, 민팅 없음
+dig-store dev              # 실제 chia:// 읽기 경로에서 미리보기, 라이브 리로드 — 무료
+dig-store init site --dir dist   # store의 첫 capsule 민팅(균일 가격 + XCH 수수료)
+dig-store commit -m "v1.1"       # 업데이트 게시 — 새 capsule
 ```
 
 → [CLI 퀵스타트](../digstore/cli/quickstart.md) · [전체 프로젝트 워크플로우](../digstore/cli/project-workflow.md)
 
 ## 앱 스캐폴딩하기 — 5개 템플릿 {#scaffold-an-app--5-templates}
 
-`static`, `vite-react`, `next-static`, `nft-drop`, `dapp-window-chia` 중 실행 가능하고 지갑이 연결된 스타터로 시작하세요. `digstore new <template>` 또는 `npm create dig-app`을 통해 사용할 수 있습니다.
+`static`, `vite-react`, `next-static`, `nft-drop`, `dapp-window-chia` 중 실행 가능하고 지갑이 연결된 스타터로 시작하세요. `dig-store new <template>` 또는 `npm create dig-app`을 통해 사용할 수 있습니다.
 
 → [앱 스캐폴딩하기](../build-a-dapp/scaffold.md)
 
-## `digstore dev`로 무료 미리보기 {#preview-free-with-digstore-dev}
+## `dig-store dev`로 무료 미리보기 {#preview-free-with-digstore-dev}
 
-`digstore dev`는 여러분의 프로젝트를 **실제** DIG 읽기 경로(암호화 → 컴파일 → 검증 → 복호화)를 통해 라이브 리로드와 주입된 개발용 `window.chia`와 함께 서빙합니다. 여러분이 보는 것이 곧 방문자가 보는 것이며, 아무것도 민팅되거나 소비되지 않습니다.
+`dig-store dev`는 여러분의 프로젝트를 **실제** DIG 읽기 경로(암호화 → 컴파일 → 검증 → 복호화)를 통해 라이브 리로드와 주입된 개발용 `window.chia`와 함께 서빙합니다. 여러분이 보는 것이 곧 방문자가 보는 것이며, 아무것도 민팅되거나 소비되지 않습니다.
 
 → [CLI 퀵스타트 → 개발 및 미리보기](../digstore/cli/quickstart.md)
 
 ## `dig.toml` — 커밋 가능한 매니페스트 {#digtoml--the-committable-manifest}
 
-프로젝트 루트의 `dig.toml`은 `store-id`, `output-dir`, `build-command`, `remote` 등의 설정을 담고 있으며, `digstore dev`, `digstore deploy`, 스캐폴드 템플릿이 이를 공유합니다. **비밀 정보는 담지 않으므로**(그런 값들은 환경 변수에서 옵니다) 커밋해도 됩니다.
+프로젝트 루트의 `dig.toml`은 `store-id`, `output-dir`, `build-command`, `remote` 등의 설정을 담고 있으며, `dig-store dev`, `dig-store deploy`, 스캐폴드 템플릿이 이를 공유합니다. **비밀 정보는 담지 않으므로**(그런 값들은 환경 변수에서 옵니다) 커밋해도 됩니다.
 
 → [프로젝트 설정 및 빌드 타임 값](../digstore/cli/configuration.md)
 

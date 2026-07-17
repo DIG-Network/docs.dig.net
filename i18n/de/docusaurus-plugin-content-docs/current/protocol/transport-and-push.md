@@ -47,7 +47,7 @@ REST metadata (descriptor/roots/delta) is JSON for ergonomics; all content/proof
 
 ```text
 push_signing_message(root, store_id) = SHA-256( PUSH_DST || root(32) || store_id(32) )   // bls.rs:194-200
-PUSH_DST = b"digstore:push:v1"
+PUSH_DST = b"dig-store:push:v1"
 ```
 
 The signing message is domain-separated with `PUSH_DST` (`bls.rs:194-200`). The push signature **authorizes the head** and is persisted on accept, so a later clone/pull re-verifies the served head's authorization (`StoreDescriptor.push_sig`).

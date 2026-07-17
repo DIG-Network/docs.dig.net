@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 title: On-chain anchoring
-description: "Wallet seed setup, on-chain costs, funding, anchor status, and chain-verified downloads for DigStore projects."
+description: "Wallet seed setup, on-chain costs, funding, anchor status, and chain-verified downloads for dig-store projects."
 keywords:
   - on-chain anchoring
   - Chia singleton
@@ -20,7 +20,7 @@ tags:
 
 # On-chain anchoring
 
-Every DigStore store is a **singleton on Chia mainnet**. There is no offline mode: `init` mints the singleton and `commit` anchors each new deployment root on-chain. Both operations block until the transaction is confirmed and spend real XCH.
+Every dig-store store is a **singleton on Chia mainnet**. There is no offline mode: `init` mints the singleton and `commit` anchors each new deployment root on-chain. Both operations block until the transaction is confirmed and spend real XCH.
 
 ## Wallet seed setup
 
@@ -30,12 +30,12 @@ Before you can create or update a project you need a funded wallet seed.
 
 ```sh
 # Import an existing BIP-39 mnemonic (prompted if --mnemonic is omitted)
-digstore seed import
-digstore seed import --mnemonic "word1 word2 … word24"
+dig-store seed import
+dig-store seed import --mnemonic "word1 word2 … word24"
 
 # Generate a fresh mnemonic (shown once — back it up)
-digstore seed generate             # 24 words by default
-digstore seed generate --words 12  # or 12 | 15 | 18 | 21 | 24
+dig-store seed generate             # 24 words by default
+dig-store seed generate --words 12  # or 12 | 15 | 18 | 21 | 24
 ```
 
 The seed is encrypted with Argon2id + AES-256-GCM and written to `~/.dig/seed.enc`.
@@ -45,7 +45,7 @@ The seed is encrypted with Argon2id + AES-256-GCM and written to `~/.dig/seed.en
 Importing or generating a seed unlocks it for the current session. Subsequent commands reuse the cached unlock until the TTL expires. The TTL is set in `~/.dig/config.toml` (`unlock_ttl`). To lock early:
 
 ```sh
-digstore lock
+dig-store lock
 ```
 
 ### Non-interactive passphrase
@@ -53,13 +53,13 @@ digstore lock
 Set `DIGSTORE_PASSPHRASE` in the environment to supply the passphrase without a prompt — useful in CI or scripts:
 
 ```sh
-DIGSTORE_PASSPHRASE=hunter2 digstore commit -m "release"
+DIGSTORE_PASSPHRASE=hunter2 dig-store commit -m "release"
 ```
 
 ### Check seed status
 
 ```sh
-digstore seed status    # shows whether a seed exists and is currently unlocked
+dig-store seed status    # shows whether a seed exists and is currently unlocked
 ```
 
 ## Costs
@@ -68,18 +68,18 @@ Every on-chain action publishes one **capsule** (`storeId:rootHash`) and costs t
 
 | Operation | $DIG | XCH |
 |---|---|---|
-| `digstore init` (mint the first capsule) | **the capsule price** | small mainnet fee |
-| `digstore commit` (publish a new capsule) | **the capsule price** | small mainnet fee |
+| `dig-store init` (mint the first capsule) | **the capsule price** | small mainnet fee |
+| `dig-store commit` (publish a new capsule) | **the capsule price** | small mainnet fee |
 
 The price is **uniform per capsule** — the same whether you mint (`init`) or commit — and is paid in $DIG at the live rate. A store's lifetime cost is therefore the uniform per-capsule price × the number of capsules. (The price is uniform by design: each capsule compiles to one fixed-size module, so a size-varying price would leak content size — see [why the price is uniform](#why-the-price-is-uniform).)
 
-**$DIG** is the DIG Network token (a Chia CAT). The $DIG payment is included **atomically in the same spend bundle** as the mint or deployment root update — there is no separate transaction. The memo on the DIG output is the store id. Before submitting, each command prints the cost and your current balance; if the wallet is short on XCH **or** DIG the command blocks with a clear message rather than broadcasting a partial spend. Use `digstore balance` to check your spendable XCH and DIG at any time:
+**$DIG** is the DIG Network token (a Chia CAT). The $DIG payment is included **atomically in the same spend bundle** as the mint or deployment root update — there is no separate transaction. The memo on the DIG output is the store id. Before submitting, each command prints the cost and your current balance; if the wallet is short on XCH **or** DIG the command blocks with a clear message rather than broadcasting a partial spend. Use `dig-store balance` to check your spendable XCH and DIG at any time:
 
-Publishing through [DIGHUb](https://hub.dig.net) with a **Super Supporter** NFT held in your wallet halves the capsule price. DIGHUb checks live ownership across every address in your wallet at publish time and shows/charges the discounted amount, the same live check used for the [handle discount](../../support/faq.md#can-i-use-my-own-domain). The discount applies only while the NFT is in that wallet; if it's staked, moved, or sold, DIGHUb charges the full price instead. Mint a Super Supporter badge (150 $DIG) at [hub.dig.net](https://hub.dig.net) to get one. The `digstore` CLI's `init`/`commit` always spend the full live price shown above — the discount currently applies only when publishing through DIGHUb.
+Publishing through [DIGHUb](https://hub.dig.net) with a **Super Supporter** NFT held in your wallet halves the capsule price. DIGHUb checks live ownership across every address in your wallet at publish time and shows/charges the discounted amount, the same live check used for the [handle discount](../../support/faq.md#can-i-use-my-own-domain). The discount applies only while the NFT is in that wallet; if it's staked, moved, or sold, DIGHUb charges the full price instead. Mint a Super Supporter badge (150 $DIG) at [hub.dig.net](https://hub.dig.net) to get one. The `dig-store` CLI's `init`/`commit` always spend the full live price shown above — the discount currently applies only when publishing through DIGHUb.
 
 ```sh
-digstore balance          # shows XCH (mojos), DIG (3-decimal), and receive address
-digstore balance --json
+dig-store balance          # shows XCH (mojos), DIG (3-decimal), and receive address
+dig-store balance --json
 ```
 
 ## Funding the wallet
@@ -88,7 +88,7 @@ digstore balance --json
 
 ### Where to get DIG {#where-to-get-dig}
 
-$DIG is the DIG Network token (a Chia CAT). Acquire it on any of these, then send it to your `digstore balance` receive address:
+$DIG is the DIG Network token (a Chia CAT). Acquire it on any of these, then send it to your `dig-store balance` receive address:
 
 - [**TibetSwap ↗**](https://v2.tibetswap.io/) — swap XCH for DIG on the AMM.
 - [**dexie.space ↗**](https://dexie.space/offers/XCH/a406d3a9de984d03c9591c10d917593b434d5263cabe2b42f6b367df16832f81) — trade DIG on the Chia DEX.
@@ -104,12 +104,12 @@ You only spend DIG when you publish a capsule on-chain (`init`/`commit`). Scaffo
 
 The price is the same for every capsule on purpose. Each capsule compiles to a **fixed-size** WASM module — padded so its length reveals nothing about how much content is inside. A price that varied with content size would re-leak the size the padding hides, so the price has to be uniform. That's why there's no per-byte fee, no tiers, and no "small commit" discount: one capsule, one price, regardless of what's in it. (The price is paid in $DIG at the live rate; only the publish screen shows the exact figure at the moment you publish.)
 
-## `digstore init` — mint the store singleton
+## `dig-store init` — mint the store singleton
 
 ```sh
-digstore init                              # interactive prompts
-digstore init site --dir dist              # non-interactive
-digstore init --wait-timeout 600           # increase confirmation timeout (default 300s)
+dig-store init                              # interactive prompts
+dig-store init site --dir dist              # non-interactive
+dig-store init --wait-timeout 600           # increase confirmation timeout (default 300s)
 ```
 
 `init` mints a Chia singleton on mainnet. **The on-chain launcher id becomes the store id** — the old SHA-256(pubkey) store id is gone in v0.5.0. `init` blocks until the mint transaction is confirmed (default timeout 300 s).
@@ -117,16 +117,16 @@ digstore init --wait-timeout 600           # increase confirmation timeout (defa
 If the confirmation times out before the chain confirms, the store is written to disk in `pending` state and is resumable:
 
 ```sh
-digstore anchor    # poll the chain and flip the store to confirmed
+dig-store anchor    # poll the chain and flip the store to confirmed
 ```
 
 A failure *before* the mint (missing seed, insufficient funds) leaves nothing on disk — just fix the issue and re-run `init`.
 
-## `digstore commit` — anchor a new deployment root
+## `dig-store commit` — anchor a new deployment root
 
 ```sh
-digstore commit -m "v1.4.2"
-digstore commit -m "v1.4.2" --wait-timeout 600
+dig-store commit -m "v1.4.2"
+dig-store commit -m "v1.4.2" --wait-timeout 600
 ```
 
 `commit` stages a singleton update transaction on mainnet and **blocks until the transaction is confirmed** before finalizing the local deployment. If it times out or fails, the local deployment is not written — re-run `commit` to resume (the operation is idempotent). Every commit spends real XCH.
@@ -134,8 +134,8 @@ digstore commit -m "v1.4.2" --wait-timeout 600
 ## Resuming a pending anchor
 
 ```sh
-digstore anchor                    # poll the chain; flip to confirmed when seen
-digstore anchor --wait-timeout 120
+dig-store anchor                    # poll the chain; flip to confirmed when seen
+dig-store anchor --wait-timeout 120
 ```
 
 Use this after a confirmation timeout on `init` or `commit`. Once the chain confirms the transaction the store or deployment moves out of `pending`.
@@ -143,11 +143,11 @@ Use this after a confirmation timeout on `init` or `commit`. Once the chain conf
 ## Anchor status and inspection
 
 ```sh
-digstore anchor status             # show the store's anchor state (network, launcher/store id, current coin, confirmed height)
-digstore anchor status --json      # machine-readable
+dig-store anchor status             # show the store's anchor state (network, launcher/store id, current coin, confirmed height)
+dig-store anchor status --json      # machine-readable
 
-digstore anchor inspect <module.dig>          # decode the on-chain pointer embedded in the module
-digstore anchor inspect <module.dig> --json
+dig-store anchor inspect <module.dig>          # decode the on-chain pointer embedded in the module
+dig-store anchor inspect <module.dig> --json
 ```
 
 ## Self-describing modules
@@ -196,4 +196,4 @@ If the chain is unreachable, or the served root does not match the on-chain root
 - [Command reference](./command-reference.md) — every wallet and anchoring command
 - [Concepts & glossary](../../concepts.md) — anchoring and DIG payment defined
 
-Next: [Using DigStore in your project →](./project-workflow.md)
+Next: [Using dig-store in your project →](./project-workflow.md)

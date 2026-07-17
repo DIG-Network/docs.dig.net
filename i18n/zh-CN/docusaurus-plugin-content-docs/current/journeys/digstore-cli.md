@@ -1,14 +1,14 @@
 ---
 sidebar_position: 3
-title: "How do I… use the digstore CLI?"
-description: "The shortest path through the digstore CLI: install it, scaffold and preview for free, publish a capsule on-chain, share it over a remote, and read it back — each task linked to the page that walks it."
+title: "How do I… use the dig-store CLI?"
+description: "The shortest path through the dig-store CLI: install it, scaffold and preview for free, publish a capsule on-chain, share it over a remote, and read it back — each task linked to the page that walks it."
 keywords:
-  - digstore CLI how-to
-  - digstore install
-  - digstore init
-  - digstore commit
-  - digstore deploy
-  - digstore cat
+  - dig-store CLI how-to
+  - dig-store install
+  - dig-store init
+  - dig-store commit
+  - dig-store deploy
+  - dig-store cat
 tags:
   - digstore-cli
   - store
@@ -18,9 +18,9 @@ tags:
   - urn
 ---
 
-# How do I… use the digstore CLI?
+# How do I… use the dig-store CLI?
 
-> **Drive everything from your terminal.** [`digstore`](../concepts.md#digstore-cli) is the Git-shaped CLI for creating, publishing, sharing, and reading stores — scriptable and CI-ready. This page maps each task to the page that walks it. Building and previewing are free; you spend only when you publish.
+> **Drive everything from your terminal.** [`dig-store`](../concepts.md#digstore-cli) is the Git-shaped CLI for creating, publishing, sharing, and reading stores — scriptable and CI-ready. This page maps each task to the page that walks it. Building and previewing are free; you spend only when you publish.
 
 ## The mental model
 
@@ -28,33 +28,33 @@ The loop mirrors Git: scaffold and preview locally for **free**, then `init` to 
 
 ## How do I install it?
 
-Grab the `digstore` binary for your OS from the Releases page — or the guided DIG Installer, or build from source — then confirm with `digstore --version`.
+Grab the `dig-store` binary for your OS from the Releases page — or the guided DIG Installer, or build from source — then confirm with `dig-store --version`.
 
 → [Installing the CLI](../digstore/cli/install.md)
 
 ## How do I try it before I spend anything?
 
-Scaffold a runnable project with `digstore new <template>` and preview it live with `digstore dev` — served over the genuine `chia://` read path with live reload and an injected dev `window.chia`. **No mint, no chain, no spend.** `digstore doctor` runs a pre-publish preflight, and `digstore commit --dry-run` previews the exact $DIG/XCH cost without spending.
+Scaffold a runnable project with `dig-store new <template>` and preview it live with `dig-store dev` — served over the genuine `chia://` read path with live reload and an injected dev `window.chia`. **No mint, no chain, no spend.** `dig-store doctor` runs a pre-publish preflight, and `dig-store commit --dry-run` previews the exact $DIG/XCH cost without spending.
 
 → [Scaffold an app](../build-a-dapp/scaffold.md) · [CLI tutorial](../digstore/cli/quickstart.md)
 
 ## How do I set up a wallet?
 
-Publishing spends real funds, so generate or import a seed and fund the wallet first: `digstore seed generate`, then `digstore balance` to see your receive address.
+Publishing spends real funds, so generate or import a seed and fund the wallet first: `dig-store seed generate`, then `dig-store balance` to see your receive address.
 
 → [On-chain anchoring](../digstore/cli/onchain-anchoring.md) · [Where to get DIG](../digstore/cli/onchain-anchoring.md#where-to-get-dig)
 
 ## How do I publish my first capsule?
 
-`digstore init site --dir dist` mints the store's singleton on Chia mainnet — **the launcher id becomes your store id** — and blocks until confirmed.
+`dig-store init site --dir dist` mints the store's singleton on Chia mainnet — **the launcher id becomes your store id** — and blocks until confirmed.
 
 → [CLI tutorial → initialize](../digstore/cli/quickstart.md)
 
 ## How do I ship an update?
 
-`digstore add -A` then `digstore commit -m "v1.1"` seals the current content into a new capsule and advances your on-chain root. For CI, `digstore deploy --output-dir dist --json` does add → commit → push in one command and never mints.
+`dig-store add -A` then `dig-store commit -m "v1.1"` seals the current content into a new capsule and advances your on-chain root. For CI, `dig-store deploy --output-dir dist --json` does add → commit → push in one command and never mints.
 
-→ [Using DigStore in your project](../digstore/cli/project-workflow.md) · [Project config](../digstore/cli/configuration.md)
+→ [Using dig-store in your project](../digstore/cli/project-workflow.md) · [Project config](../digstore/cli/configuration.md)
 
 ## How do I share it / serve it over a remote?
 
@@ -64,7 +64,7 @@ Publishing spends real funds, so generate or import a seed and fund the wallet f
 
 ## How do I read content back?
 
-`digstore cat urn:dig:chia:<storeId>/<resource>` — a [URN](../concepts.md#urn) both locates *and* decrypts the resource. The same chunked, verify-then-decrypt path the network uses.
+`dig-store cat urn:dig:chia:<storeId>/<resource>` — a [URN](../concepts.md#urn) both locates *and* decrypts the resource. The same chunked, verify-then-decrypt path the network uses.
 
 → [Streaming & retrieval keys](../digstore/cli/streaming-and-keys.md)
 
@@ -85,5 +85,5 @@ The full reference, with the on-chain-cost notes and the free pre-publish comman
 ## Go deeper
 
 - **The full builder overview** → [For app developers](../audiences/app-developers.md)
-- **The store format** → [What is DigStore?](../digstore/what-is-digstore.md) · [Store structure](../digstore/format/store-structure.md)
+- **The store format** → [What is dig-store?](../digstore/what-is-digstore.md) · [Store structure](../digstore/format/store-structure.md)
 - **Everything** → [Protocol deep-dive](../protocol-deep-dive.md) · [Concepts & glossary](../concepts.md)

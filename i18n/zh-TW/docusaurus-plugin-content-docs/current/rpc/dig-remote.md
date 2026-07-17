@@ -23,16 +23,16 @@ tags:
 The authoritative §21 transport wire spec — the REST surface, the JSON-outer/Chia-codec-inner envelope, 2-leg push v1, the authenticated head, and per-request §21.9 auth — is [Protocol · §21 transport & push](../protocol/transport-and-push.md). This page is the CLI task guide.
 :::
 
-On top of the read interface, DigStore has a **git-style remote**. You `clone` a store to disk, `pull` new generations, and `push` a new generation — over the same routes a node already serves. The transport is named by a `dig://` URL, and **every request is signed** by your identity key.
+On top of the read interface, dig-store has a **git-style remote**. You `clone` a store to disk, `pull` new generations, and `push` a new generation — over the same routes a node already serves. The transport is named by a `dig://` URL, and **every request is signed** by your identity key.
 
 ```bash
-digstore clone dig://5b1f…e9             # resolves your node (see below), else rpc.dig.net
-digstore pull                            # sync new generations
-digstore push                            # publish a new generation
+dig-store clone dig://5b1f…e9             # resolves your node (see below), else rpc.dig.net
+dig-store pull                            # sync new generations
+dig-store push                            # publish a new generation
 ```
 
 :::note `dig://` is the CLI/remote scheme; `chia://` is the browser address bar
-`dig://` names a remote *origin* for the `digstore` CLI (clone/pull/push). The DIG Browser's typeable content address is [`chia://`](../browser/chia-protocol.md) — the same store identity in a form you paste into the address bar. The underlying `urn:dig:` URN namespace is unchanged.
+`dig://` names a remote *origin* for the `dig-store` CLI (clone/pull/push). The DIG Browser's typeable content address is [`chia://`](../browser/chia-protocol.md) — the same store identity in a form you paste into the address bar. The underlying `urn:dig:` URN namespace is unchanged.
 :::
 
 ## The `dig://` scheme
@@ -51,12 +51,12 @@ The owner segment never changes which bytes you fetch — content is addressed b
 
 When a `dig://` URL doesn't name a host, the CLI resolves one by trying, in order, the **first that responds**:
 
-1. **An explicitly-configured node** — the `--node <url>` flag, the `$DIG_NODE_URL` environment variable, or a stored `digstore config node.url <url>` value. Sourced in that order, and this always wins over the automatic steps below.
+1. **An explicitly-configured node** — the `--node <url>` flag, the `$DIG_NODE_URL` environment variable, or a stored `dig-store config node.url <url>` value. Sourced in that order, and this always wins over the automatic steps below.
 2. **`dig.local`** — your installed local dig-node.
 3. **`localhost`** — a dig-node on the loopback address, its default local port.
 4. **`rpc.dig.net`** — the public gateway, used only when no local node answers.
 
-Each tier is a cheap health probe with a short timeout, so an unreachable local node falls through quickly rather than hanging a `clone`/`pull`/`push`. See [Which node digstore talks to](../digstore/cli/command-reference.md#which-node-digstore-talks-to) for how to set an override, and [Point a consumer at your node](../run-a-node/point-a-consumer.md) for the same ladder as it applies to the DIG Browser and extension.
+Each tier is a cheap health probe with a short timeout, so an unreachable local node falls through quickly rather than hanging a `clone`/`pull`/`push`. See [Which node dig-store talks to](../digstore/cli/command-reference.md#which-node-digstore-talks-to) for how to set an override, and [Point a consumer at your node](../run-a-node/point-a-consumer.md) for the same ladder as it applies to the DIG Browser and extension.
 
 Connections to any of the three tiers use mTLS, presenting a client certificate derived from your identity key — the same per-request signing described below rides on top of that authenticated channel.
 
@@ -76,7 +76,7 @@ The canonical message binds the route's logical op, the store, and the freshness
 ```
 msg = SHA-256( REQ_DST || len(method) || method || store_id(32) || timestamp_be(8) || nonce(32) )
 
-  REQ_DST  = "digstore:req:v1"
+  REQ_DST  = "dig-store:req:v1"
   method   = one of { fetch, roots, module, content, proof, push, tombstone, delta }
   len(...) = big-endian u32 length of the method string
 ```
@@ -117,13 +117,13 @@ In both cases the store-key signature over `SHA-256(root || store_id)` authorize
 Because reads are blind and client-verified, anyone can host an origin:
 
 ```bash
-digstore serve --bind 0.0.0.0:8443
+dig-store serve --bind 0.0.0.0:8443
 ```
 
 This serves the full remote protocol — descriptor, roots, module download, and `PUT` push — for a store straight from disk. Others clone it by pointing a `dig://` URL at your host:
 
 ```bash
-digstore clone dig://yourhost:8443/<storeId>
+dig-store clone dig://yourhost:8443/<storeId>
 ```
 
 A self-hosted node speaks the identical routes and the identical per-request auth as the reference node, so a store is portable across origins with no client change.
@@ -132,11 +132,11 @@ A self-hosted node speaks the identical routes and the identical per-request aut
 
 | Command | Does |
 |---|---|
-| `digstore remote add origin dig://…` | Register a remote origin for the local store. |
-| `digstore clone dig://…` | Fetch descriptor, roots, and module(s) into a new local store. |
-| `digstore pull` | Sync new generations from the origin. |
-| `digstore push` | Publish a new generation (DIGHUb `/v1` or self-hosted `PUT`). |
-| `digstore serve --bind 0.0.0.0:8443` | Serve the remote protocol for a local store. |
+| `dig-store remote add origin dig://…` | Register a remote origin for the local store. |
+| `dig-store clone dig://…` | Fetch descriptor, roots, and module(s) into a new local store. |
+| `dig-store pull` | Sync new generations from the origin. |
+| `dig-store push` | Publish a new generation (DIGHUb `/v1` or self-hosted `PUT`). |
+| `dig-store serve --bind 0.0.0.0:8443` | Serve the remote protocol for a local store. |
 
 ## Related
 

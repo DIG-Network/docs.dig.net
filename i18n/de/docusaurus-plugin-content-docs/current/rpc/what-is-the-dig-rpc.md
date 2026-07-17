@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: What is the dig RPC?
-description: "Netzwerkweite Leseschnittstelle für DigStore-capsules über JSON-RPC 2.0; blind by construction, ohne Vertrauen verifizierbar und in beliebiger Größe streambar."
+description: "Netzwerkweite Leseschnittstelle für dig-store-capsules über JSON-RPC 2.0; blind by construction, ohne Vertrauen verifizierbar und in beliebiger Größe streambar."
 keywords:
   - dig RPC
   - JSON-RPC 2.0
@@ -25,7 +25,7 @@ tags:
 Dies ist die Orientierungsseite. Die maßgebliche Spezifikation der maschinellen Schnittstelle — Methoden, das Chunk-Wire-Objekt, das Node-Profil und die OpenRPC-Dokumente — finden Sie unter [Protokoll · Die dig RPC](../protocol/dig-rpc.md).
 :::
 
-**Die dig RPC ist die netzwerkweite Schnittstelle zum direkten Lesen von Inhalten aus gehosteten DigStore-`.dig`-capsules.** Es handelt sich um einen [JSON-RPC 2.0](https://www.jsonrpc.org/specification)-Dienst, der über HTTPS `POST` angesprochen wird.
+**Die dig RPC ist die netzwerkweite Schnittstelle zum direkten Lesen von Inhalten aus gehosteten dig-store-`.dig`-capsules.** Es handelt sich um einen [JSON-RPC 2.0](https://www.jsonrpc.org/specification)-Dienst, der über HTTPS `POST` angesprochen wird.
 
 Jeder Node, der capsules hostet — der Referenz-Node unter `https://rpc.dig.net` oder jeder Drittanbieter-Node — stellt **dieselben Methoden mit derselben Semantik** bereit. Ein Client, der gegen diese Schnittstelle geschrieben ist, liest über einen einzigen Endpunkt vom gesamten Netzwerk. Es gibt kein CDN; sämtliche Content-Auslieferung bei DIG erfolgt über die dig RPC.
 
@@ -43,9 +43,9 @@ Sie bedient drei Dinge:
 - **Ohne Vertrauen verifizierbar.** Jedes echte Byte kommt mit einem Merkle-**Inclusion-Proof** an, der in der On-Chain-Generation-Root verwurzelt ist. Der Client faltet den Proof bis zur Root und akzeptiert nur, wenn diese mit einer Root übereinstimmt, der er vertraut. Dem Node wird nie vertraut, echte Bytes zurückgegeben zu haben.
 - **In beliebiger Größe streambar.** Inhalte werden in begrenzten, 64-KiB-ausgerichteten Chunks mit expliziter Fortsetzung gelesen. Eine Ein-Kilobyte-Ressource und eine Hundert-Megabyte-capsule werden über dieselbe Schleife gelesen, und keine einzelne Antwort ist unbegrenzt.
 
-## Wie sie zu DigStore passt {#how-it-fits-with-digstore}
+## Wie sie zu dig-store passt {#how-it-fits-with-digstore}
 
-DigStore liefert Ihnen das **Format**: einen content-adressierbaren, verschlüsselten store, der zu einer einzigen, sich selbst verteidigenden `.wasm`-capsule kompiliert, adressiert über eine URN, bei der *die URN der Schlüssel ist*. Die dig RPC ist die Art, wie diese capsule **im Netzwerk ausgeliefert wird**, ohne dem Host zu vertrauen:
+dig-store liefert Ihnen das **Format**: einen content-adressierbaren, verschlüsselten store, der zu einer einzigen, sich selbst verteidigenden `.wasm`-capsule kompiliert, adressiert über eine URN, bei der *die URN der Schlüssel ist*. Die dig RPC ist die Art, wie diese capsule **im Netzwerk ausgeliefert wird**, ohne dem Host zu vertrauen:
 
 1. Sie kompilieren einen store und verankern eine Generation on-chain (ein CHIP-0035-DataLayer-Singleton). Ihre **Content-Root** ist der Vertrauensanker.
 2. Ein Node hostet die capsule und stellt sie über die dig RPC bereit.

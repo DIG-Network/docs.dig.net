@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: What is the dig RPC?
-description: "用于读取 DigStore capsule 的全网统一读取接口，基于 JSON-RPC 2.0；天生盲态、无需信任即可验证，且可在任意大小下流式传输。"
+description: "用于读取 dig-store capsule 的全网统一读取接口，基于 JSON-RPC 2.0；天生盲态、无需信任即可验证，且可在任意大小下流式传输。"
 keywords:
   - dig RPC
   - JSON-RPC 2.0
@@ -25,7 +25,7 @@ tags:
 本页是概览性介绍。权威的机器接口规范 —— 方法列表、分块传输对象、节点画像以及 OpenRPC 文档 —— 参见 [协议 · dig RPC](../protocol/dig-rpc.md)。
 :::
 
-**dig RPC 是用于直接从已托管的 DigStore `.dig` capsule 中读取内容的全网统一接口。** 它是一个通过 HTTPS `POST` 传输的 [JSON-RPC 2.0](https://www.jsonrpc.org/specification) 服务。
+**dig RPC 是用于直接从已托管的 dig-store `.dig` capsule 中读取内容的全网统一接口。** 它是一个通过 HTTPS `POST` 传输的 [JSON-RPC 2.0](https://www.jsonrpc.org/specification) 服务。
 
 每一个托管 capsule 的节点 —— 无论是位于 `https://rpc.dig.net` 的参考节点，还是任何第三方节点 —— 都公开**相同语义的相同方法**。基于该接口编写的客户端只需通过一个端点即可读取整个网络的数据。这里没有 CDN；DIG 上的所有内容服务都通过 dig RPC 完成。
 
@@ -43,9 +43,9 @@ tags:
 - **无需信任即可验证。** 每一个真实字节都伴随着一份根植于链上 generation 根哈希的 Merkle **包含性证明**。客户端会将该证明折叠计算到根哈希，只有当结果与其信任的根哈希一致时才接受。节点永远不需要被信任其返回的是真实字节。
 - **可在任意大小下流式传输。** 内容以有界的、64 KiB 对齐的分块形式读取，并带有明确的续传标记。一个一千字节的资源和一个上百兆字节的 capsule 都通过同一套循环来读取，且没有任何一次响应是无界的。
 
-## 它与 DigStore 如何配合 {#how-it-fits-with-digstore}
+## 它与 dig-store 如何配合 {#how-it-fits-with-digstore}
 
-DigStore 提供**格式**：一个内容可寻址、加密的 store，编译为单一的自我防护 `.wasm` capsule，通过一个 URN 寻址，*URN 本身就是密钥*。dig RPC 则是该 capsule 在网络上**如何被提供服务**而无需信任主机的方式：
+dig-store 提供**格式**：一个内容可寻址、加密的 store，编译为单一的自我防护 `.wasm` capsule，通过一个 URN 寻址，*URN 本身就是密钥*。dig RPC 则是该 capsule 在网络上**如何被提供服务**而无需信任主机的方式：
 
 1. 你编译一个 store，并在链上锚定一个 generation（一个 CHIP-0035 DataLayer singleton）。它的**内容根哈希**就是信任锚点。
 2. 一个节点托管该 capsule，并通过 dig RPC 对外提供服务。

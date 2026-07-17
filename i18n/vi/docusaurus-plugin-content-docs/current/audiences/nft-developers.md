@@ -34,7 +34,7 @@ Việc mint một **store là miễn phí** $DIG — bạn chỉ trả **mức g
 Bắt đầu từ một trang drop có ví trong một lệnh:
 
 ```sh
-digstore new nft-drop
+dig-store new nft-drop
 # or
 npm create dig-app@latest my-drop -- --template nft-drop
 ```
@@ -46,10 +46,10 @@ npm create dig-app@latest my-drop -- --template nft-drop
 CLI tài sản xây dựng giao dịch chi tiêu qua các trình xây dựng `digstore-chain`, ký bằng seed ví của bạn, và push — tất cả đều an toàn cho CI với `--dry-run` / `--json`:
 
 ```sh
-digstore did create                          # an issuer DID for attribution
-digstore collection create --name "My Drop"  # a CHIP-0007 collection
-digstore nft mint --data ./art.png --metadata ./meta.json --dry-run
-digstore offer make ...                       # XCH / CAT trades
+dig-store did create                          # an issuer DID for attribution
+dig-store collection create --name "My Drop"  # a CHIP-0007 collection
+dig-store nft mint --data ./art.png --metadata ./meta.json --dry-run
+dig-store offer make ...                       # XCH / CAT trades
 ```
 
 Lộ trình **capsule-media** của `nft mint` ghi tác phẩm nghệ thuật + metadata CHIP-0007 vào một capsule, tính toán hash dữ liệu/metadata từ byte thật, và đặt các URI thành địa chỉ `chia://` của capsule (với một gateway https dự phòng). → [Tham khảo lệnh](../digstore/cli/command-reference.md)
@@ -78,7 +78,7 @@ Mọi giao dịch chi tiêu coin đều được xây dựng bởi wasm CHIP-003
 
 ## Offer — make / take / show {#offers--make--take--show}
 
-Trao đổi NFT lấy XCH hoặc CAT bằng `digstore offer make | take | show` (mỗi lệnh đều có `--dry-run` / `--json`). → [Tham khảo lệnh](../digstore/cli/command-reference.md)
+Trao đổi NFT lấy XCH hoặc CAT bằng `dig-store offer make | take | show` (mỗi lệnh đều có `--dry-run` / `--json`). → [Tham khảo lệnh](../digstore/cli/command-reference.md)
 
 ---
 

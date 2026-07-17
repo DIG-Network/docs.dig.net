@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: dig RPC nedir?
-description: "DigStore capsule'leri için JSON-RPC 2.0 üzerinden ağ genelinde okuma arayüzü; tasarım gereği kör, güvenmeden doğrulanabilir ve her boyutta akıtılabilir."
+description: "dig-store capsule'leri için JSON-RPC 2.0 üzerinden ağ genelinde okuma arayüzü; tasarım gereği kör, güvenmeden doğrulanabilir ve her boyutta akıtılabilir."
 keywords:
   - dig RPC
   - JSON-RPC 2.0
@@ -25,7 +25,7 @@ tags:
 Bu, yönelim sayfasıdır. Yetkili makine arayüzü şartnamesi — metotlar, chunk tel (wire) nesnesi, düğüm profili ve OpenRPC belgeleri — [Protokol · dig RPC](../protocol/dig-rpc.md)'de bulunur.
 :::
 
-**dig RPC, barındırılan DigStore `.dig` capsule'lerinden doğrudan içerik okumak için ağ genelindeki arayüzdür.** HTTPS `POST` üzerinden konuşulan bir [JSON-RPC 2.0](https://www.jsonrpc.org/specification) hizmetidir.
+**dig RPC, barındırılan dig-store `.dig` capsule'lerinden doğrudan içerik okumak için ağ genelindeki arayüzdür.** HTTPS `POST` üzerinden konuşulan bir [JSON-RPC 2.0](https://www.jsonrpc.org/specification) hizmetidir.
 
 capsule'leri barındıran her düğüm — `https://rpc.dig.net`'teki referans düğüm veya herhangi bir üçüncü taraf düğüm — **aynı semantiklere sahip aynı metotları** açığa çıkarır. Bu arayüze karşı yazılmış bir istemci, tek bir uç nokta üzerinden tüm ağdan okur. Bir CDN yoktur; DIG üzerindeki tüm içerik sunumu dig RPC aracılığıyladır.
 
@@ -43,9 +43,9 @@ capsule'leri barındıran her düğüm — `https://rpc.dig.net`'teki referans d
 - **Güvenmeden doğrulanabilir.** Her gerçek bayt, zincir üzerindeki generation köküne dayanan bir merkle **dahil etme kanıtıyla** birlikte gelir. İstemci, kanıtı köke katlar ve yalnızca güvendiği bir kökle eşleşirse kabul eder. Düğüme asla gerçek baytları döndürdüğüne güvenilmez.
 - **Her boyutta akıtılabilir.** İçerik, açık devam mekanizmasıyla sınırlı, 64 KiB hizalı parçalar (chunk) halinde okunur. Bir kilobaytlık bir kaynak ve yüz megabaytlık bir capsule aynı döngüyle okunur ve hiçbir tek yanıt sınırsız değildir.
 
-## DigStore ile nasıl bir araya geliyor {#how-it-fits-with-digstore}
+## dig-store ile nasıl bir araya geliyor {#how-it-fits-with-digstore}
 
-DigStore size **formatı** verir: URN'in *anahtarın kendisi olduğu* bir URN ile adreslenen, tek, kendini savunan bir `.wasm` capsule'e derlenen, içerik adresli, şifrelenmiş bir store. dig RPC, o capsule'ün host'a güvenmeden ağda nasıl **sunulduğudur**:
+dig-store size **formatı** verir: URN'in *anahtarın kendisi olduğu* bir URN ile adreslenen, tek, kendini savunan bir `.wasm` capsule'e derlenen, içerik adresli, şifrelenmiş bir store. dig RPC, o capsule'ün host'a güvenmeden ağda nasıl **sunulduğudur**:
 
 1. Bir store'u derler ve zincir üzerinde bir generation'ı sabitlersiniz (bir CHIP-0035 DataLayer singleton'ı). **İçerik kökü** güven çapasıdır.
 2. Bir düğüm, capsule'ü barındırır ve onu dig RPC üzerinden açığa çıkarır.

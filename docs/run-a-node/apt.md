@@ -1,14 +1,14 @@
 ---
 sidebar_position: 2
 title: Install on Ubuntu/Debian (apt)
-description: "Install dig-node and the digstore CLI on Ubuntu/Debian from the apt.dig.net repository, and run dig-node as a managed systemd service."
+description: "Install dig-node and the dig-store CLI on Ubuntu/Debian from the apt.dig.net repository, and run dig-node as a managed systemd service."
 keywords:
   - dig-node apt
   - apt.dig.net
   - install dig-node Ubuntu
   - install dig-node Debian
   - dig-node systemd
-  - digstore apt
+  - dig-store apt
 tags:
   - dig-node
   - digstore-cli
@@ -17,7 +17,7 @@ tags:
 
 # Install on Ubuntu/Debian (apt)
 
-On Ubuntu, Debian, and other Debian-family distributions, install the DIG ecosystem from the **`apt.dig.net`** repository. You get the `dig-node` service and the `digstore` CLI as ordinary apt packages — signed, and upgraded with `apt upgrade` like anything else on the box. Installing `dig-node` sets up and **enables a systemd service** so your node starts on boot and stays running.
+On Ubuntu, Debian, and other Debian-family distributions, install the DIG ecosystem from the **`apt.dig.net`** repository. You get the `dig-node` service and the `dig-store` CLI as ordinary apt packages — signed, and upgraded with `apt upgrade` like anything else on the box. Installing `dig-node` sets up and **enables a systemd service** so your node starts on boot and stays running.
 
 :::note Pre-release — infrastructure being provisioned
 `apt.dig.net` is still being stood up, so these commands may not resolve yet. They are the **real, intended** flow — bookmark this page. In the meantime, use the cross-platform [universal installer](./index.md#universal-installer-any-os) or grab a binary from the [Releases page](https://github.com/DIG-Network/dig-node/releases).
@@ -42,11 +42,11 @@ echo "deb [signed-by=/usr/share/keyrings/dig.gpg] https://apt.dig.net stable mai
 ## 3. Install the packages
 
 ```sh
-sudo apt update && sudo apt install dig-node digstore
+sudo apt update && sudo apt install dig-node dig-store
 ```
 
 - **`dig-node`** — the headless node service (serves the [dig RPC](../rpc/what-is-the-dig-rpc.md), hosts capsules, keeps the local `.dig` cache).
-- **`digstore`** — the CLI for creating, committing, and reading stores. Optional if you only want to serve, but usually wanted alongside.
+- **`dig-store`** — the CLI for creating, committing, and reading stores. Optional if you only want to serve, but usually wanted alongside.
 
 ## 4. Check the service
 
@@ -78,7 +78,7 @@ A node running headless on a server (no browser present) simply serves its RPC t
 Because it's an apt package, updates ride your normal system upgrades:
 
 ```sh
-sudo apt update && sudo apt upgrade        # picks up new dig-node / digstore releases
+sudo apt update && sudo apt upgrade        # picks up new dig-node / dig-store releases
 ```
 
 To restart after a config change, or stop the service:
@@ -91,12 +91,12 @@ sudo systemctl disable net.dignetwork.dig-node    # don't start on boot
 
 ## Other operating systems
 
-apt is the **Ubuntu/Debian-native** path. For Windows, macOS, or non-Debian Linux, use the cross-platform **[DIG Installer](./index.md#universal-installer-any-os)** (`curl … | sh`), which installs the `dig-node` and `dig-dns` services (as a Windows service / `systemd` / `launchd`) plus the `digstore` CLI on every OS, all by default in one run. To **read** DIG content without running a node, just get the **[DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)**.
+apt is the **Ubuntu/Debian-native** path. For Windows, macOS, or non-Debian Linux, use the cross-platform **[DIG Installer](./index.md#universal-installer-any-os)** (`curl … | sh`), which installs the `dig-node` and `dig-dns` services (as a Windows service / `systemd` / `launchd`) plus the `dig-store` CLI on every OS, all by default in one run. To **read** DIG content without running a node, just get the **[DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)**.
 
 ## Related
 
 - [Run a DIG node](./index.md) — what a node is, serving vs. consuming, and all install paths
 - [Using the public network RPC](../rpc/public-network-rpc.md) — the dig RPC your node speaks; operating on the network
 - [The chia:// protocol](../browser/chia-protocol.md) — how the browser/extension consume from your node (or `rpc.dig.net`)
-- [Installing the CLI](../digstore/cli/install.md) — `digstore` installers and build-from-source
+- [Installing the CLI](../digstore/cli/install.md) — `dig-store` installers and build-from-source
 - [Troubleshooting](../support/troubleshooting.md) — common failures and fixes

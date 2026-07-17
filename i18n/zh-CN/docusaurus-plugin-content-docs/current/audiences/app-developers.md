@@ -6,7 +6,7 @@ keywords:
   - publish a site
   - own your app
   - DIGHUb
-  - digstore
+  - dig-store
   - free until publish
   - capsule
 tags:
@@ -29,7 +29,7 @@ tags:
 有两个入口通向**同一个**免费构建 → 付费发布的流程：
 
 - **网页路径** —— [hub.dig.net](https://hub.dig.net) 上的 [DIGHUb](../concepts.md#dighub)：放入一个构建好的文件夹，免费预览，只在发布时连接钱包。
-- **CLI / CI 路径** —— [`digstore`](../concepts.md#digstore-cli) CLI + [`create-dig-app`](../concepts.md#create-dig-app) + [GitHub 部署 Action](../concepts.md#deploy-action)。
+- **CLI / CI 路径** —— [`dig-store`](../concepts.md#digstore-cli) CLI + [`create-dig-app`](../concepts.md#create-dig-app) + [GitHub 部署 Action](../concepts.md#deploy-action)。
 
 搭建脚手架、构建和预览**完全免费**。你只有在发布一个 capsule 时才需要付费。
 
@@ -47,34 +47,34 @@ tags:
 
 [**在 DIGHUb 中新建一个 store ↗**](https://hub.dig.net/new)。放入你构建好的站点（你的 `dist/` 或 `build/` 文件夹），在真实读取路径上获得**免费的草稿预览**，只在**发布**这一步才需要连接钱包。参见[快速开始 → 从网页发布](../quickstart.md#a-publish-from-the-web)中的网页流程演示。
 
-## 从 CLI 发布 —— digstore {#publish-from-the-cli--digstore}
+## 从 CLI 发布 —— dig-store {#publish-from-the-cli--digstore}
 
 这是 Git 形态的流程：`new` → `dev` → `init` → `commit`。
 
 ```sh
-digstore new vite-react   # scaffold a runnable project — free, no mint
-digstore dev              # preview on the real chia:// read path, live-reload — free
-digstore init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
-digstore commit -m "v1.1"       # publish an update — a new capsule
+dig-store new vite-react   # scaffold a runnable project — free, no mint
+dig-store dev              # preview on the real chia:// read path, live-reload — free
+dig-store init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
+dig-store commit -m "v1.1"       # publish an update — a new capsule
 ```
 
 → [CLI 快速入门](../digstore/cli/quickstart.md) · [完整的项目工作流](../digstore/cli/project-workflow.md)
 
 ## 搭建应用脚手架 —— 5 种模板 {#scaffold-an-app--5-templates}
 
-从一个可运行、已接入钱包的初始项目开始 —— `static`、`vite-react`、`next-static`、`nft-drop` 或 `dapp-window-chia` —— 通过 `digstore new <template>` 或 `npm create dig-app` 均可创建。
+从一个可运行、已接入钱包的初始项目开始 —— `static`、`vite-react`、`next-static`、`nft-drop` 或 `dapp-window-chia` —— 通过 `dig-store new <template>` 或 `npm create dig-app` 均可创建。
 
 → [搭建应用脚手架](../build-a-dapp/scaffold.md)
 
-## 使用 `digstore dev` 免费预览 {#preview-free-with-digstore-dev}
+## 使用 `dig-store dev` 免费预览 {#preview-free-with-digstore-dev}
 
-`digstore dev` 会通过**真实的** DIG 读取路径（加密 → 编译 → 验证 → 解密）为你的项目提供服务，支持热重载，并注入一个开发用的 `window.chia`。你看到的就是访客将会看到的效果 —— 而且不会铸造任何内容，也不会有任何花费。
+`dig-store dev` 会通过**真实的** DIG 读取路径（加密 → 编译 → 验证 → 解密）为你的项目提供服务，支持热重载，并注入一个开发用的 `window.chia`。你看到的就是访客将会看到的效果 —— 而且不会铸造任何内容，也不会有任何花费。
 
 → [CLI 快速入门 → 开发与预览](../digstore/cli/quickstart.md)
 
 ## `dig.toml` —— 可提交的清单文件 {#digtoml--the-committable-manifest}
 
-项目根目录下的 `dig.toml` 保存 `store-id`、`output-dir`、`build-command`、`remote` 及其他配置 —— 由 `digstore dev`、`digstore deploy` 和脚手架模板共用。它**不包含任何机密信息**（那些来自环境变量），因此可以提交它。
+项目根目录下的 `dig.toml` 保存 `store-id`、`output-dir`、`build-command`、`remote` 及其他配置 —— 由 `dig-store dev`、`dig-store deploy` 和脚手架模板共用。它**不包含任何机密信息**（那些来自环境变量），因此可以提交它。
 
 → [项目配置与构建期取值](../digstore/cli/configuration.md)
 

@@ -6,7 +6,7 @@ keywords:
   - publish a site
   - own your app
   - DIGHUb
-  - digstore
+  - dig-store
   - free until publish
   - capsule
 tags:
@@ -29,7 +29,7 @@ Bir **[store](../concepts.md#store)**, web sitenizin kalıcı kimliğidir — ko
 Aynı ücretsiz-inşa → ücretli-yayınlama döngüsüne giden iki ön kapı var:
 
 - **Web yolu** — [hub.dig.net](https://hub.dig.net)'teki [DIGHUb](../concepts.md#dighub): inşa edilmiş bir klasör bırakın, ücretsiz önizleyin, yalnızca Publish'te bir cüzdan bağlayın.
-- **CLI / CI yolu** — [`digstore`](../concepts.md#digstore-cli) CLI'ı + [`create-dig-app`](../concepts.md#create-dig-app) + [GitHub dağıtım Action'ı](../concepts.md#deploy-action).
+- **CLI / CI yolu** — [`dig-store`](../concepts.md#digstore-cli) CLI'ı + [`create-dig-app`](../concepts.md#create-dig-app) + [GitHub dağıtım Action'ı](../concepts.md#deploy-action).
 
 İskeleleme, inşa etme ve önizleme **hiçbir şeye** mal olmaz. Yalnızca bir capsule yayınladığınızda ödersiniz.
 
@@ -47,34 +47,34 @@ Aynı ücretsiz-inşa → ücretli-yayınlama döngüsüne giden iki ön kapı v
 
 [**DIGHUb'da yeni bir store başlatın ↗**](https://hub.dig.net/new). İnşa edilmiş sitenizi bırakın (`dist/` veya `build/` klasörünüz), gerçek okuma yolunda **ücretsiz bir taslak önizleme** alın ve yalnızca **Publish** adımında bir cüzdan bağlayın. [Hızlı başlangıç → Web'den yayınlayın](../quickstart.md#a-publish-from-the-web)'daki web yürüyüşüne bakın.
 
-## CLI'dan yayınlama — digstore {#publish-from-the-cli--digstore}
+## CLI'dan yayınlama — dig-store {#publish-from-the-cli--digstore}
 
 Git şekilli döngü: `new` → `dev` → `init` → `commit`.
 
 ```sh
-digstore new vite-react   # scaffold a runnable project — free, no mint
-digstore dev              # preview on the real chia:// read path, live-reload — free
-digstore init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
-digstore commit -m "v1.1"       # publish an update — a new capsule
+dig-store new vite-react   # scaffold a runnable project — free, no mint
+dig-store dev              # preview on the real chia:// read path, live-reload — free
+dig-store init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
+dig-store commit -m "v1.1"       # publish an update — a new capsule
 ```
 
 → [CLI hızlı başlangıcı](../digstore/cli/quickstart.md) · [Tam proje iş akışı](../digstore/cli/project-workflow.md)
 
 ## Bir uygulama iskeleleyin — 5 şablon {#scaffold-an-app--5-templates}
 
-Çalıştırılabilir, cüzdana bağlı bir başlangıçtan başlayın — `static`, `vite-react`, `next-static`, `nft-drop` veya `dapp-window-chia` — `digstore new <template>` veya `npm create dig-app` ile.
+Çalıştırılabilir, cüzdana bağlı bir başlangıçtan başlayın — `static`, `vite-react`, `next-static`, `nft-drop` veya `dapp-window-chia` — `dig-store new <template>` veya `npm create dig-app` ile.
 
 → [Bir uygulama iskeleleyin](../build-a-dapp/scaffold.md)
 
-## `digstore dev` ile ücretsiz önizleyin {#preview-free-with-digstore-dev}
+## `dig-store dev` ile ücretsiz önizleyin {#preview-free-with-digstore-dev}
 
-`digstore dev`, projenizi canlı yeniden yükleme ve enjekte edilmiş bir geliştirme `window.chia`'sıyla **gerçek** DIG okuma yolu (şifrele → derle → doğrula → şifre çöz) üzerinden sunar. Gördüğünüz şey ziyaretçilerin aldığı şeydir — ve hiçbir şey basılmaz veya harcanmaz.
+`dig-store dev`, projenizi canlı yeniden yükleme ve enjekte edilmiş bir geliştirme `window.chia`'sıyla **gerçek** DIG okuma yolu (şifrele → derle → doğrula → şifre çöz) üzerinden sunar. Gördüğünüz şey ziyaretçilerin aldığı şeydir — ve hiçbir şey basılmaz veya harcanmaz.
 
 → [CLI hızlı başlangıcı → geliştirme & önizleme](../digstore/cli/quickstart.md)
 
 ## `dig.toml` — commit edilebilir manifesto {#digtoml--the-committable-manifest}
 
-Proje kökünüzdeki `dig.toml`, `digstore dev`, `digstore deploy` ve iskeleleme şablonları tarafından paylaşılan `store-id`, `output-dir`, `build-command`, `remote` ve diğer yapılandırmayı tutar. **Hiçbir sır içermez** (bunlar ortamdan gelir), bu yüzden commit edin.
+Proje kökünüzdeki `dig.toml`, `dig-store dev`, `dig-store deploy` ve iskeleleme şablonları tarafından paylaşılan `store-id`, `output-dir`, `build-command`, `remote` ve diğer yapılandırmayı tutar. **Hiçbir sır içermez** (bunlar ortamdan gelir), bu yüzden commit edin.
 
 → [Proje yapılandırması & derleme zamanı değerleri](../digstore/cli/configuration.md)
 

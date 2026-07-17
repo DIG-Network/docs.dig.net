@@ -319,7 +319,7 @@
     "message": "DIG Network adalah platform pengembang untuk menerbitkan dan menyajikan konten di mana host tidak pernah melihat apa yang dibawanya. Mulailah dengan {digstore} — penyimpanan terenkripsi yang dialamatkan berdasarkan konten dan dikompilasi menjadi satu modul WebAssembly yang mempertahankan dirinya sendiri."
   },
   "homepage.hero.lead.digstore": {
-    "message": "DigStore"
+    "message": "dig-store"
   },
   "homepage.hero.cta.docs": {
     "message": "Jelajahi dokumentasi →"
@@ -364,7 +364,7 @@
     "message": "Blok pembangun yang dapat digabungkan"
   },
   "homepage.primitives.subtitle": {
-    "message": "DigStore sudah tersedia sekarang. Lebih banyak primitif DIG Network akan segera hadir."
+    "message": "dig-store sudah tersedia sekarang. Lebih banyak primitif DIG Network akan segera hadir."
   },
   "homepage.primitives.available": {
     "message": "TERSEDIA"
@@ -373,7 +373,7 @@
     "message": "Penyimpanan terenkripsi yang dialamatkan berdasarkan konten, berbentuk seperti Git. Arahkan ke direktori build, commit generasi, dan alamatkan semuanya dengan URN."
   },
   "homepage.primitives.digstore.link": {
-    "message": "Baca dokumentasi DigStore →"
+    "message": "Baca dokumentasi dig-store →"
   },
   "homepage.steps.capture.title": {
     "message": "Tangkap"
@@ -403,7 +403,7 @@
     "message": "Alur kerja bergaya Git untuk keluaran build — terenkripsi dan dapat dialamatkan sejak commit pertama."
   },
   "homepage.cta.title": {
-    "message": "Mulai membangun dengan DigStore"
+    "message": "Mulai membangun dengan dig-store"
   },
   "homepage.cta.subtitle": {
     "message": "Instal CLI dan terbitkan store terenkripsi pertama Anda dalam waktu kurang dari satu menit."
@@ -418,6 +418,6 @@
     "message": "DIG Network — lapisan data terdesentralisasi"
   },
   "homepage.meta.description": {
-    "message": "DIG Network adalah jaringan Proof-of-Stake Layer 2 di atas Chia. Dokumentasi pengembang untuk jaringan dan primitifnya, termasuk DigStore — penyimpanan terenkripsi yang dialamatkan berdasarkan konten."
+    "message": "DIG Network adalah jaringan Proof-of-Stake Layer 2 di atas Chia. Dokumentasi pengembang untuk jaringan dan primitifnya, termasuk dig-store — penyimpanan terenkripsi yang dialamatkan berdasarkan konten."
   }
 }

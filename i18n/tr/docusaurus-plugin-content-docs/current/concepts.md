@@ -47,7 +47,7 @@ Bir **capsule**, tek bir değişmez store nesli (generation)'dir: `(storeId, roo
 `storeId:rootHash` şeklinde yazılır. Ağın atomik birimidir — derlemenin (tek sabit boyutlu WASM modülü),
 [fiyatlandırmanın](./digstore/cli/onchain-anchoring.md) (mint veya commit için $DIG cinsinden ödenen capsule başına
 tek tip bir fiyat), almanın (bir [URN](#urn) bir capsule'ü adlandırır), önbelleklemenin ve köken kanıtının. Bir
-[store](#store) *capsule dizisidir* — her commit için bir tane. Bu tanım DigStore, dig RPC ve DIG
+[store](#store) *capsule dizisidir* — her commit için bir tane. Bu tanım dig-store, dig RPC ve DIG
 Browser genelinde aynıdır. → [capsule, tam olarak](./intro.md#the-capsule)
 
 ## Store {#store}
@@ -66,7 +66,7 @@ Git geçmişi gibi monoton olarak büyür. → [Generation'lar & kök karmalar](
 
 ## URN {#urn}
 
-Bir **URN**, DigStore'un adresi *ve* anahtarını tek bir dizede birleştirir:
+Bir **URN**, dig-store'un adresi *ve* anahtarını tek bir dizede birleştirir:
 `urn:dig:chia:<storeId>[:<rootHash>][/<resource>]`. Hem bir kaynağı **konumlandırır** hem de **şifresini çözecek
 anahtarı türetir** — bir URN'e sahip olmak, genel bir kaynağı okumak için gerekli ve yeterlidir.
 Tarayıcıya yönelik kısa yol [`chia://` protokolüdür](#chia-protocol). → [URN'ler & Şifreleme](./digstore/format/urns-and-encryption.md)
@@ -88,8 +88,8 @@ ve bir düğüme asla gerçek baytları döndürdüğüne güvenilmez. → [Merk
 
 ## Zincir üzeri sabitleme (On-chain anchoring) {#anchoring}
 
-Her store, Chia mainnet üzerinde bir **singleton**'dır. `digstore init` bunu basar (başlatıcı id'si
-store id *olur*) ve her `digstore commit`, bir CHIP-0035 singleton güncellemesi olarak yeni bir
+Her store, Chia mainnet üzerinde bir **singleton**'dır. `dig-store init` bunu basar (başlatıcı id'si
+store id *olur*) ve her `dig-store commit`, bir CHIP-0035 singleton güncellemesi olarak yeni bir
 [generation](#generation) kökünü zincir üzerinde sabitler. İkisi de onaylanana kadar bloklar ve gerçek fon harcar. Zincir, bir
 store'un en son kökü için otoritedir. → [Zincir üzeri sabitleme](./digstore/cli/onchain-anchoring.md)
 
@@ -99,16 +99,16 @@ store'un en son kökü için otoritedir. → [Zincir üzeri sabitleme](./digstor
 sabitleme ile **aynı zincir üzeri harcamaya atomik olarak dahil edilen**, $DIG cinsinden **capsule başına tek tip bir
 fiyata** mal olur — ayrı bir işlem yoktur ve memo store id'yi taşır. → [Maliyetler](./digstore/cli/onchain-anchoring.md#costs)
 
-## DigStore CLI {#digstore-cli}
+## dig-store CLI {#digstore-cli}
 
-`digstore`, store'ları oluşturan, commit eden, paylaşan ve okuyan komut satırı aracıdır — şifrelenmiş,
+`dig-store`, store'ları oluşturan, commit eden, paylaşan ve okuyan komut satırı aracıdır — şifrelenmiş,
 zincir üzeri store formatı üzerinde Git şekilli bir iş akışı (`init`, `add`, `commit`, `log`, `clone`, `push`, `pull`).
 → [Komut referansı](./digstore/cli/command-reference.md) · [CLI eğitimi](./digstore/cli/quickstart.md)
 
 ## dig.toml {#dig-toml}
 
 `dig.toml`, bir projenin kökündeki **commit edilebilir proje manifestosudur** — `store-id`, `output-dir`,
-`build-command` ve `digstore dev`, `digstore deploy` ile iskeleleme şablonları tarafından paylaşılan diğer proje
+`build-command` ve `dig-store dev`, `dig-store deploy` ile iskeleleme şablonları tarafından paylaşılan diğer proje
 yapılandırması. **Hiçbir sır içermez** (bunlar ortamdan gelir), bu yüzden commit etmek güvenlidir.
 → [Proje yapılandırması & derleme zamanı değerleri](./digstore/cli/configuration.md)
 
@@ -118,13 +118,13 @@ yapılandırması. **Hiçbir sır içermez** (bunlar ortamdan gelir), bu yüzden
 şablondan birinden (`static`, `vite-react`, `next-static`, `nft-drop`, `dapp-window-chia`) çalıştırılabilir bir
 başlangıç projesi — bir uygulama, bir [`dig.toml`](#dig-toml) ve (cüzdan şablonları için) bağlanmış [DIG SDK](#dig-sdk) —
 iskeleler. İskeleleme **ücretsizdir** — mint yok, zincir yok, harcama yok; yalnızca bir [capsule](#capsule) yayınladığınızda
-tek tip capsule fiyatını ödersiniz. Rust CLI'ın `digstore new`'inin npm tarafındaki eşdeğeridir.
+tek tip capsule fiyatını ödersiniz. Rust CLI'ın `dig-store new`'inin npm tarafındaki eşdeğeridir.
 → [Bir uygulama iskeleleyin](./build-a-dapp/scaffold.md)
 
 ## GitHub dağıtım Action'ı {#deploy-action}
 
 `dig-network/deploy-action`, **git-push-ile-dağıtım** GitHub Action'ıdır: runner üzerine
-[`digstore` CLI](#digstore-cli)'ı kurar, store'unuzu ilerletmek için `digstore deploy` çalıştırır (asla
+[`dig-store` CLI](#digstore-cli)'ı kurar, store'unuzu ilerletmek için `dig-store deploy` çalıştırır (asla
 mint yapmaz) ve yayınlanan [capsule](#capsule) + URL'ler + maliyeti adım çıktıları, bir PR
 yorumu, bir GitHub Deployment'ı ve bir commit durumu olarak geri bildirir. `if-changed` (varsayılan) ile, bayt-özdeş bir
 build hiçbir işlem yapmaz — harcama yok. → [GitHub Actions'tan dağıtım](./digstore/cli/deploy-from-github-actions.md)
@@ -192,7 +192,7 @@ otomatik olarak bir alt alan adı açığa çıkarmazlar.) → [Bir `*.on.dig.ne
 - [DIG Network genel bakış](./intro.md) — bir bakışta temel bileşenler
 - [Hızlı başlangıç](./quickstart.md) — ücretsiz inşa edin ve önizleyin, sonunda bir capsule yayınlayın
 - [Chia üzerinde bir dapp inşa edin](./build-a-dapp/tutorial.md) — tek bir yayınlanmış dapp'e dikilen her temel bileşen
-- [DigStore nedir?](./digstore/what-is-digstore.md) — tek dosyalık store formatı
+- [dig-store nedir?](./digstore/what-is-digstore.md) — tek dosyalık store formatı
 - [dig RPC nedir?](./rpc/what-is-the-dig-rpc.md) — ağ okuma yolu
 - [chia:// protokolü](./browser/chia-protocol.md) — tarayıcıda içerik adresleme
 - [Yardım alın](./support/get-help.md) — topluluk kanalları ve rapor nasıl verilir

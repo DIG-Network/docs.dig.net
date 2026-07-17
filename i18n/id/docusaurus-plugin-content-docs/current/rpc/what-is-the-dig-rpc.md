@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: What is the dig RPC?
-description: "Antarmuka baca yang berlaku di seluruh jaringan untuk capsule DigStore melalui JSON-RPC 2.0; blind secara konstruksi, dapat diverifikasi tanpa kepercayaan, dan dapat di-streaming pada ukuran berapa pun."
+description: "Antarmuka baca yang berlaku di seluruh jaringan untuk capsule dig-store melalui JSON-RPC 2.0; blind secara konstruksi, dapat diverifikasi tanpa kepercayaan, dan dapat di-streaming pada ukuran berapa pun."
 keywords:
   - dig RPC
   - JSON-RPC 2.0
@@ -25,7 +25,7 @@ tags:
 Ini adalah halaman orientasi. Spesifikasi antarmuka mesin yang otoritatif — metode, objek wire chunk, profil node, dan dokumen OpenRPC — ada di [Protocol · The dig RPC](../protocol/dig-rpc.md).
 :::
 
-**dig RPC adalah antarmuka yang berlaku di seluruh jaringan untuk membaca konten langsung dari capsule `.dig` DigStore yang di-host.** Ini adalah layanan [JSON-RPC 2.0](https://www.jsonrpc.org/specification) yang diucapkan melalui HTTPS `POST`.
+**dig RPC adalah antarmuka yang berlaku di seluruh jaringan untuk membaca konten langsung dari capsule `.dig` dig-store yang di-host.** Ini adalah layanan [JSON-RPC 2.0](https://www.jsonrpc.org/specification) yang diucapkan melalui HTTPS `POST`.
 
 Setiap node yang meng-host capsule — node referensi di `https://rpc.dig.net`, atau node pihak ketiga mana pun — mengekspos **metode yang sama dengan semantik yang sama**. Sebuah klien yang ditulis terhadap antarmuka ini membaca dari seluruh jaringan melalui satu endpoint. Tidak ada CDN; semua penyajian konten di DIG dilakukan melalui dig RPC.
 
@@ -43,9 +43,9 @@ Ia menyajikan tiga hal:
 - **Dapat diverifikasi tanpa kepercayaan.** Setiap byte asli tiba dengan sebuah merkle **inclusion proof** yang berakar pada root generation on-chain. Klien melipat proof tersebut hingga ke root dan hanya menerimanya jika cocok dengan root yang dipercayanya. Node tidak pernah dipercaya begitu saja telah mengembalikan byte yang asli.
 - **Dapat di-streaming pada ukuran berapa pun.** Konten dibaca dalam chunk yang dibatasi, selaras 64 KiB dengan kelanjutan (continuation) eksplisit. Sebuah resource satu kilobyte dan sebuah capsule seratus megabyte dibaca dengan loop yang sama, dan tidak ada satu pun respons yang tidak dibatasi.
 
-## Bagaimana ini cocok dengan DigStore {#how-it-fits-with-digstore}
+## Bagaimana ini cocok dengan dig-store {#how-it-fits-with-digstore}
 
-DigStore memberi Anda **format**: sebuah store content-addressable dan terenkripsi yang dikompilasi menjadi satu capsule `.wasm` yang mempertahankan dirinya sendiri, dialamatkan oleh sebuah URN di mana *URN itu adalah kuncinya*. dig RPC adalah cara capsule tersebut **disajikan di jaringan** tanpa memercayai host:
+dig-store memberi Anda **format**: sebuah store content-addressable dan terenkripsi yang dikompilasi menjadi satu capsule `.wasm` yang mempertahankan dirinya sendiri, dialamatkan oleh sebuah URN di mana *URN itu adalah kuncinya*. dig RPC adalah cara capsule tersebut **disajikan di jaringan** tanpa memercayai host:
 
 1. Anda mengompilasi sebuah store dan menanamkan sebuah generation on-chain (sebuah singleton DataLayer CHIP-0035). **Root konten**-nya adalah trust anchor.
 2. Sebuah node meng-host capsule tersebut dan mengekspornya melalui dig RPC.

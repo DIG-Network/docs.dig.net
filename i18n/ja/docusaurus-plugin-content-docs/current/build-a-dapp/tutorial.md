@@ -8,7 +8,7 @@ keywords:
   - window.chia
   - dig-sdk
   - chip35 spend
-  - digstore deploy
+  - dig-store deploy
   - custom domain
 tags:
   - digstore-cli
@@ -33,7 +33,7 @@ new ──▶ dev ──▶ wire wallet (dig-sdk) ──▶ build a spend (chip3
 
 ## 必要なもの {#what-youll-need}
 
-- [`digstore` CLI](../digstore/cli/install.md)がインストールされていること。
+- [`dig-store` CLI](../digstore/cli/install.md)がインストールされていること。
 - Node 18以上と`npm`。
 - 資金を入れたChiaウォレット — **デプロイのステップでのみ**必要です（$DIGでの均一なcapsule価格 + わずかなXCH手数料）。それ以前はすべて無料です。
 
@@ -41,23 +41,23 @@ new ──▶ dev ──▶ wire wallet (dig-sdk) ──▶ build a spend (chip3
 
 ## 1. Reactアプリを足場作りする — 無料、チェーンなし {#1-scaffold-a-react-app--free-no-chain}
 
-`digstore new`は、実行可能でウォレット対応済みのプロジェクトを書き出します。Reactテンプレートを選びましょう。
+`dig-store new`は、実行可能でウォレット対応済みのプロジェクトを書き出します。Reactテンプレートを選びましょう。
 
 ```sh
-digstore new vite-react my-dapp
+dig-store new vite-react my-dapp
 cd my-dapp
 ```
 
 Vite + Reactアプリ、`dig.toml`（`output-dir = "dist"`、`build-command = "npm install && npm run build"`）、そしてすでにページ内ウォレットに配線された`App.jsx`が手に入ります。storeはmintされず、何も支出されません — `new`は純粋にローカルで完結します。
 
 :::tip npmがお好みですか？`npm create dig-app`
-`npm create dig-app@latest my-dapp -- --template vite-react`は同じテンプレートをnpmから直接足場作りします — JSの入口であり、始めるのに`digstore`のインストールは不要です。5つすべてのテンプレートと2つの入口の比較については[アプリを足場作りする](./scaffold.md)を参照してください。
+`npm create dig-app@latest my-dapp -- --template vite-react`は同じテンプレートをnpmから直接足場作りします — JSの入口であり、始めるのに`dig-store`のインストールは不要です。5つすべてのテンプレートと2つの入口の比較については[アプリを足場作りする](./scaffold.md)を参照してください。
 :::
 
 ## 2. 実際の読み取りパスに対して開発する — 無料 {#2-develop-against-the-real-read-path--free}
 
 ```sh
-digstore dev
+dig-store dev
 ```
 
 `dev`はあなたのビルドを実行し、その出力を**本物の`chia://`読み取りパス**（コンパイル → 検証 → 復号）で配信し、**`window.chia`開発用シム**を注入するため、本物のウォレットなしでウォレットフローを構築できます。`src/App.jsx`を編集して保存すると、ページはライブリロードされます — チェーンとの対話も支出も一切発生せず、まさに訪問者が受け取るものが表示されます。
@@ -170,13 +170,13 @@ if (await paywall.verifyReceipt(receipt)) { /* unlock the content */ }
 ビルドとプレビューは無料です。支出が発生するのはこのステップだけです。まず**一度だけ**storeを作成します。
 
 ```sh
-digstore init my-dapp --dir dist      # mint the store's first capsule (uniform capsule price + XCH fee)
+dig-store init my-dapp --dir dist      # mint the store's first capsule (uniform capsule price + XCH fee)
 ```
 
 `init`はメインネット上にChiaシングルトンをmintします — **ランチャーIDがあなたのstore IDになります**。それを`dig.toml`（`store-id = "<64-hex>"`）にコピーしてください。それ以降は、1つのコマンドで新しいcapsuleを構築・公開できます。
 
 ```sh
-digstore deploy --json                # runs build-command, stages dist/, advances the root
+dig-store deploy --json                # runs build-command, stages dist/, advances the root
 ```
 
 各`deploy`は、均一なcapsule価格で新しい不変のcapsuleを公開します。確定した瞬間、あなたのdappは[dig RPC](../rpc/what-is-the-dig-rpc.md)経由で、その[URN](../concepts.md#urn) / `chia://`アドレスによって**読み取り可能**になります — 暗号化され、検証済みで、停止させることは不可能であり、登録も追加の支払いも不要です。（フレンドリーな`*.on.dig.net`のWebアドレスは、別の任意のステップです — [次のセクション](#6-put-it-on-your-own-domain)を参照してください。）すべてのコミットでpush-to-deployするには、[GitHub Actionsからデプロイする](../digstore/cli/deploy-from-github-actions.md)を設定してください。

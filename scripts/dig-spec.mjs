@@ -6,7 +6,7 @@
  * WHY this file exists: docs.dig.net is the canonical aggregation home for the
  * ecosystem's cross-surface contracts. The dig RPC method set and the error
  * catalog are documented in prose (docs/rpc/methods.md, docs/support/error-codes.md)
- * AND consumed by every other module (digstore, hub, dig-sdk, the extension,
+ * AND consumed by every other module (dig-store, hub, dig-sdk, the extension,
  * the browser). Keeping the machine artifacts in ONE small data module — then
  * generating the JSON from it AND drift-checking it against the prose tables —
  * means the spec, the JSON, and the human page can never silently diverge.
@@ -15,7 +15,7 @@
  *   - dig RPC methods + chunk object: docs/rpc/methods.md + docs/rpc/streaming.md
  *     (the prose spec), conformant with rpc.dig.net.
  *   - JSON-RPC -32xxx codes: docs/rpc/methods.md "Errors" + the JSON-RPC 2.0 spec.
- *   - digstore CLI exit codes 0..16: digstore crates/digstore-cli/src/error.rs
+ *   - dig-store CLI exit codes 0..16: dig-store crates/digstore-cli/src/error.rs
  *     (CliError::exit_code) — mirrored in docs/support/error-codes.md.
  *   - DIGHUb user-facing codes: docs/support/error-codes.md (the friendly codes
  *     the web app shows); the underlying wire enum is hub
@@ -90,7 +90,7 @@ export const schemas = {
   MetadataManifest: {
     title: 'MetadataManifest',
     type: 'object',
-    description: "The store's plaintext, ungated metadata manifest, embedded in the compiled module (Digstore §8.4).",
+    description: "The store's plaintext, ungated metadata manifest, embedded in the compiled module (dig-store §8.4).",
     properties: {
       schema_version: { type: 'integer' },
       name: { type: 'string' },
@@ -333,7 +333,7 @@ export const methods = [
     name: 'dig.getMetadata',
     summary: "Read the store's plaintext metadata manifest from the .dig.",
     description:
-      'Metadata is plaintext, ungated public discovery info embedded in the module (Digstore §8.4) — not a content resource, no inclusion proof, never encrypted. Its on-chain binding is the module program_hash.',
+      'Metadata is plaintext, ungated public discovery info embedded in the module (dig-store §8.4) — not a content resource, no inclusion proof, never encrypted. Its on-chain binding is the module program_hash.',
     paramStructure: 'by-name',
     params: [
       { name: 'store_id', required: true, schema: { $ref: '#/components/schemas/StoreId' } },
@@ -651,13 +651,13 @@ export const rpcCatalog = Object.entries(rpcErrors).map(([name, e]) => ({
   description: `${e.message} — ${e.meaning}`,
 }));
 
-/** digstore CLI process exit codes (0..16). Mirrors CliError::exit_code in
- *  digstore crates/digstore-cli/src/error.rs. */
+/** dig-store CLI process exit codes (0..16). Mirrors CliError::exit_code in
+ *  dig-store crates/digstore-cli/src/error.rs. */
 export const cliCatalog = [
   { exit: 0, code: 'success', description: 'The command completed.' },
   { exit: 1, code: 'other', description: 'An unclassified error. Re-run with --verbose.' },
   { exit: 2, code: 'invalid-argument', description: 'A flag or argument was invalid.' },
-  { exit: 3, code: 'no-store', description: 'No store found here. Run `digstore init`.' },
+  { exit: 3, code: 'no-store', description: 'No store found here. Run `dig-store init`.' },
   { exit: 4, code: 'not-found', description: "A resource/URN/root wasn't found." },
   { exit: 5, code: 'verification-failed', description: 'Content failed cryptographic verification (wrong salt/key or tampered data).' },
   { exit: 6, code: 'network', description: 'A network/transport failure.' },

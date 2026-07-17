@@ -6,7 +6,7 @@ keywords:
   - publish a site
   - own your app
   - DIGHUb
-  - digstore
+  - dig-store
   - free until publish
   - capsule
 tags:
@@ -29,7 +29,7 @@ tags:
 2つの入口が、**同じ**「無料でビルド → 有料で公開」というループに通じています。
 
 - **Webの経路** — [hub.dig.net](https://hub.dig.net)にある[DIGHUb](../concepts.md#dighub)：ビルド済みフォルダをドロップし、無料でプレビューし、公開時にのみウォレットを接続します。
-- **CLI／CIの経路** — [`digstore`](../concepts.md#digstore-cli) CLI + [`create-dig-app`](../concepts.md#create-dig-app) + [GitHubデプロイAction](../concepts.md#deploy-action)。
+- **CLI／CIの経路** — [`dig-store`](../concepts.md#digstore-cli) CLI + [`create-dig-app`](../concepts.md#create-dig-app) + [GitHubデプロイAction](../concepts.md#deploy-action)。
 
 足場作り、ビルド、プレビューは**無料**です。費用がかかるのは公開するときだけです。
 
@@ -47,34 +47,34 @@ tags:
 
 [**DIGHUbで新しいstoreを開始する ↗**](https://hub.dig.net/new)。ビルド済みのサイト（`dist/`や`build/`フォルダ）をドロップし、実際の読み取りパスで**無料のドラフトプレビュー**を取得し、**公開**ステップでのみウォレットを接続します。Webの手順は[クイックスタート → Webから公開する](../quickstart.md#a-publish-from-the-web)を参照してください。
 
-## CLIから公開する — digstore {#publish-from-the-cli--digstore}
+## CLIから公開する — dig-store {#publish-from-the-cli--digstore}
 
 Git形式のループです：`new` → `dev` → `init` → `commit`。
 
 ```sh
-digstore new vite-react   # scaffold a runnable project — free, no mint
-digstore dev              # preview on the real chia:// read path, live-reload — free
-digstore init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
-digstore commit -m "v1.1"       # publish an update — a new capsule
+dig-store new vite-react   # scaffold a runnable project — free, no mint
+dig-store dev              # preview on the real chia:// read path, live-reload — free
+dig-store init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
+dig-store commit -m "v1.1"       # publish an update — a new capsule
 ```
 
 → [CLIクイックスタート](../digstore/cli/quickstart.md) · [プロジェクトワークフローの全体像](../digstore/cli/project-workflow.md)
 
 ## アプリを足場作りする — 5つのテンプレート {#scaffold-an-app--5-templates}
 
-`digstore new <template>`または`npm create dig-app`を通じて、実行可能でウォレット対応済みのスターター — `static`、`vite-react`、`next-static`、`nft-drop`、`dapp-window-chia` — から始めましょう。
+`dig-store new <template>`または`npm create dig-app`を通じて、実行可能でウォレット対応済みのスターター — `static`、`vite-react`、`next-static`、`nft-drop`、`dapp-window-chia` — から始めましょう。
 
 → [アプリを足場作りする](../build-a-dapp/scaffold.md)
 
-## `digstore dev`で無料プレビュー {#preview-free-with-digstore-dev}
+## `dig-store dev`で無料プレビュー {#preview-free-with-digstore-dev}
 
-`digstore dev`は、あなたのプロジェクトを**本物の**DIG読み取りパス（暗号化 → コンパイル → 検証 → 復号）でライブリロード付きに配信し、開発用の`window.chia`を注入します。あなたが見るものが訪問者の得るものであり、mintも支出も一切発生しません。
+`dig-store dev`は、あなたのプロジェクトを**本物の**DIG読み取りパス（暗号化 → コンパイル → 検証 → 復号）でライブリロード付きに配信し、開発用の`window.chia`を注入します。あなたが見るものが訪問者の得るものであり、mintも支出も一切発生しません。
 
 → [CLIクイックスタート → 開発とプレビュー](../digstore/cli/quickstart.md)
 
 ## `dig.toml` — コミット可能なマニフェスト {#digtoml--the-committable-manifest}
 
-プロジェクトルートの`dig.toml`は、`store-id`、`output-dir`、`build-command`、`remote`、その他の設定を保持し、`digstore dev`、`digstore deploy`、足場作りテンプレートで共有されます。これには**秘密情報が一切含まれない**ため（それらは環境から取得されます）、コミットして構いません。
+プロジェクトルートの`dig.toml`は、`store-id`、`output-dir`、`build-command`、`remote`、その他の設定を保持し、`dig-store dev`、`dig-store deploy`、足場作りテンプレートで共有されます。これには**秘密情報が一切含まれない**ため（それらは環境から取得されます）、コミットして構いません。
 
 → [プロジェクト設定とビルド時の値](../digstore/cli/configuration.md)
 

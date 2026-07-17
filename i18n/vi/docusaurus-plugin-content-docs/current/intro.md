@@ -2,13 +2,13 @@
 sidebar_position: 1
 slug: /
 title: DIG Network
-description: "Tổng quan về các thành phần cơ bản của DIG Network: DigStore để xuất bản theo địa chỉ nội dung, dig RPC để lưu trữ và truy xuất ẩn danh (blind hosting), và DIG Browser để truy cập nội dung."
+description: "Tổng quan về các thành phần cơ bản của DIG Network: dig-store để xuất bản theo địa chỉ nội dung, dig RPC để lưu trữ và truy xuất ẩn danh (blind hosting), và DIG Browser để truy cập nội dung."
 keywords:
   - DIG Network
   - Proof-of-Stake Layer 2
   - Chia
   - capsule
-  - DigStore
+  - dig-store
   - dig RPC
   - DIG Browser
 tags:
@@ -43,7 +43,7 @@ Capsule là đơn vị của mạng lưới cho:
 - **Bộ nhớ đệm (Caching)** — một host hoặc trình duyệt lưu đệm một capsule theo khóa `storeId:rootHash`; bộ nhớ đệm cục bộ là một tập hợp các capsule.
 - **Nguồn gốc (Provenance)** — root của mỗi capsule mang chữ ký BLS của người xuất bản và một Merkle root.
 
-Đây là định nghĩa áp dụng trên toàn hệ sinh thái: "capsule = `(storeId, rootHash)`" mang cùng một ý nghĩa trong DigStore, dig RPC, và DIG Browser.
+Đây là định nghĩa áp dụng trên toàn hệ sinh thái: "capsule = `(storeId, rootHash)`" mang cùng một ý nghĩa trong dig-store, dig RPC, và DIG Browser.
 
 :::tip Thử ngay
 [**Tạo capsule đầu tiên của bạn trong DIGHUb ↗**](https://hub.dig.net/new) — xuất bản một trang web ngay trên trình duyệt, không cần CLI. Mỗi capsule (mint hoặc commit) có giá là **mức giá capsule đồng nhất tính bằng $DIG**.
@@ -51,21 +51,21 @@ Capsule là đơn vị của mạng lưới cho:
 
 ## Các thành phần cơ bản {#primitives}
 
-### 🗄️ DigStore {#️-digstore}
+### 🗄️ dig-store {#️-digstore}
 
 Thành phần cơ bản đầu tiên và nền tảng nhất: một **định dạng dự án WASM được mã hóa, định địa chỉ theo nội dung**. Bạn trỏ nó vào một thư mục build, commit các lần triển khai giống như Git, và nhận được một file `.wasm` duy nhất tự bảo vệ chính nó — vừa là dữ liệu của bạn, vừa là server kiểm soát quyền truy cập vào nó. URN *chính là* khóa — nó vừa định vị vừa giải mã.
 
-→ **[Khám phá DigStore](./digstore/what-is-digstore.md)**
+→ **[Khám phá dig-store](./digstore/what-is-digstore.md)**
 
 | | |
 |---|---|
-| **[DigStore là gì?](./digstore/what-is-digstore.md)** | Ý tưởng một-file, tóm gọn |
+| **[dig-store là gì?](./digstore/what-is-digstore.md)** | Ý tưởng một-file, tóm gọn |
 | **[Định dạng (The Format)](./digstore/format/overview.md)** | Dự án, các lần triển khai, URN, mã hóa, bằng chứng |
-| **[Hướng dẫn CLI](./digstore/cli/quickstart.md)** | Cài đặt và dùng `digstore` trong dự án của bạn |
+| **[Hướng dẫn CLI](./digstore/cli/quickstart.md)** | Cài đặt và dùng `dig-store` trong dự án của bạn |
 
 ### 🛰️ dig RPC {#️-dig-rpc}
 
-Thành phần cơ bản về mạng lưới: một **giao diện chuẩn để đọc nội dung từ các bản triển khai DigStore đang được lưu trữ**. JSON-RPC 2.0 qua HTTPS `POST` — mọi node lưu trữ đều nói cùng một giao thức giống hệt nhau, nên nội dung có tính di động và client không phụ thuộc vào node cụ thể nào. Nó phục vụ bản mã hóa (ciphertext) + bằng chứng bao gồm (inclusion proofs) theo retrieval key, toàn bộ bản triển khai theo `(store_id, root)`, và manifest khám phá công khai — được truyền theo từng khối (chunk), ẩn danh theo thiết kế, được xác minh và giải mã hoàn toàn ở phía client.
+Thành phần cơ bản về mạng lưới: một **giao diện chuẩn để đọc nội dung từ các bản triển khai dig-store đang được lưu trữ**. JSON-RPC 2.0 qua HTTPS `POST` — mọi node lưu trữ đều nói cùng một giao thức giống hệt nhau, nên nội dung có tính di động và client không phụ thuộc vào node cụ thể nào. Nó phục vụ bản mã hóa (ciphertext) + bằng chứng bao gồm (inclusion proofs) theo retrieval key, toàn bộ bản triển khai theo `(store_id, root)`, và manifest khám phá công khai — được truyền theo từng khối (chunk), ẩn danh theo thiết kế, được xác minh và giải mã hoàn toàn ở phía client.
 
 → **[Khám phá dig RPC](./rpc/what-is-the-dig-rpc.md)**
 
@@ -106,7 +106,7 @@ Tài liệu được tổ chức xoay quanh **việc bạn đang làm**. Mỗi l
 Chưa quen với thuật ngữ? Lướt qua [Khái niệm & thuật ngữ](./concepts.md). Muốn tìm hiểu toàn bộ thiết kế? Đọc [Đi sâu vào giao thức](./protocol-deep-dive.md).
 
 :::note
-DIG Network và các thành phần cơ bản của nó là mã nguồn mở. DigStore được cấp phép theo GPL-2.0; xem [kho mã nguồn digstore](https://github.com/DIG-Network/digstore).
+DIG Network và các thành phần cơ bản của nó là mã nguồn mở. dig-store được cấp phép theo GPL-2.0; xem [kho mã nguồn dig-store](https://github.com/DIG-Network/dig-store).
 :::
 
 ## Liên quan {#related}
@@ -114,7 +114,7 @@ DIG Network và các thành phần cơ bản của nó là mã nguồn mở. Dig
 - [Bắt đầu nhanh](./quickstart.md) — xuất bản trang web đầu tiên của bạn; miễn phí để xây dựng và xem trước
 - [Xây dựng một dapp trên Chia](./build-a-dapp/tutorial.md) — mọi thành phần cơ bản trong một hướng dẫn trọn vẹn từ đầu đến cuối
 - [Khái niệm & thuật ngữ](./concepts.md) — các thực thể cốt lõi của DIG, được định nghĩa và liên kết
-- [DigStore là gì?](./digstore/what-is-digstore.md) — định dạng store định địa chỉ theo nội dung
+- [dig-store là gì?](./digstore/what-is-digstore.md) — định dạng store định địa chỉ theo nội dung
 - [dig RPC là gì?](./rpc/what-is-the-dig-rpc.md) — giao diện đọc trên toàn mạng lưới
 - [Giao thức chia://](./browser/chia-protocol.md) — mở nội dung trong DIG Browser
 - [Nhận trợ giúp](./support/get-help.md) — cộng đồng, xử lý sự cố, và mã lỗi

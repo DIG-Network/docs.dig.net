@@ -1,14 +1,14 @@
 ---
 sidebar_position: 4
 title: Point a consumer at your node
-description: "Make the DIG Browser, extension, or digstore CLI read from your local dig-node first (dig.local → localhost), falling back to rpc.dig.net — local-first reads that share one .dig cache. The extension can also source its wallet data (balances, tokens, NFTs) from your node."
+description: "Make the DIG Browser, extension, or dig-store CLI read from your local dig-node first (dig.local → localhost), falling back to rpc.dig.net — local-first reads that share one .dig cache. The extension can also source its wallet data (balances, tokens, NFTs) from your node."
 keywords:
   - dig-node host
   - local-first reads
   - shared .dig cache
   - extension dig-node
   - dig.local
-  - digstore --node
+  - dig-store --node
   - wallet data source
   - extension wallet node
   - local-first caching
@@ -22,7 +22,7 @@ tags:
 
 # Point a consumer at your node
 
-A consumer — the [DIG Browser](../browser/chia-protocol.md), the [extension](../audiences/content-consumers.md), or the `digstore` CLI — does **not** need a node to read DIG content; every one of them falls back to the public reference node at `rpc.dig.net` when no local node is reachable. Pointing a consumer at a **local** dig-node makes reads **local-first**: faster, offline-friendly, and contributing to the network. When a node is on the same machine, the consumer and the node **share one `.dig` cache**.
+A consumer — the [DIG Browser](../browser/chia-protocol.md), the [extension](../audiences/content-consumers.md), or the `dig-store` CLI — does **not** need a node to read DIG content; every one of them falls back to the public reference node at `rpc.dig.net` when no local node is reachable. Pointing a consumer at a **local** dig-node makes reads **local-first**: faster, offline-friendly, and contributing to the network. When a node is on the same machine, the consumer and the node **share one `.dig` cache**.
 
 ## How it works
 
@@ -39,7 +39,7 @@ Either way **every byte is verified client-side against the chain**; pointing at
 
 - **DIG Browser** — the **My Node** UI lets you select the local dig-node and view its status.
 - **Extension** — set the `dig-node` host (the `server.host` setting) to your node; leave it blank to use the automatic `dig.local` → `localhost` → `rpc.dig.net` resolution. To also read wallet balances/tokens/NFTs from your node, see [Wallet data (extension)](#wallet-data-extension) below.
-- **digstore CLI** — set an explicit override with the `--node <url>` global flag, the `$DIG_NODE_URL` environment variable, or a persisted `digstore config node.url <url>`; leave all three unset to use the automatic resolution. See [Which node digstore talks to](../digstore/cli/command-reference.md#which-node-digstore-talks-to).
+- **dig-store CLI** — set an explicit override with the `--node <url>` global flag, the `$DIG_NODE_URL` environment variable, or a persisted `dig-store config node.url <url>`; leave all three unset to use the automatic resolution. See [Which node dig-store talks to](../digstore/cli/command-reference.md#which-node-digstore-talks-to).
 
 ## Wallet data (extension)
 
@@ -74,6 +74,6 @@ The local cache is a set of [capsules](../concepts.md#capsule) keyed by `storeId
 - [Configure dig-node](./configure.md)
 - [Manage your node](./manage.md) — the control.* admin RPCs + the My Node UI
 - [The dig-node Control Panel](./control-panel.md) — reserved cache space + LRU eviction
-- [Command reference — global flags](../digstore/cli/command-reference.md#global-flags) — the CLI's `--node` flag and `digstore config node.url`
+- [Command reference — global flags](../digstore/cli/command-reference.md#global-flags) — the CLI's `--node` flag and `dig-store config node.url`
 - [The dig:// remote (clone/pull/push)](../rpc/dig-remote.md) — the same ladder as it applies to `dig://` URLs without an explicit host
 - [Reading from your own node](../audiences/content-consumers.md#reading-from-your-own-node) — the extension's node-served SPA reads, from the content-consumer's side

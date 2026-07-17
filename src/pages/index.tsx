@@ -48,7 +48,7 @@ function Hero() {
           <p className={styles.lead}>
             <Translate
               id="homepage.hero.lead"
-              values={{ digstore: <strong><Translate id="homepage.hero.lead.digstore">DigStore</Translate></strong> }}>
+              values={{ digstore: <strong><Translate id="homepage.hero.lead.digstore">dig-store</Translate></strong> }}>
               {'DIG Network is a developer platform for publishing and serving content where the host never sees what it carries. Start with {digstore} — encrypted, content-addressable storage that compiles to a single self-defending WebAssembly module.'}
             </Translate>
           </p>
@@ -81,16 +81,16 @@ function Hero() {
               <span className={styles.tdot} />
               <span className={styles.tdot} />
               <span className={styles.tdot} />
-              <em>digstore</em>
+              <em>dig-store</em>
             </div>
             <pre className={styles.termBody}>
-              <code>{`$ digstore init site --dir dist
+              <code>{`$ dig-store init site --dir dist
 `}<span className={styles.ok}>✓ Initialized store 'site'</span>{`
-$ digstore add -A
+$ dig-store add -A
   47.2 MB staged · 80.8 MB free
-$ digstore commit -m "v1"
+$ dig-store commit -m "v1"
 `}<span className={styles.ok}>✓ generation 1a2b3c… → site.wasm</span>{`
-$ digstore cat urn:dig:chia:…/index.html`}</code>
+$ dig-store cat urn:dig:chia:…/index.html`}</code>
             </pre>
           </div>
         </div>
@@ -165,7 +165,7 @@ function Primitives() {
           </Heading>
           <p>
             <Translate id="homepage.primitives.subtitle">
-              DigStore is available now. More DIG Network primitives are on the way.
+              dig-store is available now. More DIG Network primitives are on the way.
             </Translate>
           </p>
         </div>
@@ -177,7 +177,7 @@ function Primitives() {
                 <Translate id="homepage.primitives.available">AVAILABLE</Translate>
               </span>
               <Heading as="h3" className={styles.featureTitle}>
-                <span className="gt">DigStore</span>
+                <span className="gt">dig-store</span>
               </Heading>
               <p className={styles.featureLead}>
                 <Translate id="homepage.primitives.digstore.lead">
@@ -186,7 +186,7 @@ function Primitives() {
                 </Translate>
               </p>
               <Link className={styles.textLink} to="/docs/digstore/what-is-digstore">
-                <Translate id="homepage.primitives.digstore.link">Read the DigStore docs →</Translate>
+                <Translate id="homepage.primitives.digstore.link">Read the dig-store docs →</Translate>
               </Link>
             </div>
           </div>
@@ -211,19 +211,19 @@ function useSteps() {
       n: '01',
       t: <Translate id="homepage.steps.capture.title">Capture</Translate>,
       d: <Translate id="homepage.steps.capture.body">Point a store at your build output.</Translate>,
-      c: 'digstore init site --dir dist',
+      c: 'dig-store init site --dir dist',
     },
     {
       n: '02',
       t: <Translate id="homepage.steps.commit.title">Commit</Translate>,
       d: <Translate id="homepage.steps.commit.body">Seal a generation into one .wasm.</Translate>,
-      c: 'digstore add -A && digstore commit -m "v1"',
+      c: 'dig-store add -A && dig-store commit -m "v1"',
     },
     {
       n: '03',
       t: <Translate id="homepage.steps.share.title">Share</Translate>,
       d: <Translate id="homepage.steps.share.body">Push to a remote; hand out a URN.</Translate>,
-      c: 'digstore push origin',
+      c: 'dig-store push origin',
     },
   ];
 }
@@ -267,7 +267,7 @@ function CTABand() {
       <div className={clsx('container', styles.ctaInner)}>
         <div className={styles.ctaGlow} aria-hidden="true" />
         <Heading as="h2">
-          <Translate id="homepage.cta.title">Start building with DigStore</Translate>
+          <Translate id="homepage.cta.title">Start building with dig-store</Translate>
         </Heading>
         <p>
           <Translate id="homepage.cta.subtitle">
@@ -295,7 +295,7 @@ export default function Home(): JSX.Element {
   const description = translate({
     id: 'homepage.meta.description',
     message:
-      'DIG Network is a Proof-of-Stake Layer 2 on Chia. Developer docs for the network and its primitives, including DigStore — encrypted content-addressable storage.',
+      'DIG Network is a Proof-of-Stake Layer 2 on Chia. Developer docs for the network and its primitives, including dig-store — encrypted content-addressable storage.',
   });
   return (
     <Layout title={title} description={description}>
