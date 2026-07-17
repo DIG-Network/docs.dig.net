@@ -52,29 +52,29 @@ Aynı ücretsiz-inşa → ücretli-yayınlama döngüsüne giden iki ön kapı v
 Git şekilli döngü: `new` → `dev` → `init` → `commit`.
 
 ```sh
-dig-store new vite-react   # scaffold a runnable project — free, no mint
-dig-store dev              # preview on the real chia:// read path, live-reload — free
-dig-store init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
-dig-store commit -m "v1.1"       # publish an update — a new capsule
+digs new vite-react   # scaffold a runnable project — free, no mint
+digs dev              # preview on the real chia:// read path, live-reload — free
+digs init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
+digs commit -m "v1.1"       # publish an update — a new capsule
 ```
 
 → [CLI hızlı başlangıcı](../digstore/cli/quickstart.md) · [Tam proje iş akışı](../digstore/cli/project-workflow.md)
 
 ## Bir uygulama iskeleleyin — 5 şablon {#scaffold-an-app--5-templates}
 
-Çalıştırılabilir, cüzdana bağlı bir başlangıçtan başlayın — `static`, `vite-react`, `next-static`, `nft-drop` veya `dapp-window-chia` — `dig-store new <template>` veya `npm create dig-app` ile.
+Çalıştırılabilir, cüzdana bağlı bir başlangıçtan başlayın — `static`, `vite-react`, `next-static`, `nft-drop` veya `dapp-window-chia` — `digs new <template>` veya `npm create dig-app` ile.
 
 → [Bir uygulama iskeleleyin](../build-a-dapp/scaffold.md)
 
-## `dig-store dev` ile ücretsiz önizleyin {#preview-free-with-digstore-dev}
+## `digs dev` ile ücretsiz önizleyin {#preview-free-with-digstore-dev}
 
-`dig-store dev`, projenizi canlı yeniden yükleme ve enjekte edilmiş bir geliştirme `window.chia`'sıyla **gerçek** DIG okuma yolu (şifrele → derle → doğrula → şifre çöz) üzerinden sunar. Gördüğünüz şey ziyaretçilerin aldığı şeydir — ve hiçbir şey basılmaz veya harcanmaz.
+`digs dev`, projenizi canlı yeniden yükleme ve enjekte edilmiş bir geliştirme `window.chia`'sıyla **gerçek** DIG okuma yolu (şifrele → derle → doğrula → şifre çöz) üzerinden sunar. Gördüğünüz şey ziyaretçilerin aldığı şeydir — ve hiçbir şey basılmaz veya harcanmaz.
 
 → [CLI hızlı başlangıcı → geliştirme & önizleme](../digstore/cli/quickstart.md)
 
 ## `dig.toml` — commit edilebilir manifesto {#digtoml--the-committable-manifest}
 
-Proje kökünüzdeki `dig.toml`, `dig-store dev`, `dig-store deploy` ve iskeleleme şablonları tarafından paylaşılan `store-id`, `output-dir`, `build-command`, `remote` ve diğer yapılandırmayı tutar. **Hiçbir sır içermez** (bunlar ortamdan gelir), bu yüzden commit edin.
+Proje kökünüzdeki `dig.toml`, `digs dev`, `digs deploy` ve iskeleleme şablonları tarafından paylaşılan `store-id`, `output-dir`, `build-command`, `remote` ve diğer yapılandırmayı tutar. **Hiçbir sır içermez** (bunlar ortamdan gelir), bu yüzden commit edin.
 
 → [Proje yapılandırması & derleme zamanı değerleri](../digstore/cli/configuration.md)
 

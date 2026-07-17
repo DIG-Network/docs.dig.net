@@ -8,7 +8,7 @@ keywords:
   - window.chia
   - dig-sdk
   - chip35 spend
-  - dig-store deploy
+  - digs deploy
   - custom domain
 tags:
   - digstore-cli
@@ -41,10 +41,10 @@ new ──▶ dev ──▶ conectar carteira (dig-sdk) ──▶ construir um s
 
 ## 1. Faça o scaffold de uma aplicação React — grátis, sem chain {#1-scaffold-a-react-app--free-no-chain}
 
-`dig-store new` grava um projeto executável já conectado a uma carteira. Escolha o template React:
+`digs new` grava um projeto executável já conectado a uma carteira. Escolha o template React:
 
 ```sh
-dig-store new vite-react my-dapp
+digs new vite-react my-dapp
 cd my-dapp
 ```
 
@@ -57,7 +57,7 @@ Você recebe uma aplicação Vite + React, um `dig.toml` (`output-dir = "dist"`,
 ## 2. Desenvolva contra o caminho de leitura real — grátis {#2-develop-against-the-real-read-path--free}
 
 ```sh
-dig-store dev
+digs dev
 ```
 
 `dev` executa seu build, serve a saída no **caminho de leitura `chia://` genuíno** (compilar → verificar → descriptografar), e injeta um **shim de desenvolvimento `window.chia`** para que você possa construir o fluxo de carteira sem uma carteira real. Edite `src/App.jsx`, salve, e a página recarrega ao vivo — exatamente o que os visitantes vão receber, com zero interação com a chain e zero gasto.
@@ -170,13 +170,13 @@ if (await paywall.verifyReceipt(receipt)) { /* desbloqueie o conteúdo */ }
 Você constrói e pré-visualiza de graça; este é o único passo que gasta. Primeiro crie o store **uma vez**:
 
 ```sh
-dig-store init my-dapp --dir dist      # minta o primeiro capsule do store (preço uniforme de capsule + taxa de XCH)
+digs init my-dapp --dir dist      # minta o primeiro capsule do store (preço uniforme de capsule + taxa de XCH)
 ```
 
 `init` minta um singleton Chia na mainnet — **o launcher id se torna o id do seu store**. Copie-o para o `dig.toml` (`store-id = "<64-hex>"`). A partir daí, um único comando constrói e publica um novo capsule:
 
 ```sh
-dig-store deploy --json                # executa o build-command, faz o staging do dist/, avança a raiz
+digs deploy --json                # executa o build-command, faz o staging do dist/, avança a raiz
 ```
 
 Cada `deploy` publica um novo capsule imutável pelo preço uniforme de capsule. No momento em que confirma, seu dapp está **legível através do [dig RPC](../rpc/what-is-the-dig-rpc.md)** pelo seu endereço [URN](../concepts.md#urn) / `chia://` — criptografado, verificado, e impossível de derrubar, sem registro e sem nada mais a pagar. (Um endereço web amigável `*.on.dig.net` é um passo separado e opcional — veja [a próxima seção](#6-put-it-on-your-own-domain).) Para deploy via push a cada commit, configure o [Deploy a partir do GitHub Actions](../digstore/cli/deploy-from-github-actions.md).

@@ -88,8 +88,8 @@ and a node is never trusted to have returned genuine bytes. → [Merkle proofs](
 
 ## On-chain anchoring {#anchoring}
 
-Every store is a **singleton on Chia mainnet**. `dig-store init` mints it (the launcher id *becomes*
-the store id) and every `dig-store commit` anchors a new [generation](#generation) root on-chain as a
+Every store is a **singleton on Chia mainnet**. `digs init` mints it (the launcher id *becomes*
+the store id) and every `digs commit` anchors a new [generation](#generation) root on-chain as a
 CHIP-0035 singleton update. Both block until confirmed and spend real funds. The chain is the
 authority for a store's latest root. → [On-chain anchoring](./digstore/cli/onchain-anchoring.md)
 
@@ -108,7 +108,7 @@ store format. → [Command reference](./digstore/cli/command-reference.md) · [C
 ## dig.toml {#dig-toml}
 
 `dig.toml` is the **committable project manifest** at a project's root — `store-id`, `output-dir`,
-`build-command`, and other project config, shared by `dig-store dev`, `dig-store deploy`, and the
+`build-command`, and other project config, shared by `digs dev`, `digs deploy`, and the
 scaffolding templates. It holds **no secrets** (those come from the environment), so it's safe to
 commit. → [Project config & build-time values](./digstore/cli/configuration.md)
 
@@ -119,12 +119,12 @@ scaffolds a runnable starter — an app, a [`dig.toml`](#dig-toml), and (for the
 [DIG SDK](#dig-sdk) wired in — from one of five templates (`static`, `vite-react`, `next-static`,
 `nft-drop`, `dapp-window-chia`). Scaffolding is **free** — no mint, no chain, no spend; you pay the
 uniform capsule price only when you publish a [capsule](#capsule). It is the npm-side companion to the Rust CLI's
-`dig-store new`. → [Scaffold an app](./build-a-dapp/scaffold.md)
+`digs new`. → [Scaffold an app](./build-a-dapp/scaffold.md)
 
 ## The GitHub deploy Action {#deploy-action}
 
 `dig-network/deploy-action` is the **git-push-to-deploy** GitHub Action: it installs the
-[`dig-store` CLI](#digstore-cli) on the runner, runs `dig-store deploy` to advance your store (never
+[`dig-store` CLI](#digstore-cli) on the runner, runs `digs deploy` to advance your store (never
 mints), and reports the published [capsule](#capsule) + URLs + cost back as step outputs, a PR
 comment, a GitHub Deployment, and a commit status. With `if-changed` (default), a byte-identical
 build is a no-op — no spend. → [Deploy from GitHub Actions](./digstore/cli/deploy-from-github-actions.md)

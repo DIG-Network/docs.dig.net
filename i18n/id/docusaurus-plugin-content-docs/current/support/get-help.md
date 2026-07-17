@@ -43,7 +43,7 @@ A report that gets answered fast includes:
 
 - **What you ran** — the exact `dig-store` command (or the DIGHUb step), and what you expected.
 - **What happened** — the full error message and any **error code** (e.g. exit code `12`, RPC `-32602`, or `DIG_INSUFFICIENT`). See [Error codes](./error-codes.md).
-- **Versions** — `dig-store --version`, your OS; for the web, your browser and wallet.
+- **Versions** — `digs --version`, your OS; for the web, your browser and wallet.
 - **Reproduce it** — the smallest set of steps that triggers it.
 
 For CLI issues, re-run with `--verbose` (and `--json` if scripting) and include the output.

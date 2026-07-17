@@ -23,7 +23,7 @@ Every DIG project carries a small, committable manifest — **`dig.toml`** — a
 
 ## `dig.toml` — the project manifest
 
-`dig.toml` lives at your project root, is **safe to commit** (it holds no secrets), and is the single source of project config shared by [`dig-store dev`](./quickstart.md), [`dig-store deploy`](./deploy-from-github-actions.md), and the scaffolding templates. It's what `dig-store new <template>` writes for you.
+`dig.toml` lives at your project root, is **safe to commit** (it holds no secrets), and is the single source of project config shared by [`digs dev`](./quickstart.md), [`digs deploy`](./deploy-from-github-actions.md), and the scaffolding templates. It's what `digs new <template>` writes for you.
 
 ```toml
 # dig.toml — your DIG project config. Committed to your repo; contains NO secrets.
@@ -38,7 +38,7 @@ Every key is optional; a missing file means all config comes from flags/env.
 
 | Key | Alias | Default | What it sets |
 |---|---|---|---|
-| `store-id` | `store_id` | — | The 64-hex store id this project deploys to (the store `dig-store init` minted). |
+| `store-id` | `store_id` | — | The 64-hex store id this project deploys to (the store `digs init` minted). |
 | `output-dir` | `output_dir` | `dist` | The built-output directory that gets staged and published. |
 | `build-command` | `build_command` | — | A shell command run **before** staging (e.g. `npm install && npm run build`). |
 | `message` | — | `deploy <sha>` | Default commit message for the new capsule. |
@@ -56,7 +56,7 @@ The same value can come from several places. Highest wins:
 flags  >  environment  >  dig.toml  >  built-in defaults
 ```
 
-So `dig-store deploy --output-dir build` overrides `output-dir = "dist"` in the file for that one run, and the file overrides the built-in `dist` default.
+So `digs deploy --output-dir build` overrides `output-dir = "dist"` in the file for that one run, and the file overrides the built-in `dist` default.
 
 :::note Secrets live in the environment, never in `dig.toml`
 Credentials — your wallet mnemonic (`DIGSTORE_PASSPHRASE` / the deploy wallet seed), the writer deploy-key (`DIGSTORE_WRITER_KEY`), the publisher deploy key (`DIGSTORE_DEPLOY_KEY`), a private store's salt (`DIGSTORE_STORE_SALT`) — are read from the **environment**, not the manifest. `dig.toml` is committed; secrets are not. See [Deploy from GitHub Actions](./deploy-from-github-actions.md#security).
@@ -75,7 +75,7 @@ Because `dig.toml`'s `build-command` runs first, your env-driven build produces 
 ```sh
 # Vite example: a PUBLIC RPC endpoint compiled into the bundle.
 echo 'VITE_DIG_RPC=https://rpc.dig.net' > .env
-dig-store deploy        # runs build-command (which reads VITE_DIG_RPC), then publishes dist/
+digs deploy        # runs build-command (which reads VITE_DIG_RPC), then publishes dist/
 ```
 
 ```jsx

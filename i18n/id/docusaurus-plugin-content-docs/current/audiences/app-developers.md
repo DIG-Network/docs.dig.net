@@ -52,29 +52,29 @@ Scaffold, build, dan preview tidak dikenakan biaya **apa pun**. Anda hanya memba
 Loop bergaya Git: `new` → `dev` → `init` → `commit`.
 
 ```sh
-dig-store new vite-react   # scaffold proyek yang dapat langsung dijalankan — gratis, tanpa mint
-dig-store dev              # preview di jalur baca chia:// yang sesungguhnya, live-reload — gratis
-dig-store init site --dir dist   # mint capsule pertama store (harga seragam + fee XCH)
-dig-store commit -m "v1.1"       # terbitkan sebuah update — capsule baru
+digs new vite-react   # scaffold proyek yang dapat langsung dijalankan — gratis, tanpa mint
+digs dev              # preview di jalur baca chia:// yang sesungguhnya, live-reload — gratis
+digs init site --dir dist   # mint capsule pertama store (harga seragam + fee XCH)
+digs commit -m "v1.1"       # terbitkan sebuah update — capsule baru
 ```
 
 → [Quickstart CLI](../digstore/cli/quickstart.md) · [Alur kerja proyek lengkap](../digstore/cli/project-workflow.md)
 
 ## Scaffold sebuah aplikasi — 5 template {#scaffold-an-app--5-templates}
 
-Mulai dari starter yang dapat langsung dijalankan dan terhubung wallet — `static`, `vite-react`, `next-static`, `nft-drop`, atau `dapp-window-chia` — melalui `dig-store new <template>` atau `npm create dig-app`.
+Mulai dari starter yang dapat langsung dijalankan dan terhubung wallet — `static`, `vite-react`, `next-static`, `nft-drop`, atau `dapp-window-chia` — melalui `digs new <template>` atau `npm create dig-app`.
 
 → [Scaffold sebuah aplikasi](../build-a-dapp/scaffold.md)
 
-## Preview gratis dengan `dig-store dev` {#preview-free-with-digstore-dev}
+## Preview gratis dengan `digs dev` {#preview-free-with-digstore-dev}
 
-`dig-store dev` menyajikan proyek Anda melalui jalur baca DIG yang **sesungguhnya** (enkripsi → kompilasi → verifikasi → dekripsi) dengan live reload dan sebuah `window.chia` dev yang disuntikkan. Apa yang Anda lihat adalah apa yang akan dilihat pengunjung — dan tidak ada yang di-mint atau dikeluarkan.
+`digs dev` menyajikan proyek Anda melalui jalur baca DIG yang **sesungguhnya** (enkripsi → kompilasi → verifikasi → dekripsi) dengan live reload dan sebuah `window.chia` dev yang disuntikkan. Apa yang Anda lihat adalah apa yang akan dilihat pengunjung — dan tidak ada yang di-mint atau dikeluarkan.
 
 → [Quickstart CLI → develop & preview](../digstore/cli/quickstart.md)
 
 ## `dig.toml` — manifest yang dapat di-commit {#digtoml--the-committable-manifest}
 
-`dig.toml` di root proyek Anda menyimpan `store-id`, `output-dir`, `build-command`, `remote`, dan konfigurasi lainnya — digunakan bersama oleh `dig-store dev`, `dig-store deploy`, dan template scaffold. File ini **tidak menyimpan rahasia** (rahasia berasal dari environment), jadi commit saja.
+`dig.toml` di root proyek Anda menyimpan `store-id`, `output-dir`, `build-command`, `remote`, dan konfigurasi lainnya — digunakan bersama oleh `digs dev`, `digs deploy`, dan template scaffold. File ini **tidak menyimpan rahasia** (rahasia berasal dari environment), jadi commit saja.
 
 → [Konfigurasi proyek & nilai build-time](../digstore/cli/configuration.md)
 

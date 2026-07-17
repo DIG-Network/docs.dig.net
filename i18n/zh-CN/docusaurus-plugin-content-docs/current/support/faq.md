@@ -57,7 +57,7 @@ The host only ever stores **ciphertext keyed by hashes**. Encryption and decrypt
 
 ## How do I update a site after it's live?
 
-Publish again. Edit, preview the new draft for free, then Publish (web) or `dig-store commit` (CLI) to ship a new capsule for the uniform capsule price. Each capsule is immutable; an update is a new one, and your store points at the latest.
+Publish again. Edit, preview the new draft for free, then Publish (web) or `digs commit` (CLI) to ship a new capsule for the uniform capsule price. Each capsule is immutable; an update is a new one, and your store points at the latest.
 
 ## Is my store reachable as soon as I publish?
 

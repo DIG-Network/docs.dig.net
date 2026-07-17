@@ -5,10 +5,10 @@ description: "The shortest path through the dig-store CLI: install it, scaffold 
 keywords:
   - dig-store CLI how-to
   - dig-store install
-  - dig-store init
-  - dig-store commit
-  - dig-store deploy
-  - dig-store cat
+  - digs init
+  - digs commit
+  - digs deploy
+  - digs cat
 tags:
   - digstore-cli
   - store
@@ -28,31 +28,31 @@ The loop mirrors Git: scaffold and preview locally for **free**, then `init` to 
 
 ## How do I install it?
 
-Grab the `dig-store` binary for your OS from the Releases page — or the guided DIG Installer, or build from source — then confirm with `dig-store --version`.
+Grab the `dig-store` binary for your OS from the Releases page — or the guided DIG Installer, or build from source — then confirm with `digs --version`.
 
 → [Installing the CLI](../digstore/cli/install.md)
 
 ## How do I try it before I spend anything?
 
-Scaffold a runnable project with `dig-store new <template>` and preview it live with `dig-store dev` — served over the genuine `chia://` read path with live reload and an injected dev `window.chia`. **No mint, no chain, no spend.** `dig-store doctor` runs a pre-publish preflight, and `dig-store commit --dry-run` previews the exact $DIG/XCH cost without spending.
+Scaffold a runnable project with `digs new <template>` and preview it live with `digs dev` — served over the genuine `chia://` read path with live reload and an injected dev `window.chia`. **No mint, no chain, no spend.** `digs doctor` runs a pre-publish preflight, and `digs commit --dry-run` previews the exact $DIG/XCH cost without spending.
 
 → [Scaffold an app](../build-a-dapp/scaffold.md) · [CLI tutorial](../digstore/cli/quickstart.md)
 
 ## How do I set up a wallet?
 
-Publishing spends real funds, so generate or import a seed and fund the wallet first: `dig-store seed generate`, then `dig-store balance` to see your receive address.
+Publishing spends real funds, so generate or import a seed and fund the wallet first: `digs seed generate`, then `digs balance` to see your receive address.
 
 → [On-chain anchoring](../digstore/cli/onchain-anchoring.md) · [Where to get DIG](../digstore/cli/onchain-anchoring.md#where-to-get-dig)
 
 ## How do I publish my first capsule?
 
-`dig-store init site --dir dist` mints the store's singleton on Chia mainnet — **the launcher id becomes your store id** — and blocks until confirmed.
+`digs init site --dir dist` mints the store's singleton on Chia mainnet — **the launcher id becomes your store id** — and blocks until confirmed.
 
 → [CLI tutorial → initialize](../digstore/cli/quickstart.md)
 
 ## How do I ship an update?
 
-`dig-store add -A` then `dig-store commit -m "v1.1"` seals the current content into a new capsule and advances your on-chain root. For CI, `dig-store deploy --output-dir dist --json` does add → commit → push in one command and never mints.
+`digs add -A` then `digs commit -m "v1.1"` seals the current content into a new capsule and advances your on-chain root. For CI, `digs deploy --output-dir dist --json` does add → commit → push in one command and never mints.
 
 → [Using dig-store in your project](../digstore/cli/project-workflow.md) · [Project config](../digstore/cli/configuration.md)
 
@@ -64,7 +64,7 @@ Publishing spends real funds, so generate or import a seed and fund the wallet f
 
 ## How do I read content back?
 
-`dig-store cat urn:dig:chia:<storeId>/<resource>` — a [URN](../concepts.md#urn) both locates *and* decrypts the resource. The same chunked, verify-then-decrypt path the network uses.
+`digs cat urn:dig:chia:<storeId>/<resource>` — a [URN](../concepts.md#urn) both locates *and* decrypts the resource. The same chunked, verify-then-decrypt path the network uses.
 
 → [Streaming & retrieval keys](../digstore/cli/streaming-and-keys.md)
 

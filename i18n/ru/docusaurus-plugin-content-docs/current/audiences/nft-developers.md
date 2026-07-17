@@ -34,7 +34,7 @@ tags:
 Начните со страницы дропа с интеграцией кошелька одной командой:
 
 ```sh
-dig-store new nft-drop
+digs new nft-drop
 # или
 npm create dig-app@latest my-drop -- --template nft-drop
 ```
@@ -46,10 +46,10 @@ npm create dig-app@latest my-drop -- --template nft-drop
 CLI для активов строит трату через строители `digstore-chain`, подписывает seed-фразой вашего кошелька и отправляет — все команды безопасны для CI с `--dry-run` / `--json`:
 
 ```sh
-dig-store did create                          # DID эмитента для атрибуции
-dig-store collection create --name "My Drop"  # коллекция CHIP-0007
-dig-store nft mint --data ./art.png --metadata ./meta.json --dry-run
-dig-store offer make ...                       # сделки XCH / CAT
+digs did create                          # DID эмитента для атрибуции
+digs collection create --name "My Drop"  # коллекция CHIP-0007
+digs nft mint --data ./art.png --metadata ./meta.json --dry-run
+digs offer make ...                       # сделки XCH / CAT
 ```
 
 Путь **capsule-media** команды `nft mint` записывает арт + метаданные CHIP-0007 в capsule, вычисляет хеши данных/метаданных из реальных байтов и устанавливает URI на адрес `chia://` capsule (с резервным https-шлюзом). → [Справочник команд](../digstore/cli/command-reference.md)
@@ -78,7 +78,7 @@ dig-store offer make ...                       # сделки XCH / CAT
 
 ## Offers — создать / принять / показать {#offers--make--take--show}
 
-Обменивайте NFT на XCH или CAT через `dig-store offer make | take | show` (каждая с `--dry-run` / `--json`). → [Справочник команд](../digstore/cli/command-reference.md)
+Обменивайте NFT на XCH или CAT через `digs offer make | take | show` (каждая с `--dry-run` / `--json`). → [Справочник команд](../digstore/cli/command-reference.md)
 
 ---
 

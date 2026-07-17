@@ -8,7 +8,7 @@ keywords:
   - window.chia
   - dig-sdk
   - chip35 spend
-  - dig-store deploy
+  - digs deploy
   - custom domain
 tags:
   - digstore-cli
@@ -41,10 +41,10 @@ new ──▶ dev ──▶ wire wallet (dig-sdk) ──▶ build a spend (chip3
 
 ## 1. Dựng khung một ứng dụng React — miễn phí, không cần chuỗi {#1-scaffold-a-react-app--free-no-chain}
 
-`dig-store new` viết ra một dự án chạy được, có ví. Chọn template React:
+`digs new` viết ra một dự án chạy được, có ví. Chọn template React:
 
 ```sh
-dig-store new vite-react my-dapp
+digs new vite-react my-dapp
 cd my-dapp
 ```
 
@@ -57,7 +57,7 @@ Bạn nhận được một ứng dụng Vite + React, một `dig.toml` (`output
 ## 2. Phát triển dựa trên đường đọc thực tế — miễn phí {#2-develop-against-the-real-read-path--free}
 
 ```sh
-dig-store dev
+digs dev
 ```
 
 `dev` chạy bản build của bạn, phục vụ kết quả qua **đường đọc `chia://` thực thụ** (biên dịch → xác minh → giải mã), và tiêm một **dev shim `window.chia`** để bạn có thể xây dựng luồng ví mà không cần ví thật. Chỉnh sửa `src/App.jsx`, lưu lại, và trang tự động tải lại — chính xác những gì khách truy cập sẽ nhận được, với không tương tác chuỗi nào và không tốn tiền nào.
@@ -170,13 +170,13 @@ if (await paywall.verifyReceipt(receipt)) { /* unlock the content */ }
 Bạn xây dựng và xem trước miễn phí; đây là bước duy nhất tốn tiền. Đầu tiên tạo store **một lần**:
 
 ```sh
-dig-store init my-dapp --dir dist      # mint the store's first capsule (uniform capsule price + XCH fee)
+digs init my-dapp --dir dist      # mint the store's first capsule (uniform capsule price + XCH fee)
 ```
 
 `init` mint một singleton Chia trên mainnet — **launcher id trở thành store id của bạn**. Sao chép nó vào `dig.toml` (`store-id = "<64-hex>"`). Từ đó trở đi, một lệnh duy nhất xây dựng và xuất bản một capsule mới:
 
 ```sh
-dig-store deploy --json                # runs build-command, stages dist/, advances the root
+digs deploy --json                # runs build-command, stages dist/, advances the root
 ```
 
 Mỗi lần `deploy` xuất bản một capsule bất biến mới với chi phí là mức giá capsule đồng nhất. Ngay khi nó được xác nhận, dapp của bạn **có thể đọc được qua [dig RPC](../rpc/what-is-the-dig-rpc.md)** bằng địa chỉ [URN](../concepts.md#urn) / `chia://` của nó — được mã hóa, xác minh, và không thể gỡ xuống, không cần đăng ký và không tốn thêm gì. (Một địa chỉ web `*.on.dig.net` thân thiện là một bước riêng biệt, tùy chọn — xem [mục tiếp theo](#6-put-it-on-your-own-domain).) Để push-to-deploy trên mỗi commit, thiết lập [Triển khai từ GitHub Actions](../digstore/cli/deploy-from-github-actions.md).

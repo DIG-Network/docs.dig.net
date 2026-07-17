@@ -52,29 +52,29 @@ Scaffolding, Bauen und Vorschau kosten **nichts**. Sie zahlen erst, wenn Sie ein
 Der Git-artige Ablauf: `new` → `dev` → `init` → `commit`.
 
 ```sh
-dig-store new vite-react   # scaffold a runnable project — free, no mint
-dig-store dev              # preview on the real chia:// read path, live-reload — free
-dig-store init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
-dig-store commit -m "v1.1"       # publish an update — a new capsule
+digs new vite-react   # scaffold a runnable project — free, no mint
+digs dev              # preview on the real chia:// read path, live-reload — free
+digs init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
+digs commit -m "v1.1"       # publish an update — a new capsule
 ```
 
 → [CLI-Quickstart](../digstore/cli/quickstart.md) · [Der vollständige Projekt-Workflow](../digstore/cli/project-workflow.md)
 
 ## Eine App scaffolden — 5 Templates {#scaffold-an-app--5-templates}
 
-Starten Sie mit einem lauffähigen, wallet-verbundenen Starter — `static`, `vite-react`, `next-static`, `nft-drop` oder `dapp-window-chia` — über `dig-store new <template>` oder `npm create dig-app`.
+Starten Sie mit einem lauffähigen, wallet-verbundenen Starter — `static`, `vite-react`, `next-static`, `nft-drop` oder `dapp-window-chia` — über `digs new <template>` oder `npm create dig-app`.
 
 → [Eine App scaffolden](../build-a-dapp/scaffold.md)
 
-## Kostenlos testen mit `dig-store dev` {#preview-free-with-digstore-dev}
+## Kostenlos testen mit `digs dev` {#preview-free-with-digstore-dev}
 
-`dig-store dev` liefert Ihr Projekt über den **echten** DIG-Lesepfad aus (verschlüsseln → kompilieren → verifizieren → entschlüsseln) mit Live-Reload und einem injizierten Dev-`window.chia`. Was Sie sehen, ist das, was Besucher erhalten — und nichts wird geprägt oder ausgegeben.
+`digs dev` liefert Ihr Projekt über den **echten** DIG-Lesepfad aus (verschlüsseln → kompilieren → verifizieren → entschlüsseln) mit Live-Reload und einem injizierten Dev-`window.chia`. Was Sie sehen, ist das, was Besucher erhalten — und nichts wird geprägt oder ausgegeben.
 
 → [CLI-Quickstart → Entwickeln & Vorschau](../digstore/cli/quickstart.md)
 
 ## `dig.toml` — das committable Manifest {#digtoml--the-committable-manifest}
 
-`dig.toml` im Wurzelverzeichnis Ihres Projekts enthält `store-id`, `output-dir`, `build-command`, `remote` und weitere Konfiguration — gemeinsam genutzt von `dig-store dev`, `dig-store deploy` und den Scaffold-Templates. Es enthält **keine Geheimnisse** (diese kommen aus der Umgebung), also können Sie es committen.
+`dig.toml` im Wurzelverzeichnis Ihres Projekts enthält `store-id`, `output-dir`, `build-command`, `remote` und weitere Konfiguration — gemeinsam genutzt von `digs dev`, `digs deploy` und den Scaffold-Templates. Es enthält **keine Geheimnisse** (diese kommen aus der Umgebung), also können Sie es committen.
 
 → [Projektkonfiguration & Build-Zeit-Werte](../digstore/cli/configuration.md)
 

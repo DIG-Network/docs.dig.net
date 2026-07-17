@@ -52,29 +52,29 @@ tags:
 Git 風格的流程：`new` → `dev` → `init` → `commit`。
 
 ```sh
-dig-store new vite-react   # 建立一個可直接執行的專案骨架——免費，不鑄造
-dig-store dev              # 在真實的 chia:// 讀取路徑上預覽，即時重新載入——免費
-dig-store init site --dir dist   # 鑄造該 store 的第一個 capsule（統一價格加上 XCH 手續費）
-dig-store commit -m "v1.1"       # 發布一次更新——一個新的 capsule
+digs new vite-react   # 建立一個可直接執行的專案骨架——免費，不鑄造
+digs dev              # 在真實的 chia:// 讀取路徑上預覽，即時重新載入——免費
+digs init site --dir dist   # 鑄造該 store 的第一個 capsule（統一價格加上 XCH 手續費）
+digs commit -m "v1.1"       # 發布一次更新——一個新的 capsule
 ```
 
 → [CLI 快速入門](../digstore/cli/quickstart.md)．[完整的專案工作流程](../digstore/cli/project-workflow.md)
 
 ## 建立應用骨架——5 種範本 {#scaffold-an-app--5-templates}
 
-從一個可直接執行、已接好錢包的起始專案開始——`static`、`vite-react`、`next-static`、`nft-drop` 或 `dapp-window-chia`——透過 `dig-store new <template>` 或 `npm create dig-app`。
+從一個可直接執行、已接好錢包的起始專案開始——`static`、`vite-react`、`next-static`、`nft-drop` 或 `dapp-window-chia`——透過 `digs new <template>` 或 `npm create dig-app`。
 
 → [建立應用骨架](../build-a-dapp/scaffold.md)
 
-## 使用 `dig-store dev` 免費預覽 {#preview-free-with-digstore-dev}
+## 使用 `digs dev` 免費預覽 {#preview-free-with-digstore-dev}
 
-`dig-store dev` 會透過**真實的** DIG 讀取路徑（加密 → 編譯 → 驗證 → 解密）提供你的專案，附帶即時重新載入以及注入的開發版 `window.chia`。你所看到的畫面就是訪客會看到的畫面——而且不會鑄造任何東西，也不會有任何花費。
+`digs dev` 會透過**真實的** DIG 讀取路徑（加密 → 編譯 → 驗證 → 解密）提供你的專案，附帶即時重新載入以及注入的開發版 `window.chia`。你所看到的畫面就是訪客會看到的畫面——而且不會鑄造任何東西，也不會有任何花費。
 
 → [CLI 快速入門 → 開發與預覽](../digstore/cli/quickstart.md)
 
 ## `dig.toml`——可提交的設定檔 {#digtoml--the-committable-manifest}
 
-專案根目錄的 `dig.toml` 存放 `store-id`、`output-dir`、`build-command`、`remote` 以及其他設定，由 `dig-store dev`、`dig-store deploy` 與骨架範本共用。它**不含任何機密資訊**（那些來自環境變數），因此可以提交它。
+專案根目錄的 `dig.toml` 存放 `store-id`、`output-dir`、`build-command`、`remote` 以及其他設定，由 `digs dev`、`digs deploy` 與骨架範本共用。它**不含任何機密資訊**（那些來自環境變數），因此可以提交它。
 
 → [專案設定與建置時期的數值](../digstore/cli/configuration.md)
 

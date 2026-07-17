@@ -52,29 +52,29 @@ Generar, construir y previsualizar no cuesta **nada**. Pagas solo cuando publica
 El ciclo con forma de Git: `new` → `dev` → `init` → `commit`.
 
 ```sh
-dig-store new vite-react   # genera un proyecto ejecutable — gratis, sin mint
-dig-store dev              # previsualiza en la vía de lectura real chia://, recarga en vivo — gratis
-dig-store init site --dir dist   # acuña el primer capsule del store (precio uniforme + comisión de XCH)
-dig-store commit -m "v1.1"       # publica una actualización — un nuevo capsule
+digs new vite-react   # genera un proyecto ejecutable — gratis, sin mint
+digs dev              # previsualiza en la vía de lectura real chia://, recarga en vivo — gratis
+digs init site --dir dist   # acuña el primer capsule del store (precio uniforme + comisión de XCH)
+digs commit -m "v1.1"       # publica una actualización — un nuevo capsule
 ```
 
 → [Quickstart de la CLI](../digstore/cli/quickstart.md) · [El flujo de trabajo completo del proyecto](../digstore/cli/project-workflow.md)
 
 ## Genera una app — 5 plantillas {#scaffold-an-app--5-templates}
 
-Empieza desde una plantilla de partida ejecutable y conectada a la wallet — `static`, `vite-react`, `next-static`, `nft-drop` o `dapp-window-chia` — vía `dig-store new <template>` o `npm create dig-app`.
+Empieza desde una plantilla de partida ejecutable y conectada a la wallet — `static`, `vite-react`, `next-static`, `nft-drop` o `dapp-window-chia` — vía `digs new <template>` o `npm create dig-app`.
 
 → [Genera una app](../build-a-dapp/scaffold.md)
 
-## Previsualiza gratis con `dig-store dev` {#preview-free-with-digstore-dev}
+## Previsualiza gratis con `digs dev` {#preview-free-with-digstore-dev}
 
-`dig-store dev` sirve tu proyecto sobre la vía de lectura **genuina** de DIG (cifrar → compilar → verificar → descifrar) con recarga en vivo y un `window.chia` de desarrollo inyectado. Lo que ves es lo que verán los visitantes — y nada se acuña ni se gasta.
+`digs dev` sirve tu proyecto sobre la vía de lectura **genuina** de DIG (cifrar → compilar → verificar → descifrar) con recarga en vivo y un `window.chia` de desarrollo inyectado. Lo que ves es lo que verán los visitantes — y nada se acuña ni se gasta.
 
 → [Quickstart de la CLI → desarrollar y previsualizar](../digstore/cli/quickstart.md)
 
 ## `dig.toml` — el manifiesto commiteable {#digtoml--the-committable-manifest}
 
-`dig.toml` en la raíz de tu proyecto contiene `store-id`, `output-dir`, `build-command`, `remote` y otra configuración — compartida por `dig-store dev`, `dig-store deploy` y las plantillas de scaffold. No contiene **ningún secreto** (esos vienen del entorno), así que puedes commitearlo.
+`dig.toml` en la raíz de tu proyecto contiene `store-id`, `output-dir`, `build-command`, `remote` y otra configuración — compartida por `digs dev`, `digs deploy` y las plantillas de scaffold. No contiene **ningún secreto** (esos vienen del entorno), así que puedes commitearlo.
 
 → [Configuración del proyecto y valores en tiempo de compilación](../digstore/cli/configuration.md)
 

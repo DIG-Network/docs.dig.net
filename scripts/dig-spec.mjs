@@ -657,7 +657,7 @@ export const cliCatalog = [
   { exit: 0, code: 'success', description: 'The command completed.' },
   { exit: 1, code: 'other', description: 'An unclassified error. Re-run with --verbose.' },
   { exit: 2, code: 'invalid-argument', description: 'A flag or argument was invalid.' },
-  { exit: 3, code: 'no-store', description: 'No store found here. Run `dig-store init`.' },
+  { exit: 3, code: 'no-store', description: 'No store found here. Run `digs init`.' },
   { exit: 4, code: 'not-found', description: "A resource/URN/root wasn't found." },
   { exit: 5, code: 'verification-failed', description: 'Content failed cryptographic verification (wrong salt/key or tampered data).' },
   { exit: 6, code: 'network', description: 'A network/transport failure.' },

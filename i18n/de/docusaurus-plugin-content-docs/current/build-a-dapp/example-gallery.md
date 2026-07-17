@@ -17,19 +17,19 @@ tags:
 
 # Example gallery
 
-Start from working code, not a blank folder. Every example below maps to a **`dig-store new` template** you can scaffold in one command, and links to the example repo it's based on.
+Start from working code, not a blank folder. Every example below maps to a **`digs new` template** you can scaffold in one command, and links to the example repo it's based on.
 
 ```sh
-dig-store new <template> my-project    # free, no chain, no spend
-cd my-project && dig-store dev          # preview on the real read path
+digs new <template> my-project    # free, no chain, no spend
+cd my-project && digs dev          # preview on the real read path
 ```
 
 :::tip Two front doors, same templates
-You can scaffold these from the `dig-store` CLI (`dig-store new`) **or** straight from npm with `npm create dig-app@latest my-project -- --template <template>`. See [Scaffold an app](./scaffold.md) for the full template list and how the two front doors compare.
+You can scaffold these from the `dig-store` CLI (`digs new`) **or** straight from npm with `npm create dig-app@latest my-project -- --template <template>`. See [Scaffold an app](./scaffold.md) for the full template list and how the two front doors compare.
 :::
 
 :::note Repo links are placeholders during pre-release
-The `dig-store new <template>` commands are live today. The **example repository links are placeholders** while the gallery is being assembled — they're marked _(coming soon)_ below. The templates themselves ship with the CLI, so you can scaffold and run every one of these now.
+The `digs new <template>` commands are live today. The **example repository links are placeholders** while the gallery is being assembled — they're marked _(coming soon)_ below. The templates themselves ship with the CLI, so you can scaffold and run every one of these now.
 :::
 
 ## Static site — `static-site`
@@ -37,7 +37,7 @@ The `dig-store new <template>` commands are live today. The **example repository
 A plain HTML/CSS/JS site, no build step. The simplest possible deployment: the folder _is_ the capsule.
 
 ```sh
-dig-store new static-site my-site
+digs new static-site my-site
 ```
 
 - **Scaffolds:** `index.html`, styles, and a `dig.toml` with `output-dir = "."`.
@@ -49,7 +49,7 @@ dig-store new static-site my-site
 A Vite + React app wired to the in-page Chia wallet (`window.chia`). This is the template the [Build a dapp tutorial](./tutorial.md) walks through end to end.
 
 ```sh
-dig-store new vite-react my-dapp
+digs new vite-react my-dapp
 ```
 
 - **Scaffolds:** a Vite/React app, `App.jsx` with a wallet **Connect** flow, `dig.toml` (`output-dir = "dist"`, `build-command = "npm install && npm run build"`).
@@ -62,7 +62,7 @@ dig-store new vite-react my-dapp
 The public mint/collection page for an NFT drop.
 
 ```sh
-dig-store new nft-drop my-drop
+digs new nft-drop my-drop
 ```
 
 - **Scaffolds:** a mint/collection landing page and a `dig.toml`. (Minting the NFTs themselves is a separate on-chain step.)
@@ -77,8 +77,8 @@ Two more templates ship with the CLI:
 - **`dapp-window-chia`** — a hand-written (no build step) dapp wired directly to `window.chia`, the minimal example of the in-page wallet.
 
 ```sh
-dig-store new next-static my-next-site
-dig-store new dapp-window-chia my-wallet-dapp
+digs new next-static my-next-site
+digs new dapp-window-chia my-wallet-dapp
 ```
 
 ## Related

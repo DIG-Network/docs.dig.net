@@ -25,15 +25,15 @@ dig-store is built for **build output**. Point a store at the directory your bui
 
 ```sh
 # in your project root
-dig-store init site --dir dist
+digs init site --dir dist
 ```
 
 Now `add`/`urn`/`status` operate relative to `dist/`. Build, then capture:
 
 ```sh
 npm run build            # produces dist/
-dig-store add -A          # stage everything under the content root (dist/)
-dig-store commit -m "v1"
+digs add -A          # stage everything under the content root (dist/)
+digs commit -m "v1"
 ```
 
 `commit` anchors the new root on Chia mainnet (blocks until confirmed, spends XCH), then seals the deployment, compiles the module, and writes a local **URN manifest** (`urns.json` / `urns.txt`) — your index of every shareable URN for that deployment. See [On-chain anchoring](./onchain-anchoring.md).
@@ -41,7 +41,7 @@ dig-store commit -m "v1"
 Change or override the content root anytime:
 
 ```sh
-dig-store dir build/site      # set the active store's content root
+digs dir build/site      # set the active store's content root
 dig-store -C ./dist add -A    # override for just this command
 ```
 
@@ -50,11 +50,11 @@ dig-store -C ./dist add -A    # override for just this command
 Staging works like Git's index:
 
 ```sh
-dig-store add path/to/file        # stage one file
-dig-store add . src/*.css         # stage paths / globs
-dig-store add -A                  # stage the whole content root
-dig-store staged                  # list staged files + size + remaining headroom
-dig-store unstage                 # clear the staging area
+digs add path/to/file        # stage one file
+digs add . src/*.css         # stage paths / globs
+digs add -A                  # stage the whole content root
+digs staged                  # list staged files + size + remaining headroom
+digs unstage                 # clear the staging area
 ```
 
 Each store is capped at **128 MB** of staged content. `add`, `status`, `staged`, and `stores` all show remaining capacity; `add` refuses content that would exceed the cap.
@@ -64,11 +64,11 @@ Each store is capped at **128 MB** of staged content. `add`, `status`, `staged`,
 One `.dig/` workspace can hold many stores, each with its own content, keys, and history:
 
 ```sh
-dig-store init site --dir dist
-dig-store init docs --dir build/docs
+digs init site --dir dist
+digs init docs --dir build/docs
 
-dig-store stores                  # list stores; * marks the active one + capacity
-dig-store use site                # switch the active store
+digs stores                  # list stores; * marks the active one + capacity
+digs use site                # switch the active store
 ```
 
 Pick which store a command targets:
@@ -79,20 +79,20 @@ dig-store --store site add -A     # target "site" regardless of the active store
 
 **Selection precedence:** `--store <name>` → the active store (`use`) → the single store if there's only one.
 
-> **Back-compat aliases.** `dig-store projects` (for `dig-store stores`) and the `--project` flag are kept only as hidden aliases for older scripts; new usage should say `stores` / `--store`.
+> **Back-compat aliases.** `digs projects` (for `digs stores`) and the `--project` flag are kept only as hidden aliases for older scripts; new usage should say `stores` / `--store`.
 
 ## A typical release loop
 
 ```sh
 # once
-dig-store init site --dir dist
-dig-store remote add origin https://example.com/stores/<storeId>
+digs init site --dir dist
+digs remote add origin https://example.com/stores/<storeId>
 
 # every release
 npm run build
-dig-store add -A
-dig-store commit -m "v1.4.2"
-dig-store push origin
+digs add -A
+digs commit -m "v1.4.2"
+digs push origin
 ```
 
 ## Handy globals

@@ -30,7 +30,7 @@ A store has an **identity**, a **history of generations**, and a compiled **modu
 
 ## Store identity
 
-A store is identified by a 64-hex **store id**, which is the store's **on-chain Chia singleton launcher id** — minted on mainnet by `dig-store init` (see [On-chain anchoring](../cli/onchain-anchoring.md)). The id is the store's permanent on-chain identity: the singleton's current root *is* the store's authoritative latest root, and every `commit` advances it on-chain.
+A store is identified by a 64-hex **store id**, which is the store's **on-chain Chia singleton launcher id** — minted on mainnet by `digs init` (see [On-chain anchoring](../cli/onchain-anchoring.md)). The id is the store's permanent on-chain identity: the singleton's current root *is* the store's authoritative latest root, and every `commit` advances it on-chain.
 
 The id is curried into every URN that references the store and is the only mandatory addressing component. A separate publisher **BLS signing key** (embedded in the module) signs the store's published roots and push heads — but the store id is the chain singleton, not a hash of that key.
 
@@ -49,8 +49,8 @@ Each commit produces exactly **one** new generation, **one** new module file, an
 Each `commit` creates a new generation — an immutable `(storeId, rootHash)` pair anchored on-chain as a CHIP-0035 singleton update. That pair is a **capsule**: the network's unit of retrieval, caching, and pricing (a uniform per-capsule price in $DIG). So a **store is a sequence of capsules**, one per commit. (See [the capsule](../../intro.md#the-capsule) for the ecosystem-wide definition.)
 
 ```sh
-dig-store log            # list generations (each root hash is a commit)
-dig-store diff <a> <b>   # what changed between two roots
+digs log            # list generations (each root hash is a commit)
+digs diff <a> <b>   # what changed between two roots
 ```
 
 ## The content root
@@ -58,7 +58,7 @@ dig-store diff <a> <b>   # what changed between two roots
 Unlike Git, a store doesn't track a source tree — it captures a **content root**: a build-output directory.
 
 - Default content root is the current directory.
-- Set it at creation with `dig-store init --dir <path>`, or later with `dig-store dir <path>`.
+- Set it at creation with `digs init --dir <path>`, or later with `digs dir <path>`.
 - Override it for a single command with `-C/--cwd <path>`.
 
 Resource keys are always **relative to the content root**, so a URN is stable no matter which subdirectory you run a command from.

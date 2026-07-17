@@ -34,7 +34,7 @@ Bir **store basmak** $DIG açısından ücretsizdir — yalnızca bir capsule ol
 Tek bir komutla cüzdana bağlı bir drop sayfasından başlayın:
 
 ```sh
-dig-store new nft-drop
+digs new nft-drop
 # or
 npm create dig-app@latest my-drop -- --template nft-drop
 ```
@@ -46,10 +46,10 @@ npm create dig-app@latest my-drop -- --template nft-drop
 Varlık CLI'ı, harcamayı `digstore-chain` oluşturucuları aracılığıyla oluşturur, cüzdan tohumunuzla imzalar ve gönderir — hepsi `--dry-run` / `--json` ile CI-güvenli:
 
 ```sh
-dig-store did create                          # an issuer DID for attribution
-dig-store collection create --name "My Drop"  # a CHIP-0007 collection
-dig-store nft mint --data ./art.png --metadata ./meta.json --dry-run
-dig-store offer make ...                       # XCH / CAT trades
+digs did create                          # an issuer DID for attribution
+digs collection create --name "My Drop"  # a CHIP-0007 collection
+digs nft mint --data ./art.png --metadata ./meta.json --dry-run
+digs offer make ...                       # XCH / CAT trades
 ```
 
 `nft mint` **capsule-media** yolu, sanatı + CHIP-0007 meta verisini bir capsule'e yazar, gerçek baytlardan veri/meta veri karmalarını hesaplar ve URI'leri capsule'ün `chia://` adresine (https ağ geçidi geri dönüşüyle) ayarlar. → [Komut referansı](../digstore/cli/command-reference.md)
@@ -78,7 +78,7 @@ SDK'nın `Paywall`'u, **öde-ve-aç** ve **NFT / koleksiyon-sahipliği kısıtla
 
 ## Teklifler — oluştur / al / göster {#offers--make--take--show}
 
-NFT'leri `dig-store offer make | take | show` ile (her biri `--dry-run` / `--json`) XCH veya CAT'ler karşılığında takas edin. → [Komut referansı](../digstore/cli/command-reference.md)
+NFT'leri `digs offer make | take | show` ile (her biri `--dry-run` / `--json`) XCH veya CAT'ler karşılığında takas edin. → [Komut referansı](../digstore/cli/command-reference.md)
 
 ---
 

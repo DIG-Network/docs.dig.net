@@ -36,7 +36,7 @@ npm create dig-app@latest
 It needs **Node 18+** and has no runtime dependencies. The `--` is npm's argument separator — it forwards the flags to `create-dig-app`. (With `npx create-dig-app` or `pnpm create dig-app` you can drop it.)
 
 :::tip Free until you publish
-Scaffolding, building, and previewing cost **nothing** — `create-dig-app` never mints, touches the chain, or spends. You pay the **[uniform capsule price in $DIG](../concepts.md#dig-payment)** only when you publish a [capsule](../concepts.md#capsule) with `dig-store deploy`. *Iterate for free, publish when it's ready.*
+Scaffolding, building, and previewing cost **nothing** — `create-dig-app` never mints, touches the chain, or spends. You pay the **[uniform capsule price in $DIG](../concepts.md#dig-payment)** only when you publish a [capsule](../concepts.md#capsule) with `digs deploy`. *Iterate for free, publish when it's ready.*
 :::
 
 ## The five templates
@@ -70,28 +70,28 @@ cd my-app
 npm install
 npm run dev       # work on your app locally (skip for the static template)
 
-dig-store dev      # preview on the real chia:// read path — FREE, no chain, no spend
-dig-store deploy   # publish a capsule when you're ready (the only step that spends $DIG)
+digs dev      # preview on the real chia:// read path — FREE, no chain, no spend
+digs deploy   # publish a capsule when you're ready (the only step that spends $DIG)
 ```
 
-[`dig-store dev`](../digstore/cli/quickstart.md) serves your build over the genuine `chia://` read path (compile → verify → decrypt) with live reload — it's exactly what visitors get, with zero chain interaction. You only spend when you run `dig-store deploy` (or publish from [DIGHUb](../concepts.md#dighub)). See the [Quickstart](../quickstart.md) for the full publish flow, and [On-chain anchoring](../digstore/cli/onchain-anchoring.md) for wallet setup and costs.
+[`digs dev`](../digstore/cli/quickstart.md) serves your build over the genuine `chia://` read path (compile → verify → decrypt) with live reload — it's exactly what visitors get, with zero chain interaction. You only spend when you run `digs deploy` (or publish from [DIGHUb](../concepts.md#dighub)). See the [Quickstart](../quickstart.md) for the full publish flow, and [On-chain anchoring](../digstore/cli/onchain-anchoring.md) for wallet setup and costs.
 
 ## What it writes
 
 Every scaffolded project includes:
 
-- **`dig.toml`** — the committable [project manifest](../digstore/cli/configuration.md) `dig-store` (and the DIG SDK adapters) read: `output-dir`, `build-command`, and the default `remote`. This is the single source of truth `dig-store deploy` and the [GitHub deploy Action](../digstore/cli/deploy-from-github-actions.md) use.
+- **`dig.toml`** — the committable [project manifest](../digstore/cli/configuration.md) `dig-store` (and the DIG SDK adapters) read: `output-dir`, `build-command`, and the default `remote`. This is the single source of truth `digs deploy` and the [GitHub deploy Action](../digstore/cli/deploy-from-github-actions.md) use.
 - **`README.md`** — the develop → preview (free) → publish flow for that template.
 - a real **app** that `npm install`s and builds to the template's output dir.
 
-## Two front doors: `create-dig-app` vs `dig-store new`
+## Two front doors: `create-dig-app` vs `digs new`
 
 There are two ways to scaffold the same templates, and they produce the same kind of project:
 
 - **`npm create dig-app`** (this page) — the **JS front door**. Best if you live in the npm/Node world: no separate install, it runs straight from npm and the wallet templates pull `@dignetwork/dig-sdk` from npm.
-- **[`dig-store new <template>`](../digstore/cli/quickstart.md)** — the **Rust CLI front door**. Best if you already have the [`dig-store` CLI](../digstore/cli/install.md) installed; it scaffolds without Node and keeps you in one tool through `dig-store dev` and `dig-store deploy`.
+- **[`digs new <template>`](../digstore/cli/quickstart.md)** — the **Rust CLI front door**. Best if you already have the [`dig-store` CLI](../digstore/cli/install.md) installed; it scaffolds without Node and keeps you in one tool through `digs dev` and `digs deploy`.
 
-Pick whichever fits your stack — both lead into the same free `dig-store dev` → `dig-store deploy` loop.
+Pick whichever fits your stack — both lead into the same free `digs dev` → `digs deploy` loop.
 
 ## Related
 

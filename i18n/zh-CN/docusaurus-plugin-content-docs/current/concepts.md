@@ -82,8 +82,8 @@ generation —— 这与 [capsule](#capsule) 所指代的正是同一件事。ge
 
 ## 链上锚定 {#anchoring}
 
-每个 store 都是 **Chia 主网上的一个 singleton**。`dig-store init` 会铸造它（launcher id
-*即成为*该 store id），而每次 `dig-store commit` 都会作为一次 CHIP-0035 singleton 更新，将新的
+每个 store 都是 **Chia 主网上的一个 singleton**。`digs init` 会铸造它（launcher id
+*即成为*该 store id），而每次 `digs commit` 都会作为一次 CHIP-0035 singleton 更新，将新的
 [generation](#generation) 根哈希锚定到链上。两者都会阻塞直到确认完成，并花费真实资金。链是 store
 最新根哈希的权威来源。→ [链上锚定](./digstore/cli/onchain-anchoring.md)
 
@@ -101,7 +101,7 @@ Git 形态的工作流（`init`、`add`、`commit`、`log`、`clone`、`push`、
 ## dig.toml {#dig-toml}
 
 `dig.toml` 是位于项目根目录、**可提交的项目清单文件** —— 包含 `store-id`、`output-dir`、
-`build-command` 及其他项目配置，被 `dig-store dev`、`dig-store deploy` 和脚手架模板共用。它**不包含任何机密信息**
+`build-command` 及其他项目配置，被 `digs dev`、`digs deploy` 和脚手架模板共用。它**不包含任何机密信息**
 （那些来自环境变量），因此可以安全地提交。→ [项目配置与构建期取值](./digstore/cli/configuration.md)
 
 ## create-dig-app {#create-dig-app}
@@ -110,12 +110,12 @@ Git 形态的工作流（`init`、`add`、`commit`、`log`、`clone`、`push`、
 （`static`、`vite-react`、`next-static`、`nft-drop`、`dapp-window-chia`）之一，搭建出一个可运行的初始项目 ——
 包含一个应用、一个 [`dig.toml`](#dig-toml)，以及（对于钱包相关模板）已接入的
 [DIG SDK](#dig-sdk)。搭建脚手架是**免费**的 —— 不铸造、不上链、不花费；你只有在发布一个 [capsule](#capsule)
-时才需要支付统一的 capsule 价格。它是 Rust CLI 中 `dig-store new` 在 npm 一侧的对应工具。→ [搭建应用脚手架](./build-a-dapp/scaffold.md)
+时才需要支付统一的 capsule 价格。它是 Rust CLI 中 `digs new` 在 npm 一侧的对应工具。→ [搭建应用脚手架](./build-a-dapp/scaffold.md)
 
 ## GitHub 部署 Action {#deploy-action}
 
 `dig-network/deploy-action` 是实现 **git-push-to-deploy** 的 GitHub Action：它会在运行器上安装
-[`dig-store` CLI](#digstore-cli)，运行 `dig-store deploy` 来推进你的 store（从不铸造），并将已发布的
+[`dig-store` CLI](#digstore-cli)，运行 `digs deploy` 来推进你的 store（从不铸造），并将已发布的
 [capsule](#capsule)、URL 和费用以步骤输出（step output）、PR 评论、GitHub Deployment 以及提交状态的形式汇报回去。
 在 `if-changed`（默认）模式下，字节完全相同的构建将不做任何操作 —— 不产生任何花费。→ [从 GitHub Actions 部署](./digstore/cli/deploy-from-github-actions.md)
 

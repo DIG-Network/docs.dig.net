@@ -4,10 +4,10 @@ title: CLI tutorial
 description: "Full walkthrough of the dig-store CLI: initialize a store, commit files, and read content back. The parallel track to the web-first quickstart."
 keywords:
   - dig-store quickstart
-  - dig-store init
-  - dig-store commit
-  - dig-store push
-  - dig-store cat
+  - digs init
+  - digs commit
+  - digs push
+  - digs cat
   - URN
 tags:
   - digstore-cli
@@ -31,35 +31,35 @@ The [**Quickstart**](../../quickstart.md) leads with the free, web-first path (b
 This is the canonical publish flow — run it top-to-bottom from inside your project once your wallet is funded (step 0):
 
 ```sh
-dig-store init                       # create the on-chain store (mints on Chia; store id = launcher id)
-dig-store add -A                     # stage every file under the store root
-dig-store add --discovery            # publish the public /.well-known discovery manifest
-dig-store commit -m "v3"             # anchor a new capsule on-chain (dynamic per-capsule $DIG price + XCH fee)
-dig-store push origin                # push the deployment to DIGHub (rpc.dig.net)
+digs init                       # create the on-chain store (mints on Chia; store id = launcher id)
+digs add -A                     # stage every file under the store root
+digs add --discovery            # publish the public /.well-known discovery manifest
+digs commit -m "v3"             # anchor a new capsule on-chain (dynamic per-capsule $DIG price + XCH fee)
+digs push origin                # push the deployment to DIGHub (rpc.dig.net)
 ```
 
 Building and previewing locally are free — you only spend when you `commit` a capsule. The rest of this page walks through each step and reads content back.
 
 ## 0. Set up your wallet
 
-`dig-store init` mints a singleton on **Chia mainnet** and costs the **uniform capsule price in $DIG + a small XCH fee**, so you need a seed and a funded wallet first. (Building and previewing locally are free — you only spend when you publish a capsule.)
+`digs init` mints a singleton on **Chia mainnet** and costs the **uniform capsule price in $DIG + a small XCH fee**, so you need a seed and a funded wallet first. (Building and previewing locally are free — you only spend when you publish a capsule.)
 
 ```sh
-dig-store seed import        # import an existing BIP-39 mnemonic (prompted)
+digs seed import        # import an existing BIP-39 mnemonic (prompted)
 # or
-dig-store seed generate      # generate a fresh mnemonic (shown once — back it up)
+digs seed generate      # generate a fresh mnemonic (shown once — back it up)
 ```
 
-Fund the wallet address that `dig-store seed status` shows before continuing. For full details see [On-chain anchoring](./onchain-anchoring.md).
+Fund the wallet address that `digs seed status` shows before continuing. For full details see [On-chain anchoring](./onchain-anchoring.md).
 
 ## 1. Initialize a workspace
 
 ```sh
 mkdir my-project && cd my-project
-dig-store init
+digs init
 ```
 
-`dig-store init` creates a `.dig/` workspace and mints the store's singleton on Chia mainnet — **the on-chain launcher id becomes the store id**. It blocks until the transaction is confirmed (default timeout 300 s), then writes the store locally. Run interactively, it asks a couple of setup questions:
+`digs init` creates a `.dig/` workspace and mints the store's singleton on Chia mainnet — **the on-chain launcher id becomes the store id**. It blocks until the transaction is confirmed (default timeout 300 s), then writes the store locally. Run interactively, it asks a couple of setup questions:
 
 ```
 Relative path to the build/content directory this store captures [.]:
@@ -72,9 +72,9 @@ Make this a private (salted) store? [y/N]:
 You can skip the prompts with flags — handy in scripts:
 
 ```sh
-dig-store init                       # current dir, public
-dig-store init site --dir dist       # a store named "site" capturing ./dist
-dig-store init --private             # private store
+digs init                       # current dir, public
+digs init site --dir dist       # a store named "site" capturing ./dist
+digs init --private             # private store
 ```
 
 ## 2. Add and commit
@@ -82,8 +82,8 @@ dig-store init --private             # private store
 ```sh
 echo "hello dig-store" > readme.txt
 
-dig-store add readme.txt --key readme    # stage one file under the key "readme"
-dig-store commit -m "first deployment"   # anchor root on-chain + compile the module
+digs add readme.txt --key readme    # stage one file under the key "readme"
+digs commit -m "first deployment"   # anchor root on-chain + compile the module
 ```
 
 `commit` anchors the new root on Chia mainnet and blocks until confirmed before finalizing the deployment (spends XCH). See [On-chain anchoring](./onchain-anchoring.md) for timeout and resume options.
@@ -91,44 +91,44 @@ dig-store commit -m "first deployment"   # anchor root on-chain + compile the mo
 `--key` sets the resource key explicitly; without it the key defaults to the path relative to the content root. Use `-A` to stage everything under the content root:
 
 ```sh
-dig-store add -A
+digs add -A
 ```
 
 ## 3. Inspect
 
 ```sh
-dig-store status            # what's staged / modified + remaining capacity
-dig-store log               # deployments — each root hash is a commit
-dig-store urn readme.txt    # preview the exact URN this file has
+digs status            # what's staged / modified + remaining capacity
+digs log               # deployments — each root hash is a commit
+digs urn readme.txt    # preview the exact URN this file has
 ```
 
-`dig-store log --json` prints the store id and root hashes you'll need to build a full URN.
+`digs log --json` prints the store id and root hashes you'll need to build a full URN.
 
 ## 4. Read it back
 
-A URN locates *and* decrypts. With the store id and root from `dig-store log --json`:
+A URN locates *and* decrypts. With the store id and root from `digs log --json`:
 
 ```sh
-dig-store cat urn:dig:chia:<storeId>:<rootHash>/readme
+digs cat urn:dig:chia:<storeId>:<rootHash>/readme
 # → hello dig-store
 ```
 
 Omit the `<rootHash>` to read from the current deployment:
 
 ```sh
-dig-store cat urn:dig:chia:<storeId>/readme
+digs cat urn:dig:chia:<storeId>/readme
 ```
 
 Write the output to a file instead of stdout:
 
 ```sh
-dig-store cat urn:dig:chia:<storeId>/readme --out readme.copy.txt
+digs cat urn:dig:chia:<storeId>/readme --out readme.copy.txt
 ```
 
 ## Where to go next
 
 - **[On-chain anchoring](./onchain-anchoring.md)** — wallet setup, funding, init/commit timeouts, anchor status, and config.
-- **[Store workflow](./project-workflow.md)** — capture a real build directory, run multiple stores per workspace, manage staging. List them with `dig-store stores`.
+- **[Store workflow](./project-workflow.md)** — capture a real build directory, run multiple stores per workspace, manage staging. List them with `digs stores`.
 - **[Sharing over a remote](./sharing.md)** — publish a store and let others `clone`/`pull` it.
 - **[Streaming & keys](./streaming-and-keys.md)** — fetch encrypted vs decrypted, list retrieval keys, checkout a whole deployment.
 

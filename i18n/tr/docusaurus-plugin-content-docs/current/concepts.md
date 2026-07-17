@@ -88,8 +88,8 @@ ve bir düğüme asla gerçek baytları döndürdüğüne güvenilmez. → [Merk
 
 ## Zincir üzeri sabitleme (On-chain anchoring) {#anchoring}
 
-Her store, Chia mainnet üzerinde bir **singleton**'dır. `dig-store init` bunu basar (başlatıcı id'si
-store id *olur*) ve her `dig-store commit`, bir CHIP-0035 singleton güncellemesi olarak yeni bir
+Her store, Chia mainnet üzerinde bir **singleton**'dır. `digs init` bunu basar (başlatıcı id'si
+store id *olur*) ve her `digs commit`, bir CHIP-0035 singleton güncellemesi olarak yeni bir
 [generation](#generation) kökünü zincir üzerinde sabitler. İkisi de onaylanana kadar bloklar ve gerçek fon harcar. Zincir, bir
 store'un en son kökü için otoritedir. → [Zincir üzeri sabitleme](./digstore/cli/onchain-anchoring.md)
 
@@ -108,7 +108,7 @@ zincir üzeri store formatı üzerinde Git şekilli bir iş akışı (`init`, `a
 ## dig.toml {#dig-toml}
 
 `dig.toml`, bir projenin kökündeki **commit edilebilir proje manifestosudur** — `store-id`, `output-dir`,
-`build-command` ve `dig-store dev`, `dig-store deploy` ile iskeleleme şablonları tarafından paylaşılan diğer proje
+`build-command` ve `digs dev`, `digs deploy` ile iskeleleme şablonları tarafından paylaşılan diğer proje
 yapılandırması. **Hiçbir sır içermez** (bunlar ortamdan gelir), bu yüzden commit etmek güvenlidir.
 → [Proje yapılandırması & derleme zamanı değerleri](./digstore/cli/configuration.md)
 
@@ -118,13 +118,13 @@ yapılandırması. **Hiçbir sır içermez** (bunlar ortamdan gelir), bu yüzden
 şablondan birinden (`static`, `vite-react`, `next-static`, `nft-drop`, `dapp-window-chia`) çalıştırılabilir bir
 başlangıç projesi — bir uygulama, bir [`dig.toml`](#dig-toml) ve (cüzdan şablonları için) bağlanmış [DIG SDK](#dig-sdk) —
 iskeleler. İskeleleme **ücretsizdir** — mint yok, zincir yok, harcama yok; yalnızca bir [capsule](#capsule) yayınladığınızda
-tek tip capsule fiyatını ödersiniz. Rust CLI'ın `dig-store new`'inin npm tarafındaki eşdeğeridir.
+tek tip capsule fiyatını ödersiniz. Rust CLI'ın `digs new`'inin npm tarafındaki eşdeğeridir.
 → [Bir uygulama iskeleleyin](./build-a-dapp/scaffold.md)
 
 ## GitHub dağıtım Action'ı {#deploy-action}
 
 `dig-network/deploy-action`, **git-push-ile-dağıtım** GitHub Action'ıdır: runner üzerine
-[`dig-store` CLI](#digstore-cli)'ı kurar, store'unuzu ilerletmek için `dig-store deploy` çalıştırır (asla
+[`dig-store` CLI](#digstore-cli)'ı kurar, store'unuzu ilerletmek için `digs deploy` çalıştırır (asla
 mint yapmaz) ve yayınlanan [capsule](#capsule) + URL'ler + maliyeti adım çıktıları, bir PR
 yorumu, bir GitHub Deployment'ı ve bir commit durumu olarak geri bildirir. `if-changed` (varsayılan) ile, bayt-özdeş bir
 build hiçbir işlem yapmaz — harcama yok. → [GitHub Actions'tan dağıtım](./digstore/cli/deploy-from-github-actions.md)

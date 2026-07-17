@@ -76,7 +76,7 @@ You don't need a node. Get the **[DIG Browser ↗](https://github.com/DIG-Networ
 - [DIG and your DNS](./dns.md) — dig-dns's split-DNS scope + its own encrypted upstream lookup
 - [Point a consumer at your node](./point-a-consumer.md) — local-first reads + the shared `.dig` cache
 - [Configure dig-node](./configure.md) — ports, listeners, cache cap, upstream
-- [Self-host a remote origin](../rpc/dig-remote.md) — `dig-store serve` + dig:// clone/pull/push
+- [Self-host a remote origin](../rpc/dig-remote.md) — `digs serve` + dig:// clone/pull/push
 - [Manage your node](./manage.md) — the control.* admin RPCs + the My Node UI
 - [The dig-node Control Panel](./control-panel.md) — run your node from the DIG extension: live status, reserved cache space (LRU), and — once paired — upstream/hosted stores/sync/peers
 - [Using the public network RPC](../rpc/public-network-rpc.md) — the dig RPC your node speaks, and operating a node on the network

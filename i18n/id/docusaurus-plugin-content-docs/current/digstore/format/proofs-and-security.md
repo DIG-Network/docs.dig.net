@@ -33,7 +33,7 @@ Each generation builds a Merkle tree with **one leaf per resource**, where a lea
 Because the leaf commits to *ciphertext* (and encryption is deterministic — see [URNs & Encryption](./urns-and-encryption.md)), the served bytes can be verified against the root without ever decrypting them. A single inclusion proof accompanies a served resource and proves those exact bytes belong to that exact root.
 
 ```sh
-dig-store cat <urn> --verify-proof
+digs cat <urn> --verify-proof
 ```
 
 `--verify-proof` checks that the resource's proof resolves to the trusted root *and* that the module's program hash matches the expected serving program — so you're verifying both the content and the code that served it.
@@ -53,8 +53,8 @@ A malicious or broken server cannot feed you fabricated content — the command 
 A store's roots are signed by the publisher's **BLS key** (embedded in the module); the store id itself is the on-chain singleton. Publishers can also **revoke** a published root — or the whole store — with a signed tombstone:
 
 ```sh
-dig-store revoke --root <hex> --reason compromise
-dig-store revoke --all --reason takedown
+digs revoke --root <hex> --reason compromise
+digs revoke --all --reason takedown
 ```
 
 A remote persists tombstones and serves them in the store descriptor; clients honor them **fail-closed** — a revoked root is refused, and a revoked store is refused entirely. A revoked root cannot be "un-revoked" by an older unsigned response.

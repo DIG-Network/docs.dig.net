@@ -65,7 +65,7 @@ tags:
 
 ## 鏈上錨定 {#anchoring}
 
-每個 store 都是 **Chia 主網上的一個單例（singleton）**。`dig-store init` 會鑄造它（launcher id *即成為* store id），而每一次 `dig-store commit` 都會以 CHIP-0035 單例更新的形式，將新的 [generation](#generation) root 錨定到鏈上。兩者都會阻塞執行直到確認完成，且都會花費真實資金。鏈上狀態是 store 最新 root 的權威來源。→ [鏈上錨定](./digstore/cli/onchain-anchoring.md)
+每個 store 都是 **Chia 主網上的一個單例（singleton）**。`digs init` 會鑄造它（launcher id *即成為* store id），而每一次 `digs commit` 都會以 CHIP-0035 單例更新的形式，將新的 [generation](#generation) root 錨定到鏈上。兩者都會阻塞執行直到確認完成，且都會花費真實資金。鏈上狀態是 store 最新 root 的權威來源。→ [鏈上錨定](./digstore/cli/onchain-anchoring.md)
 
 ## DIG payment {#dig-payment}
 
@@ -77,15 +77,15 @@ tags:
 
 ## dig.toml {#dig-toml}
 
-`dig.toml` 是位於專案根目錄的**可提交專案設定檔（manifest）**——包含 `store-id`、`output-dir`、`build-command` 以及其他專案設定，由 `dig-store dev`、`dig-store deploy` 與骨架範本共用。它**不含任何機密資訊**（那些來自環境變數），因此可以安全地提交進版本控制。→ [專案設定與建置時期的數值](./digstore/cli/configuration.md)
+`dig.toml` 是位於專案根目錄的**可提交專案設定檔（manifest）**——包含 `store-id`、`output-dir`、`build-command` 以及其他專案設定，由 `digs dev`、`digs deploy` 與骨架範本共用。它**不含任何機密資訊**（那些來自環境變數），因此可以安全地提交進版本控制。→ [專案設定與建置時期的數值](./digstore/cli/configuration.md)
 
 ## create-dig-app {#create-dig-app}
 
-`create-dig-app`（`npm create dig-app`）是啟動 DIG 專案的 **JS 前門**：它會從五種範本之一（`static`、`vite-react`、`next-static`、`nft-drop`、`dapp-window-chia`）建立一個可直接執行的起始專案——包含一個應用程式、一個 [`dig.toml`](#dig-toml)，並且（對於錢包相關範本）已接好 [DIG SDK](#dig-sdk)。建立骨架是**免費**的——不鑄造、不上鏈、不花費；只有在你發布一個 [capsule](#capsule) 時才需支付統一的 capsule 價格。它是 Rust CLI 的 `dig-store new` 在 npm 端的對應工具。→ [建立應用骨架](./build-a-dapp/scaffold.md)
+`create-dig-app`（`npm create dig-app`）是啟動 DIG 專案的 **JS 前門**：它會從五種範本之一（`static`、`vite-react`、`next-static`、`nft-drop`、`dapp-window-chia`）建立一個可直接執行的起始專案——包含一個應用程式、一個 [`dig.toml`](#dig-toml)，並且（對於錢包相關範本）已接好 [DIG SDK](#dig-sdk)。建立骨架是**免費**的——不鑄造、不上鏈、不花費；只有在你發布一個 [capsule](#capsule) 時才需支付統一的 capsule 價格。它是 Rust CLI 的 `digs new` 在 npm 端的對應工具。→ [建立應用骨架](./build-a-dapp/scaffold.md)
 
 ## GitHub 部署 Action {#deploy-action}
 
-`dig-network/deploy-action` 是實現 **git-push-to-deploy** 的 GitHub Action：它會在執行器（runner）上安裝 [`dig-store` CLI](#digstore-cli)，執行 `dig-store deploy` 以推進你的 store（絕不進行鑄造），並將已發布的 [capsule](#capsule)、網址與費用回報為步驟輸出、PR 留言、GitHub Deployment 以及提交狀態（commit status）。搭配 `if-changed`（預設啟用），若建置結果與前次位元組完全相同則不會有任何動作——不會產生花費。→ [從 GitHub Actions 部署](./digstore/cli/deploy-from-github-actions.md)
+`dig-network/deploy-action` 是實現 **git-push-to-deploy** 的 GitHub Action：它會在執行器（runner）上安裝 [`dig-store` CLI](#digstore-cli)，執行 `digs deploy` 以推進你的 store（絕不進行鑄造），並將已發布的 [capsule](#capsule)、網址與費用回報為步驟輸出、PR 留言、GitHub Deployment 以及提交狀態（commit status）。搭配 `if-changed`（預設啟用），若建置結果與前次位元組完全相同則不會有任何動作——不會產生花費。→ [從 GitHub Actions 部署](./digstore/cli/deploy-from-github-actions.md)
 
 ## DIG SDK {#dig-sdk}
 

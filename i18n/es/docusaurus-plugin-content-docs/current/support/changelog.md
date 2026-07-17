@@ -28,7 +28,7 @@ DIG is pre-release. Until a `1.0`, surfaces may change between releases; breakin
 
 | Surface | Version source | Where to read it |
 |---|---|---|
-| **`dig-store` CLI** | semver tags on the `dig-store` repo (`vX.Y.Z`) | `dig-store --version` · [Releases ↗](https://github.com/DIG-Network/dig-store/releases) |
+| **`dig-store` CLI** | semver tags on the `dig-store` repo (`vX.Y.Z`) | `digs --version` · [Releases ↗](https://github.com/DIG-Network/dig-store/releases) |
 | **dig RPC** | the JSON-RPC method set; a node advertises what it implements via `dig.methods` | [dig RPC methods](../rpc/methods.md) |
 | **`window.chia`** | the injected provider's capability/version surface (the DIG Browser is the reference implementation) | [Using window.chia](../browser/using-window-chia.md) |
 | **`@dignetwork/dig-sdk`** | semver on npm | [npm ↗](https://www.npmjs.com/package/@dignetwork/dig-sdk) |
@@ -42,8 +42,8 @@ This is the starting point the changelog tracks forward from.
 
 ### `dig-store` CLI
 
-- **Free pre-publish loop:** `dig-store new <template>` (scaffold), `dig-store dev` (local preview on the real `chia://` read path with an injected `window.chia` shim), and `dig-store doctor` (preflight) — all free, no chain, no spend. Also scaffold from npm with [`npm create dig-app`](../build-a-dapp/scaffold.md).
-- **Single-shot deploy:** `dig-store deploy` (build → stage → advance the on-chain root → publish), non-interactive and CI-safe; `commit --dry-run` previews cost without spending.
+- **Free pre-publish loop:** `digs new <template>` (scaffold), `digs dev` (local preview on the real `chia://` read path with an injected `window.chia` shim), and `digs doctor` (preflight) — all free, no chain, no spend. Also scaffold from npm with [`npm create dig-app`](../build-a-dapp/scaffold.md).
+- **Single-shot deploy:** `digs deploy` (build → stage → advance the on-chain root → publish), non-interactive and CI-safe; `commit --dry-run` previews cost without spending.
 - **CI deploy:** the [GitHub Action](../digstore/cli/deploy-from-github-actions.md) (`uses: DIG-Network/deploy-action@v1`, requires dig-store ≥ `v0.6.0`) — git-push-to-deploy with **free per-PR previews** and a PR comment + GitHub deployment status. **Keyless** by default (GitHub OIDC → a store-scoped session, no long-lived hub secret); a revocable `writer-key` advances the on-chain root and a dedicated funding wallet pays the fee, all driven from a committable [`dig.toml`](../digstore/cli/configuration.md).
 - **Distinct exit codes** per error kind for scripting/CI — see [Error codes](./error-codes.md#digstore-cli-exit-codes).
 

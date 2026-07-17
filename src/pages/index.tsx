@@ -84,13 +84,13 @@ function Hero() {
               <em>dig-store</em>
             </div>
             <pre className={styles.termBody}>
-              <code>{`$ dig-store init site --dir dist
+              <code>{`$ digs init site --dir dist
 `}<span className={styles.ok}>✓ Initialized store 'site'</span>{`
-$ dig-store add -A
+$ digs add -A
   47.2 MB staged · 80.8 MB free
-$ dig-store commit -m "v1"
+$ digs commit -m "v1"
 `}<span className={styles.ok}>✓ generation 1a2b3c… → site.wasm</span>{`
-$ dig-store cat urn:dig:chia:…/index.html`}</code>
+$ digs cat urn:dig:chia:…/index.html`}</code>
             </pre>
           </div>
         </div>
@@ -211,19 +211,19 @@ function useSteps() {
       n: '01',
       t: <Translate id="homepage.steps.capture.title">Capture</Translate>,
       d: <Translate id="homepage.steps.capture.body">Point a store at your build output.</Translate>,
-      c: 'dig-store init site --dir dist',
+      c: 'digs init site --dir dist',
     },
     {
       n: '02',
       t: <Translate id="homepage.steps.commit.title">Commit</Translate>,
       d: <Translate id="homepage.steps.commit.body">Seal a generation into one .wasm.</Translate>,
-      c: 'dig-store add -A && dig-store commit -m "v1"',
+      c: 'digs add -A && digs commit -m "v1"',
     },
     {
       n: '03',
       t: <Translate id="homepage.steps.share.title">Share</Translate>,
       d: <Translate id="homepage.steps.share.body">Push to a remote; hand out a URN.</Translate>,
-      c: 'dig-store push origin',
+      c: 'digs push origin',
     },
   ];
 }

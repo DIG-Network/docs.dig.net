@@ -52,29 +52,29 @@ tags:
 Git形式のループです：`new` → `dev` → `init` → `commit`。
 
 ```sh
-dig-store new vite-react   # scaffold a runnable project — free, no mint
-dig-store dev              # preview on the real chia:// read path, live-reload — free
-dig-store init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
-dig-store commit -m "v1.1"       # publish an update — a new capsule
+digs new vite-react   # scaffold a runnable project — free, no mint
+digs dev              # preview on the real chia:// read path, live-reload — free
+digs init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
+digs commit -m "v1.1"       # publish an update — a new capsule
 ```
 
 → [CLIクイックスタート](../digstore/cli/quickstart.md) · [プロジェクトワークフローの全体像](../digstore/cli/project-workflow.md)
 
 ## アプリを足場作りする — 5つのテンプレート {#scaffold-an-app--5-templates}
 
-`dig-store new <template>`または`npm create dig-app`を通じて、実行可能でウォレット対応済みのスターター — `static`、`vite-react`、`next-static`、`nft-drop`、`dapp-window-chia` — から始めましょう。
+`digs new <template>`または`npm create dig-app`を通じて、実行可能でウォレット対応済みのスターター — `static`、`vite-react`、`next-static`、`nft-drop`、`dapp-window-chia` — から始めましょう。
 
 → [アプリを足場作りする](../build-a-dapp/scaffold.md)
 
-## `dig-store dev`で無料プレビュー {#preview-free-with-digstore-dev}
+## `digs dev`で無料プレビュー {#preview-free-with-digstore-dev}
 
-`dig-store dev`は、あなたのプロジェクトを**本物の**DIG読み取りパス（暗号化 → コンパイル → 検証 → 復号）でライブリロード付きに配信し、開発用の`window.chia`を注入します。あなたが見るものが訪問者の得るものであり、mintも支出も一切発生しません。
+`digs dev`は、あなたのプロジェクトを**本物の**DIG読み取りパス（暗号化 → コンパイル → 検証 → 復号）でライブリロード付きに配信し、開発用の`window.chia`を注入します。あなたが見るものが訪問者の得るものであり、mintも支出も一切発生しません。
 
 → [CLIクイックスタート → 開発とプレビュー](../digstore/cli/quickstart.md)
 
 ## `dig.toml` — コミット可能なマニフェスト {#digtoml--the-committable-manifest}
 
-プロジェクトルートの`dig.toml`は、`store-id`、`output-dir`、`build-command`、`remote`、その他の設定を保持し、`dig-store dev`、`dig-store deploy`、足場作りテンプレートで共有されます。これには**秘密情報が一切含まれない**ため（それらは環境から取得されます）、コミットして構いません。
+プロジェクトルートの`dig.toml`は、`store-id`、`output-dir`、`build-command`、`remote`、その他の設定を保持し、`digs dev`、`digs deploy`、足場作りテンプレートで共有されます。これには**秘密情報が一切含まれない**ため（それらは環境から取得されます）、コミットして構いません。
 
 → [プロジェクト設定とビルド時の値](../digstore/cli/configuration.md)
 

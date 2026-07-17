@@ -50,8 +50,8 @@ urn:dig:chia:285539…aade:1a2b3c…/readme.txt      # pinned to a generation
 Preview the exact URN a file *will* have before you commit:
 
 ```sh
-dig-store urn readme.txt
-dig-store urn -A            # every staged file
+digs urn readme.txt
+digs urn -A            # every staged file
 ```
 
 ## Two values, one string
@@ -69,7 +69,7 @@ decryption_key = HKDF-SHA256(ikm = canonical_urn, …)          # WHAT decrypts 
 This split is what makes the URN a **capability**: possessing it is *necessary and sufficient* to both find and read a resource in a public store.
 
 :::tip Retrieval keys are root-independent
-A URN without a `rootHash` derives a *root-independent* key, so the same key locates the resource across generations. You can list every resource's retrieval key with `dig-store keys`. This matters for the cipher choice below.
+A URN without a `rootHash` derives a *root-independent* key, so the same key locates the resource across generations. You can list every resource's retrieval key with `digs keys`. This matters for the cipher choice below.
 :::
 
 ## Encryption
@@ -83,8 +83,8 @@ Decryption runs on the **client**: it derives the key from the URN it holds, ver
 ## Public vs private stores
 
 ```sh
-dig-store init             # public:  the URN alone decrypts
-dig-store init --private   # private: decryption ALSO needs a secret salt
+digs init             # public:  the URN alone decrypts
+digs init --private   # private: decryption ALSO needs a secret salt
 ```
 
 - **Public** — the URN is sufficient to decrypt.

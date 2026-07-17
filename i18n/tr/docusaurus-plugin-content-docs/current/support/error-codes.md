@@ -62,18 +62,18 @@ The [dig RPC](../protocol/dig-rpc.md) uses the standard [JSON-RPC 2.0](https://w
 | `0` | success | The command completed. | — |
 | `1` | other | An unclassified error. | Re-run with `--verbose`; see the printed message. |
 | `2` | invalid-argument | A flag or argument was invalid. | Check `dig-store <command> --help`. |
-| `3` | no-store | No store found here. | Run `dig-store init` (or `cd` into a store's directory). |
-| `4` | not-found | A resource/URN/root wasn't found. | Run `dig-store log` to list generations and keys. |
+| `3` | no-store | No store found here. | Run `digs init` (or `cd` into a store's directory). |
+| `4` | not-found | A resource/URN/root wasn't found. | Run `digs log` to list generations and keys. |
 | `5` | verification-failed | Content failed cryptographic verification. | Wrong `salt`/key, or the data was tampered with — recheck your URN/salt. |
-| `6` | network | A network/transport failure. | Check your connection and that the remote is reachable (`dig-store remote list`). |
-| `7` | non-fast-forward | The remote root has advanced past yours. | Run `dig-store pull` first, then push. |
+| `6` | network | A network/transport failure. | Check your connection and that the remote is reachable (`digs remote list`). |
+| `7` | non-fast-forward | The remote root has advanced past yours. | Run `digs pull` first, then push. |
 | `8` | unauthorized | Not authorized for this action. | Check your credentials / the store's signing key. |
-| `9` | no-seed | No wallet seed is set up. | Run `dig-store seed import` or `dig-store seed generate`. |
+| `9` | no-seed | No wallet seed is set up. | Run `digs seed import` or `digs seed generate`. |
 | `10` | bad-passphrase | Wrong passphrase for the seed. | Re-run and enter the correct passphrase. |
 | `11` | invalid-mnemonic | The mnemonic is invalid. | Check the word list and word count (12/24). |
 | `12` | insufficient-funds | Not enough XCH **or** DIG to cover the spend. | Fund the printed receive address (you need the uniform capsule price in $DIG + an XCH fee per capsule), then retry. |
 | `13` | chain | A Chia chain/coinset error. | Check your connection to coinset.org and retry. |
-| `14` | confirm-timeout | The on-chain confirmation timed out. | The tx may still confirm — run `dig-store anchor status`. |
+| `14` | confirm-timeout | The on-chain confirmation timed out. | The tx may still confirm — run `digs anchor status`. |
 | `15` | mint-failed | Minting the store singleton failed. | Retry; if it persists, check wallet funds and coinset.org. |
 | `16` | update-failed | Anchoring the new root failed. | Retry; if it persists, check wallet funds and coinset.org. |
 

@@ -8,7 +8,7 @@ keywords:
   - window.chia
   - dig-sdk
   - chip35 spend
-  - dig-store deploy
+  - digs deploy
   - custom domain
 tags:
   - digstore-cli
@@ -41,10 +41,10 @@ new ──▶ dev ──▶ wire wallet (dig-sdk) ──▶ build a spend (chip3
 
 ## 1. एक React ऐप स्कैफोल्ड करें — मुफ़्त, कोई चेन नहीं {#1-scaffold-a-react-app--free-no-chain}
 
-`dig-store new` एक चलने योग्य, वॉलेट-वायर्ड प्रोजेक्ट लिखता है। React template चुनें:
+`digs new` एक चलने योग्य, वॉलेट-वायर्ड प्रोजेक्ट लिखता है। React template चुनें:
 
 ```sh
-dig-store new vite-react my-dapp
+digs new vite-react my-dapp
 cd my-dapp
 ```
 
@@ -57,7 +57,7 @@ cd my-dapp
 ## 2. असली read path के विरुद्ध डेवलप करें — मुफ़्त {#2-develop-against-the-real-read-path--free}
 
 ```sh
-dig-store dev
+digs dev
 ```
 
 `dev` आपका बिल्ड चलाता है, आउटपुट को **असली `chia://` read path** (compile → verify → decrypt) पर सर्व करता है, और एक **`window.chia` dev shim** इंजेक्ट करता है ताकि आप बिना किसी असली वॉलेट के वॉलेट फ्लो बना सकें। `src/App.jsx` एडिट करें, सेव करें, और पेज लाइव-रीलोड होता है — बिल्कुल वही जो विज़िटर्स को मिलेगा, बिना किसी चेन इंटरैक्शन और बिना किसी खर्च के।
@@ -170,13 +170,13 @@ if (await paywall.verifyReceipt(receipt)) { /* unlock the content */ }
 आप मुफ़्त में बनाते और प्रीव्यू करते हैं; यह इकलौता स्टेप है जो खर्च करता है। पहले store **एक बार** बनाएं:
 
 ```sh
-dig-store init my-dapp --dir dist      # mint the store's first capsule (uniform capsule price + XCH fee)
+digs init my-dapp --dir dist      # mint the store's first capsule (uniform capsule price + XCH fee)
 ```
 
 `init`, mainnet पर एक Chia singleton mint करता है — **launcher id आपका store id बन जाता है**। इसे अपने `dig.toml` (`store-id = "<64-hex>"`) में कॉपी करें। उसके बाद, एक कमांड एक नया capsule बनाता और पब्लिश करता है:
 
 ```sh
-dig-store deploy --json                # runs build-command, stages dist/, advances the root
+digs deploy --json                # runs build-command, stages dist/, advances the root
 ```
 
 हर `deploy`, यूनिफॉर्म capsule प्राइस के लिए एक नया अपरिवर्तनीय capsule पब्लिश करता है। कन्फर्म होते ही, आपका dapp अपने [URN](../concepts.md#urn) / `chia://` एड्रेस से [dig RPC](../rpc/what-is-the-dig-rpc.md) पर **पढ़ने योग्य** है — एन्क्रिप्टेड, सत्यापित, और हटाना असंभव, कोई रजिस्ट्रेशन नहीं और चुकाने के लिए कुछ और नहीं। (एक फ्रेंडली `*.on.dig.net` वेब एड्रेस एक अलग, वैकल्पिक स्टेप है — देखें [अगला सेक्शन](#6-put-it-on-your-own-domain))। हर commit पर push-to-deploy के लिए, [Deploy from GitHub Actions](../digstore/cli/deploy-from-github-actions.md) सेट करें।

@@ -52,29 +52,29 @@ tags:
 这是 Git 形态的流程：`new` → `dev` → `init` → `commit`。
 
 ```sh
-dig-store new vite-react   # scaffold a runnable project — free, no mint
-dig-store dev              # preview on the real chia:// read path, live-reload — free
-dig-store init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
-dig-store commit -m "v1.1"       # publish an update — a new capsule
+digs new vite-react   # scaffold a runnable project — free, no mint
+digs dev              # preview on the real chia:// read path, live-reload — free
+digs init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
+digs commit -m "v1.1"       # publish an update — a new capsule
 ```
 
 → [CLI 快速入门](../digstore/cli/quickstart.md) · [完整的项目工作流](../digstore/cli/project-workflow.md)
 
 ## 搭建应用脚手架 —— 5 种模板 {#scaffold-an-app--5-templates}
 
-从一个可运行、已接入钱包的初始项目开始 —— `static`、`vite-react`、`next-static`、`nft-drop` 或 `dapp-window-chia` —— 通过 `dig-store new <template>` 或 `npm create dig-app` 均可创建。
+从一个可运行、已接入钱包的初始项目开始 —— `static`、`vite-react`、`next-static`、`nft-drop` 或 `dapp-window-chia` —— 通过 `digs new <template>` 或 `npm create dig-app` 均可创建。
 
 → [搭建应用脚手架](../build-a-dapp/scaffold.md)
 
-## 使用 `dig-store dev` 免费预览 {#preview-free-with-digstore-dev}
+## 使用 `digs dev` 免费预览 {#preview-free-with-digstore-dev}
 
-`dig-store dev` 会通过**真实的** DIG 读取路径（加密 → 编译 → 验证 → 解密）为你的项目提供服务，支持热重载，并注入一个开发用的 `window.chia`。你看到的就是访客将会看到的效果 —— 而且不会铸造任何内容，也不会有任何花费。
+`digs dev` 会通过**真实的** DIG 读取路径（加密 → 编译 → 验证 → 解密）为你的项目提供服务，支持热重载，并注入一个开发用的 `window.chia`。你看到的就是访客将会看到的效果 —— 而且不会铸造任何内容，也不会有任何花费。
 
 → [CLI 快速入门 → 开发与预览](../digstore/cli/quickstart.md)
 
 ## `dig.toml` —— 可提交的清单文件 {#digtoml--the-committable-manifest}
 
-项目根目录下的 `dig.toml` 保存 `store-id`、`output-dir`、`build-command`、`remote` 及其他配置 —— 由 `dig-store dev`、`dig-store deploy` 和脚手架模板共用。它**不包含任何机密信息**（那些来自环境变量），因此可以提交它。
+项目根目录下的 `dig.toml` 保存 `store-id`、`output-dir`、`build-command`、`remote` 及其他配置 —— 由 `digs dev`、`digs deploy` 和脚手架模板共用。它**不包含任何机密信息**（那些来自环境变量），因此可以提交它。
 
 → [项目配置与构建期取值](../digstore/cli/configuration.md)
 

@@ -3,7 +3,7 @@ sidebar_position: 5
 title: Sharing over a remote
 description: "Publishing stores to remotes, downloading with verification, revoking roots, and understanding public vs. private access models."
 keywords:
-  - dig-store remote
+  - digs remote
   - push
   - clone
   - pull
@@ -26,15 +26,15 @@ A **remote** is an HTTPS endpoint that stores and serves your `.wasm` module. Be
 
 ```sh
 # publisher
-dig-store remote add origin https://example.com/stores/<storeId>
-dig-store push origin
+digs remote add origin https://example.com/stores/<storeId>
+digs push origin
 ```
 
 `push` uploads the compiled module and the signed root for the current deployment.
 
 ```sh
-dig-store remote list             # show configured remotes
-dig-store remote remove origin    # drop one
+digs remote list             # show configured remotes
+digs remote remove origin    # drop one
 ```
 
 ## Consume
@@ -42,9 +42,9 @@ dig-store remote remove origin    # drop one
 From a fresh directory:
 
 ```sh
-dig-store clone https://example.com/stores/<storeId>
-dig-store cat   urn:dig:chia:<storeId>:<rootHash>/readme
-dig-store pull  origin            # later: fetch the publisher's newer deployment
+digs clone https://example.com/stores/<storeId>
+digs cat   urn:dig:chia:<storeId>:<rootHash>/readme
+digs pull  origin            # later: fetch the publisher's newer deployment
 ```
 
 ## Downloads are verified
@@ -67,7 +67,7 @@ Remotes must be `https://`. Plain `http://` is allowed only for `localhost` (loc
 - **Private project** — also give them the secret salt (out-of-band). They locate with the URN but decrypt with `--salt <hex>`:
 
   ```sh
-  dig-store cat urn:dig:chia:<storeId>/secret --salt <hex>
+  digs cat urn:dig:chia:<storeId>/secret --salt <hex>
   ```
 
 ## Revoking a published root
@@ -75,8 +75,8 @@ Remotes must be `https://`. Plain `http://` is allowed only for `localhost` (loc
 If a deployment must be retracted (e.g. a leaked or bad build), publish a signed tombstone:
 
 ```sh
-dig-store revoke --root <hex> --reason superseded     # retract one deployment
-dig-store revoke --all --reason takedown              # retract the whole project
+digs revoke --root <hex> --reason superseded     # retract one deployment
+digs revoke --all --reason takedown              # retract the whole project
 ```
 
 Remotes persist tombstones and clients honor them fail-closed — a revoked root is refused.

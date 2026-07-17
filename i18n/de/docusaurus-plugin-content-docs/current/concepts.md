@@ -93,8 +93,8 @@ echte Bytes zurückgegeben zu haben. → [Merkle proofs](./digstore/format/proof
 
 ## On-chain-Verankerung {#anchoring}
 
-Jeder store ist ein **Singleton auf dem Chia-Mainnet**. `dig-store init` mintet ihn (die Launcher-ID
-*wird* zur store-ID), und jeder `dig-store commit` verankert einen neuen [generation](#generation)-Root
+Jeder store ist ein **Singleton auf dem Chia-Mainnet**. `digs init` mintet ihn (die Launcher-ID
+*wird* zur store-ID), und jeder `digs commit` verankert einen neuen [generation](#generation)-Root
 on-chain als CHIP-0035-Singleton-Update. Beide blockieren, bis sie bestätigt sind, und geben echte
 Mittel aus. Die Chain ist die Autorität für den aktuellsten Root eines stores. → [On-chain-Verankerung](./digstore/cli/onchain-anchoring.md)
 
@@ -115,7 +115,7 @@ verschlüsselte, on-chain-store-Format. → [Kommandoreferenz](./digstore/cli/co
 
 `dig.toml` ist das **committbare Projektmanifest** im Root eines Projekts — `store-id`,
 `output-dir`, `build-command` und weitere Projektkonfiguration, gemeinsam genutzt von
-`dig-store dev`, `dig-store deploy` und den Scaffolding-Templates. Es enthält **keine Geheimnisse**
+`digs dev`, `digs deploy` und den Scaffolding-Templates. Es enthält **keine Geheimnisse**
 (die kommen aus der Umgebung), daher ist es sicher, es zu committen. → [Projektkonfiguration & Build-Zeit-Werte](./digstore/cli/configuration.md)
 
 ## create-dig-app {#create-dig-app}
@@ -126,12 +126,12 @@ DIG-Projekts: es scaffoldet einen lauffähigen Starter — eine App, eine [`dig.
 (`static`, `vite-react`, `next-static`, `nft-drop`, `dapp-window-chia`). Scaffolding ist
 **kostenlos** — kein Mint, keine Chain, keine Ausgabe; du zahlst den einheitlichen capsule-Preis
 erst, wenn du eine [capsule](#capsule) veröffentlichst. Es ist das npm-seitige Gegenstück zum
-`dig-store new` der Rust-CLI. → [Eine App scaffolden](./build-a-dapp/scaffold.md)
+`digs new` der Rust-CLI. → [Eine App scaffolden](./build-a-dapp/scaffold.md)
 
 ## Die GitHub-Deploy-Action {#deploy-action}
 
 `dig-network/deploy-action` ist die **git-push-to-deploy**-GitHub-Action: sie installiert die
-[`dig-store`-CLI](#digstore-cli) auf dem Runner, führt `dig-store deploy` aus, um deinen store
+[`dig-store`-CLI](#digstore-cli) auf dem Runner, führt `digs deploy` aus, um deinen store
 voranzubringen (mintet nie), und meldet die veröffentlichte [capsule](#capsule) + URLs + Kosten
 als Step-Outputs, PR-Kommentar, GitHub-Deployment und Commit-Status zurück. Mit `if-changed`
 (Standard) ist ein bytegleicher Build ein No-op — keine Ausgabe. → [Deploy from GitHub Actions](./digstore/cli/deploy-from-github-actions.md)

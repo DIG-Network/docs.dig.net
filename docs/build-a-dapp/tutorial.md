@@ -8,7 +8,7 @@ keywords:
   - window.chia
   - dig-sdk
   - chip35 spend
-  - dig-store deploy
+  - digs deploy
   - custom domain
 tags:
   - digstore-cli
@@ -41,10 +41,10 @@ new ──▶ dev ──▶ wire wallet (dig-sdk) ──▶ build a spend (chip3
 
 ## 1. Scaffold a React app — free, no chain
 
-`dig-store new` writes a runnable, wallet-wired project. Pick the React template:
+`digs new` writes a runnable, wallet-wired project. Pick the React template:
 
 ```sh
-dig-store new vite-react my-dapp
+digs new vite-react my-dapp
 cd my-dapp
 ```
 
@@ -57,7 +57,7 @@ You get a Vite + React app, a `dig.toml` (`output-dir = "dist"`, `build-command 
 ## 2. Develop against the real read path — free
 
 ```sh
-dig-store dev
+digs dev
 ```
 
 `dev` runs your build, serves the output over the **genuine `chia://` read path** (compile → verify → decrypt), and injects a **`window.chia` dev shim** so you can build the wallet flow with no real wallet. Edit `src/App.jsx`, save, and the page live-reloads — exactly what visitors will get, with zero chain interaction and zero spend.
@@ -170,13 +170,13 @@ if (await paywall.verifyReceipt(receipt)) { /* unlock the content */ }
 You build and preview for free; this is the only step that spends. First create the store **once**:
 
 ```sh
-dig-store init my-dapp --dir dist      # mint the store's first capsule (uniform capsule price + XCH fee)
+digs init my-dapp --dir dist      # mint the store's first capsule (uniform capsule price + XCH fee)
 ```
 
 `init` mints a Chia singleton on mainnet — **the launcher id becomes your store id**. Copy it into `dig.toml` (`store-id = "<64-hex>"`). From then on, one command builds and publishes a new capsule:
 
 ```sh
-dig-store deploy --json                # runs build-command, stages dist/, advances the root
+digs deploy --json                # runs build-command, stages dist/, advances the root
 ```
 
 Each `deploy` publishes a new immutable capsule for the uniform capsule price. The moment it confirms, your dapp is **readable over the [dig RPC](../rpc/what-is-the-dig-rpc.md)** by its [URN](../concepts.md#urn) / `chia://` address — encrypted, verified, and impossible to take down, with no registration and nothing more to pay. (A friendly `*.on.dig.net` web address is a separate, optional step — see [the next section](#6-put-it-on-your-own-domain).) For push-to-deploy on every commit, wire up [Deploy from GitHub Actions](../digstore/cli/deploy-from-github-actions.md).

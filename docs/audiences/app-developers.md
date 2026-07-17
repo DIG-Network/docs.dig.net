@@ -52,29 +52,29 @@ Scaffold, build, and preview cost **nothing**. You pay only when you publish a c
 The Git-shaped loop: `new` → `dev` → `init` → `commit`.
 
 ```sh
-dig-store new vite-react   # scaffold a runnable project — free, no mint
-dig-store dev              # preview on the real chia:// read path, live-reload — free
-dig-store init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
-dig-store commit -m "v1.1"       # publish an update — a new capsule
+digs new vite-react   # scaffold a runnable project — free, no mint
+digs dev              # preview on the real chia:// read path, live-reload — free
+digs init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
+digs commit -m "v1.1"       # publish an update — a new capsule
 ```
 
 → [CLI quickstart](../digstore/cli/quickstart.md) · [The full project workflow](../digstore/cli/project-workflow.md)
 
 ## Scaffold an app — 5 templates
 
-Start from a runnable, wallet-wired starter — `static`, `vite-react`, `next-static`, `nft-drop`, or `dapp-window-chia` — via `dig-store new <template>` or `npm create dig-app`.
+Start from a runnable, wallet-wired starter — `static`, `vite-react`, `next-static`, `nft-drop`, or `dapp-window-chia` — via `digs new <template>` or `npm create dig-app`.
 
 → [Scaffold an app](../build-a-dapp/scaffold.md)
 
-## Preview free with `dig-store dev`
+## Preview free with `digs dev`
 
-`dig-store dev` serves your project over the **genuine** DIG read path (encrypt → compile → verify → decrypt) with live reload and an injected dev `window.chia`. What you see is what visitors get — and nothing is minted or spent.
+`digs dev` serves your project over the **genuine** DIG read path (encrypt → compile → verify → decrypt) with live reload and an injected dev `window.chia`. What you see is what visitors get — and nothing is minted or spent.
 
 → [CLI quickstart → develop & preview](../digstore/cli/quickstart.md)
 
 ## `dig.toml` — the committable manifest
 
-`dig.toml` at your project root holds `store-id`, `output-dir`, `build-command`, `remote`, and other config — shared by `dig-store dev`, `dig-store deploy`, and the scaffold templates. It holds **no secrets** (those come from the environment), so commit it.
+`dig.toml` at your project root holds `store-id`, `output-dir`, `build-command`, `remote`, and other config — shared by `digs dev`, `digs deploy`, and the scaffold templates. It holds **no secrets** (those come from the environment), so commit it.
 
 → [Project config & build-time values](../digstore/cli/configuration.md)
 

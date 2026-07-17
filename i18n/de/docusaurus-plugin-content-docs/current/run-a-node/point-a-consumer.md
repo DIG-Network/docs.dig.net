@@ -39,7 +39,7 @@ Either way **every byte is verified client-side against the chain**; pointing at
 
 - **DIG Browser** — the **My Node** UI lets you select the local dig-node and view its status.
 - **Extension** — set the `dig-node` host (the `server.host` setting) to your node; leave it blank to use the automatic `dig.local` → `localhost` → `rpc.dig.net` resolution. To also read wallet balances/tokens/NFTs from your node, see [Wallet data (extension)](#wallet-data-extension) below.
-- **dig-store CLI** — set an explicit override with the `--node <url>` global flag, the `$DIG_NODE_URL` environment variable, or a persisted `dig-store config node.url <url>`; leave all three unset to use the automatic resolution. See [Which node dig-store talks to](../digstore/cli/command-reference.md#which-node-digstore-talks-to).
+- **dig-store CLI** — set an explicit override with the `--node <url>` global flag, the `$DIG_NODE_URL` environment variable, or a persisted `digs config node.url <url>`; leave all three unset to use the automatic resolution. See [Which node dig-store talks to](../digstore/cli/command-reference.md#which-node-digstore-talks-to).
 
 ## Wallet data (extension)
 
@@ -74,6 +74,6 @@ The local cache is a set of [capsules](../concepts.md#capsule) keyed by `storeId
 - [Configure dig-node](./configure.md)
 - [Manage your node](./manage.md) — the control.* admin RPCs + the My Node UI
 - [The dig-node Control Panel](./control-panel.md) — reserved cache space + LRU eviction
-- [Command reference — global flags](../digstore/cli/command-reference.md#global-flags) — the CLI's `--node` flag and `dig-store config node.url`
+- [Command reference — global flags](../digstore/cli/command-reference.md#global-flags) — the CLI's `--node` flag and `digs config node.url`
 - [The dig:// remote (clone/pull/push)](../rpc/dig-remote.md) — the same ladder as it applies to `dig://` URLs without an explicit host
 - [Reading from your own node](../audiences/content-consumers.md#reading-from-your-own-node) — the extension's node-served SPA reads, from the content-consumer's side

@@ -90,8 +90,8 @@ pernah didekripsi, dan sebuah node tidak pernah dipercaya begitu saja telah meng
 
 ## On-chain anchoring {#anchoring}
 
-Setiap store adalah **singleton di Chia mainnet**. `dig-store init` melakukan mint-nya (launcher id
-*menjadi* store id) dan setiap `dig-store commit` menanamkan root [generation](#generation) baru on-chain sebagai
+Setiap store adalah **singleton di Chia mainnet**. `digs init` melakukan mint-nya (launcher id
+*menjadi* store id) dan setiap `digs commit` menanamkan root [generation](#generation) baru on-chain sebagai
 update singleton CHIP-0035. Keduanya menunggu hingga terkonfirmasi dan mengeluarkan dana sungguhan. Chain adalah
 otoritas untuk root terbaru sebuah store. → [Anchoring on-chain](./digstore/cli/onchain-anchoring.md)
 
@@ -110,7 +110,7 @@ store terenkripsi dan on-chain. → [Referensi perintah](./digstore/cli/command-
 ## dig.toml {#dig-toml}
 
 `dig.toml` adalah **manifest proyek yang dapat di-commit** di root sebuah proyek — `store-id`, `output-dir`,
-`build-command`, dan konfigurasi proyek lainnya, digunakan bersama oleh `dig-store dev`, `dig-store deploy`, dan
+`build-command`, dan konfigurasi proyek lainnya, digunakan bersama oleh `digs dev`, `digs deploy`, dan
 template scaffolding. File ini **tidak menyimpan rahasia** (rahasia berasal dari environment), sehingga aman untuk
 di-commit. → [Konfigurasi proyek & nilai build-time](./digstore/cli/configuration.md)
 
@@ -121,12 +121,12 @@ melakukan scaffold sebuah starter yang siap dijalankan — sebuah aplikasi, sebu
 template wallet) [DIG SDK](#dig-sdk) yang sudah terhubung — dari salah satu dari lima template (`static`, `vite-react`, `next-static`,
 `nft-drop`, `dapp-window-chia`). Scaffolding bersifat **gratis** — tanpa mint, tanpa chain, tanpa biaya; Anda hanya membayar
 harga capsule seragam saat menerbitkan sebuah [capsule](#capsule). Ini adalah pendamping sisi-npm untuk CLI Rust,
-`dig-store new`. → [Scaffold sebuah aplikasi](./build-a-dapp/scaffold.md)
+`digs new`. → [Scaffold sebuah aplikasi](./build-a-dapp/scaffold.md)
 
 ## GitHub deploy Action {#deploy-action}
 
 `dig-network/deploy-action` adalah GitHub Action **git-push-to-deploy**: ia menginstal
-[CLI `dig-store`](#digstore-cli) di runner, menjalankan `dig-store deploy` untuk memajukan store Anda (tidak pernah
+[CLI `dig-store`](#digstore-cli) di runner, menjalankan `digs deploy` untuk memajukan store Anda (tidak pernah
 melakukan mint), dan melaporkan [capsule](#capsule) yang diterbitkan + URL + biaya kembali sebagai output step, komentar
 PR, GitHub Deployment, dan status commit. Dengan `if-changed` (default), build yang identik secara byte adalah
 no-op — tanpa biaya. → [Deploy dari GitHub Actions](./digstore/cli/deploy-from-github-actions.md)

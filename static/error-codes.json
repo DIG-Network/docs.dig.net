@@ -183,7 +183,7 @@
       "code": "no-store",
       "exit": 3,
       "http_or_exit": 3,
-      "description": "No store found here. Run `dig-store init`."
+      "description": "No store found here. Run `digs init`."
     },
     {
       "surface": "digstore-cli",
@@ -598,7 +598,7 @@
         "code": "no-store",
         "exit": 3,
         "http_or_exit": 3,
-        "description": "No store found here. Run `dig-store init`."
+        "description": "No store found here. Run `digs init`."
       },
       {
         "surface": "digstore-cli",

@@ -52,29 +52,29 @@ tags:
 Git과 유사한 흐름입니다: `new` → `dev` → `init` → `commit`.
 
 ```sh
-dig-store new vite-react   # 실행 가능한 프로젝트 스캐폴딩 — 무료, 민팅 없음
-dig-store dev              # 실제 chia:// 읽기 경로에서 미리보기, 라이브 리로드 — 무료
-dig-store init site --dir dist   # store의 첫 capsule 민팅(균일 가격 + XCH 수수료)
-dig-store commit -m "v1.1"       # 업데이트 게시 — 새 capsule
+digs new vite-react   # 실행 가능한 프로젝트 스캐폴딩 — 무료, 민팅 없음
+digs dev              # 실제 chia:// 읽기 경로에서 미리보기, 라이브 리로드 — 무료
+digs init site --dir dist   # store의 첫 capsule 민팅(균일 가격 + XCH 수수료)
+digs commit -m "v1.1"       # 업데이트 게시 — 새 capsule
 ```
 
 → [CLI 퀵스타트](../digstore/cli/quickstart.md) · [전체 프로젝트 워크플로우](../digstore/cli/project-workflow.md)
 
 ## 앱 스캐폴딩하기 — 5개 템플릿 {#scaffold-an-app--5-templates}
 
-`static`, `vite-react`, `next-static`, `nft-drop`, `dapp-window-chia` 중 실행 가능하고 지갑이 연결된 스타터로 시작하세요. `dig-store new <template>` 또는 `npm create dig-app`을 통해 사용할 수 있습니다.
+`static`, `vite-react`, `next-static`, `nft-drop`, `dapp-window-chia` 중 실행 가능하고 지갑이 연결된 스타터로 시작하세요. `digs new <template>` 또는 `npm create dig-app`을 통해 사용할 수 있습니다.
 
 → [앱 스캐폴딩하기](../build-a-dapp/scaffold.md)
 
-## `dig-store dev`로 무료 미리보기 {#preview-free-with-digstore-dev}
+## `digs dev`로 무료 미리보기 {#preview-free-with-digstore-dev}
 
-`dig-store dev`는 여러분의 프로젝트를 **실제** DIG 읽기 경로(암호화 → 컴파일 → 검증 → 복호화)를 통해 라이브 리로드와 주입된 개발용 `window.chia`와 함께 서빙합니다. 여러분이 보는 것이 곧 방문자가 보는 것이며, 아무것도 민팅되거나 소비되지 않습니다.
+`digs dev`는 여러분의 프로젝트를 **실제** DIG 읽기 경로(암호화 → 컴파일 → 검증 → 복호화)를 통해 라이브 리로드와 주입된 개발용 `window.chia`와 함께 서빙합니다. 여러분이 보는 것이 곧 방문자가 보는 것이며, 아무것도 민팅되거나 소비되지 않습니다.
 
 → [CLI 퀵스타트 → 개발 및 미리보기](../digstore/cli/quickstart.md)
 
 ## `dig.toml` — 커밋 가능한 매니페스트 {#digtoml--the-committable-manifest}
 
-프로젝트 루트의 `dig.toml`은 `store-id`, `output-dir`, `build-command`, `remote` 등의 설정을 담고 있으며, `dig-store dev`, `dig-store deploy`, 스캐폴드 템플릿이 이를 공유합니다. **비밀 정보는 담지 않으므로**(그런 값들은 환경 변수에서 옵니다) 커밋해도 됩니다.
+프로젝트 루트의 `dig.toml`은 `store-id`, `output-dir`, `build-command`, `remote` 등의 설정을 담고 있으며, `digs dev`, `digs deploy`, 스캐폴드 템플릿이 이를 공유합니다. **비밀 정보는 담지 않으므로**(그런 값들은 환경 변수에서 옵니다) 커밋해도 됩니다.
 
 → [프로젝트 설정 및 빌드 타임 값](../digstore/cli/configuration.md)
 

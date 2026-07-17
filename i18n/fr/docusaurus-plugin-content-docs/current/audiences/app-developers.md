@@ -52,29 +52,29 @@ Deux portes d'entrée mènent à la **même** boucle construction-gratuite → p
 La boucle en forme de Git : `new` → `dev` → `init` → `commit`.
 
 ```sh
-dig-store new vite-react   # échafaude un projet exécutable — gratuit, sans mint
-dig-store dev              # prévisualise sur le vrai chemin de lecture chia://, rechargement à chaud — gratuit
-dig-store init site --dir dist   # mint la première capsule du store (prix uniforme + frais XCH)
-dig-store commit -m "v1.1"       # publie une mise à jour — une nouvelle capsule
+digs new vite-react   # échafaude un projet exécutable — gratuit, sans mint
+digs dev              # prévisualise sur le vrai chemin de lecture chia://, rechargement à chaud — gratuit
+digs init site --dir dist   # mint la première capsule du store (prix uniforme + frais XCH)
+digs commit -m "v1.1"       # publie une mise à jour — une nouvelle capsule
 ```
 
 → [Démarrage rapide CLI](../digstore/cli/quickstart.md) · [Le workflow de projet complet](../digstore/cli/project-workflow.md)
 
 ## Échafauder une application — 5 modèles {#scaffold-an-app--5-templates}
 
-Démarrez à partir d'un starter exécutable et câblé avec un portefeuille — `static`, `vite-react`, `next-static`, `nft-drop`, ou `dapp-window-chia` — via `dig-store new <template>` ou `npm create dig-app`.
+Démarrez à partir d'un starter exécutable et câblé avec un portefeuille — `static`, `vite-react`, `next-static`, `nft-drop`, ou `dapp-window-chia` — via `digs new <template>` ou `npm create dig-app`.
 
 → [Échafauder une application](../build-a-dapp/scaffold.md)
 
-## Prévisualiser gratuitement avec `dig-store dev` {#preview-free-with-digstore-dev}
+## Prévisualiser gratuitement avec `digs dev` {#preview-free-with-digstore-dev}
 
-`dig-store dev` sert votre projet via le **véritable** chemin de lecture DIG (chiffrer → compiler → vérifier → déchiffrer) avec rechargement à chaud et un `window.chia` de développement injecté. Ce que vous voyez est ce que les visiteurs obtiennent — et rien n'est minté ou dépensé.
+`digs dev` sert votre projet via le **véritable** chemin de lecture DIG (chiffrer → compiler → vérifier → déchiffrer) avec rechargement à chaud et un `window.chia` de développement injecté. Ce que vous voyez est ce que les visiteurs obtiennent — et rien n'est minté ou dépensé.
 
 → [Démarrage rapide CLI → développer et prévisualiser](../digstore/cli/quickstart.md)
 
 ## `dig.toml` — le manifeste committable {#digtoml--the-committable-manifest}
 
-`dig.toml` à la racine de votre projet contient `store-id`, `output-dir`, `build-command`, `remote`, et d'autres configurations — partagées par `dig-store dev`, `dig-store deploy`, et les modèles d'échafaudage. Il ne contient **aucun secret** (ceux-ci viennent de l'environnement), donc committez-le.
+`dig.toml` à la racine de votre projet contient `store-id`, `output-dir`, `build-command`, `remote`, et d'autres configurations — partagées par `digs dev`, `digs deploy`, et les modèles d'échafaudage. Il ne contient **aucun secret** (ceux-ci viennent de l'environnement), donc committez-le.
 
 → [Configuration de projet et valeurs de build](../digstore/cli/configuration.md)
 

@@ -52,29 +52,29 @@ tags:
 Цикл в стиле Git: `new` → `dev` → `init` → `commit`.
 
 ```sh
-dig-store new vite-react   # создать готовый к запуску проект — бесплатно, без минта
-dig-store dev              # предпросмотр на настоящем пути чтения chia://, live-reload — бесплатно
-dig-store init site --dir dist   # минтит первую capsule store (единая цена + комиссия XCH)
-dig-store commit -m "v1.1"       # опубликовать обновление — новую capsule
+digs new vite-react   # создать готовый к запуску проект — бесплатно, без минта
+digs dev              # предпросмотр на настоящем пути чтения chia://, live-reload — бесплатно
+digs init site --dir dist   # минтит первую capsule store (единая цена + комиссия XCH)
+digs commit -m "v1.1"       # опубликовать обновление — новую capsule
 ```
 
 → [CLI-quickstart](../digstore/cli/quickstart.md) · [Полный рабочий процесс проекта](../digstore/cli/project-workflow.md)
 
 ## Скаффолдинг приложения — 5 шаблонов {#scaffold-an-app--5-templates}
 
-Начните с готового к запуску стартового проекта с интеграцией кошелька — `static`, `vite-react`, `next-static`, `nft-drop` или `dapp-window-chia` — через `dig-store new <template>` или `npm create dig-app`.
+Начните с готового к запуску стартового проекта с интеграцией кошелька — `static`, `vite-react`, `next-static`, `nft-drop` или `dapp-window-chia` — через `digs new <template>` или `npm create dig-app`.
 
 → [Скаффолдинг приложения](../build-a-dapp/scaffold.md)
 
-## Бесплатный предпросмотр через `dig-store dev` {#preview-free-with-digstore-dev}
+## Бесплатный предпросмотр через `digs dev` {#preview-free-with-digstore-dev}
 
-`dig-store dev` обслуживает ваш проект через **настоящий** путь чтения DIG (шифрование → компиляция → верификация → расшифровка) с live reload и внедрённым dev-режимом `window.chia`. Вы видите именно то, что получат посетители — и ничего не минтится и не тратится.
+`digs dev` обслуживает ваш проект через **настоящий** путь чтения DIG (шифрование → компиляция → верификация → расшифровка) с live reload и внедрённым dev-режимом `window.chia`. Вы видите именно то, что получат посетители — и ничего не минтится и не тратится.
 
 → [CLI-quickstart → разработка и предпросмотр](../digstore/cli/quickstart.md)
 
 ## `dig.toml` — коммитимый манифест {#digtoml--the-committable-manifest}
 
-`dig.toml` в корне вашего проекта хранит `store-id`, `output-dir`, `build-command`, `remote` и другую конфигурацию — общую для `dig-store dev`, `dig-store deploy` и шаблонов скаффолдинга. Он **не содержит секретов** (они берутся из окружения), поэтому его можно коммитить.
+`dig.toml` в корне вашего проекта хранит `store-id`, `output-dir`, `build-command`, `remote` и другую конфигурацию — общую для `digs dev`, `digs deploy` и шаблонов скаффолдинга. Он **не содержит секретов** (они берутся из окружения), поэтому его можно коммитить.
 
 → [Конфигурация проекта и значения времени сборки](../digstore/cli/configuration.md)
 

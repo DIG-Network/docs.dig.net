@@ -65,7 +65,7 @@ tags:
 
 ## オンチェーンアンカリング {#anchoring}
 
-すべてのstoreは**Chiaメインネット上のシングルトン**です。`dig-store init`はそれをmintし（ランチャーIDが*そのまま*store idになります）、`dig-store commit`のたびに新しい[generation](#generation)のrootがCHIP-0035シングルトン更新としてオンチェーンに固定されます。どちらも確定するまでブロックし、実際の資金を消費します。チェーンはstoreの最新rootに対する権威です。→ [オンチェーンアンカリング](./digstore/cli/onchain-anchoring.md)
+すべてのstoreは**Chiaメインネット上のシングルトン**です。`digs init`はそれをmintし（ランチャーIDが*そのまま*store idになります）、`digs commit`のたびに新しい[generation](#generation)のrootがCHIP-0035シングルトン更新としてオンチェーンに固定されます。どちらも確定するまでブロックし、実際の資金を消費します。チェーンはstoreの最新rootに対する権威です。→ [オンチェーンアンカリング](./digstore/cli/onchain-anchoring.md)
 
 ## DIG決済 {#dig-payment}
 
@@ -77,15 +77,15 @@ tags:
 
 ## dig.toml {#dig-toml}
 
-`dig.toml`は、プロジェクトのルートにある**コミット可能なプロジェクトマニフェスト**であり、`store-id`、`output-dir`、`build-command`、その他のプロジェクト設定を保持し、`dig-store dev`、`dig-store deploy`、および足場作りテンプレートで共有されます。これには**秘密情報が一切含まれません**（それらは環境から取得されます）ので、安全にコミットできます。→ [プロジェクト設定とビルド時の値](./digstore/cli/configuration.md)
+`dig.toml`は、プロジェクトのルートにある**コミット可能なプロジェクトマニフェスト**であり、`store-id`、`output-dir`、`build-command`、その他のプロジェクト設定を保持し、`digs dev`、`digs deploy`、および足場作りテンプレートで共有されます。これには**秘密情報が一切含まれません**（それらは環境から取得されます）ので、安全にコミットできます。→ [プロジェクト設定とビルド時の値](./digstore/cli/configuration.md)
 
 ## create-dig-app {#create-dig-app}
 
-`create-dig-app`（`npm create dig-app`）は、DIGプロジェクトを開始するための**JSの入口**であり、実行可能なスターター — アプリ、[`dig.toml`](#dig-toml)、そして（ウォレットテンプレートについては）[DIG SDK](#dig-sdk)が組み込まれたもの — を5つのテンプレート（`static`、`vite-react`、`next-static`、`nft-drop`、`dapp-window-chia`）のいずれかから足場作りします。足場作りは**無料**です — mintもチェーンも支出もありません。[capsule](#capsule)を公開するときにのみ均一なcapsule価格を支払います。これはRust CLIの`dig-store new`に対するnpm側の相棒です。→ [アプリを足場作りする](./build-a-dapp/scaffold.md)
+`create-dig-app`（`npm create dig-app`）は、DIGプロジェクトを開始するための**JSの入口**であり、実行可能なスターター — アプリ、[`dig.toml`](#dig-toml)、そして（ウォレットテンプレートについては）[DIG SDK](#dig-sdk)が組み込まれたもの — を5つのテンプレート（`static`、`vite-react`、`next-static`、`nft-drop`、`dapp-window-chia`）のいずれかから足場作りします。足場作りは**無料**です — mintもチェーンも支出もありません。[capsule](#capsule)を公開するときにのみ均一なcapsule価格を支払います。これはRust CLIの`digs new`に対するnpm側の相棒です。→ [アプリを足場作りする](./build-a-dapp/scaffold.md)
 
 ## GitHubデプロイAction {#deploy-action}
 
-`dig-network/deploy-action`は、**git-push-to-deploy**を実現するGitHub Actionであり、ランナー上に[`dig-store` CLI](#digstore-cli)をインストールし、`dig-store deploy`を実行してあなたのstoreを進め（決してmintはしません）、公開された[capsule](#capsule)、URL、費用をステップ出力、PRコメント、GitHub Deployment、コミットステータスとして報告します。`if-changed`（デフォルト）を使えば、バイト単位で同一のビルドは何もしません — 支出も発生しません。→ [GitHub Actionsからデプロイする](./digstore/cli/deploy-from-github-actions.md)
+`dig-network/deploy-action`は、**git-push-to-deploy**を実現するGitHub Actionであり、ランナー上に[`dig-store` CLI](#digstore-cli)をインストールし、`digs deploy`を実行してあなたのstoreを進め（決してmintはしません）、公開された[capsule](#capsule)、URL、費用をステップ出力、PRコメント、GitHub Deployment、コミットステータスとして報告します。`if-changed`（デフォルト）を使えば、バイト単位で同一のビルドは何もしません — 支出も発生しません。→ [GitHub Actionsからデプロイする](./digstore/cli/deploy-from-github-actions.md)
 
 ## DIG SDK {#dig-sdk}
 

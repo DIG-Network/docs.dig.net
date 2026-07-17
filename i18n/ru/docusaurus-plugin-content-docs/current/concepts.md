@@ -89,8 +89,8 @@ launcher id его on-chain синглтона Chia — синглтон в бл
 
 ## On-chain закрепление {#anchoring}
 
-Каждый store — это **синглтон в основной сети Chia**. `dig-store init` минтит его (launcher id
-*становится* store id), а каждый `dig-store commit` закрепляет новый корень [generation](#generation)
+Каждый store — это **синглтон в основной сети Chia**. `digs init` минтит его (launcher id
+*становится* store id), а каждый `digs commit` закрепляет новый корень [generation](#generation)
 в блокчейне как обновление синглтона CHIP-0035. Обе операции блокируются до подтверждения и тратят
 реальные средства. Блокчейн является источником истины для последнего корня store. → [On-chain закрепление](./digstore/cli/onchain-anchoring.md)
 
@@ -109,7 +109,7 @@ launcher id его on-chain синглтона Chia — синглтон в бл
 ## dig.toml {#dig-toml}
 
 `dig.toml` — это **коммитимый манифест проекта** в корне проекта — `store-id`, `output-dir`,
-`build-command` и другая конфигурация проекта, общая для `dig-store dev`, `dig-store deploy` и шаблонов
+`build-command` и другая конфигурация проекта, общая для `digs dev`, `digs deploy` и шаблонов
 скаффолдинга. Он **не содержит секретов** (они берутся из окружения), поэтому его безопасно коммитить.
 → [Конфигурация проекта и значения времени сборки](./digstore/cli/configuration.md)
 
@@ -120,12 +120,12 @@ launcher id его on-chain синглтона Chia — синглтон в бл
 кошельком) подключённый [DIG SDK](#dig-sdk) — на основе одного из пяти шаблонов (`static`, `vite-react`,
 `next-static`, `nft-drop`, `dapp-window-chia`). Скаффолдинг **бесплатен** — без минта, без блокчейна, без
 трат; вы платите единую цену capsule только при публикации [capsule](#capsule). Это npm-аналог CLI на
-Rust — команды `dig-store new`. → [Скаффолдинг приложения](./build-a-dapp/scaffold.md)
+Rust — команды `digs new`. → [Скаффолдинг приложения](./build-a-dapp/scaffold.md)
 
 ## GitHub deploy Action {#deploy-action}
 
 `dig-network/deploy-action` — это GitHub Action для **git-push-to-deploy**: он устанавливает
-[CLI `dig-store`](#digstore-cli) на раннере, запускает `dig-store deploy` для продвижения вашего store
+[CLI `dig-store`](#digstore-cli) на раннере, запускает `digs deploy` для продвижения вашего store
 (никогда не минтит) и сообщает об опубликованной [capsule](#capsule) + URL + стоимости обратно как
 выходные данные шага, комментарий к PR, GitHub Deployment и статус коммита. С `if-changed`
 (по умолчанию) байт-идентичная сборка становится no-op — без трат. → [Деплой из GitHub Actions](./digstore/cli/deploy-from-github-actions.md)

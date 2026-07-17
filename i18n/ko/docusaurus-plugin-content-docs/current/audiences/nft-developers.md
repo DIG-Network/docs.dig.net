@@ -34,7 +34,7 @@ tags:
 한 번의 명령으로 지갑이 연결된 드롭 페이지를 시작하세요.
 
 ```sh
-dig-store new nft-drop
+digs new nft-drop
 # or
 npm create dig-app@latest my-drop -- --template nft-drop
 ```
@@ -46,10 +46,10 @@ npm create dig-app@latest my-drop -- --template nft-drop
 에셋 CLI는 `digstore-chain` 빌더를 통해 스펜드를 빌드하고, 지갑 시드로 서명하고, 푸시합니다 — 전부 `--dry-run` / `--json`으로 CI에서 안전하게 사용할 수 있습니다.
 
 ```sh
-dig-store did create                          # an issuer DID for attribution
-dig-store collection create --name "My Drop"  # a CHIP-0007 collection
-dig-store nft mint --data ./art.png --metadata ./meta.json --dry-run
-dig-store offer make ...                       # XCH / CAT trades
+digs did create                          # an issuer DID for attribution
+digs collection create --name "My Drop"  # a CHIP-0007 collection
+digs nft mint --data ./art.png --metadata ./meta.json --dry-run
+digs offer make ...                       # XCH / CAT trades
 ```
 
 `nft mint`의 **capsule-media** 경로는 예술 작품과 CHIP-0007 메타데이터를 capsule에 기록하고, 실제 바이트로부터 data/metadata 해시를 계산하며, URI를 해당 capsule의 `chia://` 주소로 설정합니다(https 게이트웨이 폴백 포함). → [명령어 레퍼런스](../digstore/cli/command-reference.md)
@@ -78,7 +78,7 @@ SDK의 `Paywall`은 프로바이더와 스펜드 빌더를 결합하여 **결제
 
 ## Offer — make / take / show {#offers--make--take--show}
 
-`dig-store offer make | take | show`로 NFT를 XCH나 CAT과 거래하세요(각각 `--dry-run` / `--json` 지원). → [명령어 레퍼런스](../digstore/cli/command-reference.md)
+`digs offer make | take | show`로 NFT를 XCH나 CAT과 거래하세요(각각 `--dry-run` / `--json` 지원). → [명령어 레퍼런스](../digstore/cli/command-reference.md)
 
 ---
 

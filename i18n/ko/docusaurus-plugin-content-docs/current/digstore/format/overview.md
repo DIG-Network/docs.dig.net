@@ -39,7 +39,7 @@ When you `commit`, dig-store compiles your content together with a small, fixed 
                 │                                  │
                 └──────────────┬───────────────────┘
                                ▼
-                    dig-store commit  →  store.wasm
+                    digs commit  →  store.wasm
                                │
         ┌──────────────────────┼──────────────────────┐
         ▼                      ▼                       ▼

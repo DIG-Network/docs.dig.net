@@ -3,7 +3,7 @@ sidebar_position: 6
 title: Streaming & retrieval keys
 description: "Streaming resources by URN or retrieval key, listing keys per deployment, and checking out entire generations."
 keywords:
-  - dig-store cat
+  - digs cat
   - retrieval key
   - URN
   - checkout
@@ -22,7 +22,7 @@ dig-store lets you stream a resource out **by URN** (decrypted) or **by retrieva
 
 ## `cat` — stream one resource
 
-`dig-store cat <target>` accepts either a URN or a 64-hex retrieval key, and the two behave differently:
+`digs cat <target>` accepts either a URN or a 64-hex retrieval key, and the two behave differently:
 
 | You pass… | You get back | Use it for |
 |---|---|---|
@@ -31,10 +31,10 @@ dig-store lets you stream a resource out **by URN** (decrypted) or **by retrieva
 
 ```sh
 # By URN → decrypted
-dig-store cat urn:dig:chia:<storeId>/logo.png --out logo.png
+digs cat urn:dig:chia:<storeId>/logo.png --out logo.png
 
 # By retrieval key → encrypted bytes only (resolved within the active project)
-dig-store cat 34e4d485…b111 --out logo.png.enc
+digs cat 34e4d485…b111 --out logo.png.enc
 ```
 
 Both forms support `--out <file>` to write to a file instead of stdout, and the URN form supports `--verify-proof` (check the Merkle proof against the trusted root) and `--salt <hex>` (private projects).
@@ -43,12 +43,12 @@ Why two modes? The URN and the retrieval key are **different values** (see [URNs
 
 ## `keys` — list retrieval keys
 
-`dig-store keys` lists every committed resource in a deployment with its URN and retrieval key:
+`digs keys` lists every committed resource in a deployment with its URN and retrieval key:
 
 ```sh
-dig-store keys                  # current deployment
-dig-store keys --root <hex>     # a specific deployment
-dig-store keys --json           # machine-readable
+digs keys                  # current deployment
+digs keys --root <hex>     # a specific deployment
+digs keys --json           # machine-readable
 ```
 
 Example (`--json`):
@@ -70,8 +70,8 @@ The retrieval key is **root-independent** — derived from the store id and reso
 To write an entire deployment's content to a directory (decrypted):
 
 ```sh
-dig-store checkout <root> --out ./restored
-dig-store checkout <root> --out ./restored --salt <hex>   # private project
+digs checkout <root> --out ./restored
+digs checkout <root> --out ./restored --salt <hex>   # private project
 ```
 
 This is the bulk counterpart to `cat`: instead of one resource, it reconstructs every file in that deployment under `--out`.

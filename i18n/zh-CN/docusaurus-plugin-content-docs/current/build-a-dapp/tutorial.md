@@ -8,7 +8,7 @@ keywords:
   - window.chia
   - dig-sdk
   - chip35 spend
-  - dig-store deploy
+  - digs deploy
   - custom domain
 tags:
   - digstore-cli
@@ -41,10 +41,10 @@ new ──▶ dev ──▶ wire wallet (dig-sdk) ──▶ build a spend (chip3
 
 ## 1. 搭建一个 React 应用 —— 免费，不上链 {#1-scaffold-a-react-app--free-no-chain}
 
-`dig-store new` 会写入一个可运行的、已接入钱包的项目。选择 React 模板：
+`digs new` 会写入一个可运行的、已接入钱包的项目。选择 React 模板：
 
 ```sh
-dig-store new vite-react my-dapp
+digs new vite-react my-dapp
 cd my-dapp
 ```
 
@@ -57,7 +57,7 @@ cd my-dapp
 ## 2. 在真实读取路径上开发 —— 免费 {#2-develop-against-the-real-read-path--free}
 
 ```sh
-dig-store dev
+digs dev
 ```
 
 `dev` 会运行你的构建流程，通过**真实的 `chia://` 读取路径**（编译 → 验证 → 解密）提供输出内容的服务，并注入一个 **`window.chia` 开发模拟器（dev shim）**，让你无需真实钱包即可开发钱包相关流程。编辑 `src/App.jsx` 并保存，页面会热重载 —— 这正是访客最终会看到的效果，且不涉及任何链上交互，也不会有任何花费。
@@ -170,13 +170,13 @@ if (await paywall.verifyReceipt(receipt)) { /* unlock the content */ }
 构建和预览都是免费的；这一步是唯一会花费的步骤。首先**一次性**创建 store：
 
 ```sh
-dig-store init my-dapp --dir dist      # mint the store's first capsule (uniform capsule price + XCH fee)
+digs init my-dapp --dir dist      # mint the store's first capsule (uniform capsule price + XCH fee)
 ```
 
 `init` 会在主网上铸造一个 Chia singleton —— **launcher id 即成为你的 store id**。将它复制进 `dig.toml`（`store-id = "<64-hex>"`）。此后，一条命令即可构建并发布一个新的 capsule：
 
 ```sh
-dig-store deploy --json                # runs build-command, stages dist/, advances the root
+digs deploy --json                # runs build-command, stages dist/, advances the root
 ```
 
 每一次 `deploy` 都会以统一的 capsule 价格发布一个新的不可变 capsule。一经确认，你的 dapp 就**可以通过 [dig RPC](../rpc/what-is-the-dig-rpc.md) 读取**，通过它的 [URN](../concepts.md#urn) / `chia://` 地址访问 —— 加密、已验证，且无法被下线，无需注册，也无需额外付费。（一个友好的 `*.on.dig.net` 网址是一个单独的可选步骤 —— 参见[下一节](#6-put-it-on-your-own-domain)。）若要在每次提交时都实现 push-to-deploy，请接入[从 GitHub Actions 部署](../digstore/cli/deploy-from-github-actions.md)。
