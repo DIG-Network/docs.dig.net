@@ -67,7 +67,7 @@ tags:
 - **`dig://`** — §21の**トランスポート**ロケーター（CLI／ピア層）*かつ*DIG Browserの内部ページスキーム — 2つの異なる用途であり、決してコンテンツアドレスではありません。
 - **`urn:dig:`** — 両者が派生元とするURN名前空間。
 - **store / capsule** — アイデンティティとその不変のgeneration。
-- **$DIG** — capsuleごとに支払われるCAT；**DigStore** — storeフォーマット。
+- **$DIG** — capsuleごとに支払われるCAT；**dig-store** — storeフォーマット。
 
 ## 関連項目 {#related}
 

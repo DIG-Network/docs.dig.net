@@ -319,7 +319,7 @@
     "message": "DIG Network, barındırıcının taşıdığı içeriği asla göremediği bir içerik yayınlama ve sunma geliştirici platformudur. Tek bir kendini savunan WebAssembly modülüne derlenen şifreli, içerik adresli depolama olan {digstore} ile başlayın."
   },
   "homepage.hero.lead.digstore": {
-    "message": "DigStore"
+    "message": "dig-store"
   },
   "homepage.hero.cta.docs": {
     "message": "Dokümanları keşfedin →"
@@ -364,7 +364,7 @@
     "message": "Birleştirilebilir yapı taşları"
   },
   "homepage.primitives.subtitle": {
-    "message": "DigStore artık kullanılabilir. Daha fazla DIG Network temel bileşeni yolda."
+    "message": "dig-store artık kullanılabilir. Daha fazla DIG Network temel bileşeni yolda."
   },
   "homepage.primitives.available": {
     "message": "KULLANILABİLİR"
@@ -373,7 +373,7 @@
     "message": "Git şeklinde, şifreli, içerik adresli bir mağaza. Bir build dizinine yönlendirin, nesilleri commit'leyin ve her şeyi URN ile adresleyin."
   },
   "homepage.primitives.digstore.link": {
-    "message": "DigStore dokümanlarını okuyun →"
+    "message": "dig-store dokümanlarını okuyun →"
   },
   "homepage.steps.capture.title": {
     "message": "Yakala"
@@ -403,7 +403,7 @@
     "message": "Build çıktısı için Git tarzı iş akışı — ilk commit'ten itibaren şifreli ve adreslenebilir."
   },
   "homepage.cta.title": {
-    "message": "DigStore ile inşa etmeye başlayın"
+    "message": "dig-store ile inşa etmeye başlayın"
   },
   "homepage.cta.subtitle": {
     "message": "CLI'yi kurun ve ilk şifreli mağazanızı bir dakikadan kısa sürede yayınlayın."
@@ -418,6 +418,6 @@
     "message": "DIG Network — merkeziyetsiz veri katmanı"
   },
   "homepage.meta.description": {
-    "message": "DIG Network, Chia üzerinde bir Proof-of-Stake Katman 2 ağıdır. Ağ ve şifreli, içerik adresli depolama olan DigStore dahil temel bileşenleri hakkında geliştirici dokümanları."
+    "message": "DIG Network, Chia üzerinde bir Proof-of-Stake Katman 2 ağıdır. Ağ ve şifreli, içerik adresli depolama olan dig-store dahil temel bileşenleri hakkında geliştirici dokümanları."
   }
 }

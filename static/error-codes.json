@@ -5,7 +5,7 @@
   "version": 1,
   "surfaces": {
     "dig-rpc": "JSON-RPC 2.0 codes for the dig RPC (rpc.dig.net). http_or_exit is the transport status (always 200; the error rides in the JSON envelope).",
-    "digstore-cli": "digstore CLI process exit codes (0..16). http_or_exit is the process exit code.",
+    "digstore-cli": "dig-store CLI process exit codes (0..16). http_or_exit is the process exit code.",
     "dighub": "DIGHUb (hub.dig.net) user-facing codes. http_or_exit is the HTTP status where one exists.",
     "dig-loader": "dig:// content-loader failure codes (DIG Browser / extension). http_or_exit is null (surfaced on the error page)."
   },
@@ -183,7 +183,7 @@
       "code": "no-store",
       "exit": 3,
       "http_or_exit": 3,
-      "description": "No store found here. Run `digstore init`."
+      "description": "No store found here. Run `digs init`."
     },
     {
       "surface": "digstore-cli",
@@ -598,7 +598,7 @@
         "code": "no-store",
         "exit": 3,
         "http_or_exit": 3,
-        "description": "No store found here. Run `digstore init`."
+        "description": "No store found here. Run `digs init`."
       },
       {
         "surface": "digstore-cli",

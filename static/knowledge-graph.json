@@ -68,7 +68,7 @@
     {
       "id": "concept:digstore-cli",
       "type": "concept",
-      "title": "DigStore CLI",
+      "title": "dig-store CLI",
       "url": "https://docs.dig.net/docs/tags/digstore-cli",
       "tag": "digstore-cli"
     },
@@ -492,7 +492,7 @@
     {
       "id": "/docs/digstore/cli/project-workflow",
       "type": "doc",
-      "title": "Using DigStore in your project",
+      "title": "Using dig-store in your project",
       "url": "https://docs.dig.net/docs/digstore/cli/project-workflow",
       "tags": [
         "digstore-cli",
@@ -545,7 +545,7 @@
     {
       "id": "/docs/digstore/format/overview",
       "type": "doc",
-      "title": "The DigStore WASM Store Format",
+      "title": "The dig-store WASM Store Format",
       "url": "https://docs.dig.net/docs/digstore/format/overview",
       "tags": [
         "store",
@@ -603,7 +603,7 @@
     {
       "id": "/docs/digstore/what-is-digstore",
       "type": "doc",
-      "title": "What is DigStore?",
+      "title": "What is dig-store?",
       "url": "https://docs.dig.net/docs/digstore/what-is-digstore",
       "tags": [
         "store",
@@ -655,7 +655,7 @@
     {
       "id": "/docs/journeys/digstore-cli",
       "type": "doc",
-      "title": "How do I… use the digstore CLI?",
+      "title": "How do I… use the dig-store CLI?",
       "url": "https://docs.dig.net/docs/journeys/digstore-cli",
       "tags": [
         "digstore-cli",

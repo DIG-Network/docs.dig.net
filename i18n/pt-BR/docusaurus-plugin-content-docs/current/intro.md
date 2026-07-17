@@ -2,13 +2,13 @@
 sidebar_position: 1
 slug: /
 title: DIG Network
-description: "Visão geral dos primitivos da DIG Network: DigStore para publicação com endereçamento por conteúdo, dig RPC para hospedagem e recuperação cegas, e o DIG Browser para acesso a conteúdo."
+description: "Visão geral dos primitivos da DIG Network: dig-store para publicação com endereçamento por conteúdo, dig RPC para hospedagem e recuperação cegas, e o DIG Browser para acesso a conteúdo."
 keywords:
   - DIG Network
   - Proof-of-Stake Layer 2
   - Chia
   - capsule
-  - DigStore
+  - dig-store
   - dig RPC
   - DIG Browser
 tags:
@@ -43,7 +43,7 @@ O capsule é a unidade da rede para:
 - **Cache** — um host ou navegador armazena em cache um capsule indexado por `storeId:rootHash`; o cache local é um conjunto de capsules.
 - **Proveniência** — a raiz de cada capsule carrega a assinatura BLS do publicador e uma raiz Merkle.
 
-Esta é a definição válida em todo o ecossistema: "capsule = `(storeId, rootHash)`" significa a mesma coisa na DigStore, no dig RPC e no DIG Browser.
+Esta é a definição válida em todo o ecossistema: "capsule = `(storeId, rootHash)`" significa a mesma coisa na dig-store, no dig RPC e no DIG Browser.
 
 :::tip Experimente
 [**Crie seu primeiro capsule na DIGHUb ↗**](https://hub.dig.net/new) — publique um site no navegador, sem precisar de CLI. Cada capsule (mint ou commit) custa o **preço uniforme de capsule em $DIG**.
@@ -51,21 +51,21 @@ Esta é a definição válida em todo o ecossistema: "capsule = `(storeId, rootH
 
 ## Primitivos {#primitives}
 
-### 🗄️ DigStore {#️-digstore}
+### 🗄️ dig-store {#️-digstore}
 
 O primeiro e mais fundamental primitivo: um **projeto WASM criptografado e endereçável por conteúdo**. Você aponta para um diretório de build, faz commit dos deployments como no Git, e obtém um único arquivo `.wasm` autodefensivo que é ao mesmo tempo seus dados e o servidor que controla o acesso a eles. A URN *é* a chave — ela localiza e descriptografa ao mesmo tempo.
 
-→ **[Explore a DigStore](./digstore/what-is-digstore.md)**
+→ **[Explore a dig-store](./digstore/what-is-digstore.md)**
 
 | | |
 |---|---|
-| **[O que é a DigStore?](./digstore/what-is-digstore.md)** | A ideia de um único arquivo, em poucas palavras |
+| **[O que é a dig-store?](./digstore/what-is-digstore.md)** | A ideia de um único arquivo, em poucas palavras |
 | **[O formato](./digstore/format/overview.md)** | Projetos, deployments, URNs, criptografia, provas |
-| **[Tutorial da CLI](./digstore/cli/quickstart.md)** | Instale e use o `digstore` no seu projeto |
+| **[Tutorial da CLI](./digstore/cli/quickstart.md)** | Instale e use o `dig-store` no seu projeto |
 
 ### 🛰️ dig RPC {#️-dig-rpc}
 
-O primitivo de rede: uma **interface padrão para ler conteúdo de deployments DigStore hospedados**. JSON-RPC 2.0 sobre HTTPS `POST` — todo nó de hospedagem fala o mesmo protocolo de forma idêntica, então o conteúdo é portável e os clientes são agnósticos em relação ao nó. Ele serve ciphertext + provas de inclusão por chave de recuperação, deployments inteiros por `(store_id, root)`, e o manifesto público de descoberta — transmitido em chunks, cego por construção, verificado e descriptografado inteiramente no lado do cliente.
+O primitivo de rede: uma **interface padrão para ler conteúdo de deployments dig-store hospedados**. JSON-RPC 2.0 sobre HTTPS `POST` — todo nó de hospedagem fala o mesmo protocolo de forma idêntica, então o conteúdo é portável e os clientes são agnósticos em relação ao nó. Ele serve ciphertext + provas de inclusão por chave de recuperação, deployments inteiros por `(store_id, root)`, e o manifesto público de descoberta — transmitido em chunks, cego por construção, verificado e descriptografado inteiramente no lado do cliente.
 
 → **[Explore o dig RPC](./rpc/what-is-the-dig-rpc.md)**
 
@@ -106,7 +106,7 @@ A documentação está organizada em torno **do que você está fazendo**. Cada 
 Novo no vocabulário? Dê uma olhada em [Conceitos e glossário](./concepts.md). Quer o design completo? Leia o [Aprofundamento no protocolo](./protocol-deep-dive.md).
 
 :::note
-A DIG Network e seus primitivos são open source. A DigStore é licenciada sob GPL-2.0; veja o [repositório digstore](https://github.com/DIG-Network/digstore).
+A DIG Network e seus primitivos são open source. A dig-store é licenciada sob GPL-2.0; veja o [repositório dig-store](https://github.com/DIG-Network/dig-store).
 :::
 
 ## Relacionados {#related}
@@ -114,7 +114,7 @@ A DIG Network e seus primitivos são open source. A DigStore é licenciada sob G
 - [Quickstart](./quickstart.md) — publique seu primeiro site; grátis para construir e pré-visualizar
 - [Construa um dapp na Chia](./build-a-dapp/tutorial.md) — cada primitivo em um único tutorial de ponta a ponta
 - [Conceitos e glossário](./concepts.md) — as entidades centrais da DIG, definidas e ligadas
-- [O que é a DigStore?](./digstore/what-is-digstore.md) — o formato de store endereçável por conteúdo
+- [O que é a dig-store?](./digstore/what-is-digstore.md) — o formato de store endereçável por conteúdo
 - [O que é o dig RPC?](./rpc/what-is-the-dig-rpc.md) — a interface de leitura de toda a rede
 - [O protocolo chia://](./browser/chia-protocol.md) — abrindo conteúdo no DIG Browser
 - [Obtenha ajuda](./support/get-help.md) — comunidade, solução de problemas e códigos de erro

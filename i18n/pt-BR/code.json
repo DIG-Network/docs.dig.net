@@ -319,7 +319,7 @@
     "message": "A DIG Network é uma plataforma para desenvolvedores publicarem e servirem conteúdo sem que o host jamais veja o que está hospedando. Comece com o {digstore} — armazenamento criptografado e endereçável por conteúdo, compilado em um único módulo WebAssembly autodefensivo."
   },
   "homepage.hero.lead.digstore": {
-    "message": "DigStore"
+    "message": "dig-store"
   },
   "homepage.hero.cta.docs": {
     "message": "Explorar a documentação →"
@@ -364,7 +364,7 @@
     "message": "Blocos de construção combináveis"
   },
   "homepage.primitives.subtitle": {
-    "message": "O DigStore já está disponível. Mais primitivas da DIG Network estão a caminho."
+    "message": "O dig-store já está disponível. Mais primitivas da DIG Network estão a caminho."
   },
   "homepage.primitives.available": {
     "message": "DISPONÍVEL"
@@ -373,7 +373,7 @@
     "message": "Um repositório criptografado e endereçável por conteúdo, no estilo do Git. Aponte-o para um diretório de build, faça commit de gerações e endereie tudo por URN."
   },
   "homepage.primitives.digstore.link": {
-    "message": "Ler a documentação do DigStore →"
+    "message": "Ler a documentação do dig-store →"
   },
   "homepage.steps.capture.title": {
     "message": "Capturar"
@@ -403,7 +403,7 @@
     "message": "Fluxo de trabalho no estilo Git para a saída do build — criptografado e endereçável desde o primeiro commit."
   },
   "homepage.cta.title": {
-    "message": "Comece a construir com o DigStore"
+    "message": "Comece a construir com o dig-store"
   },
   "homepage.cta.subtitle": {
     "message": "Instale a CLI e publique seu primeiro store criptografado em menos de um minuto."
@@ -418,6 +418,6 @@
     "message": "DIG Network: a camada de dados descentralizada"
   },
   "homepage.meta.description": {
-    "message": "A DIG Network é uma rede Proof-of-Stake de Camada 2 sobre a Chia. Documentação para desenvolvedores sobre a rede e suas primitivas, incluindo o DigStore — armazenamento criptografado e endereçável por conteúdo."
+    "message": "A DIG Network é uma rede Proof-of-Stake de Camada 2 sobre a Chia. Documentação para desenvolvedores sobre a rede e suas primitivas, incluindo o dig-store — armazenamento criptografado e endereçável por conteúdo."
   }
 }

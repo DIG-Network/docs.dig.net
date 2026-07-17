@@ -319,7 +319,7 @@
     "message": "DIG Network est une plateforme pour développeurs permettant de publier et de servir du contenu sans que l'hébergeur ne voie jamais ce qu'il héberge. Commencez avec {digstore} — un stockage chiffré et adressable par contenu, compilé en un seul module WebAssembly autodéfendu."
   },
   "homepage.hero.lead.digstore": {
-    "message": "DigStore"
+    "message": "dig-store"
   },
   "homepage.hero.cta.docs": {
     "message": "Explorer la documentation →"
@@ -364,7 +364,7 @@
     "message": "Blocs de construction composables"
   },
   "homepage.primitives.subtitle": {
-    "message": "DigStore est disponible dès maintenant. D'autres primitives DIG Network arrivent bientôt."
+    "message": "dig-store est disponible dès maintenant. D'autres primitives DIG Network arrivent bientôt."
   },
   "homepage.primitives.available": {
     "message": "DISPONIBLE"
@@ -373,7 +373,7 @@
     "message": "Un store chiffré et adressable par contenu, façonné comme Git. Pointez-le vers un répertoire de build, validez des générations et adressez tout par URN."
   },
   "homepage.primitives.digstore.link": {
-    "message": "Lire la documentation DigStore →"
+    "message": "Lire la documentation dig-store →"
   },
   "homepage.steps.capture.title": {
     "message": "Capturer"
@@ -403,7 +403,7 @@
     "message": "Flux de travail façon Git pour la sortie de build — chiffré et adressable dès le premier commit."
   },
   "homepage.cta.title": {
-    "message": "Commencez à créer avec DigStore"
+    "message": "Commencez à créer avec dig-store"
   },
   "homepage.cta.subtitle": {
     "message": "Installez la CLI et publiez votre premier store chiffré en moins d'une minute."
@@ -418,6 +418,6 @@
     "message": "DIG Network — la couche de données décentralisée"
   },
   "homepage.meta.description": {
-    "message": "DIG Network est un réseau de Layer 2 à preuve d'enjeu sur Chia. Documentation pour développeurs sur le réseau et ses primitives, y compris DigStore — un stockage chiffré et adressable par contenu."
+    "message": "DIG Network est un réseau de Layer 2 à preuve d'enjeu sur Chia. Documentation pour développeurs sur le réseau et ses primitives, y compris dig-store — un stockage chiffré et adressable par contenu."
   }
 }

@@ -67,7 +67,7 @@ Un éditeur **découpe + chiffre** (L1) le contenu dans un **format de capsule**
 - **`dig://`** — le localisateur de **transport** §21 (plan CLI/pair) *et* le schéma de page interne du DIG Browser — deux usages distincts, jamais l'adresse de contenu.
 - **`urn:dig:`** — l'espace de noms d'URN dont les deux dérivent.
 - **store / capsule** — l'identité et sa génération immuable.
-- **$DIG** — le CAT payé par capsule ; **DigStore** — le format de store.
+- **$DIG** — le CAT payé par capsule ; **dig-store** — le format de store.
 
 ## Voir aussi {#related}
 

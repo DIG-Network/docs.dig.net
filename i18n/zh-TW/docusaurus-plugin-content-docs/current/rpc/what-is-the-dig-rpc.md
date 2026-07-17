@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: 什麼是 dig RPC？
-description: "透過 JSON-RPC 2.0 讀取 DigStore capsule 的全網通用讀取介面；天生具有盲目性、無需信任即可驗證，且可在任何大小下進行串流傳輸。"
+description: "透過 JSON-RPC 2.0 讀取 dig-store capsule 的全網通用讀取介面；天生具有盲目性、無需信任即可驗證，且可在任何大小下進行串流傳輸。"
 keywords:
   - dig RPC
   - JSON-RPC 2.0
@@ -25,7 +25,7 @@ tags:
 本頁是導覽頁。權威的機器介面規格——包含方法列表、區塊傳輸物件、節點設定檔與 OpenRPC 文件——請見[協定．dig RPC](../protocol/dig-rpc.md)。
 :::
 
-**dig RPC 是全網通用的介面，用於直接從託管的 DigStore `.dig` capsule 中讀取內容。** 它是透過 HTTPS `POST` 傳輸的 [JSON-RPC 2.0](https://www.jsonrpc.org/specification) 服務。
+**dig RPC 是全網通用的介面，用於直接從託管的 dig-store `.dig` capsule 中讀取內容。** 它是透過 HTTPS `POST` 傳輸的 [JSON-RPC 2.0](https://www.jsonrpc.org/specification) 服務。
 
 每個託管 capsule 的節點——無論是位於 `https://rpc.dig.net` 的參考節點，或任何第三方節點——都會公開**相同語意的相同方法**。針對這個介面撰寫的用戶端，可透過單一端點讀取整個網路的內容。這裡沒有 CDN；DIG 上的所有內容服務都是透過 dig RPC 進行。
 
@@ -43,9 +43,9 @@ tags:
 - **無需信任即可驗證。** 每一個真實的位元組都會附帶一份以鏈上 generation root 為根的 merkle **納入證明（inclusion proof）**。用戶端會將這份證明折算回 root，只有在其與自己信任的 root 相符時才會接受。節點永遠不會被信任其回傳了真實的位元組。
 - **可在任何大小下進行串流傳輸。** 內容以有界、對齊 64 KiB 的區塊讀取，並帶有明確的續傳機制。一份一千位元組的資源與一份一百百萬位元組的 capsule，會透過同一個迴圈讀取，沒有任何一次回應是無界的。
 
-## 它與 DigStore 的關係 {#how-it-fits-with-digstore}
+## 它與 dig-store 的關係 {#how-it-fits-with-digstore}
 
-DigStore 提供的是**格式**：一個內容定址、經過加密的 store，會編譯成單一能自我保護的 `.wasm` capsule，並以一個 URN 定址——而*這個 URN 就是金鑰*。dig RPC 則是在不信任主機的前提下，將這個 capsule **在網路上提供服務**的方式：
+dig-store 提供的是**格式**：一個內容定址、經過加密的 store，會編譯成單一能自我保護的 `.wasm` capsule，並以一個 URN 定址——而*這個 URN 就是金鑰*。dig RPC 則是在不信任主機的前提下，將這個 capsule **在網路上提供服務**的方式：
 
 1. 你編譯一個 store，並在鏈上錨定一個 generation（一個 CHIP-0035 DataLayer 單例）。它的**內容 root** 是信任錨點。
 2. 一個節點託管這個 capsule，並透過 dig RPC 將其公開。

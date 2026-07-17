@@ -24,7 +24,7 @@ DIG is built to be driven by agents and tools, not just read by humans. Every co
 |---|---|
 | [`/openrpc.json`](pathname:///openrpc.json) | OpenRPC 1.2.6 document for the dig JSON-RPC read interface — the **network profile** (rpc.dig.net): methods, request/response JSON Schemas (incl. the chunk object with `chunk_lens` and no `decoy` field), and catalogued error responses (incl. `-32004`). Generated from the same source as [Protocol · The dig RPC](./protocol/dig-rpc.md). |
 | [`/openrpc-node.json`](pathname:///openrpc-node.json) | OpenRPC 1.2.6 document for the **node profile** — the local dig-node / in-process DIG Browser node: `dig.getContent` plus the node-only `dig.getAnchoredRoot` / `dig.stage` / `cache.*`. Gate on `dig.methods`. |
-| [`/error-codes.json`](pathname:///error-codes.json) | The cross-surface [error catalog](./support/error-codes.md): dig RPC `-32xxx` codes, digstore CLI exit codes, DIGHUb codes, and dig-loader codes, as `[{surface, code, http_or_exit, description}]`. |
+| [`/error-codes.json`](pathname:///error-codes.json) | The cross-surface [error catalog](./support/error-codes.md): dig RPC `-32xxx` codes, dig-store CLI exit codes, DIGHUb codes, and dig-loader codes, as `[{surface, code, http_or_exit, description}]`. |
 | [`/llms.txt`](pathname:///llms.txt) | A link-rich markdown map of the docs ([llms.txt convention](https://llmstxt.org/)). |
 | [`/knowledge-graph.json`](pathname:///knowledge-graph.json) | Entities (concepts + docs) and typed edges (`defines`, `part-of`, `requires`, `see-also`). |
 | [`/sitemap.xml`](pathname:///sitemap.xml) | Every public route. |
@@ -38,7 +38,7 @@ The REST control plane (`hub.dig.net/v1`, bearer-JWT) — accounts, stores, doma
 
 ## Discovery affordances
 
-- The `digstore` CLI ships `--help-json`, `completion <shell>`, and catalogued exit codes — introspect it without out-of-band knowledge.
+- The `dig-store` CLI ships `--help-json`, `completion <shell>`, and catalogued exit codes — introspect it without out-of-band knowledge.
 - The dig RPC is self-describing via the OpenRPC document (method listing + schemas).
 - `@dignetwork/dig-sdk` exposes `capabilities()` so you can branch on what's available. → [The DIG SDK](./sdk.md)
 

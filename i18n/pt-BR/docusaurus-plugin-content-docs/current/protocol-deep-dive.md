@@ -67,7 +67,7 @@ Um publicador **fragmenta + criptografa** (L1) o conteúdo em um **formato de ca
 - **`dig://`** — o localizador de **transporte** §21 (plano de CLI/peer) *e* o esquema interno de páginas do DIG Browser — dois usos distintos, nunca o endereço de conteúdo.
 - **`urn:dig:`** — o namespace de URN do qual ambos derivam.
 - **store / capsule** — a identidade e sua generation imutável.
-- **$DIG** — o CAT pago por capsule; **DigStore** — o formato do store.
+- **$DIG** — o CAT pago por capsule; **dig-store** — o formato do store.
 
 ## Relacionados {#related}
 

@@ -1,8 +1,8 @@
 # DIG Network Documentation
 
-> DIG Network is a Proof-of-Stake Layer 2 on Chia — a decentralized network for publishing, addressing, and serving content without trusting the host. These are the developer docs for the network and its primitives: DigStore (the content-addressable, encrypted store format and CLI), the dig RPC (the network-wide read interface), and the DIG Browser (a browser with the native chia:// protocol and an injected Chia wallet).
+> DIG Network is a Proof-of-Stake Layer 2 on Chia — a decentralized network for publishing, addressing, and serving content without trusting the host. These are the developer docs for the network and its primitives: dig-store (the content-addressable, encrypted store format and CLI), the dig RPC (the network-wide read interface), and the DIG Browser (a browser with the native chia:// protocol and an injected Chia wallet).
 
-The unifying concept is the **capsule**: one immutable store generation — the pair `(storeId, rootHash)`, written `storeId:rootHash`. It is the network's atomic unit of compilation (one fixed-size WASM module), pricing (a uniform per-capsule price in $DIG to mint or commit), retrieval (a URN names one capsule), caching, and provenance. A store is a sequence of capsules, one per commit. This definition is identical across DigStore, the dig RPC, and the DIG Browser.
+The unifying concept is the **capsule**: one immutable store generation — the pair `(storeId, rootHash)`, written `storeId:rootHash`. It is the network's atomic unit of compilation (one fixed-size WASM module), pricing (a uniform per-capsule price in $DIG to mint or commit), retrieval (a URN names one capsule), caching, and provenance. A store is a sequence of capsules, one per commit. This definition is identical across dig-store, the dig RPC, and the DIG Browser.
 
 The docs are organized in two top-level sections: **Using DIG** (one track per audience — each track's landing carries a 10-second "why" + the mental model, then the task-oriented how-to) and the **Protocol** spec (a pure, first-class specification defined as seven bottom-up layers, with the IMPLEMENTATION as the source of truth). Audiences: app developers, NFT developers, integration developers, node operators, content consumers, troubleshooting.
 
@@ -16,7 +16,7 @@ The docs are organized in two top-level sections: **Using DIG** (one track per a
 
 ## Using DIG — by audience (each landing = 10-sec why + mental model)
 
-- [For app developers](https://docs.dig.net/docs/audiences/app-developers): publish a site/app you own — build free, pay a uniform $DIG price per published capsule; two front doors (DIGHUb web + the digstore CLI/CI).
+- [For app developers](https://docs.dig.net/docs/audiences/app-developers): publish a site/app you own — build free, pay a uniform $DIG price per published capsule; two front doors (DIGHUb web + the dig-store CLI/CI).
 - [For NFT developers](https://docs.dig.net/docs/audiences/nft-developers): mint CHIP-0007 collections whose art lives in a tamper-evident capsule; spends built by the canonical CHIP-0035 wasm, never hand-rolled.
 - [For integration developers](https://docs.dig.net/docs/audiences/integration-developers): a fully machine-readable platform + a typed @dignetwork/dig-sdk; two surfaces (the hub /v1 REST control plane and the dig JSON-RPC read path).
 - [For node operators](https://docs.dig.net/docs/run-a-node/): serve content provably and provider-blind; the blind host only ever touches ciphertext keyed by hashes.
@@ -25,8 +25,8 @@ The docs are organized in two top-level sections: **Using DIG** (one track per a
 
 ## Core concepts
 
-- [What is DigStore?](https://docs.dig.net/docs/digstore/what-is-digstore): a Git-shaped, encrypted, content-addressable store that compiles to a single self-defending WebAssembly module — both the data and the server that gates it.
-- [The DigStore WASM Store Format](https://docs.dig.net/docs/digstore/format/overview): the whole format in one read — store, generation/capsule, URN, and compiled module.
+- [What is dig-store?](https://docs.dig.net/docs/digstore/what-is-digstore): a Git-shaped, encrypted, content-addressable store that compiles to a single self-defending WebAssembly module — both the data and the server that gates it.
+- [The dig-store WASM Store Format](https://docs.dig.net/docs/digstore/format/overview): the whole format in one read — store, generation/capsule, URN, and compiled module.
 - [Store structure](https://docs.dig.net/docs/digstore/format/store-structure): store identity (the on-chain singleton launcher id), generations and root hashes, the on-disk layout, and the compiled module.
 - [URNs & Encryption](https://docs.dig.net/docs/digstore/format/urns-and-encryption): the URN that is both address and key; retrieval key = SHA-256(canonical_urn); AES-256-GCM-SIV; public vs private stores.
 - [Proofs & Security](https://docs.dig.net/docs/digstore/format/proofs-and-security): Merkle inclusion proofs over ciphertext, signed roots, revocation, host attestation, and the threat model.
@@ -35,24 +35,24 @@ The docs are organized in two top-level sections: **Using DIG** (one track per a
 ## Quickstarts (Hub users & frontend deployers)
 
 - [CLI quick start](https://docs.dig.net/docs/digstore/cli/quickstart): create a store, commit a file, and read it back in minutes.
-- [Using DigStore in your project](https://docs.dig.net/docs/digstore/cli/project-workflow): capture a build directory, manage staging, run multiple stores in one workspace, the release loop.
+- [Using dig-store in your project](https://docs.dig.net/docs/digstore/cli/project-workflow): capture a build directory, manage staging, run multiple stores in one workspace, the release loop.
 - [Publish from the web (DIGHUb)](https://hub.dig.net/new): deploy a capsule with no CLI.
 - [Connect your wallet (Sage walkthrough)](https://docs.dig.net/docs/journeys/connect-your-wallet): step-by-step wallet pairing for DIGHUb, including exactly where Sage's WalletConnect setting lives (Settings → WalletConnect → Add connection).
 
 ## Build a dapp (integrating developers)
 
-- [Build a dapp on Chia](https://docs.dig.net/docs/build-a-dapp/tutorial): the end-to-end thread — scaffold a React app (digstore new / npm create dig-app), develop free (digstore dev), wire the in-page wallet (window.chia + WalletConnect fallback via @dignetwork/dig-sdk), build and sign a spend (chip35 wasm via the SDK /spend subpath), deploy on-chain (the uniform capsule price in $DIG), and add a custom domain.
+- [Build a dapp on Chia](https://docs.dig.net/docs/build-a-dapp/tutorial): the end-to-end thread — scaffold a React app (digs new / npm create dig-app), develop free (digs dev), wire the in-page wallet (window.chia + WalletConnect fallback via @dignetwork/dig-sdk), build and sign a spend (chip35 wasm via the SDK /spend subpath), deploy on-chain (the uniform capsule price in $DIG), and add a custom domain.
 - [Deploy an existing app (web upload)](https://docs.dig.net/docs/build-a-dapp/deploy-existing-app): already have a built site/SPA? How DIG serves it (the store as your file set, index.html + assets + routes, the anchored-root serve model) plus a worked example — upload a real dist/ folder through DIGHUb's web upload (drag a whole folder or use Add a folder, subfolders preserved) and reach it via URN, chia://, or the free .dig address.
-- [Scaffold an app (create-dig-app)](https://docs.dig.net/docs/build-a-dapp/scaffold): npm create dig-app — the JS front door; scaffolds a runnable starter (app + dig.toml + the DIG SDK on wallet templates) from five templates (static, vite-react, next-static, nft-drop, dapp-window-chia). Free to scaffold/build/preview; the uniform capsule price in $DIG only at publish. The npm companion to the Rust CLI's digstore new.
+- [Scaffold an app (create-dig-app)](https://docs.dig.net/docs/build-a-dapp/scaffold): npm create dig-app — the JS front door; scaffolds a runnable starter (app + dig.toml + the DIG SDK on wallet templates) from five templates (static, vite-react, next-static, nft-drop, dapp-window-chia). Free to scaffold/build/preview; the uniform capsule price in $DIG only at publish. The npm companion to the Rust CLI's digs new.
 - [Example gallery](https://docs.dig.net/docs/build-a-dapp/example-gallery): example projects mapped to scaffold templates — static, vite-react, nft-drop, next-static, dapp-window-chia (example repo links are placeholders during pre-release).
 - [Submit your dApp to the store](https://docs.dig.net/docs/build-a-dapp/submit-to-the-store): list a dApp on the DIG Network dApp store (explore.dig.net) — connect a wallet at hub.dig.net/submit, fill in metadata + artwork, submit for review; an admin approval publishes the listing automatically, no repository or pull request needed from the submitter.
 
-## DigStore CLI (integrating developers)
+## dig-store CLI (integrating developers)
 
-- [Installing the CLI](https://docs.dig.net/docs/digstore/cli/install): the raw per-OS/arch binary from the digstore Releases page, the guided DIG Installer, or build from source with Rust.
-- [Command reference](https://docs.dig.net/docs/digstore/cli/command-reference): every digstore command — wallet, store, staging, history, content, remote, maintenance.
+- [Installing the CLI](https://docs.dig.net/docs/digstore/cli/install): the raw per-OS/arch binary from the dig-store Releases page, the guided DIG Installer, or build from source with Rust.
+- [Command reference](https://docs.dig.net/docs/digstore/cli/command-reference): every dig-store command — wallet, store, staging, history, content, remote, maintenance.
 - [Project config & build-time values](https://docs.dig.net/docs/digstore/cli/configuration): the committable dig.toml manifest (store-id, output-dir, build-command, …; flags > env > dig.toml > defaults) and how to inject PUBLIC build-time config; the rule that a blind static capsule holds no server secrets.
-- [Deploy from GitHub Actions](https://docs.dig.net/docs/digstore/cli/deploy-from-github-actions): git-push-to-deploy with dig-network/deploy-action@v1 — installs digstore, runs digstore deploy (advances the store, never mints), and reports the capsule + URLs + cost as a PR comment + GitHub deployment status. if-changed makes unchanged pushes a no-op (no spend); preview-per-PR is scaffolded. v1 puts a dedicated deploy wallet's seed in CI (passphrase + mnemonic); scoped deploy tokens are the planned safe replacement.
+- [Deploy from GitHub Actions](https://docs.dig.net/docs/digstore/cli/deploy-from-github-actions): git-push-to-deploy with dig-network/deploy-action@v1 — installs dig-store, runs digs deploy (advances the store, never mints), and reports the capsule + URLs + cost as a PR comment + GitHub deployment status. if-changed makes unchanged pushes a no-op (no spend); preview-per-PR is scaffolded. v1 puts a dedicated deploy wallet's seed in CI (passphrase + mnemonic); scoped deploy tokens are the planned safe replacement.
 - [Sharing over a remote](https://docs.dig.net/docs/digstore/cli/sharing): publish, clone/pull with verification, revoke, public vs private sharing.
 - [Streaming & retrieval keys](https://docs.dig.net/docs/digstore/cli/streaming-and-keys): cat by URN (decrypted) or retrieval key (encrypted); list keys; checkout a whole generation.
 
@@ -79,8 +79,8 @@ The docs are organized in two top-level sections: **Using DIG** (one track per a
 ## Run a node (operators / deployers)
 
 - [Run a DIG node](https://docs.dig.net/docs/run-a-node/): what a dig-node is — the headless content SERVER (serve side) that exposes the dig RPC and shares the local .dig cache; serving vs. consuming (the browser/extension consume from a local dig-node when present, else rpc.dig.net); all install paths. Pre-release.
-- [Install on Ubuntu/Debian (apt)](https://docs.dig.net/docs/run-a-node/apt): the Debian-native path — add the apt.dig.net signing key + source, apt install dig-node digstore, then systemctl enable --now dig-node (systemd service) and status/journalctl. Cross-references the cross-platform DIG Installer (curl|sh) and the DIG Browser. Pre-release (apt.dig.net being provisioned).
-- [Install anywhere — the universal installer](https://docs.dig.net/docs/run-a-node/universal-installer): the DIG Installer — the cross-platform curl|sh (or irm|iex) installer that installs the full stack by default (digstore CLI + dig-node + dig-dns, the latter two as boot-start services; Windows service / systemd / launchd); registers dig.local for same-host consumers; --no-<component> opts out, --with-relay/--with-browser are opt-in extras; every install also places the dign/digd short-alias binaries (same commands, flags, --json, exit codes as dig-node/dig-dns). Pre-release.
+- [Install on Ubuntu/Debian (apt)](https://docs.dig.net/docs/run-a-node/apt): the Debian-native path — add the apt.dig.net signing key + source, apt install dig-node dig-store, then systemctl enable --now dig-node (systemd service) and status/journalctl. Cross-references the cross-platform DIG Installer (curl|sh) and the DIG Browser. Pre-release (apt.dig.net being provisioned).
+- [Install anywhere — the universal installer](https://docs.dig.net/docs/run-a-node/universal-installer): the DIG Installer — the cross-platform curl|sh (or irm|iex) installer that installs the full stack by default (dig-store CLI + dig-node + dig-dns, the latter two as boot-start services; Windows service / systemd / launchd); registers dig.local for same-host consumers; --no-<component> opts out, --with-relay/--with-browser are opt-in extras; every install also places the dign/digd short-alias binaries (same commands, flags, --json, exit codes as dig-node/dig-dns). Pre-release.
 - [DIG and your DNS](https://docs.dig.net/docs/run-a-node/dns): dig-dns is a split-DNS resolver — it claims only the .dig top-level domain and never takes over your system DNS; its own rpc.dig.net lookup resolves over encrypted DNS (Mullvad, then Quad9) by default, toggled with DIG_DNS_SECURE_UPSTREAM.
 - [Point a consumer at your node](https://docs.dig.net/docs/run-a-node/point-a-consumer): make the DIG Browser/extension read local-first (dig.local→localhost, else rpc.dig.net) and share one .dig cache; every byte is still verified client-side.
 - [Configure dig-node](https://docs.dig.net/docs/run-a-node/configure): listeners/ports, the cache cap, and the upstream the node blind-fetches from, via config + DIGNODE_* env vars.
@@ -116,8 +116,8 @@ The protocol is specified as SEVEN bottom-up layers, each naming its canonical c
 - [Get help](https://docs.dig.net/docs/support/get-help): community Discord, GitHub issues, and how to file a report that gets answered.
 - [Troubleshooting](https://docs.dig.net/docs/support/troubleshooting): fixes for the common failures — insufficient DIG, confirmation timeout, non-fast-forward, verification failed, wallet/session.
 - [FAQ](https://docs.dig.net/docs/support/faq): what it costs (uniform per-capsule price in $DIG), iterate-for-free, blind hosting, custom domains, updates, public vs private.
-- [Error codes](https://docs.dig.net/docs/support/error-codes): one table for every code — dig RPC JSON-RPC (-32xxx), digstore CLI exit codes (0–16), and DIGHUb user-facing codes (DIG_INSUFFICIENT, SLUG_TAKEN, WALLET_DECLINED, …).
-- [Changelog](https://docs.dig.net/docs/support/changelog): what changed across the developer surfaces — digstore CLI (semver), dig RPC (method set + chunk wire format), window.chia provider, dig-sdk and chip35-dl-coin-wasm (npm) — plus how each is versioned and any breaking changes.
+- [Error codes](https://docs.dig.net/docs/support/error-codes): one table for every code — dig RPC JSON-RPC (-32xxx), dig-store CLI exit codes (0–16), and DIGHUb user-facing codes (DIG_INSUFFICIENT, SLUG_TAKEN, WALLET_DECLINED, …).
+- [Changelog](https://docs.dig.net/docs/support/changelog): what changed across the developer surfaces — dig-store CLI (semver), dig RPC (method set + chunk wire format), window.chia provider, dig-sdk and chip35-dl-coin-wasm (npm) — plus how each is versioned and any breaking changes.
 - [Status](https://docs.dig.net/docs/support/status): health of the DIG services (rpc.dig.net, hub.dig.net, on.dig.net) and the RPC + provider versioning notes (a live dashboard is planned).
 
 ## Machine-readable
@@ -134,7 +134,7 @@ The core concepts an agent should resolve first: the **capsule** (`storeId:rootH
 
 ## Optional
 
-- [DigStore source](https://github.com/DIG-Network/digstore): the open-source (GPL-2.0) CLI and store format.
+- [dig-store source](https://github.com/DIG-Network/dig-store): the open-source (GPL-2.0) CLI and store format.
 - [DIG Network site](https://dig.net): the project home.
 - [DIGHUb](https://hub.dig.net): publish and manage capsules from the web.
 

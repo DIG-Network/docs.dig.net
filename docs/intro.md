@@ -2,13 +2,13 @@
 sidebar_position: 1
 slug: /
 title: DIG Network
-description: "Overview of the DIG Network primitives: DigStore for content-addressable publishing, dig RPC for blind hosting and retrieval, and the DIG Browser for content access."
+description: "Overview of the DIG Network primitives: dig-store for content-addressable publishing, dig RPC for blind hosting and retrieval, and the DIG Browser for content access."
 keywords:
   - DIG Network
   - Proof-of-Stake Layer 2
   - Chia
   - capsule
-  - DigStore
+  - dig-store
   - dig RPC
   - DIG Browser
 tags:
@@ -43,7 +43,7 @@ The capsule is the network's unit of:
 - **Caching** — a host or browser caches a capsule keyed by `storeId:rootHash`; the local cache is a set of capsules.
 - **Provenance** — each capsule's root carries the publisher's BLS signature and a Merkle root.
 
-This is the ecosystem-wide definition: "capsule = `(storeId, rootHash)`" means the same thing in DigStore, the dig RPC, and the DIG Browser.
+This is the ecosystem-wide definition: "capsule = `(storeId, rootHash)`" means the same thing in dig-store, the dig RPC, and the DIG Browser.
 
 :::tip Try it
 [**Create your first capsule in DIGHUb ↗**](https://hub.dig.net/new) — publish a site in the browser, no CLI required. Each capsule (mint or commit) costs the **uniform capsule price in $DIG**.
@@ -51,21 +51,21 @@ This is the ecosystem-wide definition: "capsule = `(storeId, rootHash)`" means t
 
 ## Primitives
 
-### 🗄️ DigStore
+### 🗄️ dig-store
 
 The first and most fundamental primitive: a **content-addressable, encrypted WASM project format**. You point it at a build directory, commit deployments like Git, and get a single self-defending `.wasm` file that is both your data and the server that gates access to it. The URN *is* the key — it both locates and decrypts.
 
-→ **[Explore DigStore](./digstore/what-is-digstore.md)**
+→ **[Explore dig-store](./digstore/what-is-digstore.md)**
 
 | | |
 |---|---|
-| **[What is DigStore?](./digstore/what-is-digstore.md)** | The one-file idea, in a nutshell |
+| **[What is dig-store?](./digstore/what-is-digstore.md)** | The one-file idea, in a nutshell |
 | **[The Format](./digstore/format/overview.md)** | Projects, deployments, URNs, encryption, proofs |
-| **[CLI Tutorial](./digstore/cli/quickstart.md)** | Install and use `digstore` in your project |
+| **[CLI Tutorial](./digstore/cli/quickstart.md)** | Install and use `dig-store` in your project |
 
 ### 🛰️ dig RPC
 
-The networking primitive: a **standard interface for reading content from hosted DigStore deployments**. JSON-RPC 2.0 over HTTPS `POST` — every hosting node speaks it identically, so content is portable and clients are node-agnostic. It serves ciphertext + inclusion proofs by retrieval key, whole deployments by `(store_id, root)`, and the public discovery manifest — streamed in chunks, blind by construction, verified and decrypted entirely client-side.
+The networking primitive: a **standard interface for reading content from hosted dig-store deployments**. JSON-RPC 2.0 over HTTPS `POST` — every hosting node speaks it identically, so content is portable and clients are node-agnostic. It serves ciphertext + inclusion proofs by retrieval key, whole deployments by `(store_id, root)`, and the public discovery manifest — streamed in chunks, blind by construction, verified and decrypted entirely client-side.
 
 → **[Explore the dig RPC](./rpc/what-is-the-dig-rpc.md)**
 
@@ -106,7 +106,7 @@ The docs are organized around **what you're doing**. Each track opens with a ten
 New to the vocabulary? Skim [Concepts & glossary](./concepts.md). Want the full design? Read the [Protocol deep-dive](./protocol-deep-dive.md).
 
 :::note
-DIG Network and its primitives are open source. DigStore is licensed under GPL-2.0; see the [digstore repository](https://github.com/DIG-Network/digstore).
+DIG Network and its primitives are open source. dig-store is licensed under GPL-2.0; see the [dig-store repository](https://github.com/DIG-Network/dig-store).
 :::
 
 ## Related
@@ -114,7 +114,7 @@ DIG Network and its primitives are open source. DigStore is licensed under GPL-2
 - [Quickstart](./quickstart.md) — ship your first site; free to build and preview
 - [Build a dapp on Chia](./build-a-dapp/tutorial.md) — every primitive in one end-to-end tutorial
 - [Concepts & glossary](./concepts.md) — the core DIG entities, defined and linked
-- [What is DigStore?](./digstore/what-is-digstore.md) — the content-addressable store format
+- [What is dig-store?](./digstore/what-is-digstore.md) — the content-addressable store format
 - [What is the dig RPC?](./rpc/what-is-the-dig-rpc.md) — the network-wide read interface
 - [The chia:// protocol](./browser/chia-protocol.md) — opening content in the DIG Browser
 - [Get help](./support/get-help.md) — community, troubleshooting, and error codes

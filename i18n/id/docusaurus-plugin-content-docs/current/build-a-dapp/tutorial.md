@@ -8,7 +8,7 @@ keywords:
   - window.chia
   - dig-sdk
   - chip35 spend
-  - digstore deploy
+  - digs deploy
   - custom domain
 tags:
   - digstore-cli
@@ -33,7 +33,7 @@ new ──▶ dev ──▶ hubungkan wallet (dig-sdk) ──▶ bangun spend (c
 
 ## Yang Anda perlukan {#what-youll-need}
 
-- [CLI `digstore`](../digstore/cli/install.md) terinstal.
+- [CLI `dig-store`](../digstore/cli/install.md) terinstal.
 - Node 18+ dan `npm`.
 - Sebuah wallet Chia yang terdanai — **hanya pada langkah deploy** (harga capsule seragam dalam $DIG + fee XCH kecil). Semua sebelum itu gratis.
 
@@ -41,23 +41,23 @@ new ──▶ dev ──▶ hubungkan wallet (dig-sdk) ──▶ bangun spend (c
 
 ## 1. Scaffold aplikasi React — gratis, tanpa chain {#1-scaffold-a-react-app--free-no-chain}
 
-`digstore new` menulis sebuah proyek yang dapat langsung dijalankan dan sudah terhubung wallet. Pilih template React-nya:
+`digs new` menulis sebuah proyek yang dapat langsung dijalankan dan sudah terhubung wallet. Pilih template React-nya:
 
 ```sh
-digstore new vite-react my-dapp
+digs new vite-react my-dapp
 cd my-dapp
 ```
 
 Anda mendapatkan aplikasi Vite + React, sebuah `dig.toml` (`output-dir = "dist"`, `build-command = "npm install && npm run build"`), dan sebuah `App.jsx` yang sudah terhubung ke wallet dalam-halaman. Tidak ada store yang di-mint dan tidak ada yang dikeluarkan — `new` murni bersifat lokal.
 
 :::tip Lebih suka npm? `npm create dig-app`
-`npm create dig-app@latest my-dapp -- --template vite-react` melakukan scaffold template yang sama langsung dari npm — pintu depan JS, tidak perlu instal `digstore` untuk memulai. Lihat [Scaffold sebuah aplikasi](./scaffold.md) untuk kelima template dan perbandingan kedua pintu depannya.
+`npm create dig-app@latest my-dapp -- --template vite-react` melakukan scaffold template yang sama langsung dari npm — pintu depan JS, tidak perlu instal `dig-store` untuk memulai. Lihat [Scaffold sebuah aplikasi](./scaffold.md) untuk kelima template dan perbandingan kedua pintu depannya.
 :::
 
 ## 2. Develop terhadap jalur baca yang sesungguhnya — gratis {#2-develop-against-the-real-read-path--free}
 
 ```sh
-digstore dev
+digs dev
 ```
 
 `dev` menjalankan build Anda, menyajikan hasilnya melalui **jalur baca `chia://` yang sesungguhnya** (kompilasi → verifikasi → dekripsi), dan menyuntikkan sebuah **shim dev `window.chia`** sehingga Anda dapat membangun alur wallet tanpa wallet sungguhan. Edit `src/App.jsx`, simpan, dan halaman melakukan live-reload — persis seperti yang akan didapat pengunjung, dengan nol interaksi chain dan nol biaya.
@@ -170,13 +170,13 @@ if (await paywall.verifyReceipt(receipt)) { /* buka kunci kontennya */ }
 Anda build dan preview secara gratis; ini satu-satunya langkah yang mengeluarkan biaya. Pertama buat store-nya **sekali**:
 
 ```sh
-digstore init my-dapp --dir dist      # mint capsule pertama store (harga capsule seragam + fee XCH)
+digs init my-dapp --dir dist      # mint capsule pertama store (harga capsule seragam + fee XCH)
 ```
 
 `init` melakukan mint singleton Chia di mainnet — **launcher id menjadi store id Anda**. Salin ke `dig.toml` (`store-id = "<64-hex>"`). Sejak saat itu, satu perintah membangun dan menerbitkan capsule baru:
 
 ```sh
-digstore deploy --json                # menjalankan build-command, staging dist/, memajukan root
+digs deploy --json                # menjalankan build-command, staging dist/, memajukan root
 ```
 
 Setiap `deploy` menerbitkan capsule immutable baru dengan harga capsule seragam. Begitu terkonfirmasi, dapp Anda **dapat dibaca melalui [dig RPC](../rpc/what-is-the-dig-rpc.md)** lewat alamat [URN](../concepts.md#urn) / `chia://`-nya — terenkripsi, terverifikasi, dan mustahil untuk diturunkan, tanpa registrasi dan tanpa biaya tambahan apa pun. (Alamat web `*.on.dig.net` yang ramah adalah langkah terpisah dan opsional — lihat [bagian berikutnya](#6-put-it-on-your-own-domain).) Untuk push-to-deploy pada setiap commit, siapkan [Deploy dari GitHub Actions](../digstore/cli/deploy-from-github-actions.md).

@@ -319,7 +319,7 @@
     "message": "DIG Network एक डेवलपर प्लेटफ़ॉर्म है जो सामग्री को प्रकाशित और सर्व करने के लिए है, जहाँ होस्ट कभी नहीं देख पाता कि वह क्या ले जा रहा है। {digstore} से शुरू करें — एन्क्रिप्टेड, कंटेंट-एड्रेसेबल स्टोरेज जो एक ही सेल्फ़-डिफ़ेंडिंग WebAssembly मॉड्यूल में कंपाइल होता है।"
   },
   "homepage.hero.lead.digstore": {
-    "message": "DigStore"
+    "message": "dig-store"
   },
   "homepage.hero.cta.docs": {
     "message": "दस्तावेज़ देखें →"
@@ -364,7 +364,7 @@
     "message": "संयोज्य बिल्डिंग ब्लॉक्स"
   },
   "homepage.primitives.subtitle": {
-    "message": "DigStore अभी उपलब्ध है। और अधिक DIG Network प्रिमिटिव्स जल्द आ रहे हैं।"
+    "message": "dig-store अभी उपलब्ध है। और अधिक DIG Network प्रिमिटिव्स जल्द आ रहे हैं।"
   },
   "homepage.primitives.available": {
     "message": "उपलब्ध"
@@ -373,7 +373,7 @@
     "message": "Git-आकार का, एन्क्रिप्टेड, कंटेंट-एड्रेसेबल स्टोर। इसे अपनी बिल्ड डायरेक्टरी पर पॉइंट करें, जनरेशन कमिट करें, और सब कुछ URN से एड्रेस करें।"
   },
   "homepage.primitives.digstore.link": {
-    "message": "DigStore दस्तावेज़ पढ़ें →"
+    "message": "dig-store दस्तावेज़ पढ़ें →"
   },
   "homepage.steps.capture.title": {
     "message": "कैप्चर"
@@ -403,7 +403,7 @@
     "message": "बिल्ड आउटपुट के लिए Git-शैली वर्कफ़्लो — पहले कमिट से ही एन्क्रिप्टेड और एड्रेसेबल।"
   },
   "homepage.cta.title": {
-    "message": "DigStore के साथ निर्माण शुरू करें"
+    "message": "dig-store के साथ निर्माण शुरू करें"
   },
   "homepage.cta.subtitle": {
     "message": "CLI इंस्टॉल करें और एक मिनट से भी कम समय में अपना पहला एन्क्रिप्टेड स्टोर प्रकाशित करें।"
@@ -418,6 +418,6 @@
     "message": "DIG Network — विकेंद्रीकृत डेटा लेयर"
   },
   "homepage.meta.description": {
-    "message": "DIG Network, Chia पर एक Proof-of-Stake लेयर 2 है। नेटवर्क और इसके प्रिमिटिव्स के लिए डेवलपर दस्तावेज़, जिसमें DigStore शामिल है — एन्क्रिप्टेड कंटेंट-एड्रेसेबल स्टोरेज।"
+    "message": "DIG Network, Chia पर एक Proof-of-Stake लेयर 2 है। नेटवर्क और इसके प्रिमिटिव्स के लिए डेवलपर दस्तावेज़, जिसमें dig-store शामिल है — एन्क्रिप्टेड कंटेंट-एड्रेसेबल स्टोरेज।"
   }
 }

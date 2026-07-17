@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: What is the dig RPC?
-description: "Interfaz de lectura de toda la red para capsules de DigStore vía JSON-RPC 2.0; ciega por construcción, verificable sin confianza, y transmisible en cualquier tamaño."
+description: "Interfaz de lectura de toda la red para capsules de dig-store vía JSON-RPC 2.0; ciega por construcción, verificable sin confianza, y transmisible en cualquier tamaño."
 keywords:
   - dig RPC
   - JSON-RPC 2.0
@@ -25,7 +25,7 @@ tags:
 Esta es la página de orientación. La especificación normativa de la interfaz de máquina — métodos, el objeto de fragmento en el wire, el perfil de nodo y los documentos OpenRPC — está en [Protocolo · El dig RPC](../protocol/dig-rpc.md).
 :::
 
-**El dig RPC es la interfaz de toda la red para leer contenido directamente desde capsules `.dig` de DigStore hospedados.** Es un servicio [JSON-RPC 2.0](https://www.jsonrpc.org/specification) hablado sobre HTTPS `POST`.
+**El dig RPC es la interfaz de toda la red para leer contenido directamente desde capsules `.dig` de dig-store hospedados.** Es un servicio [JSON-RPC 2.0](https://www.jsonrpc.org/specification) hablado sobre HTTPS `POST`.
 
 Todo nodo que hospeda capsules — el nodo de referencia en `https://rpc.dig.net`, o cualquier nodo de terceros — expone los **mismos métodos con la misma semántica**. Un cliente escrito contra esta interfaz lee de toda la red a través de un único endpoint. No hay CDN; todo el servicio de contenido en DIG es vía el dig RPC.
 
@@ -43,9 +43,9 @@ Sirve tres cosas:
 - **Verificable sin confianza.** Cada byte real llega con una **prueba de inclusión** merkle anclada en la raíz de generation en cadena. El cliente pliega la prueba hasta la raíz y acepta solo si coincide con una raíz en la que confía. Nunca se confía en que el nodo haya devuelto bytes genuinos.
 - **Transmisible en cualquier tamaño.** El contenido se lee en fragmentos acotados, alineados a 64 KiB, con continuación explícita. Un recurso de un kilobyte y un capsule de cien megabytes se leen con el mismo bucle, y ninguna respuesta individual es ilimitada.
 
-## Cómo encaja con DigStore {#how-it-fits-with-digstore}
+## Cómo encaja con dig-store {#how-it-fits-with-digstore}
 
-DigStore te da el **formato**: un store cifrado y direccionable por contenido que compila a un único capsule `.wasm` autodefendido, direccionado por una URN donde *la URN es la clave*. El dig RPC es cómo ese capsule se **sirve en la red** sin confiar en el host:
+dig-store te da el **formato**: un store cifrado y direccionable por contenido que compila a un único capsule `.wasm` autodefendido, direccionado por una URN donde *la URN es la clave*. El dig RPC es cómo ese capsule se **sirve en la red** sin confiar en el host:
 
 1. Compilas un store y anclas una generation en cadena (un singleton DataLayer CHIP-0035). Su **raíz de contenido** es el ancla de confianza.
 2. Un nodo hospeda el capsule y lo expone a través del dig RPC.

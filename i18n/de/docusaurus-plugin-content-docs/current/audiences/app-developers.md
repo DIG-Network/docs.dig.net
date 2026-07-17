@@ -6,7 +6,7 @@ keywords:
   - publish a site
   - own your app
   - DIGHUb
-  - digstore
+  - dig-store
   - free until publish
   - capsule
 tags:
@@ -29,7 +29,7 @@ Ein **[store](../concepts.md#store)** ist die dauerhafte Identität Ihrer Websit
 Zwei Eingänge führen zur **gleichen** kostenlosen Build-zu-bezahltem-Publish-Schleife:
 
 - **Der Web-Weg** — [DIGHUb](../concepts.md#dighub) unter [hub.dig.net](https://hub.dig.net): einen gebauten Ordner ablegen, kostenlos in der Vorschau ansehen, ein Wallet erst beim Publish verbinden.
-- **Der CLI-/CI-Weg** — die [`digstore`](../concepts.md#digstore-cli)-CLI + [`create-dig-app`](../concepts.md#create-dig-app) + die [GitHub-Deploy-Action](../concepts.md#deploy-action).
+- **Der CLI-/CI-Weg** — die [`dig-store`](../concepts.md#digstore-cli)-CLI + [`create-dig-app`](../concepts.md#create-dig-app) + die [GitHub-Deploy-Action](../concepts.md#deploy-action).
 
 Scaffolding, Bauen und Vorschau kosten **nichts**. Sie zahlen erst, wenn Sie eine capsule veröffentlichen.
 
@@ -47,34 +47,34 @@ Scaffolding, Bauen und Vorschau kosten **nichts**. Sie zahlen erst, wenn Sie ein
 
 [**Einen neuen store in DIGHUb starten ↗**](https://hub.dig.net/new). Legen Sie Ihre gebaute Site ab (Ihren `dist/`- oder `build/`-Ordner), erhalten Sie eine **kostenlose Entwurfsvorschau** auf dem echten Lesepfad, und verbinden Sie ein Wallet erst im Schritt **Publish**. Sehen Sie den Web-Walkthrough unter [Quickstart → Über das Web veröffentlichen](../quickstart.md#a-publish-from-the-web).
 
-## Über die CLI veröffentlichen — digstore {#publish-from-the-cli--digstore}
+## Über die CLI veröffentlichen — dig-store {#publish-from-the-cli--digstore}
 
 Der Git-artige Ablauf: `new` → `dev` → `init` → `commit`.
 
 ```sh
-digstore new vite-react   # scaffold a runnable project — free, no mint
-digstore dev              # preview on the real chia:// read path, live-reload — free
-digstore init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
-digstore commit -m "v1.1"       # publish an update — a new capsule
+digs new vite-react   # scaffold a runnable project — free, no mint
+digs dev              # preview on the real chia:// read path, live-reload — free
+digs init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
+digs commit -m "v1.1"       # publish an update — a new capsule
 ```
 
 → [CLI-Quickstart](../digstore/cli/quickstart.md) · [Der vollständige Projekt-Workflow](../digstore/cli/project-workflow.md)
 
 ## Eine App scaffolden — 5 Templates {#scaffold-an-app--5-templates}
 
-Starten Sie mit einem lauffähigen, wallet-verbundenen Starter — `static`, `vite-react`, `next-static`, `nft-drop` oder `dapp-window-chia` — über `digstore new <template>` oder `npm create dig-app`.
+Starten Sie mit einem lauffähigen, wallet-verbundenen Starter — `static`, `vite-react`, `next-static`, `nft-drop` oder `dapp-window-chia` — über `digs new <template>` oder `npm create dig-app`.
 
 → [Eine App scaffolden](../build-a-dapp/scaffold.md)
 
-## Kostenlos testen mit `digstore dev` {#preview-free-with-digstore-dev}
+## Kostenlos testen mit `digs dev` {#preview-free-with-digstore-dev}
 
-`digstore dev` liefert Ihr Projekt über den **echten** DIG-Lesepfad aus (verschlüsseln → kompilieren → verifizieren → entschlüsseln) mit Live-Reload und einem injizierten Dev-`window.chia`. Was Sie sehen, ist das, was Besucher erhalten — und nichts wird geprägt oder ausgegeben.
+`digs dev` liefert Ihr Projekt über den **echten** DIG-Lesepfad aus (verschlüsseln → kompilieren → verifizieren → entschlüsseln) mit Live-Reload und einem injizierten Dev-`window.chia`. Was Sie sehen, ist das, was Besucher erhalten — und nichts wird geprägt oder ausgegeben.
 
 → [CLI-Quickstart → Entwickeln & Vorschau](../digstore/cli/quickstart.md)
 
 ## `dig.toml` — das committable Manifest {#digtoml--the-committable-manifest}
 
-`dig.toml` im Wurzelverzeichnis Ihres Projekts enthält `store-id`, `output-dir`, `build-command`, `remote` und weitere Konfiguration — gemeinsam genutzt von `digstore dev`, `digstore deploy` und den Scaffold-Templates. Es enthält **keine Geheimnisse** (diese kommen aus der Umgebung), also können Sie es committen.
+`dig.toml` im Wurzelverzeichnis Ihres Projekts enthält `store-id`, `output-dir`, `build-command`, `remote` und weitere Konfiguration — gemeinsam genutzt von `digs dev`, `digs deploy` und den Scaffold-Templates. Es enthält **keine Geheimnisse** (diese kommen aus der Umgebung), also können Sie es committen.
 
 → [Projektkonfiguration & Build-Zeit-Werte](../digstore/cli/configuration.md)
 

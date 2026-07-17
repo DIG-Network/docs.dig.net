@@ -36,7 +36,7 @@ A **deploy key** is a separate key you authorize *on your store, on-chain*, in t
 This is the [admin / writer / oracle delegation](../chip-0035-spends-and-delegation.md#delegation--admin--writer--oracle) model: a deploy key is a **revocable writer delegate**. Because it's scoped to advancing the root, a leaked deploy key can publish a capsule but can **never seize your store**.
 
 :::note You own the store; the key only updates it
-You create the store once (in DIGHUb or with [`digstore init`](../digstore/cli/onchain-anchoring.md), which mints it and spends $DIG). A deploy key never mints and never owns — it only advances an existing store you already control.
+You create the store once (in DIGHUb or with [`digs init`](../digstore/cli/onchain-anchoring.md), which mints it and spends $DIG). A deploy key never mints and never owns — it only advances an existing store you already control.
 :::
 
 ## Issue a deploy key
@@ -58,10 +58,10 @@ Give each key a clear name when you create it — e.g. `github-actions`, `stagin
 
 ## Use a deploy key in CI
 
-The issued key goes into CI as the **`DIGSTORE_WRITER_KEY`** secret, and [`digstore commit`](../digstore/cli/command-reference.md) reads it to sign the root advance.
+The issued key goes into CI as the **`DIGSTORE_WRITER_KEY`** secret, and [`digs commit`](../digstore/cli/command-reference.md) reads it to sign the root advance.
 
-:::caution `DIGSTORE_WRITER_KEY` + `digstore commit` — not `digstore deploy`
-The key DIGHUb issues is a **writer** key: it authorizes the on-chain root advance and is consumed by `digstore commit --deploy-key` (which reads `DIGSTORE_WRITER_KEY`). It is **not** the `digstore deploy` publisher key (`DIGSTORE_DEPLOY_KEY`) — a §21 head-push credential with no on-chain authority. Put the issued secret in `DIGSTORE_WRITER_KEY`.
+:::caution `DIGSTORE_WRITER_KEY` + `digs commit` — not `digs deploy`
+The key DIGHUb issues is a **writer** key: it authorizes the on-chain root advance and is consumed by `digs commit --deploy-key` (which reads `DIGSTORE_WRITER_KEY`). It is **not** the `digs deploy` publisher key (`DIGSTORE_DEPLOY_KEY`) — a §21 head-push credential with no on-chain authority. Put the issued secret in `DIGSTORE_WRITER_KEY`.
 :::
 
 A minimal GitHub Actions step, using the key as a repository secret:
@@ -74,8 +74,8 @@ A minimal GitHub Actions step, using the key as a repository secret:
     DIG_MNEMONIC:        ${{ secrets.DIG_MNEMONIC }}         # the funding wallet's seed
   run: |
     npm ci && npm run build                 # produce ./dist
-    digstore seed import --mnemonic "$DIG_MNEMONIC"
-    digstore commit --message "ci: $GITHUB_SHA"   # advance the root; signed by the writer key
+    digs seed import --mnemonic "$DIG_MNEMONIC"
+    digs commit --message "ci: $GITHUB_SHA"   # advance the root; signed by the writer key
 ```
 
 Two distinct credentials are in play, and only one can spend:
@@ -128,7 +128,7 @@ A deploy key is a key **you generate**. If you'd rather authorize a website's ow
 directly — e.g. giving `hub.dig.net` writer access without copying anything — use:
 
 ```
-digstore authorize-origin-as-writer hub.dig.net
+digs authorize-origin-as-writer hub.dig.net
 ```
 
 This discovers the origin's DIG pubkey from its [well-known
@@ -151,5 +151,5 @@ to preview the change first.
 
 - [Deploy from GitHub Actions](../digstore/cli/deploy-from-github-actions.md) — the Action that wraps this flow, with free PR previews
 - [Webhooks](./webhooks.md) — get notified when a deploy changes state
-- [Command reference](../digstore/cli/command-reference.md) — every `digstore` command and flag
+- [Command reference](../digstore/cli/command-reference.md) — every `dig-store` command and flag
 - [Concepts & glossary](../concepts.md) — store, capsule, and anchoring defined

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: dig RPC là gì?
-description: "Giao diện đọc trên toàn mạng lưới cho các capsule DigStore qua JSON-RPC 2.0; ẩn danh theo thiết kế, có thể xác minh mà không cần tin tưởng, và có thể streaming ở bất kỳ kích thước nào."
+description: "Giao diện đọc trên toàn mạng lưới cho các capsule dig-store qua JSON-RPC 2.0; ẩn danh theo thiết kế, có thể xác minh mà không cần tin tưởng, và có thể streaming ở bất kỳ kích thước nào."
 keywords:
   - dig RPC
   - JSON-RPC 2.0
@@ -25,7 +25,7 @@ tags:
 Đây là trang định hướng. Đặc tả giao diện máy chuẩn tắc — các phương thức, đối tượng wire dạng chunk, hồ sơ node, và các tài liệu OpenRPC — nằm ở [Protocol · dig RPC](../protocol/dig-rpc.md).
 :::
 
-**dig RPC là giao diện trên toàn mạng lưới để đọc nội dung trực tiếp từ các capsule `.dig` của DigStore đang được lưu trữ.** Đây là một dịch vụ [JSON-RPC 2.0](https://www.jsonrpc.org/specification) được nói qua HTTPS `POST`.
+**dig RPC là giao diện trên toàn mạng lưới để đọc nội dung trực tiếp từ các capsule `.dig` của dig-store đang được lưu trữ.** Đây là một dịch vụ [JSON-RPC 2.0](https://www.jsonrpc.org/specification) được nói qua HTTPS `POST`.
 
 Mọi node lưu trữ capsule — node tham chiếu tại `https://rpc.dig.net`, hoặc bất kỳ node bên thứ ba nào — đều phơi bày **cùng các phương thức với cùng ngữ nghĩa**. Một client được viết dựa trên giao diện này đọc từ toàn bộ mạng lưới qua một endpoint duy nhất. Không có CDN; toàn bộ việc phục vụ nội dung trên DIG đều qua dig RPC.
 
@@ -43,9 +43,9 @@ Nó phục vụ ba thứ:
 - **Có thể xác minh mà không cần tin tưởng.** Mọi byte thật đến kèm một **bằng chứng bao gồm (inclusion proof)** merkle bắt nguồn từ root generation on-chain. Client gấp bằng chứng lại thành root và chỉ chấp nhận nếu nó khớp với một root mà nó tin tưởng. Node không bao giờ được tin tưởng là đã trả về byte thật.
 - **Có thể streaming ở bất kỳ kích thước nào.** Nội dung được đọc theo các chunk có giới hạn, căn chỉnh theo 64 KiB với sự tiếp nối tường minh. Một tài nguyên một kilobyte và một capsule một trăm megabyte được đọc bằng cùng một vòng lặp, và không có phản hồi đơn lẻ nào là không giới hạn.
 
-## Nó khớp với DigStore như thế nào {#how-it-fits-with-digstore}
+## Nó khớp với dig-store như thế nào {#how-it-fits-with-digstore}
 
-DigStore cho bạn **định dạng**: một store được mã hóa, định địa chỉ theo nội dung, biên dịch thành một capsule `.wasm` duy nhất tự bảo vệ chính nó, được định địa chỉ bằng một URN mà *URN chính là khóa*. dig RPC là cách capsule đó được **phục vụ trên mạng lưới** mà không cần tin tưởng host:
+dig-store cho bạn **định dạng**: một store được mã hóa, định địa chỉ theo nội dung, biên dịch thành một capsule `.wasm` duy nhất tự bảo vệ chính nó, được định địa chỉ bằng một URN mà *URN chính là khóa*. dig RPC là cách capsule đó được **phục vụ trên mạng lưới** mà không cần tin tưởng host:
 
 1. Bạn biên dịch một store và neo một generation on-chain (một singleton DataLayer CHIP-0035). **Content root** của nó là điểm neo tin tưởng.
 2. Một node lưu trữ capsule và phơi bày nó qua dig RPC.

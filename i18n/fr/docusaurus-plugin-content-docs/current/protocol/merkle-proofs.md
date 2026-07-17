@@ -22,8 +22,8 @@ tags:
 ## Domain separation
 
 ```text
-LEAF_TAG = b"digstore:leaf:v1"     // merkle.rs:34  (raw-chunk build path only)
-NODE_TAG = b"digstore:node:v1"     // merkle.rs:39
+LEAF_TAG = b"dig-store:leaf:v1"     // merkle.rs:34  (raw-chunk build path only)
+NODE_TAG = b"dig-store:node:v1"     // merkle.rs:39
 node     = SHA-256( NODE_TAG || left(32) || right(32) )   // hash_pair, merkle.rs:113-119
 ```
 

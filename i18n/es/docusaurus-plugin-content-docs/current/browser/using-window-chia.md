@@ -24,7 +24,7 @@ tags:
 The provider speaks [CHIP-0002](https://github.com/Chia-Network/chips/blob/main/CHIPs/chip-0002.md) (the Chia wallet provider interface), so the method names and result shapes match what a CHIP-0002 wallet returns over WalletConnect. If you already integrate Sage over WalletConnect, the same calls work here — you just route them through `window.chia` instead of a WalletConnect session.
 
 :::note Audience
-This page is for **developers integrating a wallet into a web app**. It documents the public provider surface only; the wallet's internals (key derivation, the loopback signer, on-chain spends) are covered in the [DigStore](../digstore/what-is-digstore.md) and [dig RPC](../rpc/what-is-the-dig-rpc.md) sections.
+This page is for **developers integrating a wallet into a web app**. It documents the public provider surface only; the wallet's internals (key derivation, the loopback signer, on-chain spends) are covered in the [dig-store](../digstore/what-is-digstore.md) and [dig RPC](../rpc/what-is-the-dig-rpc.md) sections.
 :::
 
 ## How it works
@@ -162,5 +162,5 @@ Pages served from a `chia://` store run inside the DIG Browser too, so `window.c
 - [The window.chia provider spec](../protocol/window-chia-provider.md) — the normative, versioned provider contract
 - [The chia:// protocol](./chia-protocol.md) — the browser's native content-address scheme
 - [What is the dig RPC?](../rpc/what-is-the-dig-rpc.md) — how the browser reads content from the network
-- [What is DigStore?](../digstore/what-is-digstore.md) — the store format a `chia://` page is served from
+- [What is dig-store?](../digstore/what-is-digstore.md) — the store format a `chia://` page is served from
 - [Concepts & glossary](../concepts.md) — window.chia and the chia:// protocol defined

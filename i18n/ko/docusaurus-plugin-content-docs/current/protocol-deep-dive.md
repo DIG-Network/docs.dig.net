@@ -67,7 +67,7 @@ tags:
 - **`dig://`** — §21 **전송** 로케이터(CLI/피어 플레인)이자 DIG Browser의 내부 페이지 스킴 — 서로 다른 두 가지 용도이며, 결코 콘텐츠 주소가 아닙니다.
 - **`urn:dig:`** — 두 스킴이 모두 파생되는 URN 네임스페이스.
 - **store / capsule** — 식별자와 그 불변의 세대(generation).
-- **$DIG** — capsule마다 지불되는 CAT; **DigStore** — store 포맷.
+- **$DIG** — capsule마다 지불되는 CAT; **dig-store** — store 포맷.
 
 ## 관련 문서 {#related}
 

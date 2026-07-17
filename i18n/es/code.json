@@ -319,7 +319,7 @@
     "message": "DIG Network es una plataforma para desarrolladores que permite publicar y servir contenido sin que el host vea jamás lo que aloja. Empieza con {digstore}: almacenamiento cifrado y direccionable por contenido que se compila en un único módulo WebAssembly autodefendido."
   },
   "homepage.hero.lead.digstore": {
-    "message": "DigStore"
+    "message": "dig-store"
   },
   "homepage.hero.cta.docs": {
     "message": "Explorar la documentación →"
@@ -364,7 +364,7 @@
     "message": "Bloques de construcción combinables"
   },
   "homepage.primitives.subtitle": {
-    "message": "DigStore ya está disponible. Próximamente llegarán más primitivas de DIG Network."
+    "message": "dig-store ya está disponible. Próximamente llegarán más primitivas de DIG Network."
   },
   "homepage.primitives.available": {
     "message": "DISPONIBLE"
@@ -373,7 +373,7 @@
     "message": "Un almacén cifrado y direccionable por contenido con la forma de Git. Apúntalo a un directorio de compilación, confirma generaciones y direcciona todo mediante URN."
   },
   "homepage.primitives.digstore.link": {
-    "message": "Leer la documentación de DigStore →"
+    "message": "Leer la documentación de dig-store →"
   },
   "homepage.steps.capture.title": {
     "message": "Capturar"
@@ -403,7 +403,7 @@
     "message": "Flujo de trabajo al estilo Git para la salida de compilación: cifrado y direccionable desde el primer commit."
   },
   "homepage.cta.title": {
-    "message": "Empieza a construir con DigStore"
+    "message": "Empieza a construir con dig-store"
   },
   "homepage.cta.subtitle": {
     "message": "Instala la CLI y publica tu primer store cifrado en menos de un minuto."
@@ -418,6 +418,6 @@
     "message": "DIG Network: la capa de datos descentralizada"
   },
   "homepage.meta.description": {
-    "message": "DIG Network es una red de Prueba de Participación de Capa 2 sobre Chia. Documentación para desarrolladores sobre la red y sus primitivas, incluido DigStore, almacenamiento cifrado y direccionable por contenido."
+    "message": "DIG Network es una red de Prueba de Participación de Capa 2 sobre Chia. Documentación para desarrolladores sobre la red y sus primitivas, incluido dig-store, almacenamiento cifrado y direccionable por contenido."
   }
 }

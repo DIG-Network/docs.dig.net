@@ -9,7 +9,7 @@
  *                             error responses. This is the canonical dig-RPC spec
  *                             referenced by every other module.
  *   static/error-codes.json — the ecosystem cross-surface error catalog:
- *                             dig RPC -32xxx, digstore CLI exit codes 0..16,
+ *                             dig RPC -32xxx, dig-store CLI exit codes 0..16,
  *                             DIGHUb user-facing codes, and the dig:// loader codes,
  *                             as a flat [{surface, code, http_or_exit, description}]
  *                             list plus a `bySurface` index.
@@ -79,7 +79,7 @@ function buildOpenRpc({ title, methodSet, info, servers }) {
       title,
       version: pkg.version && pkg.version !== '0.0.0' ? pkg.version : '1.0.0',
       description: info,
-      license: { name: 'GPL-2.0', url: 'https://github.com/DIG-Network/digstore/blob/main/LICENSE' },
+      license: { name: 'GPL-2.0', url: 'https://github.com/DIG-Network/dig-store/blob/main/LICENSE' },
     },
     servers,
     methods: openrpcMethods,
@@ -103,7 +103,7 @@ function buildErrorCatalog() {
     version: 1,
     surfaces: {
       'dig-rpc': 'JSON-RPC 2.0 codes for the dig RPC (rpc.dig.net). http_or_exit is the transport status (always 200; the error rides in the JSON envelope).',
-      'digstore-cli': 'digstore CLI process exit codes (0..16). http_or_exit is the process exit code.',
+      'digstore-cli': 'dig-store CLI process exit codes (0..16). http_or_exit is the process exit code.',
       dighub: 'DIGHUb (hub.dig.net) user-facing codes. http_or_exit is the HTTP status where one exists.',
       'dig-loader': 'dig:// content-loader failure codes (DIG Browser / extension). http_or_exit is null (surfaced on the error page).',
     },
@@ -162,11 +162,11 @@ function driftGate(catalog) {
     tableCodes(md, 'dig RPC (JSON-RPC)'),
   );
 
-  // digstore CLI: prose first column is the Exit number.
+  // dig-store CLI: prose first column is the Exit number.
   assertSetEqual(
     'digstore-cli',
     catalog.bySurface['digstore-cli'].map((e) => String(e.exit)),
-    tableCodes(md, 'digstore CLI (exit codes)'),
+    tableCodes(md, 'dig-store CLI (exit codes)'),
   );
 
   // DIGHUb: prose first column is the UPPER_SNAKE code.

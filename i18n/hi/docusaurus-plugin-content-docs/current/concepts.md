@@ -42,7 +42,7 @@ tags:
 
 एक **capsule** एक अपरिवर्तनीय store generation है: जोड़ी `(storeId, rootHash)`, जिसे कैननिकल रूप से
 `storeId:rootHash` लिखा जाता है। यह नेटवर्क की एटॉमिक इकाई है — कंपाइलेशन की (एक फिक्स्ड-साइज़ WASM मॉड्यूल),
-[pricing](./digstore/cli/onchain-anchoring.md) की ($DIG में भुगतान की गई, mint या commit के लिए एक यूनिफॉर्म प्रति-capsule कीमत), रिट्रीवल की (एक [URN](#urn) एक capsule का नाम रखता है), कैशिंग की, और प्रोवेनेंस की। एक [store](#store) *capsules का एक क्रम* है, प्रति commit एक। यह परिभाषा DigStore, dig RPC, और DIG
+[pricing](./digstore/cli/onchain-anchoring.md) की ($DIG में भुगतान की गई, mint या commit के लिए एक यूनिफॉर्म प्रति-capsule कीमत), रिट्रीवल की (एक [URN](#urn) एक capsule का नाम रखता है), कैशिंग की, और प्रोवेनेंस की। एक [store](#store) *capsules का एक क्रम* है, प्रति commit एक। यह परिभाषा dig-store, dig RPC, और DIG
 Browser में समान है। → [The capsule, in full](./intro.md#the-capsule)
 
 ## Store {#store}
@@ -59,7 +59,7 @@ commit एक। इसकी पहचान एक 64-hex **store id** है,
 
 ## URN {#urn}
 
-एक **URN**, DigStore का एड्रेस *और* key एक स्ट्रिंग में है:
+एक **URN**, dig-store का एड्रेस *और* key एक स्ट्रिंग में है:
 `urn:dig:chia:<storeId>[:<rootHash>][/<resource>]`। यह एक resource को **लोकेट** भी करता है और **वह key
 भी derive करता है जो उसे डिक्रिप्ट करती है** — एक पब्लिक resource को पढ़ने के लिए URN का होना ज़रूरी और पर्याप्त है।
 ब्राउज़र-फेसिंग शॉर्टहैंड है [`chia://` protocol](#chia-protocol)। → [URNs & Encryption](./digstore/format/urns-and-encryption.md)
@@ -80,8 +80,8 @@ commit एक। इसकी पहचान एक 64-hex **store id** है,
 
 ## On-chain anchoring {#anchoring}
 
-हर store, Chia mainnet पर एक **singleton** है। `digstore init` इसे mint करता है (launcher id *ही*
-store id बन जाता है) और हर `digstore commit`, CHIP-0035 singleton update के रूप में एक नए
+हर store, Chia mainnet पर एक **singleton** है। `digs init` इसे mint करता है (launcher id *ही*
+store id बन जाता है) और हर `digs commit`, CHIP-0035 singleton update के रूप में एक नए
 [generation](#generation) root को ऑन-चेन एंकर करता है। दोनों कन्फर्म होने तक ब्लॉक करते हैं और असली फंड खर्च करते हैं। चेन ही
 किसी store के नवीनतम root के लिए अथॉरिटी है। → [On-chain anchoring](./digstore/cli/onchain-anchoring.md)
 
@@ -91,15 +91,15 @@ store id बन जाता है) और हर `digstore commit`, CHIP-0035 
 $DIG में **एक यूनिफॉर्म प्रति-capsule कीमत** लेता है, जो एंकर के समान ऑन-चेन खर्च में **एटॉमिक रूप से शामिल** है —
 कोई अलग ट्रांज़ैक्शन नहीं है, और memo store id ले जाता है। → [Costs](./digstore/cli/onchain-anchoring.md#costs)
 
-## DigStore CLI {#digstore-cli}
+## dig-store CLI {#digstore-cli}
 
-`digstore`, वह कमांड-लाइन टूल है जो stores बनाता, commit करता, शेयर करता, और पढ़ता है — एन्क्रिप्टेड,
+`dig-store`, वह कमांड-लाइन टूल है जो stores बनाता, commit करता, शेयर करता, और पढ़ता है — एन्क्रिप्टेड,
 ऑन-चेन store फॉर्मेट पर एक Git-आकार का वर्कफ़्लो (`init`, `add`, `commit`, `log`, `clone`, `push`, `pull`)। → [Command reference](./digstore/cli/command-reference.md) · [CLI tutorial](./digstore/cli/quickstart.md)
 
 ## dig.toml {#dig-toml}
 
 `dig.toml`, किसी प्रोजेक्ट के रूट पर **committable प्रोजेक्ट मैनिफेस्ट** है — `store-id`, `output-dir`,
-`build-command`, और अन्य प्रोजेक्ट कॉन्फ़िग, जो `digstore dev`, `digstore deploy`, और
+`build-command`, और अन्य प्रोजेक्ट कॉन्फ़िग, जो `digs dev`, `digs deploy`, और
 स्कैफोल्डिंग templates द्वारा साझा किया जाता है। इसमें **कोई सीक्रेट नहीं** होता (वे environment से आते हैं), इसलिए इसे
 commit करना सुरक्षित है। → [Project config & build-time values](./digstore/cli/configuration.md)
 
@@ -109,12 +109,12 @@ commit करना सुरक्षित है। → [Project config & bui
 पांच templates (`static`, `vite-react`, `next-static`, `nft-drop`, `dapp-window-chia`) में से एक से एक चलने योग्य स्टार्टर — एक ऐप, एक [`dig.toml`](#dig-toml), और (वॉलेट templates के लिए)
 [DIG SDK](#dig-sdk) वायर्ड — स्कैफोल्ड करता है। स्कैफोल्डिंग **मुफ़्त** है — कोई mint नहीं, कोई चेन नहीं, कोई खर्च नहीं; आप
 यूनिफॉर्म capsule प्राइस केवल तभी चुकाते हैं जब आप एक [capsule](#capsule) पब्लिश करते हैं। यह Rust CLI के
-`digstore new` का npm-साइड साथी है। → [Scaffold an app](./build-a-dapp/scaffold.md)
+`digs new` का npm-साइड साथी है। → [Scaffold an app](./build-a-dapp/scaffold.md)
 
 ## The GitHub deploy Action {#deploy-action}
 
 `dig-network/deploy-action`, **git-push-to-deploy** GitHub Action है: यह रनर पर
-[`digstore` CLI](#digstore-cli) इंस्टॉल करता है, आपके store को आगे बढ़ाने के लिए `digstore deploy` चलाता है (कभी
+[`dig-store` CLI](#digstore-cli) इंस्टॉल करता है, आपके store को आगे बढ़ाने के लिए `digs deploy` चलाता है (कभी
 mint नहीं करता), और पब्लिश किए गए [capsule](#capsule) + URLs + लागत को step outputs, एक PR
 कमेंट, एक GitHub Deployment, और एक commit status के रूप में रिपोर्ट करता है। `if-changed` (डिफ़ॉल्ट) के साथ, एक byte-identical
 बिल्ड एक no-op है — कोई खर्च नहीं। → [Deploy from GitHub Actions](./digstore/cli/deploy-from-github-actions.md)
@@ -179,7 +179,7 @@ store पहले से ही [dig RPC](#dig-rpc) पर अपने [URN](#
 - [DIG Network overview](./intro.md) — एक नज़र में प्रिमिटिव्स
 - [Quickstart](./quickstart.md) — मुफ़्त में बनाएं और प्रीव्यू करें, अंत में एक capsule पब्लिश करें
 - [Build a dapp on Chia](./build-a-dapp/tutorial.md) — एक शिप किए गए dapp में सिले हुए हर प्रिमिटिव
-- [DigStore क्या है?](./digstore/what-is-digstore.md) — वन-फाइल store फॉर्मेट
+- [dig-store क्या है?](./digstore/what-is-digstore.md) — वन-फाइल store फॉर्मेट
 - [dig RPC क्या है?](./rpc/what-is-the-dig-rpc.md) — नेटवर्क read path
 - [The chia:// protocol](./browser/chia-protocol.md) — ब्राउज़र में कंटेंट को एड्रेस करना
 - [मदद पाएं](./support/get-help.md) — समुदाय चैनल्स और रिपोर्ट कैसे करें

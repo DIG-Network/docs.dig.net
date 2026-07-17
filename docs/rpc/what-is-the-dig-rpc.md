@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: What is the dig RPC?
-description: "Network-wide read interface for DigStore capsules via JSON-RPC 2.0; blind by construction, verifiable without trust, and streamable at any size."
+description: "Network-wide read interface for dig-store capsules via JSON-RPC 2.0; blind by construction, verifiable without trust, and streamable at any size."
 keywords:
   - dig RPC
   - JSON-RPC 2.0
@@ -25,7 +25,7 @@ tags:
 This is the orientation page. The authoritative machine-interface spec — methods, the chunk wire object, the node profile, and the OpenRPC documents — is [Protocol · The dig RPC](../protocol/dig-rpc.md).
 :::
 
-**The dig RPC is the network-wide interface for reading content directly from hosted DigStore `.dig` capsules.** It is a [JSON-RPC 2.0](https://www.jsonrpc.org/specification) service spoken over HTTPS `POST`.
+**The dig RPC is the network-wide interface for reading content directly from hosted dig-store `.dig` capsules.** It is a [JSON-RPC 2.0](https://www.jsonrpc.org/specification) service spoken over HTTPS `POST`.
 
 Every node that hosts capsules — the reference node at `https://rpc.dig.net`, or any third-party node — exposes the **same methods with the same semantics**. A client written against this interface reads from the whole network through one endpoint. There is no CDN; all content serving on DIG is via the dig RPC.
 
@@ -43,9 +43,9 @@ It serves three things:
 - **Verifiable without trust.** Every real byte arrives with a merkle **inclusion proof** rooted at the on-chain generation root. The client folds the proof to the root and accepts only if it matches a root it trusts. The node is never trusted to have returned genuine bytes.
 - **Streamable at any size.** Content is read in bounded, 64 KiB-aligned chunks with explicit continuation. A one-kilobyte resource and a hundred-megabyte capsule are read by the same loop, and no single response is unbounded.
 
-## How it fits with DigStore
+## How it fits with dig-store
 
-DigStore gives you the **format**: a content-addressable, encrypted store that compiles to a single self-defending `.wasm` capsule, addressed by a URN where *the URN is the key*. The dig RPC is how that capsule is **served on the network** without trusting the host:
+dig-store gives you the **format**: a content-addressable, encrypted store that compiles to a single self-defending `.wasm` capsule, addressed by a URN where *the URN is the key*. The dig RPC is how that capsule is **served on the network** without trusting the host:
 
 1. You compile a store and anchor a generation on-chain (a CHIP-0035 DataLayer singleton). Its **content root** is the trust anchor.
 2. A node hosts the capsule and exposes it over the dig RPC.

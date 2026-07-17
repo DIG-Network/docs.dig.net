@@ -24,7 +24,7 @@ tags:
 
 # The `chia://` protocol
 
-**`chia://` is the DIG Browser's native address scheme.** Paste a `chia://` link into the address bar and the browser fetches the content straight from the DIG Network — content-addressed and cryptographically verified — with no web server in the middle. It is the browser-facing front end of DigStore's [`urn:dig:` URN scheme](../digstore/format/urns-and-encryption.md): the same identity, in a form you can type and link. The browser also provides [`window.chia` wallet integration](./using-window-chia.md) for apps running in the DIG Browser.
+**`chia://` is the DIG Browser's native address scheme.** Paste a `chia://` link into the address bar and the browser fetches the content straight from the DIG Network — content-addressed and cryptographically verified — with no web server in the middle. It is the browser-facing front end of dig-store's [`urn:dig:` URN scheme](../digstore/format/urns-and-encryption.md): the same identity, in a form you can type and link. The browser also provides [`window.chia` wallet integration](./using-window-chia.md) for apps running in the DIG Browser.
 
 :::note Renamed from `dig://`
 The scheme value is `chia` (it was previously `dig`); it is otherwise **functionally identical**. The underlying `urn:dig:` URN namespace is **unchanged** — it derives retrieval keys and must stay byte-exact — so only the typed/linked address changed, not the protocol.
@@ -81,7 +81,7 @@ Without a `rootHash` you always get the store's **current** version — the brow
 
 ## The full URN form
 
-`chia://` is shorthand. The canonical, portable identity is the DigStore **URN**, which the browser also accepts directly in the address bar:
+`chia://` is shorthand. The canonical, portable identity is the dig-store **URN**, which the browser also accepts directly in the address bar:
 
 ```
 urn:dig:<chain>:<storeId>[:<rootHash>][/<resource>]
@@ -102,7 +102,7 @@ urn:dig:chia:2855390f…aade:1a2b3c…/readme.txt      # pinned version
 
 When you type a URN (`urn:dig:…`) or a chain-qualified shorthand (`chia://chia:<storeId>…`), the browser **canonicalizes** it to the host-bearing form `chia://[<rootHash>.]<storeId>/<resource>`. Two benefits: it parses as an ordinary URL, and **relative subresources** (the page's images, scripts, links) resolve against the same store and version automatically.
 
-The URN's grammar is defined once, in DigStore's [`urn.rs`](https://github.com/DIG-Network/digstore), and is shared byte-for-byte by every implementation (the browser, `dig-node`, the RPC, the extension).
+The URN's grammar is defined once, in dig-store's [`urn.rs`](https://github.com/DIG-Network/dig-store), and is shared byte-for-byte by every implementation (the browser, `dig-node`, the RPC, the extension).
 
 ## For integrating developers — the shorthand grammar
 
@@ -144,7 +144,7 @@ When a local [dig-node](../concepts.md#dig-node) answers, the extension opens a 
 
 ### Capsule: the unit of identity
 
-A **capsule** is one immutable store generation: the pair **`(storeId, rootHash)`**, written canonically as **`storeId:rootHash`**. A **store is a sequence of capsules** — one per commit, since each commit advances the on-chain root and produces a new capsule. A `chia://` (or URN) address **with** a `rootHash` names exactly one capsule; **without** a `rootHash` it names a store and resolves to its latest capsule. This is the ecosystem-wide [capsule concept](../intro.md#the-capsule); the canonical identity type lives in DigStore's `capsule.rs`.
+A **capsule** is one immutable store generation: the pair **`(storeId, rootHash)`**, written canonically as **`storeId:rootHash`**. A **store is a sequence of capsules** — one per commit, since each commit advances the on-chain root and produces a new capsule. A `chia://` (or URN) address **with** a `rootHash` names exactly one capsule; **without** a `rootHash` it names a store and resolves to its latest capsule. This is the ecosystem-wide [capsule concept](../intro.md#the-capsule); the canonical identity type lives in dig-store's `capsule.rs`.
 
 ### Retrieval key
 
@@ -156,7 +156,7 @@ retrieval_key = SHA-256(canonical_urn)        # lowercase hex
 
 Two details matter for getting the same key everywhere:
 
-- The **chain** is the constant `chia` (DigStore's `CHAIN`), and a missing resource defaults to **`index.html`** (`DEFAULT_RESOURCE_KEY`).
+- The **chain** is the constant `chia` (dig-store's `CHAIN`), and a missing resource defaults to **`index.html`** (`DEFAULT_RESOURCE_KEY`).
 - The retrieval key is derived from the **root-dropped** URN — the `rootHash` is **not** part of the key. The key is therefore root-independent, so the same key locates a resource across versions; the served bytes are then Merkle-verified against the correct root.
 
 Getting the canonical string wrong yields a silent cache miss, never corruption — every response is Merkle-verified against the store's on-chain root before it renders. For the full retrieval-key + decryption-key derivation, see [URNs & Encryption](../digstore/format/urns-and-encryption.md).

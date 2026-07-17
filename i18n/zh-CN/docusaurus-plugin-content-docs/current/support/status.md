@@ -50,7 +50,7 @@ When a service or contract changes, here's how the change is signalled — so yo
 
 - **dig RPC** — a node advertises the methods it implements via `dig.methods`; an unimplemented method returns `-32601` (method not found) rather than failing opaquely. The chunk wire format is part of the shared, byte-stable read contract — a change to it is a coordinated, breaking change announced in the [changelog](./changelog.md).
 - **`window.chia` provider** — the injected provider exposes its identity (`isDIG`) and connection state; query capabilities before calling a method. The provider's versioned surface is documented in [Using window.chia](../browser/using-window-chia.md), and the DIG Browser is its reference implementation.
-- **CLI / SDK** — semver (`digstore --version`, npm). Pin a version in CI and bump deliberately; breaking changes are listed in the [changelog](./changelog.md).
+- **CLI / SDK** — semver (`digs --version`, npm). Pin a version in CI and bump deliberately; breaking changes are listed in the [changelog](./changelog.md).
 
 ## Related
 

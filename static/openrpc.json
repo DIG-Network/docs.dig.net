@@ -2,11 +2,11 @@
   "openrpc": "1.2.6",
   "info": {
     "title": "dig RPC — DIG Network Content Interface (network profile)",
-    "version": "0.4.4",
+    "version": "0.4.5",
     "description": "The network-wide read interface for DIG content over JSON-RPC 2.0 — the NETWORK PROFILE served by the canonical node at rpc.dig.net. Blind by construction (the node holds no URN and no key), verifiable without trust (merkle inclusion proofs against the chain-anchored root), and streamable at any size. There is no `decoy` field on the wire and no CDN. See https://docs.dig.net/docs/protocol/dig-rpc.",
     "license": {
       "name": "GPL-2.0",
-      "url": "https://github.com/DIG-Network/digstore/blob/main/LICENSE"
+      "url": "https://github.com/DIG-Network/dig-store/blob/main/LICENSE"
     }
   },
   "servers": [
@@ -363,7 +363,7 @@
     {
       "name": "dig.getMetadata",
       "summary": "Read the store's plaintext metadata manifest from the .dig.",
-      "description": "Metadata is plaintext, ungated public discovery info embedded in the module (Digstore §8.4) — not a content resource, no inclusion proof, never encrypted. Its on-chain binding is the module program_hash.",
+      "description": "Metadata is plaintext, ungated public discovery info embedded in the module (dig-store §8.4) — not a content resource, no inclusion proof, never encrypted. Its on-chain binding is the module program_hash.",
       "paramStructure": "by-name",
       "params": [
         {
@@ -613,7 +613,7 @@
       "MetadataManifest": {
         "title": "MetadataManifest",
         "type": "object",
-        "description": "The store's plaintext, ungated metadata manifest, embedded in the compiled module (Digstore §8.4).",
+        "description": "The store's plaintext, ungated metadata manifest, embedded in the compiled module (dig-store §8.4).",
         "properties": {
           "schema_version": {
             "type": "integer"

@@ -6,7 +6,7 @@ keywords:
   - publish a site
   - own your app
   - DIGHUb
-  - digstore
+  - dig-store
   - free until publish
   - capsule
 tags:
@@ -29,7 +29,7 @@ A **[store](../concepts.md#store)** is your website's permanent identity — an 
 Two front doors lead to the **same** free-build → paid-publish loop:
 
 - **The web path** — [DIGHUb](../concepts.md#dighub) at [hub.dig.net](https://hub.dig.net): drop a built folder, preview free, connect a wallet only at Publish.
-- **The CLI / CI path** — the [`digstore`](../concepts.md#digstore-cli) CLI + [`create-dig-app`](../concepts.md#create-dig-app) + the [GitHub deploy Action](../concepts.md#deploy-action).
+- **The CLI / CI path** — the [`dig-store`](../concepts.md#digstore-cli) CLI + [`create-dig-app`](../concepts.md#create-dig-app) + the [GitHub deploy Action](../concepts.md#deploy-action).
 
 Scaffold, build, and preview cost **nothing**. You pay only when you publish a capsule.
 
@@ -47,34 +47,34 @@ Scaffold, build, and preview cost **nothing**. You pay only when you publish a c
 
 [**Start a new store in DIGHUb ↗**](https://hub.dig.net/new). Drop in your built site (your `dist/` or `build/` folder), get a **free draft preview** on the real read path, and connect a wallet only at the **Publish** step. See the web walkthrough in the [Quickstart → Publish from the web](../quickstart.md#a-publish-from-the-web).
 
-## Publish from the CLI — digstore
+## Publish from the CLI — dig-store
 
 The Git-shaped loop: `new` → `dev` → `init` → `commit`.
 
 ```sh
-digstore new vite-react   # scaffold a runnable project — free, no mint
-digstore dev              # preview on the real chia:// read path, live-reload — free
-digstore init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
-digstore commit -m "v1.1"       # publish an update — a new capsule
+digs new vite-react   # scaffold a runnable project — free, no mint
+digs dev              # preview on the real chia:// read path, live-reload — free
+digs init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
+digs commit -m "v1.1"       # publish an update — a new capsule
 ```
 
 → [CLI quickstart](../digstore/cli/quickstart.md) · [The full project workflow](../digstore/cli/project-workflow.md)
 
 ## Scaffold an app — 5 templates
 
-Start from a runnable, wallet-wired starter — `static`, `vite-react`, `next-static`, `nft-drop`, or `dapp-window-chia` — via `digstore new <template>` or `npm create dig-app`.
+Start from a runnable, wallet-wired starter — `static`, `vite-react`, `next-static`, `nft-drop`, or `dapp-window-chia` — via `digs new <template>` or `npm create dig-app`.
 
 → [Scaffold an app](../build-a-dapp/scaffold.md)
 
-## Preview free with `digstore dev`
+## Preview free with `digs dev`
 
-`digstore dev` serves your project over the **genuine** DIG read path (encrypt → compile → verify → decrypt) with live reload and an injected dev `window.chia`. What you see is what visitors get — and nothing is minted or spent.
+`digs dev` serves your project over the **genuine** DIG read path (encrypt → compile → verify → decrypt) with live reload and an injected dev `window.chia`. What you see is what visitors get — and nothing is minted or spent.
 
 → [CLI quickstart → develop & preview](../digstore/cli/quickstart.md)
 
 ## `dig.toml` — the committable manifest
 
-`dig.toml` at your project root holds `store-id`, `output-dir`, `build-command`, `remote`, and other config — shared by `digstore dev`, `digstore deploy`, and the scaffold templates. It holds **no secrets** (those come from the environment), so commit it.
+`dig.toml` at your project root holds `store-id`, `output-dir`, `build-command`, `remote`, and other config — shared by `digs dev`, `digs deploy`, and the scaffold templates. It holds **no secrets** (those come from the environment), so commit it.
 
 → [Project config & build-time values](../digstore/cli/configuration.md)
 

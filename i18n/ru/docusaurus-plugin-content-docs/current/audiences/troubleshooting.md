@@ -22,9 +22,9 @@ tags:
 
 ## The mental model — find your failure by its code
 
-Every surface — the dig RPC, the digstore CLI, DIGHUb, the `chia://` loader, the SDK — maps a failure to one **STABLE code**. **Branch on the code, never the message.** One consolidated catalog covers all of them and is also published machine-readable.
+Every surface — the dig RPC, the dig-store CLI, DIGHUb, the `chia://` loader, the SDK — maps a failure to one **STABLE code**. **Branch on the code, never the message.** One consolidated catalog covers all of them and is also published machine-readable.
 
-Pre-flight guards (`digstore doctor`, `--dry-run`, `--if-changed`) and resumable anchors mean a stuck or no-op publish **never silently spends**.
+Pre-flight guards (`digs doctor`, `--dry-run`, `--if-changed`) and resumable anchors mean a stuck or no-op publish **never silently spends**.
 
 ## Common publishing failures
 
@@ -52,7 +52,7 @@ The browser extension shows your node as offline even though it's running and he
 
 ## Pre-flight & cost checks — don't waste a capsule
 
-`digstore doctor` (environment + readiness), `--dry-run` (preview the cost and the would-be capsule), and `--if-changed` (a byte-identical build is a no-op).
+`digs doctor` (environment + readiness), `--dry-run` (preview the cost and the would-be capsule), and `--if-changed` (a byte-identical build is a no-op).
 
 → [Deploy from GitHub Actions](../digstore/cli/deploy-from-github-actions.md) · [On-chain anchoring → cost & safety](../digstore/cli/onchain-anchoring.md#cost-and-safety)
 

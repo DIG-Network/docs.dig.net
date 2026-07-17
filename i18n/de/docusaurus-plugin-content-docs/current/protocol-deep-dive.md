@@ -85,7 +85,7 @@ Definition, geteilt über Produzent, Host und Verifizierer hinweg — die [C8-Pa
   Seitenschema des DIG Browser — zwei unterschiedliche Verwendungen, nie die Inhaltsadresse.
 - **`urn:dig:`** — der URN-Namensraum, aus dem beide abgeleitet sind.
 - **store / capsule** — die Identität und ihre unveränderliche generation.
-- **$DIG** — das CAT, das pro capsule bezahlt wird; **DigStore** — das store-Format.
+- **$DIG** — das CAT, das pro capsule bezahlt wird; **dig-store** — das store-Format.
 
 ## Verwandte Themen {#related}
 

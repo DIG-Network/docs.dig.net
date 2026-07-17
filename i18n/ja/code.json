@@ -319,7 +319,7 @@
     "message": "DIG Network は、ホストが中身を一切見ることのできない形でコンテンツを公開・配信するための開発者向けプラットフォームです。まずは{digstore}から始めましょう——単一の自己防衛型 WebAssembly モジュールにコンパイルされる、暗号化されたコンテンツアドレス指定ストレージです。"
   },
   "homepage.hero.lead.digstore": {
-    "message": "DigStore"
+    "message": "dig-store"
   },
   "homepage.hero.cta.docs": {
     "message": "ドキュメントを見る →"
@@ -364,7 +364,7 @@
     "message": "組み合わせ可能なビルディングブロック"
   },
   "homepage.primitives.subtitle": {
-    "message": "DigStore は現在ご利用いただけます。今後さらに多くの DIG Network プリミティブが登場予定です。"
+    "message": "dig-store は現在ご利用いただけます。今後さらに多くの DIG Network プリミティブが登場予定です。"
   },
   "homepage.primitives.available": {
     "message": "利用可能"
@@ -373,7 +373,7 @@
     "message": "Git のような形をした、暗号化されたコンテンツアドレス指定ストアです。ビルドディレクトリを指定し、世代をコミットし、すべてを URN でアドレス指定します。"
   },
   "homepage.primitives.digstore.link": {
-    "message": "DigStore ドキュメントを読む →"
+    "message": "dig-store ドキュメントを読む →"
   },
   "homepage.steps.capture.title": {
     "message": "キャプチャ"
@@ -403,7 +403,7 @@
     "message": "ビルド出力のための Git スタイルのワークフロー——最初のコミットから暗号化され、アドレス指定可能です。"
   },
   "homepage.cta.title": {
-    "message": "DigStore で構築を始める"
+    "message": "dig-store で構築を始める"
   },
   "homepage.cta.subtitle": {
     "message": "CLI をインストールし、1分以内に最初の暗号化ストアを公開しましょう。"
@@ -418,6 +418,6 @@
     "message": "DIG Network — 非中央集権型データレイヤー"
   },
   "homepage.meta.description": {
-    "message": "DIG Network は Chia 上の Proof-of-Stake レイヤー2です。暗号化されたコンテンツアドレス指定ストレージである DigStore を含む、ネットワークとそのプリミティブに関する開発者向けドキュメントです。"
+    "message": "DIG Network は Chia 上の Proof-of-Stake レイヤー2です。暗号化されたコンテンツアドレス指定ストレージである dig-store を含む、ネットワークとそのプリミティブに関する開発者向けドキュメントです。"
   }
 }

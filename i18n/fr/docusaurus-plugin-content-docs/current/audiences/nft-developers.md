@@ -34,7 +34,7 @@ Minter un **store est gratuit** en $DIG — vous ne payez le **prix uniforme de 
 Démarrez à partir d'une page de drop câblée avec un portefeuille en une commande :
 
 ```sh
-digstore new nft-drop
+digs new nft-drop
 # ou
 npm create dig-app@latest my-drop -- --template nft-drop
 ```
@@ -46,10 +46,10 @@ npm create dig-app@latest my-drop -- --template nft-drop
 La CLI d'actifs construit la dépense via les constructeurs `digstore-chain`, signe avec la seed de votre portefeuille, et diffuse — le tout compatible CI avec `--dry-run` / `--json` :
 
 ```sh
-digstore did create                          # un DID d'émetteur pour l'attribution
-digstore collection create --name "My Drop"  # une collection CHIP-0007
-digstore nft mint --data ./art.png --metadata ./meta.json --dry-run
-digstore offer make ...                       # échanges XCH / CAT
+digs did create                          # un DID d'émetteur pour l'attribution
+digs collection create --name "My Drop"  # une collection CHIP-0007
+digs nft mint --data ./art.png --metadata ./meta.json --dry-run
+digs offer make ...                       # échanges XCH / CAT
 ```
 
 Le chemin **capsule-media** de `nft mint` écrit l'art + les métadonnées CHIP-0007 dans une capsule, calcule les hachages de données/métadonnées à partir des octets réels, et fixe les URI à l'adresse `chia://` de la capsule (avec un repli sur une passerelle https). → [Référence des commandes](../digstore/cli/command-reference.md)
@@ -78,7 +78,7 @@ Le `Paywall` du SDK compose le fournisseur avec le constructeur de dépense pour
 
 ## Offres — faire / accepter / afficher {#offers--make--take--show}
 
-Échangez des NFT contre du XCH ou des CAT avec `digstore offer make | take | show` (chacun avec `--dry-run` / `--json`). → [Référence des commandes](../digstore/cli/command-reference.md)
+Échangez des NFT contre du XCH ou des CAT avec `digs offer make | take | show` (chacun avec `--dry-run` / `--json`). → [Référence des commandes](../digstore/cli/command-reference.md)
 
 ---
 

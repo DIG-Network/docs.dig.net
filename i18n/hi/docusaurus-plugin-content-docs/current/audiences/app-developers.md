@@ -6,7 +6,7 @@ keywords:
   - publish a site
   - own your app
   - DIGHUb
-  - digstore
+  - dig-store
   - free until publish
   - capsule
 tags:
@@ -29,7 +29,7 @@ tags:
 दो front doors उसी फ्री-बिल्ड → पेड-पब्लिश लूप की ओर ले जाते हैं:
 
 - **वेब पथ** — [hub.dig.net](https://hub.dig.net) पर [DIGHUb](../concepts.md#dighub): एक बनाया गया फोल्डर डालें, मुफ़्त में प्रीव्यू करें, केवल Publish पर वॉलेट कनेक्ट करें।
-- **CLI / CI पथ** — [`digstore`](../concepts.md#digstore-cli) CLI + [`create-dig-app`](../concepts.md#create-dig-app) + [GitHub deploy Action](../concepts.md#deploy-action)।
+- **CLI / CI पथ** — [`dig-store`](../concepts.md#digstore-cli) CLI + [`create-dig-app`](../concepts.md#create-dig-app) + [GitHub deploy Action](../concepts.md#deploy-action)।
 
 स्कैफोल्ड, बिल्ड, और प्रीव्यू करने की कोई कीमत **नहीं** है। आप केवल तभी भुगतान करते हैं जब आप एक capsule पब्लिश करते हैं।
 
@@ -47,34 +47,34 @@ tags:
 
 [**DIGHUb में एक नया store शुरू करें ↗**](https://hub.dig.net/new)। अपनी बनी हुई साइट (आपका `dist/` या `build/` फोल्डर) डालें, असली read path पर एक **फ्री ड्राफ्ट प्रीव्यू** पाएं, और केवल **Publish** स्टेप पर वॉलेट कनेक्ट करें। वेब walkthrough देखें [Quickstart → Publish from the web](../quickstart.md#a-publish-from-the-web) में।
 
-## CLI से पब्लिश करें — digstore {#publish-from-the-cli--digstore}
+## CLI से पब्लिश करें — dig-store {#publish-from-the-cli--digstore}
 
 Git-आकार का लूप: `new` → `dev` → `init` → `commit`।
 
 ```sh
-digstore new vite-react   # scaffold a runnable project — free, no mint
-digstore dev              # preview on the real chia:// read path, live-reload — free
-digstore init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
-digstore commit -m "v1.1"       # publish an update — a new capsule
+digs new vite-react   # scaffold a runnable project — free, no mint
+digs dev              # preview on the real chia:// read path, live-reload — free
+digs init site --dir dist   # mint the store's first capsule (uniform price + XCH fee)
+digs commit -m "v1.1"       # publish an update — a new capsule
 ```
 
 → [CLI quickstart](../digstore/cli/quickstart.md) · [The full project workflow](../digstore/cli/project-workflow.md)
 
 ## एक ऐप स्कैफोल्ड करें — 5 templates {#scaffold-an-app--5-templates}
 
-एक चलने योग्य, वॉलेट-वायर्ड स्टार्टर से शुरू करें — `static`, `vite-react`, `next-static`, `nft-drop`, या `dapp-window-chia` — `digstore new <template>` या `npm create dig-app` के ज़रिए।
+एक चलने योग्य, वॉलेट-वायर्ड स्टार्टर से शुरू करें — `static`, `vite-react`, `next-static`, `nft-drop`, या `dapp-window-chia` — `digs new <template>` या `npm create dig-app` के ज़रिए।
 
 → [Scaffold an app](../build-a-dapp/scaffold.md)
 
-## `digstore dev` से मुफ़्त में प्रीव्यू करें {#preview-free-with-digstore-dev}
+## `digs dev` से मुफ़्त में प्रीव्यू करें {#preview-free-with-digstore-dev}
 
-`digstore dev`, आपके प्रोजेक्ट को **असली** DIG read path (encrypt → compile → verify → decrypt) पर लाइव रीलोड और एक इंजेक्टेड dev `window.chia` के साथ सर्व करता है। जो आप देखते हैं वही विज़िटर्स को मिलता है — और कुछ भी mint या खर्च नहीं होता।
+`digs dev`, आपके प्रोजेक्ट को **असली** DIG read path (encrypt → compile → verify → decrypt) पर लाइव रीलोड और एक इंजेक्टेड dev `window.chia` के साथ सर्व करता है। जो आप देखते हैं वही विज़िटर्स को मिलता है — और कुछ भी mint या खर्च नहीं होता।
 
 → [CLI quickstart → develop & preview](../digstore/cli/quickstart.md)
 
 ## `dig.toml` — committable मैनिफेस्ट {#digtoml--the-committable-manifest}
 
-आपके प्रोजेक्ट रूट पर `dig.toml`, `store-id`, `output-dir`, `build-command`, `remote`, और अन्य कॉन्फ़िग रखता है — जो `digstore dev`, `digstore deploy`, और स्कैफोल्ड templates द्वारा साझा किया जाता है। इसमें **कोई सीक्रेट नहीं** है (वे environment से आते हैं), इसलिए इसे commit करें।
+आपके प्रोजेक्ट रूट पर `dig.toml`, `store-id`, `output-dir`, `build-command`, `remote`, और अन्य कॉन्फ़िग रखता है — जो `digs dev`, `digs deploy`, और स्कैफोल्ड templates द्वारा साझा किया जाता है। इसमें **कोई सीक्रेट नहीं** है (वे environment से आते हैं), इसलिए इसे commit करें।
 
 → [Project config & build-time values](../digstore/cli/configuration.md)
 

@@ -57,7 +57,7 @@ The host only ever stores **ciphertext keyed by hashes**. Encryption and decrypt
 
 ## How do I update a site after it's live?
 
-Publish again. Edit, preview the new draft for free, then Publish (web) or `digstore commit` (CLI) to ship a new capsule for the uniform capsule price. Each capsule is immutable; an update is a new one, and your store points at the latest.
+Publish again. Edit, preview the new draft for free, then Publish (web) or `digs commit` (CLI) to ship a new capsule for the uniform capsule price. Each capsule is immutable; an update is a new one, and your store points at the latest.
 
 ## Is my store reachable as soon as I publish?
 
@@ -83,7 +83,7 @@ Add the [GitHub Action](../digstore/cli/deploy-from-github-actions.md): push to 
 
 ## Is it open source?
 
-Yes. DigStore is GPL-2.0 — see the [digstore repository ↗](https://github.com/DIG-Network/digstore). The whole protocol is [specified in the Protocol section](../protocol-deep-dive.md).
+Yes. dig-store is GPL-2.0 — see the [dig-store repository ↗](https://github.com/DIG-Network/dig-store). The whole protocol is [specified in the Protocol section](../protocol-deep-dive.md).
 
 ## Related
 

@@ -2,13 +2,13 @@
 sidebar_position: 1
 slug: /
 title: DIG Network
-description: "Ringkasan primitif DIG Network: DigStore untuk penerbitan content-addressable, dig RPC untuk blind hosting dan retrieval, serta DIG Browser untuk akses konten."
+description: "Ringkasan primitif DIG Network: dig-store untuk penerbitan content-addressable, dig RPC untuk blind hosting dan retrieval, serta DIG Browser untuk akses konten."
 keywords:
   - DIG Network
   - Proof-of-Stake Layer 2
   - Chia
   - capsule
-  - DigStore
+  - dig-store
   - dig RPC
   - DIG Browser
 tags:
@@ -43,7 +43,7 @@ capsule adalah unit dasar jaringan untuk:
 - **Caching** — host atau browser menyimpan cache capsule dengan kunci `storeId:rootHash`; cache lokal adalah kumpulan capsule.
 - **Provenance** — root setiap capsule membawa tanda tangan BLS penerbit dan root Merkle.
 
-Ini adalah definisi yang berlaku di seluruh ekosistem: "capsule = `(storeId, rootHash)`" memiliki arti yang sama di DigStore, dig RPC, dan DIG Browser.
+Ini adalah definisi yang berlaku di seluruh ekosistem: "capsule = `(storeId, rootHash)`" memiliki arti yang sama di dig-store, dig RPC, dan DIG Browser.
 
 :::tip Coba sekarang
 [**Buat capsule pertama Anda di DIGHUb ↗**](https://hub.dig.net/new) — terbitkan situs langsung dari browser, tanpa perlu CLI. Setiap capsule (mint atau commit) dikenakan **harga capsule seragam dalam $DIG**.
@@ -51,21 +51,21 @@ Ini adalah definisi yang berlaku di seluruh ekosistem: "capsule = `(storeId, roo
 
 ## Primitif {#primitives}
 
-### 🗄️ DigStore {#️-digstore}
+### 🗄️ dig-store {#️-digstore}
 
 Primitif pertama dan paling fundamental: sebuah **proyek content-addressable terenkripsi dalam format WASM**. Anda arahkan ke direktori build, melakukan commit deployment layaknya Git, dan mendapatkan satu file `.wasm` yang mempertahankan dirinya sendiri — yaitu data Anda sekaligus server yang mengatur akses ke data tersebut. URN itu sendiri *adalah* kuncinya — ia sekaligus menemukan dan mendekripsi.
 
-→ **[Jelajahi DigStore](./digstore/what-is-digstore.md)**
+→ **[Jelajahi dig-store](./digstore/what-is-digstore.md)**
 
 | | |
 |---|---|
-| **[Apa itu DigStore?](./digstore/what-is-digstore.md)** | Ide satu-file, secara ringkas |
+| **[Apa itu dig-store?](./digstore/what-is-digstore.md)** | Ide satu-file, secara ringkas |
 | **[Format](./digstore/format/overview.md)** | Proyek, deployment, URN, enkripsi, proof |
-| **[Tutorial CLI](./digstore/cli/quickstart.md)** | Instal dan gunakan `digstore` di proyek Anda |
+| **[Tutorial CLI](./digstore/cli/quickstart.md)** | Instal dan gunakan `dig-store` di proyek Anda |
 
 ### 🛰️ dig RPC {#️-dig-rpc}
 
-Primitif jaringan: sebuah **antarmuka standar untuk membaca konten dari deployment DigStore yang di-host**. JSON-RPC 2.0 melalui HTTPS `POST` — setiap node hosting berbicara dengan cara yang identik, sehingga konten bersifat portabel dan klien tidak terikat pada node tertentu. Ia menyajikan ciphertext + proof inklusi berdasarkan retrieval key, seluruh deployment berdasarkan `(store_id, root)`, dan manifest discovery publik — di-streaming dalam potongan (chunk), blind secara konstruksi, diverifikasi dan didekripsi sepenuhnya di sisi klien.
+Primitif jaringan: sebuah **antarmuka standar untuk membaca konten dari deployment dig-store yang di-host**. JSON-RPC 2.0 melalui HTTPS `POST` — setiap node hosting berbicara dengan cara yang identik, sehingga konten bersifat portabel dan klien tidak terikat pada node tertentu. Ia menyajikan ciphertext + proof inklusi berdasarkan retrieval key, seluruh deployment berdasarkan `(store_id, root)`, dan manifest discovery publik — di-streaming dalam potongan (chunk), blind secara konstruksi, diverifikasi dan didekripsi sepenuhnya di sisi klien.
 
 → **[Jelajahi dig RPC](./rpc/what-is-the-dig-rpc.md)**
 
@@ -106,7 +106,7 @@ Dokumen ini disusun berdasarkan **apa yang sedang Anda kerjakan**. Setiap jalur 
 Baru mengenal kosakatanya? Simak [Konsep & glosarium](./concepts.md). Ingin memahami desain lengkapnya? Baca [Pembahasan mendalam protokol](./protocol-deep-dive.md).
 
 :::note
-DIG Network dan primitif-primitifnya bersifat open source. DigStore dilisensikan di bawah GPL-2.0; lihat [repositori digstore](https://github.com/DIG-Network/digstore).
+DIG Network dan primitif-primitifnya bersifat open source. dig-store dilisensikan di bawah GPL-2.0; lihat [repositori dig-store](https://github.com/DIG-Network/dig-store).
 :::
 
 ## Terkait {#related}
@@ -114,7 +114,7 @@ DIG Network dan primitif-primitifnya bersifat open source. DigStore dilisensikan
 - [Quickstart](./quickstart.md) — terbitkan situs pertama Anda; gratis untuk build dan preview
 - [Bangun dapp di Chia](./build-a-dapp/tutorial.md) — setiap primitif dalam satu tutorial end-to-end
 - [Konsep & glosarium](./concepts.md) — entitas inti DIG, didefinisikan dan tertaut
-- [Apa itu DigStore?](./digstore/what-is-digstore.md) — format store content-addressable
+- [Apa itu dig-store?](./digstore/what-is-digstore.md) — format store content-addressable
 - [Apa itu dig RPC?](./rpc/what-is-the-dig-rpc.md) — antarmuka baca yang berlaku di seluruh jaringan
 - [Protokol chia://](./browser/chia-protocol.md) — membuka konten di DIG Browser
 - [Dapatkan bantuan](./support/get-help.md) — komunitas, troubleshooting, dan kode error

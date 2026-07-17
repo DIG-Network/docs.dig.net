@@ -319,7 +319,7 @@
     "message": "DIG Network là nền tảng dành cho nhà phát triển để xuất bản và phân phối nội dung mà máy chủ lưu trữ không bao giờ nhìn thấy nội dung nó mang theo. Hãy bắt đầu với {digstore} — bộ lưu trữ được mã hóa, định địa chỉ theo nội dung, biên dịch thành một mô-đun WebAssembly tự bảo vệ duy nhất."
   },
   "homepage.hero.lead.digstore": {
-    "message": "DigStore"
+    "message": "dig-store"
   },
   "homepage.hero.cta.docs": {
     "message": "Khám phá tài liệu →"
@@ -364,7 +364,7 @@
     "message": "Các khối xây dựng có thể kết hợp"
   },
   "homepage.primitives.subtitle": {
-    "message": "DigStore đã có sẵn. Nhiều thành phần cơ bản khác của DIG Network sắp ra mắt."
+    "message": "dig-store đã có sẵn. Nhiều thành phần cơ bản khác của DIG Network sắp ra mắt."
   },
   "homepage.primitives.available": {
     "message": "SẴN CÓ"
@@ -373,7 +373,7 @@
     "message": "Một kho lưu trữ được mã hóa, định địa chỉ theo nội dung, có hình dạng giống Git. Trỏ nó vào thư mục build, commit các thế hệ, và định địa chỉ mọi thứ bằng URN."
   },
   "homepage.primitives.digstore.link": {
-    "message": "Đọc tài liệu DigStore →"
+    "message": "Đọc tài liệu dig-store →"
   },
   "homepage.steps.capture.title": {
     "message": "Thu thập"
@@ -403,7 +403,7 @@
     "message": "Quy trình làm việc theo phong cách Git cho đầu ra bản build — được mã hóa và định địa chỉ ngay từ commit đầu tiên."
   },
   "homepage.cta.title": {
-    "message": "Bắt đầu xây dựng với DigStore"
+    "message": "Bắt đầu xây dựng với dig-store"
   },
   "homepage.cta.subtitle": {
     "message": "Cài đặt CLI và xuất bản store được mã hóa đầu tiên của bạn trong chưa đầy một phút."
@@ -418,6 +418,6 @@
     "message": "DIG Network — lớp dữ liệu phi tập trung"
   },
   "homepage.meta.description": {
-    "message": "DIG Network là mạng Layer 2 Proof-of-Stake trên nền tảng Chia. Tài liệu dành cho nhà phát triển về mạng lưới và các thành phần cơ bản của nó, bao gồm DigStore — bộ lưu trữ được mã hóa, định địa chỉ theo nội dung."
+    "message": "DIG Network là mạng Layer 2 Proof-of-Stake trên nền tảng Chia. Tài liệu dành cho nhà phát triển về mạng lưới và các thành phần cơ bản của nó, bao gồm dig-store — bộ lưu trữ được mã hóa, định địa chỉ theo nội dung."
   }
 }

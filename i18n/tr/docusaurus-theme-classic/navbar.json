@@ -11,9 +11,9 @@
     "message": "Dokümantasyon",
     "description": "Navbar item with label Documentation"
   },
-  "item.label.DigStore": {
-    "message": "DigStore",
-    "description": "Navbar item with label DigStore"
+  "item.label.dig-store": {
+    "message": "dig-store",
+    "description": "Navbar item with label dig-store"
   },
   "item.label.Get help": {
     "message": "Yardım alın",

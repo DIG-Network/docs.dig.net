@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: What is the dig RPC?
-description: "JSON-RPC 2.0 के ज़रिए DigStore capsules के लिए नेटवर्क-व्यापी read इंटरफेस; संरचना से ब्लाइंड, बिना भरोसे के सत्यापन योग्य, और किसी भी साइज़ पर स्ट्रीम करने योग्य।"
+description: "JSON-RPC 2.0 के ज़रिए dig-store capsules के लिए नेटवर्क-व्यापी read इंटरफेस; संरचना से ब्लाइंड, बिना भरोसे के सत्यापन योग्य, और किसी भी साइज़ पर स्ट्रीम करने योग्य।"
 keywords:
   - dig RPC
   - JSON-RPC 2.0
@@ -25,7 +25,7 @@ tags:
 यह ओरिएंटेशन पेज है। अथॉरिटेटिव मशीन-इंटरफेस स्पेक — methods, chunk wire object, node profile, और OpenRPC डॉक्यूमेंट्स — [Protocol · The dig RPC](../protocol/dig-rpc.md) में है।
 :::
 
-**dig RPC, होस्टेड DigStore `.dig` capsules से सीधे कंटेंट पढ़ने के लिए नेटवर्क-व्यापी इंटरफेस है।** यह HTTPS `POST` पर बोली जाने वाली एक [JSON-RPC 2.0](https://www.jsonrpc.org/specification) सर्विस है।
+**dig RPC, होस्टेड dig-store `.dig` capsules से सीधे कंटेंट पढ़ने के लिए नेटवर्क-व्यापी इंटरफेस है।** यह HTTPS `POST` पर बोली जाने वाली एक [JSON-RPC 2.0](https://www.jsonrpc.org/specification) सर्विस है।
 
 हर node जो capsules होस्ट करता है — `https://rpc.dig.net` पर संदर्भ node, या कोई भी थर्ड-पार्टी node — **समान semantics के साथ समान methods** एक्सपोज़ करता है। इस इंटरफेस के विरुद्ध लिखा गया एक क्लाइंट एक एंडपॉइंट के ज़रिए पूरे नेटवर्क से पढ़ता है। कोई CDN नहीं है; DIG पर सारी कंटेंट सर्विंग dig RPC के ज़रिए होती है।
 
@@ -43,9 +43,9 @@ tags:
 - **बिना भरोसे के सत्यापन योग्य।** हर असली byte, ऑन-चेन generation root पर rooted एक merkle **inclusion proof** के साथ आता है। क्लाइंट proof को root तक fold करता है और तभी स्वीकार करता है जब वह किसी भरोसेमंद root से मेल खाता हो। node पर कभी यह भरोसा नहीं किया जाता कि उसने असली bytes लौटाए हैं।
 - **किसी भी साइज़ पर स्ट्रीम करने योग्य।** कंटेंट को स्पष्ट continuation के साथ bounded, 64 KiB-aligned chunks में पढ़ा जाता है। एक एक-किलोबाइट resource और सौ-मेगाबाइट का capsule एक ही लूप से पढ़े जाते हैं, और कोई भी सिंगल response अनबाउंडेड नहीं होता।
 
-## यह DigStore के साथ कैसे फिट होता है {#how-it-fits-with-digstore}
+## यह dig-store के साथ कैसे फिट होता है {#how-it-fits-with-digstore}
 
-DigStore आपको **फॉर्मेट** देता है: एक कंटेंट-एड्रेसेबल, एन्क्रिप्टेड store जो एक सिंगल सेल्फ-डिफेंडिंग `.wasm` capsule में कंपाइल होता है, जिसे एक URN से एड्रेस किया जाता है जहां *URN ही key है*। dig RPC यह है कि उस capsule को host पर भरोसा किए बिना नेटवर्क पर **कैसे सर्व किया जाता है**:
+dig-store आपको **फॉर्मेट** देता है: एक कंटेंट-एड्रेसेबल, एन्क्रिप्टेड store जो एक सिंगल सेल्फ-डिफेंडिंग `.wasm` capsule में कंपाइल होता है, जिसे एक URN से एड्रेस किया जाता है जहां *URN ही key है*। dig RPC यह है कि उस capsule को host पर भरोसा किए बिना नेटवर्क पर **कैसे सर्व किया जाता है**:
 
 1. आप एक store कंपाइल करते हैं और एक generation को ऑन-चेन एंकर करते हैं (एक CHIP-0035 DataLayer singleton)। इसका **कंटेंट root** ट्रस्ट एंकर है।
 2. एक node capsule को होस्ट करता है और उसे dig RPC पर एक्सपोज़ करता है।

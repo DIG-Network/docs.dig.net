@@ -319,7 +319,7 @@
     "message": "DIG Network ist eine Entwicklerplattform zum Veröffentlichen und Bereitstellen von Inhalten, bei der der Host niemals sieht, was er speichert. Starten Sie mit {digstore} — verschlüsseltem, inhaltsadressierbarem Speicher, der in ein einziges selbstverteidigendes WebAssembly-Modul kompiliert wird."
   },
   "homepage.hero.lead.digstore": {
-    "message": "DigStore"
+    "message": "dig-store"
   },
   "homepage.hero.cta.docs": {
     "message": "Dokumentation ansehen →"
@@ -364,7 +364,7 @@
     "message": "Kombinierbare Bausteine"
   },
   "homepage.primitives.subtitle": {
-    "message": "DigStore ist jetzt verfügbar. Weitere DIG-Network-Primitiven sind unterwegs."
+    "message": "dig-store ist jetzt verfügbar. Weitere DIG-Network-Primitiven sind unterwegs."
   },
   "homepage.primitives.available": {
     "message": "VERFÜGBAR"
@@ -373,7 +373,7 @@
     "message": "Ein Git-förmiger, verschlüsselter, inhaltsadressierbarer Store. Richten Sie ihn auf ein Build-Verzeichnis, committen Sie Generationen und adressieren Sie alles per URN."
   },
   "homepage.primitives.digstore.link": {
-    "message": "DigStore-Dokumentation lesen →"
+    "message": "dig-store-Dokumentation lesen →"
   },
   "homepage.steps.capture.title": {
     "message": "Erfassen"
@@ -403,7 +403,7 @@
     "message": "Git-artiger Workflow für Build-Ausgaben — verschlüsselt und adressierbar ab dem ersten Commit."
   },
   "homepage.cta.title": {
-    "message": "Beginnen Sie mit DigStore"
+    "message": "Beginnen Sie mit dig-store"
   },
   "homepage.cta.subtitle": {
     "message": "Installieren Sie die CLI und veröffentlichen Sie Ihren ersten verschlüsselten Store in weniger als einer Minute."
@@ -418,6 +418,6 @@
     "message": "DIG Network — die dezentrale Datenschicht"
   },
   "homepage.meta.description": {
-    "message": "DIG Network ist ein Proof-of-Stake-Layer-2-Netzwerk auf Chia. Entwicklerdokumentation für das Netzwerk und seine Primitiven, einschließlich DigStore — verschlüsselter, inhaltsadressierbarer Speicher."
+    "message": "DIG Network ist ein Proof-of-Stake-Layer-2-Netzwerk auf Chia. Entwicklerdokumentation für das Netzwerk und seine Primitiven, einschließlich dig-store — verschlüsselter, inhaltsadressierbarer Speicher."
   }
 }

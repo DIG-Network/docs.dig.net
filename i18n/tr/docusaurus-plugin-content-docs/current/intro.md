@@ -2,13 +2,13 @@
 sidebar_position: 1
 slug: /
 title: DIG Network
-description: "DigStore ile içerik adresli yayınlama, kör barındırma ve alma için dig RPC ile içerik erişimi için DIG Browser dahil olmak üzere DIG Network temel bileşenlerine genel bakış."
+description: "dig-store ile içerik adresli yayınlama, kör barındırma ve alma için dig RPC ile içerik erişimi için DIG Browser dahil olmak üzere DIG Network temel bileşenlerine genel bakış."
 keywords:
   - DIG Network
   - Proof-of-Stake Layer 2
   - Chia
   - capsule
-  - DigStore
+  - dig-store
   - dig RPC
   - DIG Browser
 tags:
@@ -43,7 +43,7 @@ capsule, ağın şu birimidir:
 - **Önbellekleme** — bir host veya tarayıcı, bir capsule'ü `storeId:rootHash` anahtarıyla önbelleğe alır; yerel önbellek bir capsule kümesidir.
 - **Köken kanıtı (Provenance)** — her capsule'ün kökü, yayıncının BLS imzasını ve bir Merkle kökünü taşır.
 
-Bu, ekosistem genelinde geçerli tanımdır: "capsule = `(storeId, rootHash)`" ifadesi DigStore'da, dig RPC'de ve DIG Browser'da aynı anlama gelir.
+Bu, ekosistem genelinde geçerli tanımdır: "capsule = `(storeId, rootHash)`" ifadesi dig-store'da, dig RPC'de ve DIG Browser'da aynı anlama gelir.
 
 :::tip Deneyin
 [**DIGHUb'da ilk capsule'ünüzü oluşturun ↗**](https://hub.dig.net/new) — tarayıcıda bir site yayınlayın, CLI gerekmez. Her capsule (mint veya commit) **$DIG cinsinden tek tip capsule fiyatına** mal olur.
@@ -51,21 +51,21 @@ Bu, ekosistem genelinde geçerli tanımdır: "capsule = `(storeId, rootHash)`" i
 
 ## Temel bileşenler {#primitives}
 
-### 🗄️ DigStore {#️-digstore}
+### 🗄️ dig-store {#️-digstore}
 
 İlk ve en temel bileşen: **içerik adresli, şifrelenmiş bir WASM proje formatı**. Bir build dizinini işaret edersiniz, dağıtımları Git gibi commit'lersiniz ve hem verinizi hem de ona erişimi denetleyen sunucuyu barındıran tek, kendini savunan bir `.wasm` dosyası elde edersiniz. URN *anahtarın kendisidir* — hem konumlandırır hem şifresini çözer.
 
-→ **[DigStore'u keşfedin](./digstore/what-is-digstore.md)**
+→ **[dig-store'u keşfedin](./digstore/what-is-digstore.md)**
 
 | | |
 |---|---|
-| **[DigStore nedir?](./digstore/what-is-digstore.md)** | Tek dosya fikri, özetle |
+| **[dig-store nedir?](./digstore/what-is-digstore.md)** | Tek dosya fikri, özetle |
 | **[Format](./digstore/format/overview.md)** | Projeler, dağıtımlar, URN'ler, şifreleme, kanıtlar |
-| **[CLI Eğitimi](./digstore/cli/quickstart.md)** | Projenizde `digstore`'u kurun ve kullanın |
+| **[CLI Eğitimi](./digstore/cli/quickstart.md)** | Projenizde `dig-store`'u kurun ve kullanın |
 
 ### 🛰️ dig RPC {#️-dig-rpc}
 
-Ağ bileşeni: barındırılan DigStore dağıtımlarından **içerik okumak için standart bir arayüz**. HTTPS `POST` üzerinden JSON-RPC 2.0 — her barındırma düğümü bunu aynı şekilde konuşur, böylece içerik taşınabilir ve istemciler düğümden bağımsızdır. Alma anahtarına göre şifreli metin + dahil etme kanıtları, `(store_id, root)` ile tüm dağıtımlar ve genel keşif manifestosunu sunar — parçalar halinde akıtılır, tasarım gereği kördür, tamamen istemci tarafında doğrulanır ve şifresi çözülür.
+Ağ bileşeni: barındırılan dig-store dağıtımlarından **içerik okumak için standart bir arayüz**. HTTPS `POST` üzerinden JSON-RPC 2.0 — her barındırma düğümü bunu aynı şekilde konuşur, böylece içerik taşınabilir ve istemciler düğümden bağımsızdır. Alma anahtarına göre şifreli metin + dahil etme kanıtları, `(store_id, root)` ile tüm dağıtımlar ve genel keşif manifestosunu sunar — parçalar halinde akıtılır, tasarım gereği kördür, tamamen istemci tarafında doğrulanır ve şifresi çözülür.
 
 → **[dig RPC'yi keşfedin](./rpc/what-is-the-dig-rpc.md)**
 
@@ -106,7 +106,7 @@ Dokümantasyon **ne yaptığınıza** göre organize edilmiştir. Her yol, on sa
 Kelime dağarcığına yeni misiniz? [Kavramlar & sözlük](./concepts.md)'e göz atın. Tam tasarımı mı istiyorsunuz? [Protokol derinlemesine inceleme](./protocol-deep-dive.md)'yi okuyun.
 
 :::note
-DIG Network ve temel bileşenleri açık kaynaktır. DigStore, GPL-2.0 lisansı altındadır; bkz. [digstore deposu](https://github.com/DIG-Network/digstore).
+DIG Network ve temel bileşenleri açık kaynaktır. dig-store, GPL-2.0 lisansı altındadır; bkz. [dig-store deposu](https://github.com/DIG-Network/dig-store).
 :::
 
 ## İlgili {#related}
@@ -114,7 +114,7 @@ DIG Network ve temel bileşenleri açık kaynaktır. DigStore, GPL-2.0 lisansı 
 - [Hızlı başlangıç](./quickstart.md) — ilk sitenizi gönderin; inşa etmek ve önizlemek ücretsizdir
 - [Chia üzerinde bir dapp inşa edin](./build-a-dapp/tutorial.md) — tek uçtan uca eğitimde her temel bileşen
 - [Kavramlar & sözlük](./concepts.md) — temel DIG varlıkları, tanımlanmış ve bağlantılı
-- [DigStore nedir?](./digstore/what-is-digstore.md) — içerik adresli store formatı
+- [dig-store nedir?](./digstore/what-is-digstore.md) — içerik adresli store formatı
 - [dig RPC nedir?](./rpc/what-is-the-dig-rpc.md) — ağ genelinde okuma arayüzü
 - [chia:// protokolü](./browser/chia-protocol.md) — içeriği DIG Browser'da açmak
 - [Yardım alın](./support/get-help.md) — topluluk, sorun giderme ve hata kodları

@@ -6,7 +6,7 @@ keywords:
   - publish a site
   - own your app
   - DIGHUb
-  - digstore
+  - dig-store
   - free until publish
   - capsule
 tags:
@@ -29,7 +29,7 @@ Um **[store](../concepts.md#store)** é a identidade permanente do seu site — 
 Duas portas de entrada levam ao **mesmo** ciclo de construir-de-graça → publicar-pago:
 
 - **O caminho web** — [DIGHUb](../concepts.md#dighub) em [hub.dig.net](https://hub.dig.net): solte uma pasta já construída, pré-visualize de graça, conecte uma carteira somente no Publish.
-- **O caminho CLI / CI** — a CLI [`digstore`](../concepts.md#digstore-cli) + [`create-dig-app`](../concepts.md#create-dig-app) + a [GitHub deploy Action](../concepts.md#deploy-action).
+- **O caminho CLI / CI** — a CLI [`dig-store`](../concepts.md#digstore-cli) + [`create-dig-app`](../concepts.md#create-dig-app) + a [GitHub deploy Action](../concepts.md#deploy-action).
 
 Fazer o scaffold, construir e pré-visualizar não custam **nada**. Você paga somente quando publica um capsule.
 
@@ -47,34 +47,34 @@ Fazer o scaffold, construir e pré-visualizar não custam **nada**. Você paga s
 
 [**Inicie um novo store na DIGHUb ↗**](https://hub.dig.net/new). Solte seu site já construído (sua pasta `dist/` ou `build/`), obtenha uma **pré-visualização de rascunho gratuita** no caminho de leitura real, e conecte uma carteira somente no passo de **Publish**. Veja o passo a passo da web no [Quickstart → Publicar pela web](../quickstart.md#a-publish-from-the-web).
 
-## Publicar pela CLI — digstore {#publish-from-the-cli--digstore}
+## Publicar pela CLI — dig-store {#publish-from-the-cli--digstore}
 
 O ciclo no estilo Git: `new` → `dev` → `init` → `commit`.
 
 ```sh
-digstore new vite-react   # faz o scaffold de um projeto executável — grátis, sem mint
-digstore dev              # pré-visualiza no caminho de leitura chia:// real, com live-reload — grátis
-digstore init site --dir dist   # faz o mint do primeiro capsule do store (preço uniforme + taxa de XCH)
-digstore commit -m "v1.1"       # publica uma atualização — um novo capsule
+digs new vite-react   # faz o scaffold de um projeto executável — grátis, sem mint
+digs dev              # pré-visualiza no caminho de leitura chia:// real, com live-reload — grátis
+digs init site --dir dist   # faz o mint do primeiro capsule do store (preço uniforme + taxa de XCH)
+digs commit -m "v1.1"       # publica uma atualização — um novo capsule
 ```
 
 → [Quickstart da CLI](../digstore/cli/quickstart.md) · [O fluxo de trabalho completo do projeto](../digstore/cli/project-workflow.md)
 
 ## Faça o scaffold de uma aplicação — 5 templates {#scaffold-an-app--5-templates}
 
-Comece a partir de um ponto de partida executável e já conectado a uma carteira — `static`, `vite-react`, `next-static`, `nft-drop`, ou `dapp-window-chia` — via `digstore new <template>` ou `npm create dig-app`.
+Comece a partir de um ponto de partida executável e já conectado a uma carteira — `static`, `vite-react`, `next-static`, `nft-drop`, ou `dapp-window-chia` — via `digs new <template>` ou `npm create dig-app`.
 
 → [Faça o scaffold de uma aplicação](../build-a-dapp/scaffold.md)
 
-## Pré-visualize de graça com `digstore dev` {#preview-free-with-digstore-dev}
+## Pré-visualize de graça com `digs dev` {#preview-free-with-digstore-dev}
 
-`digstore dev` serve seu projeto no caminho de leitura **genuíno** da DIG (criptografar → compilar → verificar → descriptografar) com live reload e um `window.chia` de desenvolvimento injetado. O que você vê é o que os visitantes recebem — e nada é mintado ou gasto.
+`digs dev` serve seu projeto no caminho de leitura **genuíno** da DIG (criptografar → compilar → verificar → descriptografar) com live reload e um `window.chia` de desenvolvimento injetado. O que você vê é o que os visitantes recebem — e nada é mintado ou gasto.
 
 → [Quickstart da CLI → desenvolver e pré-visualizar](../digstore/cli/quickstart.md)
 
 ## `dig.toml` — o manifesto commitável {#digtoml--the-committable-manifest}
 
-`dig.toml` na raiz do seu projeto guarda `store-id`, `output-dir`, `build-command`, `remote`, e outras configurações — compartilhado por `digstore dev`, `digstore deploy`, e os templates de scaffold. Ele não guarda **nenhum segredo** (esses vêm do ambiente), então commite-o.
+`dig.toml` na raiz do seu projeto guarda `store-id`, `output-dir`, `build-command`, `remote`, e outras configurações — compartilhado por `digs dev`, `digs deploy`, e os templates de scaffold. Ele não guarda **nenhum segredo** (esses vêm do ambiente), então commite-o.
 
 → [Configuração de projeto e valores em tempo de build](../digstore/cli/configuration.md)
 

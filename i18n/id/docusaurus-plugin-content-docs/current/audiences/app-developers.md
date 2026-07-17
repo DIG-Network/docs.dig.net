@@ -6,7 +6,7 @@ keywords:
   - publish a site
   - own your app
   - DIGHUb
-  - digstore
+  - dig-store
   - free until publish
   - capsule
 tags:
@@ -29,7 +29,7 @@ tags:
 Dua pintu depan menuju ke loop build-gratis → publish-berbayar yang **sama**:
 
 - **Jalur web** — [DIGHUb](../concepts.md#dighub) di [hub.dig.net](https://hub.dig.net): masukkan folder yang sudah di-build, preview gratis, hubungkan wallet hanya saat Publish.
-- **Jalur CLI / CI** — CLI [`digstore`](../concepts.md#digstore-cli) + [`create-dig-app`](../concepts.md#create-dig-app) + [GitHub deploy Action](../concepts.md#deploy-action).
+- **Jalur CLI / CI** — CLI [`dig-store`](../concepts.md#digstore-cli) + [`create-dig-app`](../concepts.md#create-dig-app) + [GitHub deploy Action](../concepts.md#deploy-action).
 
 Scaffold, build, dan preview tidak dikenakan biaya **apa pun**. Anda hanya membayar saat menerbitkan sebuah capsule.
 
@@ -47,34 +47,34 @@ Scaffold, build, dan preview tidak dikenakan biaya **apa pun**. Anda hanya memba
 
 [**Mulai store baru di DIGHUb ↗**](https://hub.dig.net/new). Masukkan situs yang sudah Anda build (folder `dist/` atau `build/` Anda), dapatkan **preview draft gratis** pada jalur baca yang sesungguhnya, dan hubungkan wallet hanya pada langkah **Publish**. Lihat walkthrough web-nya di [Quickstart → Terbitkan dari web](../quickstart.md#a-publish-from-the-web).
 
-## Terbitkan dari CLI — digstore {#publish-from-the-cli--digstore}
+## Terbitkan dari CLI — dig-store {#publish-from-the-cli--digstore}
 
 Loop bergaya Git: `new` → `dev` → `init` → `commit`.
 
 ```sh
-digstore new vite-react   # scaffold proyek yang dapat langsung dijalankan — gratis, tanpa mint
-digstore dev              # preview di jalur baca chia:// yang sesungguhnya, live-reload — gratis
-digstore init site --dir dist   # mint capsule pertama store (harga seragam + fee XCH)
-digstore commit -m "v1.1"       # terbitkan sebuah update — capsule baru
+digs new vite-react   # scaffold proyek yang dapat langsung dijalankan — gratis, tanpa mint
+digs dev              # preview di jalur baca chia:// yang sesungguhnya, live-reload — gratis
+digs init site --dir dist   # mint capsule pertama store (harga seragam + fee XCH)
+digs commit -m "v1.1"       # terbitkan sebuah update — capsule baru
 ```
 
 → [Quickstart CLI](../digstore/cli/quickstart.md) · [Alur kerja proyek lengkap](../digstore/cli/project-workflow.md)
 
 ## Scaffold sebuah aplikasi — 5 template {#scaffold-an-app--5-templates}
 
-Mulai dari starter yang dapat langsung dijalankan dan terhubung wallet — `static`, `vite-react`, `next-static`, `nft-drop`, atau `dapp-window-chia` — melalui `digstore new <template>` atau `npm create dig-app`.
+Mulai dari starter yang dapat langsung dijalankan dan terhubung wallet — `static`, `vite-react`, `next-static`, `nft-drop`, atau `dapp-window-chia` — melalui `digs new <template>` atau `npm create dig-app`.
 
 → [Scaffold sebuah aplikasi](../build-a-dapp/scaffold.md)
 
-## Preview gratis dengan `digstore dev` {#preview-free-with-digstore-dev}
+## Preview gratis dengan `digs dev` {#preview-free-with-digstore-dev}
 
-`digstore dev` menyajikan proyek Anda melalui jalur baca DIG yang **sesungguhnya** (enkripsi → kompilasi → verifikasi → dekripsi) dengan live reload dan sebuah `window.chia` dev yang disuntikkan. Apa yang Anda lihat adalah apa yang akan dilihat pengunjung — dan tidak ada yang di-mint atau dikeluarkan.
+`digs dev` menyajikan proyek Anda melalui jalur baca DIG yang **sesungguhnya** (enkripsi → kompilasi → verifikasi → dekripsi) dengan live reload dan sebuah `window.chia` dev yang disuntikkan. Apa yang Anda lihat adalah apa yang akan dilihat pengunjung — dan tidak ada yang di-mint atau dikeluarkan.
 
 → [Quickstart CLI → develop & preview](../digstore/cli/quickstart.md)
 
 ## `dig.toml` — manifest yang dapat di-commit {#digtoml--the-committable-manifest}
 
-`dig.toml` di root proyek Anda menyimpan `store-id`, `output-dir`, `build-command`, `remote`, dan konfigurasi lainnya — digunakan bersama oleh `digstore dev`, `digstore deploy`, dan template scaffold. File ini **tidak menyimpan rahasia** (rahasia berasal dari environment), jadi commit saja.
+`dig.toml` di root proyek Anda menyimpan `store-id`, `output-dir`, `build-command`, `remote`, dan konfigurasi lainnya — digunakan bersama oleh `digs dev`, `digs deploy`, dan template scaffold. File ini **tidak menyimpan rahasia** (rahasia berasal dari environment), jadi commit saja.
 
 → [Konfigurasi proyek & nilai build-time](../digstore/cli/configuration.md)
 

@@ -319,7 +319,7 @@
     "message": "DIG Network는 호스트가 자신이 담고 있는 콘텐츠를 절대 볼 수 없는 방식으로 콘텐츠를 게시하고 제공하는 개발자 플랫폼입니다. 암호화된 콘텐츠 주소 지정 스토리지인 {digstore}로 시작하세요. 단일 자기방어형 WebAssembly 모듈로 컴파일됩니다."
   },
   "homepage.hero.lead.digstore": {
-    "message": "DigStore"
+    "message": "dig-store"
   },
   "homepage.hero.cta.docs": {
     "message": "문서 살펴보기 →"
@@ -364,7 +364,7 @@
     "message": "조합 가능한 빌딩 블록"
   },
   "homepage.primitives.subtitle": {
-    "message": "DigStore는 지금 바로 사용할 수 있습니다. 더 많은 DIG Network 프리미티브가 곧 제공될 예정입니다."
+    "message": "dig-store는 지금 바로 사용할 수 있습니다. 더 많은 DIG Network 프리미티브가 곧 제공될 예정입니다."
   },
   "homepage.primitives.available": {
     "message": "제공 중"
@@ -373,7 +373,7 @@
     "message": "Git 형태의 암호화된 콘텐츠 주소 지정 스토어입니다. 빌드 디렉터리를 지정하고, 세대를 커밋하고, URN으로 모든 것을 주소 지정하세요."
   },
   "homepage.primitives.digstore.link": {
-    "message": "DigStore 문서 읽기 →"
+    "message": "dig-store 문서 읽기 →"
   },
   "homepage.steps.capture.title": {
     "message": "캡처"
@@ -403,7 +403,7 @@
     "message": "빌드 출력을 위한 Git 스타일 워크플로우 — 첫 커밋부터 암호화되고 주소 지정 가능합니다."
   },
   "homepage.cta.title": {
-    "message": "DigStore로 빌드 시작하기"
+    "message": "dig-store로 빌드 시작하기"
   },
   "homepage.cta.subtitle": {
     "message": "CLI를 설치하고 1분 이내에 첫 번째 암호화된 스토어를 게시하세요."
@@ -418,6 +418,6 @@
     "message": "DIG Network — 탈중앙화 데이터 레이어"
   },
   "homepage.meta.description": {
-    "message": "DIG Network는 Chia 기반의 지분증명 레이어 2입니다. 암호화된 콘텐츠 주소 지정 스토리지인 DigStore를 포함하여 네트워크와 그 프리미티브에 대한 개발자 문서입니다."
+    "message": "DIG Network는 Chia 기반의 지분증명 레이어 2입니다. 암호화된 콘텐츠 주소 지정 스토리지인 dig-store를 포함하여 네트워크와 그 프리미티브에 대한 개발자 문서입니다."
   }
 }

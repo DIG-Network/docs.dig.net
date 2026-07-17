@@ -67,7 +67,7 @@ tags:
 - **`dig://`** — §21 **transport** locator (CLI/peer प्लेन) *और* DIG Browser की इंटरनल पेज स्कीम — दो अलग उपयोग, कभी कंटेंट एड्रेस नहीं।
 - **`urn:dig:`** — URN नेमस्पेस जिससे दोनों derive होते हैं।
 - **store / capsule** — पहचान और उसका अपरिवर्तनीय generation।
-- **$DIG** — प्रति capsule भुगतान किया गया CAT; **DigStore** — store फॉर्मेट।
+- **$DIG** — प्रति capsule भुगतान किया गया CAT; **dig-store** — store फॉर्मेट।
 
 ## संबंधित {#related}
 

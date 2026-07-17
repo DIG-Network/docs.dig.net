@@ -43,4 +43,4 @@ Open it from the **Control Pane button in the toolbar** (next to the wallet and 
 
 - [Configure dig-node](./configure.md) — ports, cache cap, upstream
 - [Node conformance](../rpc/conformance.md) — the public serving contract (distinct from control.*)
-- [Self-host a remote origin](../rpc/dig-remote.md) — `digstore serve` + dig:// clone/pull/push
+- [Self-host a remote origin](../rpc/dig-remote.md) — `digs serve` + dig:// clone/pull/push

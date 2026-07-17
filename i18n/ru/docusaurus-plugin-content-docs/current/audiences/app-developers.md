@@ -6,7 +6,7 @@ keywords:
   - publish a site
   - own your app
   - DIGHUb
-  - digstore
+  - dig-store
   - free until publish
   - capsule
 tags:
@@ -29,7 +29,7 @@ tags:
 Два входа ведут к **одному и тому же** циклу «бесплатная сборка → платная публикация»:
 
 - **Веб-путь** — [DIGHUb](../concepts.md#dighub) на [hub.dig.net](https://hub.dig.net): загрузите собранную папку, бесплатный предпросмотр, подключение кошелька только на шаге Publish.
-- **CLI / CI-путь** — CLI [`digstore`](../concepts.md#digstore-cli) + [`create-dig-app`](../concepts.md#create-dig-app) + [GitHub deploy Action](../concepts.md#deploy-action).
+- **CLI / CI-путь** — CLI [`dig-store`](../concepts.md#digstore-cli) + [`create-dig-app`](../concepts.md#create-dig-app) + [GitHub deploy Action](../concepts.md#deploy-action).
 
 Скаффолдинг, сборка и предпросмотр **ничего не стоят**. Вы платите только при публикации capsule.
 
@@ -47,34 +47,34 @@ tags:
 
 [**Создайте новый store в DIGHUb ↗**](https://hub.dig.net/new). Загрузите собранный сайт (папку `dist/` или `build/`), получите **бесплатный предпросмотр черновика** на настоящем пути чтения и подключите кошелёк только на шаге **Publish**. См. веб-инструкцию в [Quickstart → Публикация из веба](../quickstart.md#a-publish-from-the-web).
 
-## Публикация из CLI — digstore {#publish-from-the-cli--digstore}
+## Публикация из CLI — dig-store {#publish-from-the-cli--digstore}
 
 Цикл в стиле Git: `new` → `dev` → `init` → `commit`.
 
 ```sh
-digstore new vite-react   # создать готовый к запуску проект — бесплатно, без минта
-digstore dev              # предпросмотр на настоящем пути чтения chia://, live-reload — бесплатно
-digstore init site --dir dist   # минтит первую capsule store (единая цена + комиссия XCH)
-digstore commit -m "v1.1"       # опубликовать обновление — новую capsule
+digs new vite-react   # создать готовый к запуску проект — бесплатно, без минта
+digs dev              # предпросмотр на настоящем пути чтения chia://, live-reload — бесплатно
+digs init site --dir dist   # минтит первую capsule store (единая цена + комиссия XCH)
+digs commit -m "v1.1"       # опубликовать обновление — новую capsule
 ```
 
 → [CLI-quickstart](../digstore/cli/quickstart.md) · [Полный рабочий процесс проекта](../digstore/cli/project-workflow.md)
 
 ## Скаффолдинг приложения — 5 шаблонов {#scaffold-an-app--5-templates}
 
-Начните с готового к запуску стартового проекта с интеграцией кошелька — `static`, `vite-react`, `next-static`, `nft-drop` или `dapp-window-chia` — через `digstore new <template>` или `npm create dig-app`.
+Начните с готового к запуску стартового проекта с интеграцией кошелька — `static`, `vite-react`, `next-static`, `nft-drop` или `dapp-window-chia` — через `digs new <template>` или `npm create dig-app`.
 
 → [Скаффолдинг приложения](../build-a-dapp/scaffold.md)
 
-## Бесплатный предпросмотр через `digstore dev` {#preview-free-with-digstore-dev}
+## Бесплатный предпросмотр через `digs dev` {#preview-free-with-digstore-dev}
 
-`digstore dev` обслуживает ваш проект через **настоящий** путь чтения DIG (шифрование → компиляция → верификация → расшифровка) с live reload и внедрённым dev-режимом `window.chia`. Вы видите именно то, что получат посетители — и ничего не минтится и не тратится.
+`digs dev` обслуживает ваш проект через **настоящий** путь чтения DIG (шифрование → компиляция → верификация → расшифровка) с live reload и внедрённым dev-режимом `window.chia`. Вы видите именно то, что получат посетители — и ничего не минтится и не тратится.
 
 → [CLI-quickstart → разработка и предпросмотр](../digstore/cli/quickstart.md)
 
 ## `dig.toml` — коммитимый манифест {#digtoml--the-committable-manifest}
 
-`dig.toml` в корне вашего проекта хранит `store-id`, `output-dir`, `build-command`, `remote` и другую конфигурацию — общую для `digstore dev`, `digstore deploy` и шаблонов скаффолдинга. Он **не содержит секретов** (они берутся из окружения), поэтому его можно коммитить.
+`dig.toml` в корне вашего проекта хранит `store-id`, `output-dir`, `build-command`, `remote` и другую конфигурацию — общую для `digs dev`, `digs deploy` и шаблонов скаффолдинга. Он **не содержит секретов** (они берутся из окружения), поэтому его можно коммитить.
 
 → [Конфигурация проекта и значения времени сборки](../digstore/cli/configuration.md)
 

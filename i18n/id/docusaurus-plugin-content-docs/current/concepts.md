@@ -48,7 +48,7 @@ kosakata jaringan. Simak sekilas untuk berorientasi; ikuti tautan untuk mendalam
 sebagai `storeId:rootHash`. Ini adalah unit atomik jaringan — untuk kompilasi (satu modul WASM berukuran
 tetap), [penetapan harga](./digstore/cli/onchain-anchoring.md) (harga seragam per capsule untuk mint atau commit, dibayar
 dalam $DIG), retrieval (sebuah [URN](#urn) menamai satu capsule), caching, dan provenance. Sebuah [store](#store) adalah *rangkaian
-capsule*, satu per commit. Definisi ini identik di seluruh DigStore, dig RPC, dan DIG
+capsule*, satu per commit. Definisi ini identik di seluruh dig-store, dig RPC, dan DIG
 Browser. → [capsule, secara lengkap](./intro.md#the-capsule)
 
 ## Store {#store}
@@ -67,7 +67,7 @@ konten saat ini menjadi generation baru yang bersifat append-only — hal yang s
 
 ## URN {#urn}
 
-**URN** adalah alamat *sekaligus* kunci milik DigStore dalam satu string:
+**URN** adalah alamat *sekaligus* kunci milik dig-store dalam satu string:
 `urn:dig:chia:<storeId>[:<rootHash>][/<resource>]`. Ia sekaligus **menemukan** sebuah resource dan
 **menurunkan kunci yang mendekripsinya** — memiliki URN sudah cukup dan diperlukan untuk membaca resource
 publik. Singkatan yang menghadap browser adalah [protokol `chia://`](#chia-protocol). → [URN & Enkripsi](./digstore/format/urns-and-encryption.md)
@@ -90,8 +90,8 @@ pernah didekripsi, dan sebuah node tidak pernah dipercaya begitu saja telah meng
 
 ## On-chain anchoring {#anchoring}
 
-Setiap store adalah **singleton di Chia mainnet**. `digstore init` melakukan mint-nya (launcher id
-*menjadi* store id) dan setiap `digstore commit` menanamkan root [generation](#generation) baru on-chain sebagai
+Setiap store adalah **singleton di Chia mainnet**. `digs init` melakukan mint-nya (launcher id
+*menjadi* store id) dan setiap `digs commit` menanamkan root [generation](#generation) baru on-chain sebagai
 update singleton CHIP-0035. Keduanya menunggu hingga terkonfirmasi dan mengeluarkan dana sungguhan. Chain adalah
 otoritas untuk root terbaru sebuah store. → [Anchoring on-chain](./digstore/cli/onchain-anchoring.md)
 
@@ -101,16 +101,16 @@ otoritas untuk root terbaru sebuah store. → [Anchoring on-chain](./digstore/cl
 dikenakan **harga seragam per capsule dalam $DIG**, disertakan **secara atomik dalam spend on-chain yang sama** sebagai
 anchor — tidak ada transaksi terpisah, dan memo membawa store id. → [Biaya](./digstore/cli/onchain-anchoring.md#costs)
 
-## DigStore CLI {#digstore-cli}
+## dig-store CLI {#digstore-cli}
 
-`digstore` adalah alat command-line yang membuat, meng-commit, membagikan, dan membaca store — sebuah
+`dig-store` adalah alat command-line yang membuat, meng-commit, membagikan, dan membaca store — sebuah
 alur kerja bergaya Git (`init`, `add`, `commit`, `log`, `clone`, `push`, `pull`) di atas format
 store terenkripsi dan on-chain. → [Referensi perintah](./digstore/cli/command-reference.md) · [Tutorial CLI](./digstore/cli/quickstart.md)
 
 ## dig.toml {#dig-toml}
 
 `dig.toml` adalah **manifest proyek yang dapat di-commit** di root sebuah proyek — `store-id`, `output-dir`,
-`build-command`, dan konfigurasi proyek lainnya, digunakan bersama oleh `digstore dev`, `digstore deploy`, dan
+`build-command`, dan konfigurasi proyek lainnya, digunakan bersama oleh `digs dev`, `digs deploy`, dan
 template scaffolding. File ini **tidak menyimpan rahasia** (rahasia berasal dari environment), sehingga aman untuk
 di-commit. → [Konfigurasi proyek & nilai build-time](./digstore/cli/configuration.md)
 
@@ -121,12 +121,12 @@ melakukan scaffold sebuah starter yang siap dijalankan — sebuah aplikasi, sebu
 template wallet) [DIG SDK](#dig-sdk) yang sudah terhubung — dari salah satu dari lima template (`static`, `vite-react`, `next-static`,
 `nft-drop`, `dapp-window-chia`). Scaffolding bersifat **gratis** — tanpa mint, tanpa chain, tanpa biaya; Anda hanya membayar
 harga capsule seragam saat menerbitkan sebuah [capsule](#capsule). Ini adalah pendamping sisi-npm untuk CLI Rust,
-`digstore new`. → [Scaffold sebuah aplikasi](./build-a-dapp/scaffold.md)
+`digs new`. → [Scaffold sebuah aplikasi](./build-a-dapp/scaffold.md)
 
 ## GitHub deploy Action {#deploy-action}
 
 `dig-network/deploy-action` adalah GitHub Action **git-push-to-deploy**: ia menginstal
-[CLI `digstore`](#digstore-cli) di runner, menjalankan `digstore deploy` untuk memajukan store Anda (tidak pernah
+[CLI `dig-store`](#digstore-cli) di runner, menjalankan `digs deploy` untuk memajukan store Anda (tidak pernah
 melakukan mint), dan melaporkan [capsule](#capsule) yang diterbitkan + URL + biaya kembali sebagai output step, komentar
 PR, GitHub Deployment, dan status commit. Dengan `if-changed` (default), build yang identik secara byte adalah
 no-op — tanpa biaya. → [Deploy dari GitHub Actions](./digstore/cli/deploy-from-github-actions.md)
@@ -194,7 +194,7 @@ secara otomatis memunculkan subdomain.) → [Bisakah saya mendapatkan alamat `*.
 - [Ringkasan DIG Network](./intro.md) — primitif-primitifnya sekilas
 - [Quickstart](./quickstart.md) — build dan preview gratis, terbitkan sebuah capsule di akhir
 - [Bangun dapp di Chia](./build-a-dapp/tutorial.md) — setiap primitif dirangkai menjadi satu dapp yang diterbitkan
-- [Apa itu DigStore?](./digstore/what-is-digstore.md) — format store satu-file
+- [Apa itu dig-store?](./digstore/what-is-digstore.md) — format store satu-file
 - [Apa itu dig RPC?](./rpc/what-is-the-dig-rpc.md) — jalur baca jaringan
 - [Protokol chia://](./browser/chia-protocol.md) — mengalamatkan konten di browser
 - [Dapatkan bantuan](./support/get-help.md) — kanal komunitas dan cara melapor

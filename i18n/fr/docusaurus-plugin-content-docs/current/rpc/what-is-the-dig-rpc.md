@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: What is the dig RPC?
-description: "Interface de lecture pour tout le réseau pour les capsules DigStore via JSON-RPC 2.0 ; aveugle par construction, vérifiable sans confiance, et diffusable à n'importe quelle taille."
+description: "Interface de lecture pour tout le réseau pour les capsules dig-store via JSON-RPC 2.0 ; aveugle par construction, vérifiable sans confiance, et diffusable à n'importe quelle taille."
 keywords:
   - dig RPC
   - JSON-RPC 2.0
@@ -25,7 +25,7 @@ tags:
 Ceci est la page d'orientation. La spécification faisant autorité de l'interface machine — méthodes, l'objet de fil de bloc, le profil de nœud, et les documents OpenRPC — se trouve dans [Protocole · Le dig RPC](../protocol/dig-rpc.md).
 :::
 
-**Le dig RPC est l'interface pour tout le réseau permettant de lire du contenu directement depuis des capsules DigStore `.dig` hébergées.** C'est un service [JSON-RPC 2.0](https://www.jsonrpc.org/specification) parlé sur HTTPS `POST`.
+**Le dig RPC est l'interface pour tout le réseau permettant de lire du contenu directement depuis des capsules dig-store `.dig` hébergées.** C'est un service [JSON-RPC 2.0](https://www.jsonrpc.org/specification) parlé sur HTTPS `POST`.
 
 Chaque nœud qui héberge des capsules — le nœud de référence à `https://rpc.dig.net`, ou tout nœud tiers — expose **les mêmes méthodes avec la même sémantique**. Un client écrit contre cette interface lit depuis tout le réseau via un seul point d'entrée. Il n'y a pas de CDN ; tout le service de contenu sur DIG passe par le dig RPC.
 
@@ -43,9 +43,9 @@ Il sert trois choses :
 - **Vérifiable sans confiance.** Chaque octet réel arrive avec une **preuve d'inclusion** merkle enracinée à la racine de génération on-chain. Le client replie la preuve jusqu'à la racine et n'accepte que si elle correspond à une racine en laquelle il a confiance. Le nœud n'est jamais présumé avoir retourné des octets authentiques.
 - **Diffusable à n'importe quelle taille.** Le contenu est lu en blocs bornés, alignés sur 64 Kio, avec continuation explicite. Une ressource d'un kilo-octet et une capsule de cent méga-octets sont lues par la même boucle, et aucune réponse unique n'est illimitée.
 
-## Comment il s'articule avec DigStore {#how-it-fits-with-digstore}
+## Comment il s'articule avec dig-store {#how-it-fits-with-digstore}
 
-DigStore vous donne le **format** : un store chiffré, adressable par contenu, qui se compile en une seule capsule `.wasm` auto-défendue, adressée par une URN où *l'URN est la clé*. Le dig RPC est la façon dont cette capsule est **servie sur le réseau** sans faire confiance à l'hébergeur :
+dig-store vous donne le **format** : un store chiffré, adressable par contenu, qui se compile en une seule capsule `.wasm` auto-défendue, adressée par une URN où *l'URN est la clé*. Le dig RPC est la façon dont cette capsule est **servie sur le réseau** sans faire confiance à l'hébergeur :
 
 1. Vous compilez un store et ancrez une génération on-chain (un singleton DataLayer CHIP-0035). Sa **racine de contenu** est l'ancre de confiance.
 2. Un nœud héberge la capsule et l'expose via le dig RPC.

@@ -56,7 +56,7 @@ The inclusion proof authenticates the **entire resource** against the generation
 4. once `complete`, verifies the proof over the fully reassembled ciphertext against the trusted `root`;
 5. only then decrypts with the URN-derived key.
 
-A miss is **not** flagged — the capsule returns an indistinguishable, non-verifying response, so the client learns not-found only when step 4 (proof) or step 5 (decryption tag) fails. Split the reassembled ciphertext by `chunk_lens` and AES-256-GCM-SIV-open each chunk; empty/absent `chunk_lens` ⇒ a single chunk = the whole ciphertext. For `dig.getCapsule` there is no per-resource proof; the reassembled capsule self-verifies on install (store id + signed root + on-chain root) per DigStore.
+A miss is **not** flagged — the capsule returns an indistinguishable, non-verifying response, so the client learns not-found only when step 4 (proof) or step 5 (decryption tag) fails. Split the reassembled ciphertext by `chunk_lens` and AES-256-GCM-SIV-open each chunk; empty/absent `chunk_lens` ⇒ a single chunk = the whole ciphertext. For `dig.getCapsule` there is no per-resource proof; the reassembled capsule self-verifies on install (store id + signed root + on-chain root) per dig-store.
 
 :::tip Pin "latest"
 When you read with `root: "latest"`, the first chunk's `root` field is the head the node resolved. Pin every subsequent chunk to that exact root so a head change mid-stream can't splice two generations together.

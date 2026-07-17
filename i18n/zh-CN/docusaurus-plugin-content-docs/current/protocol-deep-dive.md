@@ -67,7 +67,7 @@ tags:
 - **`dig://`** —— §21 **传输层**定位符（CLI/对等平面）*同时也是* DIG Browser 内部的页面协议 —— 两种不同的用途，绝不作为内容地址。
 - **`urn:dig:`** —— 前两者共同派生自的 URN 命名空间。
 - **store / capsule** —— 身份及其不可变的 generation。
-- **$DIG** —— 每个 capsule 需要支付的 CAT 代币；**DigStore** —— 该 store 的格式名称。
+- **$DIG** —— 每个 capsule 需要支付的 CAT 代币；**dig-store** —— 该 store 的格式名称。
 
 ## 相关链接 {#related}
 

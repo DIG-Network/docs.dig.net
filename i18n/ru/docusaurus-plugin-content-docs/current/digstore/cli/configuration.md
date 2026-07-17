@@ -23,7 +23,7 @@ Every DIG project carries a small, committable manifest — **`dig.toml`** — a
 
 ## `dig.toml` — the project manifest
 
-`dig.toml` lives at your project root, is **safe to commit** (it holds no secrets), and is the single source of project config shared by [`digstore dev`](./quickstart.md), [`digstore deploy`](./deploy-from-github-actions.md), and the scaffolding templates. It's what `digstore new <template>` writes for you.
+`dig.toml` lives at your project root, is **safe to commit** (it holds no secrets), and is the single source of project config shared by [`digs dev`](./quickstart.md), [`digs deploy`](./deploy-from-github-actions.md), and the scaffolding templates. It's what `digs new <template>` writes for you.
 
 ```toml
 # dig.toml — your DIG project config. Committed to your repo; contains NO secrets.
@@ -38,7 +38,7 @@ Every key is optional; a missing file means all config comes from flags/env.
 
 | Key | Alias | Default | What it sets |
 |---|---|---|---|
-| `store-id` | `store_id` | — | The 64-hex store id this project deploys to (the store `digstore init` minted). |
+| `store-id` | `store_id` | — | The 64-hex store id this project deploys to (the store `digs init` minted). |
 | `output-dir` | `output_dir` | `dist` | The built-output directory that gets staged and published. |
 | `build-command` | `build_command` | — | A shell command run **before** staging (e.g. `npm install && npm run build`). |
 | `message` | — | `deploy <sha>` | Default commit message for the new capsule. |
@@ -56,7 +56,7 @@ The same value can come from several places. Highest wins:
 flags  >  environment  >  dig.toml  >  built-in defaults
 ```
 
-So `digstore deploy --output-dir build` overrides `output-dir = "dist"` in the file for that one run, and the file overrides the built-in `dist` default.
+So `digs deploy --output-dir build` overrides `output-dir = "dist"` in the file for that one run, and the file overrides the built-in `dist` default.
 
 :::note Secrets live in the environment, never in `dig.toml`
 Credentials — your wallet mnemonic (`DIGSTORE_PASSPHRASE` / the deploy wallet seed), the writer deploy-key (`DIGSTORE_WRITER_KEY`), the publisher deploy key (`DIGSTORE_DEPLOY_KEY`), a private store's salt (`DIGSTORE_STORE_SALT`) — are read from the **environment**, not the manifest. `dig.toml` is committed; secrets are not. See [Deploy from GitHub Actions](./deploy-from-github-actions.md#security).
@@ -64,18 +64,18 @@ Credentials — your wallet mnemonic (`DIGSTORE_PASSPHRASE` / the deploy wallet 
 
 ## Build-time values for a dapp
 
-A real dapp usually needs a handful of **PUBLIC** values compiled into its bundle: which dig RPC endpoint to read from, a CAT/asset id it transacts with, a feature flag. With DIG you inject these the **ordinary way your framework already does** — at build time, before `digstore` stages the output:
+A real dapp usually needs a handful of **PUBLIC** values compiled into its bundle: which dig RPC endpoint to read from, a CAT/asset id it transacts with, a feature flag. With DIG you inject these the **ordinary way your framework already does** — at build time, before `dig-store` stages the output:
 
 - **Vite** — `import.meta.env.VITE_*` from a `.env` file or the build environment.
 - **Next.js (static export)** — `NEXT_PUBLIC_*`.
 - **A plain static site** — a small `config.js` you write (or template) before building.
 
-Because `dig.toml`'s `build-command` runs first, your env-driven build produces a fully-baked `output-dir`, and `digstore` simply publishes those bytes. Nothing DIG-specific is required — set your env, build, deploy:
+Because `dig.toml`'s `build-command` runs first, your env-driven build produces a fully-baked `output-dir`, and `dig-store` simply publishes those bytes. Nothing DIG-specific is required — set your env, build, deploy:
 
 ```sh
 # Vite example: a PUBLIC RPC endpoint compiled into the bundle.
 echo 'VITE_DIG_RPC=https://rpc.dig.net' > .env
-digstore deploy        # runs build-command (which reads VITE_DIG_RPC), then publishes dist/
+digs deploy        # runs build-command (which reads VITE_DIG_RPC), then publishes dist/
 ```
 
 ```jsx
@@ -110,7 +110,7 @@ What to do instead when a dapp needs privileged work:
 ## Related
 
 - [Deploy from GitHub Actions](./deploy-from-github-actions.md) — `dig.toml` + secrets in CI
-- [Using DigStore in your project](./project-workflow.md) — capture a build directory and commit it
+- [Using dig-store in your project](./project-workflow.md) — capture a build directory and commit it
 - [Build a dapp on Chia](../../build-a-dapp/tutorial.md) — the end-to-end tutorial that uses this config
 - [Using window.chia](../../browser/using-window-chia.md) — client-side signing, no key in the capsule
 - [On-chain anchoring](./onchain-anchoring.md) — what a deploy spends and confirms

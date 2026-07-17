@@ -218,7 +218,7 @@ const config: Config = {
             "@id": "https://docs.dig.net/error-codes.json#dataset",
             name: "DIG ecosystem error-code catalog",
             description:
-              "Cross-surface error catalog: dig RPC JSON-RPC codes, digstore CLI exit codes, DIGHUb user-facing codes, and dig:// loader codes, as [{surface, code, http_or_exit, description}].",
+              "Cross-surface error catalog: dig RPC JSON-RPC codes, dig-store CLI exit codes, DIGHUb user-facing codes, and dig:// loader codes, as [{surface, code, http_or_exit, description}].",
             url: "https://docs.dig.net/docs/support/error-codes",
             encodingFormat: "application/json",
             distribution: {
@@ -284,7 +284,7 @@ const config: Config = {
         },
         {
           to: "/docs/digstore/what-is-digstore",
-          label: "DigStore",
+          label: "dig-store",
           position: "left",
         },
         {
@@ -303,7 +303,7 @@ const config: Config = {
           "aria-label": "DIG Network Discord",
         },
         {
-          href: "https://github.com/DIG-Network/digstore",
+          href: "https://github.com/DIG-Network/dig-store",
           position: "right",
           className: "navbar-github-link",
           "aria-label": "GitHub repository",
@@ -313,7 +313,7 @@ const config: Config = {
     footer: {
       style: "dark",
       logo: {
-        alt: "DigStore — by DIG Network",
+        alt: "dig-store — by DIG Network",
         src: "img/brand/wordmark-with-slogan-white.svg",
         href: "https://dig.net",
         width: 200,
@@ -323,11 +323,11 @@ const config: Config = {
           title: "Documentation",
           items: [
             { label: "DIG Network", to: "/docs/" },
-            { label: "DigStore", to: "/docs/digstore/what-is-digstore" },
+            { label: "dig-store", to: "/docs/digstore/what-is-digstore" },
           ],
         },
         {
-          title: "DigStore",
+          title: "dig-store",
           items: [
             { label: "The Format", to: "/docs/digstore/format/overview" },
             { label: "CLI tutorial", to: "/docs/digstore/cli/quickstart" },
@@ -353,13 +353,13 @@ const config: Config = {
         {
           title: "Project",
           items: [
-            { label: "digstore on GitHub", href: "https://github.com/DIG-Network/digstore" },
-            { label: "Releases", href: "https://github.com/DIG-Network/digstore/releases" },
+            { label: "dig-store on GitHub", href: "https://github.com/DIG-Network/dig-store" },
+            { label: "Releases", href: "https://github.com/DIG-Network/dig-store/releases" },
             { label: "DIG Network", href: "https://dig.net" },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} DIG Network. DigStore is open source under GPL-2.0.`,
+      copyright: `Copyright © ${new Date().getFullYear()} DIG Network. dig-store is open source under GPL-2.0.`,
     },
     prism: {
       theme: prismThemes.oneLight,

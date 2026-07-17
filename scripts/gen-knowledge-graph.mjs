@@ -34,7 +34,7 @@ const CONCEPT_TITLES = {
   'merkle-proof': 'Merkle proof',
   anchoring: 'On-chain anchoring',
   'dig-payment': 'DIG payment',
-  'digstore-cli': 'DigStore CLI',
+  'digstore-cli': 'dig-store CLI',
   'dig-toml': 'dig.toml',
   'create-dig-app': 'create-dig-app',
   'deploy-action': 'The GitHub deploy Action',

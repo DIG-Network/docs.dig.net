@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 title: Install anywhere — the universal installer
-description: "The DIG Installer — the cross-platform installer for Windows, macOS, and any Linux. One curl | sh (or irm | iex, or a direct download) installs the full DIG stack by default: the digstore CLI plus the dig-node and dig-dns boot-start services, and registers dig.local."
+description: "The DIG Installer — the cross-platform installer for Windows, macOS, and any Linux. One curl | sh (or irm | iex, or a direct download) installs the full DIG stack by default: the dig-store CLI plus the dig-node and dig-dns boot-start services, and registers dig.local."
 keywords:
   - DIG Installer
   - universal installer
@@ -21,7 +21,7 @@ tags:
 
 # Install anywhere — the universal installer
 
-The cross-platform path — **Windows, macOS, and any Linux**. The **DIG Installer** detects your OS and installs the full DIG stack in one run: the `digstore` CLI, plus the `dig-node` and `dig-dns` services, both registered to start automatically on every boot. It needs no package manager.
+The cross-platform path — **Windows, macOS, and any Linux**. The **DIG Installer** detects your OS and installs the full DIG stack in one run: the `dig-store` CLI, plus the `dig-node` and `dig-dns` services, both registered to start automatically on every boot. It needs no package manager.
 
 ```sh
 # macOS / Linux
@@ -35,7 +35,7 @@ irm https://dig.net/install.ps1 | iex
 
 This is the same self-contained `dig-installer` shipped on the [Releases page](https://github.com/DIG-Network/dig-installer/releases) — download `dig-installer-<version>-<os_arch>` and run it directly if you prefer not to pipe to a shell, or on Windows.
 
-Every component installs by default — `digstore`, `dig-node`, and `dig-dns`. Skip any one of them with its `--no-<component>` flag (`--no-digstore`, `--no-dig-node`, `--no-dig-dns`); the advanced `dig-relay` and the DIG Browser stay opt-in via `--with-relay` / `--with-browser`.
+Every component installs by default — `dig-store`, `dig-node`, and `dig-dns`. Skip any one of them with its `--no-<component>` flag (`--no-dig-store`, `--no-dig-node`, `--no-dig-dns`); the advanced `dig-relay` and the DIG Browser stay opt-in via `--with-relay` / `--with-browser`.
 
 ## GUI installer {#gui-installer}
 
@@ -44,7 +44,7 @@ Prefer a guided setup over flags? Download the desktop wizard —
 [Releases page](https://github.com/DIG-Network/dig-installer/releases) — in a dark theme that
 matches the rest of DIG Network's apps: **Welcome → License → Components → Install → Done**.
 
-On the **Components** step, every component — `digstore`, `dig-node`, `dig-dns`, `dig-relay`, and DIG Browser — is checked by default, so clicking through with no changes installs everything (`digstore` has no checkbox; it's always installed). Uncheck any of the others to install just a subset.
+On the **Components** step, every component — `dig-store`, `dig-node`, `dig-dns`, `dig-relay`, and DIG Browser — is checked by default, so clicking through with no changes installs everything (`dig-store` has no checkbox; it's always installed). Uncheck any of the others to install just a subset.
 
 If a component isn't available yet for your platform, it's skipped automatically and the rest of your selected components still install normally.
 
@@ -112,6 +112,6 @@ Prefer the signed, `apt upgrade`-able native path: → [Install on Ubuntu/Debian
 ## Related
 
 - [Run a node — overview](./index.md)
-- [Installing the CLI](../digstore/cli/install.md) — the raw `digstore` binary on its own
+- [Installing the CLI](../digstore/cli/install.md) — the raw `dig-store` binary on its own
 - [Configure dig-node](./configure.md) — ports, listeners, cache cap, upstream
 - [Point a consumer at your node](./point-a-consumer.md) — shared `.dig` cache
