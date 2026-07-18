@@ -41,6 +41,10 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
       - run: npm ci
+      # Static gates (§2.4a): types must check and lint must be clean before we
+      # spend time on the full multi-locale build + browser suites.
+      - run: npm run typecheck # tsc --noEmit across the TS surface
+      - run: npm run lint # eslint . — zero errors (§2.4a/§6.4)
       # onBrokenLinks/onBrokenAnchors: "throw" (docusaurus.config.ts) means this
       # also fails the build on any broken link/anchor across all 14 locales.
       - run: npm run build # docusaurus build --out-dir dist; postbuild annotates sitemap hreflang

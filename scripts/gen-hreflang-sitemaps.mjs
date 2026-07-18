@@ -61,12 +61,12 @@ const LOCALES = [
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const distDir = path.resolve(__dirname, "..", "dist");
 
-function localePrefix(locale) {
+export function localePrefix(locale) {
   return locale === DEFAULT_LOCALE ? "" : `/${locale}`;
 }
 
 /** Strip `locale`'s own prefix from a `<loc>` URL, returning the logical (locale-free) path (leading slash, no trailing slash except root). */
-function stripLocalePrefix(loc, locale) {
+export function stripLocalePrefix(loc, locale) {
   let p = loc.startsWith(SITE_URL) ? loc.slice(SITE_URL.length) : loc;
   if (!p.startsWith("/")) p = `/${p}`;
   const prefix = localePrefix(locale);
@@ -76,7 +76,7 @@ function stripLocalePrefix(loc, locale) {
   return p;
 }
 
-function buildAlternateUrl(logicalPath, locale) {
+export function buildAlternateUrl(logicalPath, locale) {
   const prefix = localePrefix(locale);
   const p = logicalPath === "/" ? "" : logicalPath;
   return `${SITE_URL}${prefix}${p}` || `${SITE_URL}/`;
@@ -148,4 +148,8 @@ function main() {
   console.log(`gen-hreflang-sitemaps: done — ${totalFiles} sitemap(s), ${totalUrls} url(s) total.`);
 }
 
-main();
+// Run the postbuild pass only when invoked directly (`npm run postbuild`), not
+// when imported for unit-testing the pure helpers above.
+if (process.argv[1] && import.meta.url === url.pathToFileURL(process.argv[1]).href) {
+  main();
+}
