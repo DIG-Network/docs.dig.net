@@ -84,7 +84,7 @@ const config: Config = {
           changefreq: "weekly",
           priority: 0.5,
           filename: "sitemap.xml",
-          ignorePatterns: ["/404.html", "/BaseUrlWrapper", "/markdown-page"],
+          ignorePatterns: ["/404.html", "/markdown-page"],
         },
       } satisfies Preset.Options,
     ],

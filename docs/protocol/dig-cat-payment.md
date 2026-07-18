@@ -48,7 +48,7 @@ build_dig_store_payment(buyer_synth_key, dig_cats: Vec<Cat>, store_id, amount) -
 `amount` is a **dynamic input**: `dig_amount = target_usd / live_DIG_price`, where `target_usd` ≈ **$1/capsule/year** of realistic AWS hosting. The amount is **uniform per fixed-size capsule** (the [128 MiB fixed module](./self-defending-module.md#fixed-size-obfuscation)) so price leaks nothing about content. **chip35 has no hardcoded amount** — the caller computes it.
 
 :::note Off-chain pricing
-Per-capsule pricing is enforced **off-chain** (the hub/anchor-watcher reconciles a confirmed treasury payment); it is **not** a protocol constant. The mirror's `COMMIT_DIG = 100_000` base units (100 DIG) is only a deterministic CLI fallback when no explicit amount is passed (`anchor/dig.rs:28-41`).
+Per-capsule pricing is enforced **off-chain** (the hub/anchor-watcher reconciles a confirmed treasury payment); it is **not** a protocol constant. When no explicit amount is passed, the CLI fetches the live USD-pegged per-capsule price and **fails loud** if that price is unreachable — it never falls back to a silent flat spend.
 :::
 
 :::note The commit bundle is a client-side all-or-nothing bundle

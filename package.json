@@ -1,6 +1,6 @@
 {
   "name": "docs-dig-net",
-  "version": "0.4.6",
+  "version": "0.5.0",
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
@@ -19,6 +19,7 @@
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc",
+    "lint": "eslint .",
     "test:unit": "node --test tests/unit/",
     "test:e2e": "playwright test",
     "test:a11y": "playwright test tests/e2e/a11y.spec.ts tests/e2e/mobile-nav.spec.ts tests/e2e/aria-snapshot.spec.ts tests/e2e/keyboard-nav.spec.ts",
@@ -39,13 +40,19 @@
     "@docusaurus/module-type-aliases": "3.5.2",
     "@docusaurus/tsconfig": "3.5.2",
     "@docusaurus/types": "3.5.2",
+    "@eslint/js": "^9.39.5",
     "@guidepup/virtual-screen-reader": "^0.32.1",
     "@playwright/test": "^1.61.1",
     "autoprefixer": "^10.4.20",
+    "eslint": "^9.39.5",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "globals": "^15.15.0",
     "jsdom": "^29.1.1",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.14",
-    "typescript": "~5.5.2"
+    "typescript": "~5.5.2",
+    "typescript-eslint": "^8.64.0"
   },
   "browserslist": {
     "production": [

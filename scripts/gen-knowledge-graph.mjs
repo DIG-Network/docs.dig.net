@@ -15,7 +15,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import {fileURLToPath} from 'node:url';
+import {fileURLToPath, pathToFileURL} from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -62,7 +62,7 @@ function walk(dir) {
 }
 
 /** docs/rpc/methods.md -> /docs/rpc/methods ; docs/intro.md -> /docs (slug: /) */
-function docUrlPath(absFile, frontMatter) {
+export function docUrlPath(absFile, frontMatter) {
   if (frontMatter.slug === '/') return '/docs';
   let rel = path.relative(DOCS, absFile).replace(/\\/g, '/').replace(/\.md$/, '');
   rel = rel.replace(/\/index$/, ''); // run-a-node/index -> run-a-node
@@ -70,7 +70,7 @@ function docUrlPath(absFile, frontMatter) {
 }
 
 /** Minimal frontmatter parser: title, slug, and the tags list. */
-function parseFrontMatter(src) {
+export function parseFrontMatter(src) {
   const m = src.match(/^---\n([\s\S]*?)\n---/);
   const fm = {tags: []};
   if (!m) return fm;
@@ -91,7 +91,7 @@ function parseFrontMatter(src) {
 }
 
 /** Resolve a relative .md link from a source file into a /docs URL path. */
-function resolveRelLink(fromFile, href) {
+export function resolveRelLink(fromFile, href) {
   const clean = href.split('#')[0];
   if (!clean.endsWith('.md')) return null;
   const abs = path.resolve(path.dirname(fromFile), clean);
@@ -103,7 +103,7 @@ function resolveRelLink(fromFile, href) {
 }
 
 /** Extract the "## Related" section's relative .md links. */
-function parseRelated(src, fromFile) {
+export function parseRelated(src, fromFile) {
   const sec = src.split(/\n##\s+Related\s*\n/);
   if (sec.length < 2) return [];
   const block = sec[1].split(/\n##\s+/)[0];
@@ -111,69 +111,83 @@ function parseRelated(src, fromFile) {
   return links.map((h) => resolveRelLink(fromFile, h)).filter(Boolean);
 }
 
-const files = walk(DOCS);
-const docNodes = new Map(); // url -> node
-const docFront = new Map(); // url -> {tags, file}
-const edges = [];
-
-for (const file of files) {
-  const src = fs.readFileSync(file, 'utf8');
-  const fm = parseFrontMatter(src);
-  const url = docUrlPath(file, fm);
-  const title = fm.title || path.basename(file, '.md');
-  docNodes.set(url, {id: url, type: 'doc', title, url: SITE + url, tags: fm.tags});
-  docFront.set(url, {tags: fm.tags, related: parseRelated(src, file)});
-}
-
-// Concept nodes (one per controlled-vocabulary tag), keyed by their tag page.
-const conceptNodes = [];
-for (const [tag, title] of Object.entries(CONCEPT_TITLES)) {
-  const url = `/docs/tags/${tag}`;
-  conceptNodes.push({id: `concept:${tag}`, type: 'concept', title, url: SITE + url, tag});
-}
-
-// Edge: concepts glossary `defines` every concept.
-const CONCEPTS_DOC = '/docs/concepts';
-for (const tag of Object.keys(CONCEPT_TITLES)) {
-  edges.push({from: CONCEPTS_DOC, to: `concept:${tag}`, type: 'defines'});
-}
-
-// Edge: each doc is `part-of` every concept it is tagged with (doc -> concept).
-for (const [url, {tags}] of docFront) {
-  for (const tag of tags) {
-    if (CONCEPT_TITLES[tag]) {
-      edges.push({from: url, to: `concept:${tag}`, type: 'part-of'});
-    }
-  }
-}
-
-// Edge: "## Related" links become typed doc->doc edges.
-// init/commit, clone/pull → requires (anchoring/install/quickstart deps); the
-// rest are see-also. We classify by a small, explicit table rather than guess.
+// Edge classification for "## Related" links: these (fromUrl, toUrl) pairs are
+// genuine prerequisites (`requires`); every other related link is `see-also`.
+// An explicit table rather than a guess keeps the edge types deterministic.
 const REQUIRES = new Set([
-  // (fromUrl, toUrl) pairs where `from` genuinely needs `to` first.
   '/docs/digstore/cli/quickstart|->|/docs/digstore/cli/install',
   '/docs/digstore/cli/quickstart|->|/docs/digstore/cli/onchain-anchoring',
   '/docs/digstore/cli/onchain-anchoring|->|/docs/digstore/cli/quickstart',
   '/docs/digstore/cli/sharing|->|/docs/digstore/cli/onchain-anchoring',
 ]);
-for (const [url, {related}] of docFront) {
-  for (const to of related) {
-    if (to === url) continue;
-    const key = `${url}|->|${to}`;
-    edges.push({from: url, to, type: REQUIRES.has(key) ? 'requires' : 'see-also'});
+
+const CONCEPTS_DOC = '/docs/concepts';
+
+/** Build the full knowledge graph from the docs tree. */
+function buildGraph() {
+  const files = walk(DOCS);
+  const docNodes = new Map(); // url -> node
+  const docFront = new Map(); // url -> {tags, related}
+  const edges = [];
+
+  for (const file of files) {
+    const src = fs.readFileSync(file, 'utf8');
+    const fm = parseFrontMatter(src);
+    const url = docUrlPath(file, fm);
+    const title = fm.title || path.basename(file, '.md');
+    docNodes.set(url, {id: url, type: 'doc', title, url: SITE + url, tags: fm.tags});
+    docFront.set(url, {tags: fm.tags, related: parseRelated(src, file)});
   }
+
+  // Concept nodes (one per controlled-vocabulary tag), keyed by their tag page.
+  const conceptNodes = [];
+  for (const [tag, title] of Object.entries(CONCEPT_TITLES)) {
+    const url = `/docs/tags/${tag}`;
+    conceptNodes.push({id: `concept:${tag}`, type: 'concept', title, url: SITE + url, tag});
+  }
+
+  // Edge: concepts glossary `defines` every concept.
+  for (const tag of Object.keys(CONCEPT_TITLES)) {
+    edges.push({from: CONCEPTS_DOC, to: `concept:${tag}`, type: 'defines'});
+  }
+
+  // Edge: each doc is `part-of` every concept it is tagged with (doc -> concept).
+  for (const [url, {tags}] of docFront) {
+    for (const tag of tags) {
+      if (CONCEPT_TITLES[tag]) {
+        edges.push({from: url, to: `concept:${tag}`, type: 'part-of'});
+      }
+    }
+  }
+
+  // Edge: "## Related" links become typed doc->doc edges.
+  for (const [url, {related}] of docFront) {
+    for (const to of related) {
+      if (to === url) continue;
+      const key = `${url}|->|${to}`;
+      edges.push({from: url, to, type: REQUIRES.has(key) ? 'requires' : 'see-also'});
+    }
+  }
+
+  return {
+    generatedFrom: 'docs/**/*.md frontmatter tags + "## Related" links',
+    site: SITE,
+    nodes: [...conceptNodes, ...docNodes.values()],
+    edges,
+  };
 }
 
-const graph = {
-  generatedFrom: 'docs/**/*.md frontmatter tags + "## Related" links',
-  site: SITE,
-  nodes: [...conceptNodes, ...docNodes.values()],
-  edges,
-};
+function main() {
+  const graph = buildGraph();
+  const outPath = path.join(ROOT, 'static', 'knowledge-graph.json');
+  fs.writeFileSync(outPath, JSON.stringify(graph, null, 2) + '\n');
+  console.log(
+    `knowledge-graph.json: ${graph.nodes.length} nodes, ${graph.edges.length} edges -> ${path.relative(ROOT, outPath)}`,
+  );
+}
 
-const outPath = path.join(ROOT, 'static', 'knowledge-graph.json');
-fs.writeFileSync(outPath, JSON.stringify(graph, null, 2) + '\n');
-console.log(
-  `knowledge-graph.json: ${graph.nodes.length} nodes, ${graph.edges.length} edges -> ${path.relative(ROOT, outPath)}`,
-);
+// Generate only when invoked directly (`npm run knowledge-graph`), not when
+// imported for unit-testing the pure parsers above.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main();
+}

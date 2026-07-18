@@ -1,41 +1,57 @@
-# Website
+# docs.dig.net
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+The DIG Network documentation site — a [Docusaurus](https://docusaurus.io/) v3
+static site built with **npm** and deployed to S3 + CloudFront. It carries the
+ecosystem's user-facing docs across 14 locales plus committed machine-readable
+artifacts (`llms.txt`, `knowledge-graph.json`, `openrpc.json`, `error-codes.json`)
+that other repositories consume.
 
-### Installation
+The normative contract for the build pipeline, the machine artifacts, and the drift
+gates is [`SPEC.md`](./SPEC.md). Operational procedures (deploy + local run) live in
+[`runbooks/`](./runbooks).
 
-```
-$ yarn
-```
+## Prerequisites
 
-### Local Development
+- Node.js >= 18
+- npm (the repo is npm-only — `package-lock.json` is the lockfile; do not use yarn)
 
-```
-$ yarn start
-```
-
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
-
-### Build
-
-```
-$ yarn build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-### Deployment
-
-Using SSH:
+## Install
 
 ```
-$ USE_SSH=true yarn deploy
+npm ci
 ```
 
-Not using SSH:
+## Local development
 
 ```
-$ GIT_USER=<Your GitHub username> yarn deploy
+npm start
 ```
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+Runs `npm run gen` first (generates `knowledge-graph.json` + the OpenRPC/error-code
+artifacts), then starts the Docusaurus dev server with live reload.
+
+## Build
+
+```
+npm run build
+```
+
+Generates the static site into `dist/`. `onBrokenLinks`/`onBrokenAnchors` are set to
+`throw`, so a broken internal link or anchor in any locale fails the build. The
+`postbuild` step annotates each locale's `sitemap.xml` with hreflang alternates.
+
+## Quality gates
+
+```
+npm run typecheck   # tsc
+npm run lint        # eslint . — zero errors
+npm run test:unit   # node --test (pure logic + drift lints)
+npm run test:a11y   # Playwright: axe-core, ARIA tree, keyboard, mobile nav
+npm run test:e2e    # Playwright: full a11y/SEO suite (needs a build first)
+```
+
+## Deployment
+
+Tag-triggered: pushing a `v*` tag runs `.github/workflows/deploy.yml`, which builds
+and syncs `dist/` to the S3 bucket `docs-dig-net` and invalidates CloudFront
+distribution `E1G7CFG1FDYG9Y`. See [`runbooks/deploy.md`](./runbooks/deploy.md).
