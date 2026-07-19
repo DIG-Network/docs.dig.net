@@ -106,7 +106,7 @@ capsule은 다음 사항들의 네트워크 단위입니다:
 용어가 낯설다면? [개념 & 용어집](./concepts.md)을 훑어보세요. 전체 설계를 알고 싶다면 [프로토콜 심층 분석](./protocol-deep-dive.md)을 읽어보세요.
 
 :::note
-DIG Network와 그 프리미티브는 오픈 소스입니다. dig-store는 GPL-2.0 라이선스로 배포됩니다. [dig-store 저장소](https://github.com/DIG-Network/dig-store)를 참고하세요.
+DIG Network와 그 프리미티브는 오픈 소스입니다. dig-store는 GPL-2.0 라이선스로 배포됩니다. [dig-store 저장소](https://github.com/DIG-Network/digs)를 참고하세요.
 :::
 
 ## 관련 문서 {#related}

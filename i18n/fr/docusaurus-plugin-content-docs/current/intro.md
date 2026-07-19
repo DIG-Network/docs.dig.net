@@ -106,7 +106,7 @@ La documentation est organisée autour de **ce que vous faites**. Chaque parcour
 Nouveau dans le vocabulaire ? Parcourez [Concepts et glossaire](./concepts.md). Vous voulez la conception complète ? Lisez la [Plongée en profondeur dans le protocole](./protocol-deep-dive.md).
 
 :::note
-DIG Network et ses primitives sont open source. dig-store est sous licence GPL-2.0 ; voir le [dépôt dig-store](https://github.com/DIG-Network/dig-store).
+DIG Network et ses primitives sont open source. dig-store est sous licence GPL-2.0 ; voir le [dépôt dig-store](https://github.com/DIG-Network/digs).
 :::
 
 ## Voir aussi {#related}

@@ -303,7 +303,7 @@ const config: Config = {
           "aria-label": "DIG Network Discord",
         },
         {
-          href: "https://github.com/DIG-Network/dig-store",
+          href: "https://github.com/DIG-Network/digs",
           position: "right",
           className: "navbar-github-link",
           "aria-label": "GitHub repository",
@@ -353,8 +353,8 @@ const config: Config = {
         {
           title: "Project",
           items: [
-            { label: "dig-store on GitHub", href: "https://github.com/DIG-Network/dig-store" },
-            { label: "Releases", href: "https://github.com/DIG-Network/dig-store/releases" },
+            { label: "dig-store on GitHub", href: "https://github.com/DIG-Network/digs" },
+            { label: "Releases", href: "https://github.com/DIG-Network/digs/releases" },
             { label: "DIG Network", href: "https://dig.net" },
           ],
         },

@@ -106,7 +106,7 @@ capsule 是這個網路的以下各項單位：
 還不熟悉這些詞彙？瀏覽一下[概念與詞彙表](./concepts.md)。想了解完整設計？閱讀[協定深入解析](./protocol-deep-dive.md)。
 
 :::note
-DIG Network 及其核心元件皆為開放原始碼。dig-store 採用 GPL-2.0 授權；詳見 [dig-store 儲存庫](https://github.com/DIG-Network/dig-store)。
+DIG Network 及其核心元件皆為開放原始碼。dig-store 採用 GPL-2.0 授權；詳見 [dig-store 儲存庫](https://github.com/DIG-Network/digs)。
 :::
 
 ## 相關文件 {#related}

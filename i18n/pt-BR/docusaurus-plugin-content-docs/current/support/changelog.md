@@ -28,7 +28,7 @@ DIG is pre-release. Until a `1.0`, surfaces may change between releases; breakin
 
 | Surface | Version source | Where to read it |
 |---|---|---|
-| **`dig-store` CLI** | semver tags on the `dig-store` repo (`vX.Y.Z`) | `digs --version` · [Releases ↗](https://github.com/DIG-Network/dig-store/releases) |
+| **`dig-store` CLI** | semver tags on the `dig-store` repo (`vX.Y.Z`) | `digs --version` · [Releases ↗](https://github.com/DIG-Network/digs/releases) |
 | **dig RPC** | the JSON-RPC method set; a node advertises what it implements via `dig.methods` | [dig RPC methods](../rpc/methods.md) |
 | **`window.chia`** | the injected provider's capability/version surface (the DIG Browser is the reference implementation) | [Using window.chia](../browser/using-window-chia.md) |
 | **`@dignetwork/dig-sdk`** | semver on npm | [npm ↗](https://www.npmjs.com/package/@dignetwork/dig-sdk) |
@@ -69,7 +69,7 @@ _None recorded yet (pre-release baseline)._ Breaking changes to the CLI flags/ou
 ## Related
 
 - [Status](./status.md) — live health of the DIG services
-- [dig-store releases ↗](https://github.com/DIG-Network/dig-store/releases) — commit-level CLI history
+- [dig-store releases ↗](https://github.com/DIG-Network/digs/releases) — commit-level CLI history
 - [dig RPC methods](../rpc/methods.md) — the read method set this tracks
 - [Using window.chia](../browser/using-window-chia.md) — the provider surface this tracks
 - [Concepts & glossary](../concepts.md) — the vocabulary, defined once

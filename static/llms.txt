@@ -134,7 +134,7 @@ The core concepts an agent should resolve first: the **capsule** (`storeId:rootH
 
 ## Optional
 
-- [dig-store source](https://github.com/DIG-Network/dig-store): the open-source (GPL-2.0) CLI and store format.
+- [dig-store source](https://github.com/DIG-Network/digs): the open-source (GPL-2.0) CLI and store format.
 - [DIG Network site](https://dig.net): the project home.
 - [DIGHUb](https://hub.dig.net): publish and manage capsules from the web.
 

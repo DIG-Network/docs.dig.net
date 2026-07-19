@@ -106,7 +106,7 @@ capsule 是该网络的最小单位，体现在：
 刚接触这些术语？可以先浏览[概念与术语表](./concepts.md)。想了解完整设计？请阅读[协议深度解析](./protocol-deep-dive.md)。
 
 :::note
-DIG Network 及其基础原语均为开源项目。dig-store 采用 GPL-2.0 许可证；详见 [dig-store 代码仓库](https://github.com/DIG-Network/dig-store)。
+DIG Network 及其基础原语均为开源项目。dig-store 采用 GPL-2.0 许可证；详见 [dig-store 代码仓库](https://github.com/DIG-Network/digs)。
 :::
 
 ## 相关链接 {#related}

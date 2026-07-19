@@ -19,7 +19,7 @@ tags:
 
 ## Raw binary (Windows / macOS / Linux)
 
-Download the binary for your OS/CPU from the [Releases](https://github.com/DIG-Network/dig-store/releases) page:
+Download the binary for your OS/CPU from the [Releases](https://github.com/DIG-Network/digs/releases) page:
 
 - **`dig-store-<ver>-windows-x64.exe`** — Windows
 - **`dig-store-<ver>-macos-arm64`** — Apple Silicon Mac (M1/M2/M3)
@@ -70,7 +70,7 @@ dig-store update          # download + install the latest release, in place
 dig-store update --check  # just report whether a newer release exists
 ```
 
-On Windows, download the latest `dig-store-<ver>-windows-x64.exe` from the [Releases](https://github.com/DIG-Network/dig-store/releases) page (or re-run the [DIG Installer](../../run-a-node/universal-installer.md)) and use it to replace the binary on your `PATH`.
+On Windows, download the latest `dig-store-<ver>-windows-x64.exe` from the [Releases](https://github.com/DIG-Network/digs/releases) page (or re-run the [DIG Installer](../../run-a-node/universal-installer.md)) and use it to replace the binary on your `PATH`.
 
 ## Related
 

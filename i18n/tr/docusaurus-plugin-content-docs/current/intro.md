@@ -106,7 +106,7 @@ Dokümantasyon **ne yaptığınıza** göre organize edilmiştir. Her yol, on sa
 Kelime dağarcığına yeni misiniz? [Kavramlar & sözlük](./concepts.md)'e göz atın. Tam tasarımı mı istiyorsunuz? [Protokol derinlemesine inceleme](./protocol-deep-dive.md)'yi okuyun.
 
 :::note
-DIG Network ve temel bileşenleri açık kaynaktır. dig-store, GPL-2.0 lisansı altındadır; bkz. [dig-store deposu](https://github.com/DIG-Network/dig-store).
+DIG Network ve temel bileşenleri açık kaynaktır. dig-store, GPL-2.0 lisansı altındadır; bkz. [dig-store deposu](https://github.com/DIG-Network/digs).
 :::
 
 ## İlgili {#related}

@@ -106,7 +106,7 @@ Capsule — это единица измерения сети для:
 Впервые видите терминологию? Просмотрите [Концепции и глоссарий](./concepts.md). Хотите полное описание архитектуры? Читайте [Глубокое погружение в протокол](./protocol-deep-dive.md).
 
 :::note
-DIG Network и его примитивы — открытый исходный код. dig-store лицензирован под GPL-2.0; см. [репозиторий dig-store](https://github.com/DIG-Network/dig-store).
+DIG Network и его примитивы — открытый исходный код. dig-store лицензирован под GPL-2.0; см. [репозиторий dig-store](https://github.com/DIG-Network/digs).
 :::
 
 ## Смотрите также {#related}

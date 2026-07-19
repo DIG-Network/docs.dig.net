@@ -106,7 +106,7 @@ The docs are organized around **what you're doing**. Each track opens with a ten
 New to the vocabulary? Skim [Concepts & glossary](./concepts.md). Want the full design? Read the [Protocol deep-dive](./protocol-deep-dive.md).
 
 :::note
-DIG Network and its primitives are open source. dig-store is licensed under GPL-2.0; see the [dig-store repository](https://github.com/DIG-Network/dig-store).
+DIG Network and its primitives are open source. dig-store is licensed under GPL-2.0; see the [dig-store repository](https://github.com/DIG-Network/digs).
 :::
 
 ## Related

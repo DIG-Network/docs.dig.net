@@ -79,7 +79,7 @@ function buildOpenRpc({ title, methodSet, info, servers }) {
       title,
       version: pkg.version && pkg.version !== '0.0.0' ? pkg.version : '1.0.0',
       description: info,
-      license: { name: 'GPL-2.0', url: 'https://github.com/DIG-Network/dig-store/blob/main/LICENSE' },
+      license: { name: 'GPL-2.0', url: 'https://github.com/DIG-Network/digs/blob/main/LICENSE' },
     },
     servers,
     methods: openrpcMethods,

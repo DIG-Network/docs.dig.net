@@ -106,7 +106,7 @@ Dokumen ini disusun berdasarkan **apa yang sedang Anda kerjakan**. Setiap jalur 
 Baru mengenal kosakatanya? Simak [Konsep & glosarium](./concepts.md). Ingin memahami desain lengkapnya? Baca [Pembahasan mendalam protokol](./protocol-deep-dive.md).
 
 :::note
-DIG Network dan primitif-primitifnya bersifat open source. dig-store dilisensikan di bawah GPL-2.0; lihat [repositori dig-store](https://github.com/DIG-Network/dig-store).
+DIG Network dan primitif-primitifnya bersifat open source. dig-store dilisensikan di bawah GPL-2.0; lihat [repositori dig-store](https://github.com/DIG-Network/digs).
 :::
 
 ## Terkait {#related}
