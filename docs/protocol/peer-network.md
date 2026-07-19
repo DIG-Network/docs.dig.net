@@ -151,6 +151,10 @@ peer_id = SHA-256( SubjectPublicKeyInfo DER )        // 32 bytes
 - `peer_id` is a **`Bytes32`** — 32 raw bytes, rendered as 64 lower-case hex on any text surface (`dig-gossip` `types/peer.rs`: `pub type PeerId = Bytes32`, `peer_id_from_tls_spki_der`).
 - The hashed input is the **full `SubjectPublicKeyInfo` ASN.1 sequence** (algorithm identifier + subject public-key bit string) lifted from the peer's X.509 leaf certificate — **not** the bare public-key bit string. Both sides recover the other's `peer_id` from the certificate exchanged during the handshake, so identity is bound to key material: impersonation requires the private key.
 
+:::note End-to-end encryption exemption for node↔node RPC
+**Directed node↔node RPC over mTLS between keyless peers is EXEMPT from the ecosystem-wide end-to-end payload-seal rule.** The payload-seal rule applies to directed messages with a DID-keyed recipient (dig-chat, dig-email, dig-video-chat, and any future directed channel where the recipient is identified by their DID). Node↔node RPC between autonomous network participants (each identified by their transport `peer_id`, not a DID) already achieves end-to-end authentication and confidentiality through mTLS itself — the mutual certificate exchange and the asymmetric handshake provide the necessary authenticity and secrecy guarantees. Adding a second layer of DID-keyed payload sealing would be redundant and would impede the transport's design. This exemption applies only to the authorized node↔node RPC surface (the PEER/CONTROL tier with its mTLS authentication requirement); it does not apply to any directed message that names a DID-identified recipient.
+:::
+
 ### mTLS is mandatory
 
 **All peer-to-peer connections use mutual TLS over a WebSocket (`wss://`).** This is a hard requirement — plaintext and server-only TLS are never accepted for a peer link.

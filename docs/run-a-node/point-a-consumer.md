@@ -68,6 +68,12 @@ With a local node reachable, the extension also opens a store directly from it a
 
 The local cache is a set of [capsules](../concepts.md#capsule) keyed by `storeId:rootHash`, written content-addressed with a cross-process lock — so the in-process browser node and a standalone dig-node on the same machine read and write **one** cache without corruption.
 
+## Troubleshooting
+
+### The extension shows my node as offline, but it's running {#extension-shows-offline}
+
+Update your dig-node — versions before **0.13.0** are missing a header Chrome now requires. Modern Chrome's Private Network Access protection blocks an extension's request to a loopback address (`127.0.0.1`) unless the node's response says it's allowed; older dig-node builds didn't send that, so Chrome silently blocked every request and the extension correctly reported the node offline even though it was up and answering direct requests. [Update to the latest dig-node release](./index.md#install-it) and reload the extension — no other configuration changes needed.
+
 ## Related
 
 - [Run a node — overview](./index.md)
