@@ -106,7 +106,7 @@ capsule नेटवर्क की इकाई है:
 शब्दावली से अपरिचित हैं? [Concepts & glossary](./concepts.md) देखें। पूरा डिज़ाइन चाहिए? [Protocol deep-dive](./protocol-deep-dive.md) पढ़ें।
 
 :::note
-DIG Network और उसके प्रिमिटिव्स ओपन सोर्स हैं। dig-store, GPL-2.0 के तहत लाइसेंस प्राप्त है; देखें [dig-store repository](https://github.com/DIG-Network/dig-store)।
+DIG Network और उसके प्रिमिटिव्स ओपन सोर्स हैं। dig-store, GPL-2.0 के तहत लाइसेंस प्राप्त है; देखें [dig-store repository](https://github.com/DIG-Network/digs)।
 :::
 
 ## संबंधित {#related}

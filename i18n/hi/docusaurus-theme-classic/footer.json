@@ -65,11 +65,11 @@
   },
   "link.item.label.dig-store on GitHub": {
     "message": "GitHub पर dig-store",
-    "description": "The label of footer link with label=dig-store on GitHub linking to https://github.com/DIG-Network/dig-store"
+    "description": "The label of footer link with label=dig-store on GitHub linking to https://github.com/DIG-Network/digs"
   },
   "link.item.label.Releases": {
     "message": "रिलीज़",
-    "description": "The label of footer link with label=Releases linking to https://github.com/DIG-Network/dig-store/releases"
+    "description": "The label of footer link with label=Releases linking to https://github.com/DIG-Network/digs/releases"
   },
   "copyright": {
     "message": "Copyright © 2026 DIG Network. dig-store is open source under GPL-2.0.",

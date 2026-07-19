@@ -106,7 +106,7 @@ urn:dig:chia:2855390f…aade:1a2b3c…/readme.txt      # pinned version
 
 When you type a URN (`urn:dig:…`) or a chain-qualified shorthand (`chia://chia:<storeId>…`), the browser **canonicalizes** it to the host-bearing form `chia://[<rootHash>.]<storeId>/<resource>`. Two benefits: it parses as an ordinary URL, and **relative subresources** (the page's images, scripts, links) resolve against the same store and version automatically.
 
-The URN's grammar is defined once, in dig-store's [`urn.rs`](https://github.com/DIG-Network/dig-store), and is shared byte-for-byte by every implementation (the browser, `dig-node`, the RPC, the extension).
+The URN's grammar is defined once, in dig-store's [`urn.rs`](https://github.com/DIG-Network/digs), and is shared byte-for-byte by every implementation (the browser, `dig-node`, the RPC, the extension).
 
 ## For integrating developers — the shorthand grammar
 

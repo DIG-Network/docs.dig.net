@@ -83,7 +83,7 @@ Add the [GitHub Action](../digstore/cli/deploy-from-github-actions.md): push to 
 
 ## Is it open source?
 
-Yes. dig-store is GPL-2.0 — see the [dig-store repository ↗](https://github.com/DIG-Network/dig-store). The whole protocol is [specified in the Protocol section](../protocol-deep-dive.md).
+Yes. dig-store is GPL-2.0 — see the [dig-store repository ↗](https://github.com/DIG-Network/digs). The whole protocol is [specified in the Protocol section](../protocol-deep-dive.md).
 
 ## Related
 

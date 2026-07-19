@@ -21,7 +21,7 @@ Stuck on something? Start here.
 | Where | Best for |
 |---|---|
 | [**Discord ↗**](https://discord.gg/v78aygUZt) | Quick questions, deploy help, talking to other builders and the team. |
-| [**dig-store issues ↗**](https://github.com/DIG-Network/dig-store/issues) | CLI bugs, feature requests, anything `dig-store`. |
+| [**dig-store issues ↗**](https://github.com/DIG-Network/digs/issues) | CLI bugs, feature requests, anything `dig-store`. |
 | [**DIGHUb issues ↗**](https://github.com/DIG-Network/hub.dig.net/issues) | Web app / publish / domain problems. |
 | [Troubleshooting](./troubleshooting.md) · [FAQ](./faq.md) · [Error codes](./error-codes.md) | Answers you can find without waiting. |
 

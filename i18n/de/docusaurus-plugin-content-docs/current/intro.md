@@ -106,7 +106,7 @@ Die Dokumentation ist danach organisiert, **was du gerade tust**. Jeder Track be
 Neu im Vokabular? Überflieg [Konzepte & Glossar](./concepts.md). Willst du das vollständige Design? Lies den [Protocol Deep-Dive](./protocol-deep-dive.md).
 
 :::note
-DIG Network und seine Primitive sind Open Source. dig-store ist unter GPL-2.0 lizenziert; siehe das [dig-store-Repository](https://github.com/DIG-Network/dig-store).
+DIG Network und seine Primitive sind Open Source. dig-store ist unter GPL-2.0 lizenziert; siehe das [dig-store-Repository](https://github.com/DIG-Network/digs).
 :::
 
 ## Verwandte Themen {#related}

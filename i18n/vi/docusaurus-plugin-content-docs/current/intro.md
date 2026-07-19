@@ -106,7 +106,7 @@ Tài liệu được tổ chức xoay quanh **việc bạn đang làm**. Mỗi l
 Chưa quen với thuật ngữ? Lướt qua [Khái niệm & thuật ngữ](./concepts.md). Muốn tìm hiểu toàn bộ thiết kế? Đọc [Đi sâu vào giao thức](./protocol-deep-dive.md).
 
 :::note
-DIG Network và các thành phần cơ bản của nó là mã nguồn mở. dig-store được cấp phép theo GPL-2.0; xem [kho mã nguồn dig-store](https://github.com/DIG-Network/dig-store).
+DIG Network và các thành phần cơ bản của nó là mã nguồn mở. dig-store được cấp phép theo GPL-2.0; xem [kho mã nguồn dig-store](https://github.com/DIG-Network/digs).
 :::
 
 ## Liên quan {#related}

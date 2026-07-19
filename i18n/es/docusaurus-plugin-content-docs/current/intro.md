@@ -106,7 +106,7 @@ La documentación está organizada en torno a **lo que estás haciendo**. Cada r
 ¿Nuevo en el vocabulario? Repasa [Conceptos y glosario](./concepts.md). ¿Quieres el diseño completo? Lee la [Inmersión profunda en el protocolo](./protocol-deep-dive.md).
 
 :::note
-DIG Network y sus primitivos son de código abierto. dig-store está licenciado bajo GPL-2.0; consulta el [repositorio de dig-store](https://github.com/DIG-Network/dig-store).
+DIG Network y sus primitivos son de código abierto. dig-store está licenciado bajo GPL-2.0; consulta el [repositorio de dig-store](https://github.com/DIG-Network/digs).
 :::
 
 ## Relacionado {#related}

@@ -27,7 +27,7 @@ Publish your site or dapp to DIG automatically — a new **capsule** of your exi
 - **Pull request → a free preview.** Your build is compiled and verified through the real `chia://` read path and you get a shareable, content-addressed preview. **No chain, no wallet, no spend.**
 - **Push to your default branch → a real deploy.** The Action advances your store's on-chain root and publishes the new capsule, then posts the live URL + cost back on the commit.
 
-The dedicated **[`dig-network/deploy-action`](https://github.com/DIG-Network/deploy-action)** does the work: it installs the [`dig-store`](https://github.com/DIG-Network/dig-store) CLI on the runner, runs `digs deploy`, and reports the result as step outputs, a PR comment, a GitHub Deployment, and a commit status.
+The dedicated **[`dig-network/deploy-action`](https://github.com/DIG-Network/deploy-action)** does the work: it installs the [`dig-store`](https://github.com/DIG-Network/digs) CLI on the runner, runs `digs deploy`, and reports the result as step outputs, a PR comment, a GitHub Deployment, and a commit status.
 
 :::note You create the store once; CI only updates it
 Your store already exists (you ran [`digs init`](./onchain-anchoring.md) once, which mints it and spends $DIG). The Action only **advances** that store — it never mints. Each real deploy is a new capsule and costs the uniform capsule price in $DIG + a small XCH fee, paid from your deploy wallet. **PR previews are free.**

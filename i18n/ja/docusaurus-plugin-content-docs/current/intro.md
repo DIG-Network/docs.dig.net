@@ -106,7 +106,7 @@ capsuleはネットワークにおける以下の単位です。
 用語に不慣れですか？[概念と用語集](./concepts.md)にざっと目を通してください。設計の全体像を知りたければ、[プロトコル詳解](./protocol-deep-dive.md)を読んでください。
 
 :::note
-DIG Networkとそのプリミティブはオープンソースです。dig-storeはGPL-2.0の下でライセンスされています。[dig-storeリポジトリ](https://github.com/DIG-Network/dig-store)を参照してください。
+DIG Networkとそのプリミティブはオープンソースです。dig-storeはGPL-2.0の下でライセンスされています。[dig-storeリポジトリ](https://github.com/DIG-Network/digs)を参照してください。
 :::
 
 ## 関連項目 {#related}
