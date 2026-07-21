@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.5.2] - 2026-07-21
+
+### Documentation
+- **run-a-relay:** Document relay operator config knobs (14 locales) (#45)
+
 ## [0.5.1] - 2026-07-19
 
 ### Chores
