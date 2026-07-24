@@ -2,7 +2,7 @@
   "openrpc": "1.2.6",
   "info": {
     "title": "dig RPC — node profile (local dig-node / in-process DIG Browser)",
-    "version": "0.5.0",
+    "version": "0.5.3",
     "description": "The NODE PROFILE: a distinct, smaller surface than the network profile. Of the byte methods it implements ONLY dig.getContent (local-first, else proxy); everything else proxies upstream or returns -32601. It ADDS node-only methods the security model depends on — chiefly dig.getAnchoredRoot (the CHIP-0035 on-chain head, the trusted root for mandatory root-pinning), dig.stage, and cache.*. Gate on dig.methods rather than assuming one uniform surface. See https://docs.dig.net/docs/protocol/dig-rpc#node-profile.",
     "license": {
       "name": "GPL-2.0",
@@ -959,6 +959,19 @@
             "type": "string",
             "pattern": "^[0-9a-f]{64}$",
             "description": "FIRST FRAME ONLY: the resolved generation root the inclusion_proof is against."
+          },
+          "range_proof": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "contentEncoding": "base64"
+            },
+            "description": "OPTIONAL (v0.4.0+): one base64-encoded merkle inclusion proof PER CHUNK carried by this frame, in ascending chunk order — so every frame's chunks are independently verifiable, not just the first. Verify each proof against the CALLER's chain-anchored root (the frame's `root` is an advisory echo, never the trust anchor); a frame whose chunks lack a valid proof is unverified content. Absent from pre-0.4.0 peers (backwards compatible)."
+          },
+          "first_chunk_index": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "OPTIONAL (v0.4.0+): the absolute index (into chunk_lens) of the FIRST chunk carried by this frame — pairs each range_proof entry with its chunk position. Absent from pre-0.4.0 peers."
           }
         }
       }
