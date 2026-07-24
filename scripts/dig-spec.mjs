@@ -211,6 +211,18 @@ export const schemas = {
         description: 'FIRST FRAME ONLY: base64 merkle inclusion proof of the WHOLE resource against the generation `root`, relayed verbatim. Verify the range against the CALLER-supplied chain-anchored root — the node is never the trust anchor. null for capsule fetches (capsule: true), which self-verify on install.',
       },
       root: { ...hex64, description: 'FIRST FRAME ONLY: the resolved generation root the inclusion_proof is against.' },
+      range_proof: {
+        type: 'array',
+        items: { type: 'string', contentEncoding: 'base64' },
+        description:
+          'OPTIONAL (v0.4.0+): one base64-encoded merkle inclusion proof PER CHUNK carried by this frame, in ascending chunk order — so every frame\'s chunks are independently verifiable, not just the first. Verify each proof against the CALLER\'s chain-anchored root (the frame\'s `root` is an advisory echo, never the trust anchor); a frame whose chunks lack a valid proof is unverified content. Absent from pre-0.4.0 peers (backwards compatible).',
+      },
+      first_chunk_index: {
+        type: 'integer',
+        minimum: 0,
+        description:
+          'OPTIONAL (v0.4.0+): the absolute index (into chunk_lens) of the FIRST chunk carried by this frame — pairs each range_proof entry with its chunk position. Absent from pre-0.4.0 peers.',
+      },
     },
   },
 };
