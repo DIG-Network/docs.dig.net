@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.5.3] - 2026-07-24
+
+### Documentation
+- **protocol:** Per-range merkle proofs on dig.fetchRange (#1437) (#46)
+
 ## [0.5.2] - 2026-07-21
 
 ### Documentation
