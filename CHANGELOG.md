@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.7.0] - 2026-07-26
+
+### Documentation
+- **protocol:** Publish the paged range-frame metadata split and -32009 (#48)
+
 ## [0.6.0] - 2026-07-26
 
 ### Documentation
