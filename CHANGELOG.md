@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.6.0] - 2026-07-26
+
+### Documentation
+- **protocol:** Real-time capsule-holder discovery (find_providers + holdings-announce) (#47)
+
 ## [0.5.3] - 2026-07-24
 
 ### Documentation
