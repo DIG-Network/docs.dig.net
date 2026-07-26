@@ -191,37 +191,43 @@ export const schemas = {
     title: 'RangeFrame',
     type: 'object',
     description:
-      'One frame of a streamed dig.fetchRange response. Data is delivered as an ordered stream of these frames over a logical stream of the multiplexed peer transport — the caller reads incrementally with backpressure and reassembles by `offset`. The FIRST frame (offset == range start) additionally carries the range-verification metadata (total_length, chunk_lens, chunk_index, inclusion_proof) so a range fetched from ONE peer is independently verifiable against the capsule\'s chain-anchored merkle root without the whole file. See https://docs.dig.net/docs/protocol/peer-network#range.',
+      'One frame of a streamed dig.fetchRange response. Data is delivered as an ordered stream of these frames over a logical stream of the multiplexed peer transport — the caller reads incrementally with backpressure and reassembles by `offset`. Frame metadata divides in two by whether it scales with the resource: the FIXED-SIZE identity set (root, total_length, chunk_count, plus chunk_index when the window is chunk-aligned) rides EVERY frame, so a wrong-generation holder is detected as the first bytes arrive; the RESOURCE-SCALING layout set (chunk_lens, inclusion_proof) rides the first frame or a paged prologue ONCE per range stream, each page located by chunk_lens_offset, and is omitted entirely when the caller sets skip_layout. See https://docs.dig.net/docs/protocol/peer-network#range.',
     required: ['offset', 'length', 'bytes', 'complete'],
     properties: {
       offset: { type: 'integer', minimum: 0, description: 'This frame\'s start offset within the requested range (bytes into the resource ciphertext).' },
-      length: { type: 'integer', minimum: 0, description: 'This frame\'s byte length (= decoded `bytes` length).' },
+      length: { type: 'integer', minimum: 0, description: 'This frame\'s byte length (= decoded `bytes` length). At most MAX_RANGE_FRAME_PAYLOAD (32768) — the cap a serve path splits its stream on.' },
       bytes: { type: 'string', contentEncoding: 'base64', description: 'This frame\'s ciphertext bytes, standard base64.' },
       complete: { type: 'boolean', description: 'true when this is the final frame of the requested range.' },
-      total_length: { type: 'integer', minimum: 0, description: 'FIRST FRAME ONLY: the full resource ciphertext length (so a client can plan its ranges).' },
+      total_length: { type: 'integer', minimum: 0, description: 'EVERY FRAME (identity set): the full resource ciphertext length — plan ranges against it, and with `root` it detects a holder serving a different generation. A chunk_lens array whose entries do not sum to this value is rejected.' },
+      chunk_count: { type: 'integer', minimum: 0, description: 'EVERY FRAME (identity set): the number of chunks in the WHOLE resource — the entry count a reassembled chunk_lens must reach.' },
+      chunk_index: { type: 'integer', minimum: 0, description: 'EVERY FRAME (identity set) when the frame\'s window is chunk-aligned: index into chunk_lens of this frame\'s first chunk.' },
+      root: { ...hex64, description: 'EVERY FRAME (identity set): the generation root this range was served from. Advisory echo — verify against the CALLER\'s chain-anchored root, never this field.' },
       chunk_lens: {
         type: 'array',
         items: { type: 'integer', minimum: 0 },
-        description: 'FIRST FRAME ONLY: per-chunk ciphertext lengths of the WHOLE resource, in order (identical to the dig RPC chunk_lens). Maps a byte range to the chunk(s) covering it; required to split + verify + decrypt.',
+        description: 'ONCE PER RANGE STREAM (layout set): per-chunk ciphertext lengths of the WHOLE resource, in order (identical to the dig RPC chunk_lens). A DECRYPT input, not a verify input — per-chunk AES-256-GCM-SIV needs the entire array and a reader rejects one whose entries do not sum to total_length, so it is never sliced to a frame\'s own chunks. It rides the first frame when it fits (at most MAX_FIRST_FRAME_CHUNK_LENS = 2486 entries), otherwise a paged prologue of at most MAX_CHUNK_LENS_PER_FRAME = 2048 entries per page, each page located by chunk_lens_offset. Omitted when the caller sets skip_layout.',
       },
-      chunk_index: { type: 'integer', minimum: 0, description: 'FIRST FRAME ONLY: index into chunk_lens of the first chunk in this range.' },
+      chunk_lens_offset: {
+        type: 'integer',
+        minimum: 0,
+        description: 'ONCE PER RANGE STREAM (layout set): the index into the resource\'s chunk_lens at which this frame\'s prologue page begins, so pages are placed without depending on arrival order.',
+      },
       inclusion_proof: {
         type: ['string', 'null'],
         contentEncoding: 'base64',
-        description: 'FIRST FRAME ONLY: base64 merkle inclusion proof of the WHOLE resource against the generation `root`, relayed verbatim. Verify the range against the CALLER-supplied chain-anchored root — the node is never the trust anchor. null for capsule fetches (capsule: true), which self-verify on install.',
+        description: 'ONCE PER RANGE STREAM (layout set): base64 merkle inclusion proof of the WHOLE resource against the generation `root`, relayed verbatim, at most MAX_INCLUSION_PROOF_B64 (4096) bytes. Verify the range against the CALLER-supplied chain-anchored root — the node is never the trust anchor. null for capsule fetches (capsule: true), which self-verify on install. A resource whose proof exceeds the cap has no conforming range stream and the holder answers RANGE_METADATA_UNREPRESENTABLE (-32009) instead of streaming frames. Omitted when the caller sets skip_layout.',
       },
-      root: { ...hex64, description: 'FIRST FRAME ONLY: the resolved generation root the inclusion_proof is against.' },
       range_proof: {
         type: 'array',
         items: { type: 'string', contentEncoding: 'base64' },
         description:
-          'OPTIONAL (v0.4.0+): one base64-encoded merkle inclusion proof PER CHUNK carried by this frame, in ascending chunk order — so every frame\'s chunks are independently verifiable, not just the first. Verify each proof against the CALLER\'s chain-anchored root (the frame\'s `root` is an advisory echo, never the trust anchor); a frame whose chunks lack a valid proof is unverified content. Absent from pre-0.4.0 peers (backwards compatible).',
+          'RESERVED: a server MUST NOT emit this field and a client MUST NOT require it. Range verification is the whole-resource inclusion_proof against the caller\'s chain-anchored root; merkle leaves commit per RESOURCE, so a proof for a single chunk is not derivable.',
       },
       first_chunk_index: {
         type: 'integer',
         minimum: 0,
         description:
-          'OPTIONAL (v0.4.0+): the absolute index (into chunk_lens) of the FIRST chunk carried by this frame — pairs each range_proof entry with its chunk position. Absent from pre-0.4.0 peers.',
+          'RESERVED: a server MUST NOT emit this field and a client MUST NOT require it. Use chunk_index (identity set) for the frame\'s first chunk position.',
       },
     },
   },
@@ -603,7 +609,7 @@ export const nodeMethods = [
     name: 'dig.fetchRange',
     summary: 'Stream a byte range [offset, offset+length) of a resource or capsule (multi-source).',
     description:
-      'STREAMING + BYTE-RANGE fetch: return only the requested byte range of a content resource (store_id + retrieval_key) or a whole capsule/.dig (capsule: true, identified by store_id[:root]), delivered as an ordered STREAM of RangeFrame chunks over a logical stream of the multiplexed peer transport (read incrementally with backpressure; reassemble by offset). The FIRST frame carries total_length + chunk_lens + chunk_index + inclusion_proof so the range is INDEPENDENTLY verifiable against the capsule\'s chain-anchored merkle root — a downloader fans different ranges out to different peers concurrently, verifies each, retries a bad range from another source, and resumes per-range. The range is widened to whole-chunk boundaries so each returned chunk is a complete verifiable unit; length is clamped to the node window (3 MiB). NODE-PROFILE ONLY. See https://docs.dig.net/docs/protocol/peer-network#range.',
+      'STREAMING + BYTE-RANGE fetch: return only the requested byte range of a content resource (store_id + retrieval_key) or a whole capsule/.dig (capsule: true, identified by store_id[:root]), delivered as an ordered STREAM of RangeFrame chunks over a logical stream of the multiplexed peer transport (read incrementally with backpressure; reassemble by offset). EVERY frame carries the fixed-size identity set (root + total_length + chunk_count, plus chunk_index when chunk-aligned), and the resource-scaling layout (chunk_lens + inclusion_proof) rides the first frame or a paged prologue once per stream, so the range is INDEPENDENTLY verifiable against the capsule\'s chain-anchored merkle root — a downloader fans different ranges out to different peers concurrently, verifies each, retries a bad range from another source, and resumes per-range. The range is widened to whole-chunk boundaries so each returned chunk is a complete verifiable unit; length is clamped to the node window (3 MiB). NODE-PROFILE ONLY. See https://docs.dig.net/docs/protocol/peer-network#range.',
     paramStructure: 'by-name',
     params: [
       { name: 'store_id', required: true, schema: { $ref: '#/components/schemas/StoreId' } },
@@ -612,9 +618,10 @@ export const nodeMethods = [
       { name: 'capsule', required: false, schema: { type: 'boolean', default: false }, description: 'true to fetch the whole capsule/.dig (identified by store_id[:root]) instead of a resource.' },
       { name: 'offset', required: false, schema: { type: 'integer', minimum: 0, default: 0 }, description: 'Byte offset into the resource ciphertext.' },
       { name: 'length', required: true, schema: { type: 'integer', minimum: 1 }, description: 'Bytes to return; clamped to the node window (3 MiB) and widened to whole-chunk boundaries.' },
+      { name: 'skip_layout', required: false, schema: { type: 'boolean' }, description: 'true when the caller already holds the resource layout + commitment; the peer then omits the layout metadata (chunk_lens, inclusion_proof) and streams data frames only.' },
     ],
     result: { name: 'frame', schema: { $ref: '#/components/schemas/RangeFrame' } },
-    errors: ['INVALID_PARAMS', 'INTERNAL_ERROR', 'RESOURCE_UNAVAILABLE', 'RANGE_NOT_SATISFIABLE'],
+    errors: ['INVALID_PARAMS', 'INTERNAL_ERROR', 'RESOURCE_UNAVAILABLE', 'RANGE_NOT_SATISFIABLE', 'RANGE_METADATA_UNREPRESENTABLE'],
   },
 ];
 
@@ -633,6 +640,7 @@ export const rpcErrors = {
   ROOT_NOT_ANCHORED: { code: -32005, message: 'Root not chain-anchored', meaning: 'The requested or served generation is not the store’s current on-chain root. A content read is pinned to the CHIP-0035 singleton’s on-chain root (resolved live from the chain, never trusted from the serving node): a requested root that is not the on-chain root, an unreachable chain, or a store with no confirmed generation fails closed with this code rather than serving an unverified generation. Omit root to take the chain tip.' },
   PEER_UNREACHABLE: { code: -32006, message: 'Peer unreachable', meaning: 'No connection to the named peer could be established — every NAT-traversal strategy (direct, UPnP/NAT-PMP/PCP mapping, relay-coordinated hole-punch, and relayed fallback) failed, or the peer is not registered on this network. Returned by the node-profile peer methods (dig.getPeers / dig.announce / dig.getNetworkInfo).' },
   RANGE_NOT_SATISFIABLE: { code: -32007, message: 'Range not satisfiable', meaning: 'The requested byte range lies outside the resource (offset >= total_length) or is otherwise unsatisfiable. Returned by the node-profile dig.fetchRange when the offset/length cannot be served.' },
+  RANGE_METADATA_UNREPRESENTABLE: { code: -32009, message: 'Range metadata unrepresentable', meaning: 'The range metadata ALONE cannot fit a frame — an inclusion_proof whose base64 exceeds MAX_INCLUSION_PROOF_B64 (4096) — so this holder has no conforming range stream for the resource and streams no frames. Returned by the node-profile dig.fetchRange. HOLDER-FATAL: a client skips this holder, does not re-request the range from it, and MUST NOT count it as a transport failure (counted as transport it retries a peer that can never succeed).' },
   CONTENT_REDIRECT: { code: -32008, message: 'Content held elsewhere — redirect', meaning: 'This node does not hold the requested content, but it located peers that do (via the DHT) — a redirect, not a not-found. error.data.redirect names the holder(s) (providers[] = peer_id + candidate addresses), the requested content, and the bounded redirect budget (redirect_depth, max_redirects). Returned by the node-profile content methods (dig.getContent / dig.fetchRange) on a local miss when a provider exists; re-request against a named provider, echoing redirect_depth.' },
   UPSTREAM_ERROR: { code: -32010, message: 'Upstream error', meaning: 'A thin-shell node relayed a method it does not resolve locally to its upstream DIG RPC, and the upstream was unreachable or returned a non-JSON response.' },
   STAGE_DIR_UNREADABLE: { code: -32011, message: 'Stage: source directory unreadable', meaning: 'dig.stage (local control) could not read the source directory.' },

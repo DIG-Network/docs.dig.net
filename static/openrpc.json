@@ -2,7 +2,7 @@
   "openrpc": "1.2.6",
   "info": {
     "title": "dig RPC — DIG Network Content Interface (network profile)",
-    "version": "0.5.3",
+    "version": "0.7.0",
     "description": "The network-wide read interface for DIG content over JSON-RPC 2.0 — the NETWORK PROFILE served by the canonical node at rpc.dig.net. Blind by construction (the node holds no URN and no key), verifiable without trust (merkle inclusion proofs against the chain-anchored root), and streamable at any size. There is no `decoy` field on the wire and no CDN. See https://docs.dig.net/docs/protocol/dig-rpc.",
     "license": {
       "name": "GPL-2.0",
@@ -850,7 +850,7 @@
       "RangeFrame": {
         "title": "RangeFrame",
         "type": "object",
-        "description": "One frame of a streamed dig.fetchRange response. Data is delivered as an ordered stream of these frames over a logical stream of the multiplexed peer transport — the caller reads incrementally with backpressure and reassembles by `offset`. The FIRST frame (offset == range start) additionally carries the range-verification metadata (total_length, chunk_lens, chunk_index, inclusion_proof) so a range fetched from ONE peer is independently verifiable against the capsule's chain-anchored merkle root without the whole file. See https://docs.dig.net/docs/protocol/peer-network#range.",
+        "description": "One frame of a streamed dig.fetchRange response. Data is delivered as an ordered stream of these frames over a logical stream of the multiplexed peer transport — the caller reads incrementally with backpressure and reassembles by `offset`. Frame metadata divides in two by whether it scales with the resource: the FIXED-SIZE identity set (root, total_length, chunk_count, plus chunk_index when the window is chunk-aligned) rides EVERY frame, so a wrong-generation holder is detected as the first bytes arrive; the RESOURCE-SCALING layout set (chunk_lens, inclusion_proof) rides the first frame or a paged prologue ONCE per range stream, each page located by chunk_lens_offset, and is omitted entirely when the caller sets skip_layout. See https://docs.dig.net/docs/protocol/peer-network#range.",
         "required": [
           "offset",
           "length",
@@ -866,7 +866,7 @@
           "length": {
             "type": "integer",
             "minimum": 0,
-            "description": "This frame's byte length (= decoded `bytes` length)."
+            "description": "This frame's byte length (= decoded `bytes` length). At most MAX_RANGE_FRAME_PAYLOAD (32768) — the cap a serve path splits its stream on."
           },
           "bytes": {
             "type": "string",
@@ -880,7 +880,22 @@
           "total_length": {
             "type": "integer",
             "minimum": 0,
-            "description": "FIRST FRAME ONLY: the full resource ciphertext length (so a client can plan its ranges)."
+            "description": "EVERY FRAME (identity set): the full resource ciphertext length — plan ranges against it, and with `root` it detects a holder serving a different generation. A chunk_lens array whose entries do not sum to this value is rejected."
+          },
+          "chunk_count": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "EVERY FRAME (identity set): the number of chunks in the WHOLE resource — the entry count a reassembled chunk_lens must reach."
+          },
+          "chunk_index": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "EVERY FRAME (identity set) when the frame's window is chunk-aligned: index into chunk_lens of this frame's first chunk."
+          },
+          "root": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "description": "EVERY FRAME (identity set): the generation root this range was served from. Advisory echo — verify against the CALLER's chain-anchored root, never this field."
           },
           "chunk_lens": {
             "type": "array",
@@ -888,12 +903,12 @@
               "type": "integer",
               "minimum": 0
             },
-            "description": "FIRST FRAME ONLY: per-chunk ciphertext lengths of the WHOLE resource, in order (identical to the dig RPC chunk_lens). Maps a byte range to the chunk(s) covering it; required to split + verify + decrypt."
+            "description": "ONCE PER RANGE STREAM (layout set): per-chunk ciphertext lengths of the WHOLE resource, in order (identical to the dig RPC chunk_lens). A DECRYPT input, not a verify input — per-chunk AES-256-GCM-SIV needs the entire array and a reader rejects one whose entries do not sum to total_length, so it is never sliced to a frame's own chunks. It rides the first frame when it fits (at most MAX_FIRST_FRAME_CHUNK_LENS = 2486 entries), otherwise a paged prologue of at most MAX_CHUNK_LENS_PER_FRAME = 2048 entries per page, each page located by chunk_lens_offset. Omitted when the caller sets skip_layout."
           },
-          "chunk_index": {
+          "chunk_lens_offset": {
             "type": "integer",
             "minimum": 0,
-            "description": "FIRST FRAME ONLY: index into chunk_lens of the first chunk in this range."
+            "description": "ONCE PER RANGE STREAM (layout set): the index into the resource's chunk_lens at which this frame's prologue page begins, so pages are placed without depending on arrival order."
           },
           "inclusion_proof": {
             "type": [
@@ -901,12 +916,7 @@
               "null"
             ],
             "contentEncoding": "base64",
-            "description": "FIRST FRAME ONLY: base64 merkle inclusion proof of the WHOLE resource against the generation `root`, relayed verbatim. Verify the range against the CALLER-supplied chain-anchored root — the node is never the trust anchor. null for capsule fetches (capsule: true), which self-verify on install."
-          },
-          "root": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{64}$",
-            "description": "FIRST FRAME ONLY: the resolved generation root the inclusion_proof is against."
+            "description": "ONCE PER RANGE STREAM (layout set): base64 merkle inclusion proof of the WHOLE resource against the generation `root`, relayed verbatim, at most MAX_INCLUSION_PROOF_B64 (4096) bytes. Verify the range against the CALLER-supplied chain-anchored root — the node is never the trust anchor. null for capsule fetches (capsule: true), which self-verify on install. A resource whose proof exceeds the cap has no conforming range stream and the holder answers RANGE_METADATA_UNREPRESENTABLE (-32009) instead of streaming frames. Omitted when the caller sets skip_layout."
           },
           "range_proof": {
             "type": "array",
@@ -914,12 +924,12 @@
               "type": "string",
               "contentEncoding": "base64"
             },
-            "description": "OPTIONAL (v0.4.0+): one base64-encoded merkle inclusion proof PER CHUNK carried by this frame, in ascending chunk order — so every frame's chunks are independently verifiable, not just the first. Verify each proof against the CALLER's chain-anchored root (the frame's `root` is an advisory echo, never the trust anchor); a frame whose chunks lack a valid proof is unverified content. Absent from pre-0.4.0 peers (backwards compatible)."
+            "description": "RESERVED: a server MUST NOT emit this field and a client MUST NOT require it. Range verification is the whole-resource inclusion_proof against the caller's chain-anchored root; merkle leaves commit per RESOURCE, so a proof for a single chunk is not derivable."
           },
           "first_chunk_index": {
             "type": "integer",
             "minimum": 0,
-            "description": "OPTIONAL (v0.4.0+): the absolute index (into chunk_lens) of the FIRST chunk carried by this frame — pairs each range_proof entry with its chunk position. Absent from pre-0.4.0 peers."
+            "description": "RESERVED: a server MUST NOT emit this field and a client MUST NOT require it. Use chunk_index (identity set) for the frame's first chunk position."
           }
         }
       }
@@ -984,6 +994,13 @@
       "RANGE_NOT_SATISFIABLE": {
         "code": -32007,
         "message": "Range not satisfiable",
+        "data": {
+          "type": "object"
+        }
+      },
+      "RANGE_METADATA_UNREPRESENTABLE": {
+        "code": -32009,
+        "message": "Range metadata unrepresentable",
         "data": {
           "type": "object"
         }

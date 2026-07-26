@@ -558,6 +558,7 @@ Alongside the standard JSON-RPC codes and the shared `-32004` (resource unavaila
 | `-32006` | `PEER_UNREACHABLE` | No connection to the named peer could be established — every [traversal strategy](#nat-traversal) (direct, UPnP/NAT-PMP/PCP mapping, relay-coordinated hole-punch, and relayed fallback) failed, or the peer is not registered on this network. |
 | `-32007` | `RANGE_NOT_SATISFIABLE` | The requested byte range lies outside the resource (`offset` ≥ its length). Returned by [`dig.fetchRange`](#range). |
 | `-32008` | `CONTENT_REDIRECT` | This node does **not** hold the requested content, but it located peers that do — a **redirect, not a not-found** ([§9a](#redirect-on-miss)). `error.data.redirect` names the holder(s). |
+| `-32009` | `RANGE_METADATA_UNREPRESENTABLE` | The metadata for a range alone cannot fit a frame, so this holder has no conforming range stream for the resource ([§9](#range-errors)). Holder-fatal, and not a transport failure. |
 
 See the full [error catalog](../support/error-codes.md).
 
@@ -661,8 +662,9 @@ Stream a byte range of a resource or capsule from this peer.
 
   - **Resource identity.** For a content resource: `store_id` + `retrieval_key` (+ optional `root`, defaulting to the chain-anchored tip). For a whole capsule / `.dig`: set `capsule: true` and identify it by `store_id` (+ optional `root`); `retrieval_key` is then omitted. The capsule identity is `<store_id>[:<root>]`.
   - **Range.** `offset` (bytes into the resource ciphertext, default `0`) and `length` (bytes to return). `length` is clamped to the node's window (3 MiB); a request whose range is not chunk-aligned is widened to whole-chunk boundaries (see integrity below), so the response may return slightly more than asked.
+  - **`skip_layout`** (optional, bool) — set it to `true` when you already hold the resource's layout and commitment. The peer then omits the layout metadata described below and streams data frames only.
 
-- **result:** a **stream** ([§8](#streaming)) of `dig.fetchRange` frames. Beyond the base frame fields, the **first frame** (`offset == range start`) carries the verification metadata for the range:
+- **result:** a **stream** ([§8](#streaming)) of `dig.fetchRange` frames. Frame metadata divides into two sets, by whether it scales with the resource:
 
 ```json
 {
@@ -670,25 +672,50 @@ Stream a byte range of a resource or capsule from this peer.
   "length": 262144,
   "bytes": "<base64 ciphertext>",
   "complete": false,
+  "root": "<64hex>",
   "total_length": 10485760,
-  "chunk_lens": [262144, 262144, 131072],
+  "chunk_count": 3,
   "chunk_index": 0,
-  "inclusion_proof": "<base64 merkle proof>",
-  "root": "<64hex>"
+  "chunk_lens": [262144, 262144, 131072],
+  "chunk_lens_offset": 0,
+  "inclusion_proof": "<base64 merkle proof>"
 }
 ```
 
-  - `total_length` — the full resource ciphertext length (so a client can plan its ranges).
-  - `chunk_lens` — the per-chunk ciphertext lengths of the **whole resource**, in order (first frame only) — identical to the [dig RPC `chunk_lens`](./dig-rpc.md#the-chunk-wire-object). This is how a client maps a byte range to the chunk(s) that cover it.
-  - `chunk_index` — the index (into `chunk_lens`) of the first chunk in this frame.
-  - `inclusion_proof` — the merkle inclusion proof of the **whole resource** against the capsule's generation `root` (first frame only), relayed verbatim ([Merkle inclusion proofs](./merkle-proofs.md)). For `capsule: true` the capsule self-verifies on install, so `inclusion_proof` is `null` (as with [`dig.getCapsule`](./dig-rpc.md)).
+**On EVERY frame — the fixed-size identity set.** Each of these is one scalar, so it costs the same on a three-chunk resource as on a million-chunk one:
 
-**Per-range proof fields (v0.4.0+, optional):** Any frame MAY additionally carry merkle proofs for the chunks in that frame — a forward-compatible extension that allows clients to verify each range against the chain-anchored root without awaiting the whole resource:
+  - `root` — the generation the peer served this range from. Advisory echo (see the verification rule below).
+  - `total_length` — the full resource ciphertext length, so a client can plan its ranges.
+  - `chunk_count` — the number of chunks in the whole resource.
+  - `chunk_index` — the index (into `chunk_lens`) of this frame's first chunk. Present when the frame's window is chunk-aligned.
 
-  - `range_proof` (optional, array of strings) — one base64-encoded merkle inclusion proof per chunk in this frame, in ascending chunk order. Each proof binds to the chunk's absolute index (see `first_chunk_index` below). Servers expand a byte-range request to the covering whole-chunk boundaries, so the returned frame's chunks are complete, verifiable units.
-  - `first_chunk_index` (optional, integer) — the absolute index (into the resource's `chunk_lens`) of the first chunk in this frame. Pairs with `range_proof[]` so each proof is indexed: `proof[i]` verifies chunk `first_chunk_index + i`.
+They ride every frame because `root` + `total_length` are what detect a peer serving a **different generation** than the one you asked for, and they detect it as the first bytes arrive rather than at the end of the stream.
 
-**Verification rule (normative):** Clients verify each range's proofs against their **own chain-anchored root** (the CHIP-0035 singleton's current on-chain `metadata.root_hash`), never against the frame's `root` field (which is advisory echo only). A frame lacking valid proofs against the client's pinned root is unverified content and MUST NOT be treated as trusted. The fields are optional for backwards compatibility with v0.3.0 servers; a frame without them still verifies via the first-frame `inclusion_proof` over the whole resource.
+**Once per range stream — the resource-scaling layout set.** These grow with the resource, so they are delivered once and reused for every subsequent frame of the stream:
+
+  - `chunk_lens` — the per-chunk ciphertext lengths of the **whole resource**, in order — identical to the [dig RPC `chunk_lens`](./dig-rpc.md#the-chunk-wire-object). This is how a client maps a byte range to the chunk(s) that cover it. It rides the first frame when it fits there, and otherwise a **paged prologue**: successive frames each carry up to `MAX_CHUNK_LENS_PER_FRAME` entries, and the reader concatenates the pages into one array of `chunk_count` entries before it decrypts.
+  - `chunk_lens_offset` — the index into the resource's `chunk_lens` at which this frame's page begins. Every page states its own offset, so pages are placed without depending on arrival order.
+  - `inclusion_proof` — the merkle inclusion proof of the **whole resource** against the generation `root`, relayed verbatim ([Merkle inclusion proofs](./merkle-proofs.md)). For `capsule: true` the capsule self-verifies on install, so `inclusion_proof` is `null` (as with [`dig.getCapsule`](./dig-rpc.md)). A client that requested `skip_layout` receives no layout set at all.
+
+**Why the layout is delivered whole, and never sliced to the frame's own chunks.** `chunk_lens` is a **decrypt** input, not a verify input: per-chunk AES-256-GCM-SIV needs the *entire* array, and a reader rejects any array whose entries do not sum to `total_length`. A per-frame slice is therefore unusable on arrival — which is why a large layout is **paged**, each page carrying the offset that locates it, rather than trimmed. The arrival-time wrong-holder check does not need the layout either: `root` + `total_length` answer that, while a per-chunk proof could not, because merkle leaves commit per **resource** — a proof for a single chunk is not derivable.
+
+**Frame bounds.** These are byte-identical wire constants; every implementation of DIG peer framing uses these exact values:
+
+| Constant | Value | What it bounds |
+|---|---|---|
+| `MAX_FRAMED_BODY` | `65536` | The total encoded body of one frame. |
+| `MAX_RANGE_FRAME_PAYLOAD` | `32768` | The raw `bytes` payload one frame may carry. |
+| `MAX_INCLUSION_PROOF_B64` | `4096` | The base64 `inclusion_proof`. |
+| `MAX_CHUNK_LENS_PER_FRAME` | `2048` | The `chunk_lens` entries one prologue page carries. |
+| `MAX_FIRST_FRAME_CHUNK_LENS` | `2486` | The `chunk_lens` entries guaranteed to fit a first frame. |
+
+A serve path splits its stream on **`MAX_RANGE_FRAME_PAYLOAD`** — never on the per-request window (3 MiB), which bounds what one *request* may ask for, not what one *frame* may carry.
+
+**When metadata alone cannot fit a frame.** One input is unrepresentable: an `inclusion_proof` whose base64 exceeds `MAX_INCLUSION_PROOF_B64`. Such a resource has no conforming range stream, so the holder streams **no** frame and answers the single structured error [`-32009` `RANGE_METADATA_UNREPRESENTABLE`](#range-errors). A client MUST treat it as **holder-fatal**: skip that holder, do not re-request that range from it, and do **not** count it as a transport failure — counted as transport, it makes the client retry a peer that can never succeed.
+
+**Reserved.** `range_proof` and `first_chunk_index` are reserved frame field names. A server MUST NOT emit them and a client MUST NOT require them; range verification is the whole-resource `inclusion_proof` against the client's own pinned root.
+
+**Verification rule (normative):** Clients verify every range against their **own chain-anchored root** (the CHIP-0035 singleton's current on-chain `metadata.root_hash`), never against the frame's `root` field, which is advisory echo. Bytes not verified against the client's pinned root are unverified content and MUST NOT be treated as trusted.
 
 ### Per-range integrity — verify a range without the whole file {#range-integrity}
 
@@ -696,7 +723,7 @@ A range fetched from one peer is **independently verifiable** against the capsul
 
 A requested range maps to whole **chunk(s)** — the node widens the range to chunk boundaries — so each returned chunk is a complete, verifiable unit. A client verifies a fetched range as follows:
 
-1. **Split by `chunk_lens`.** Using the first frame's `chunk_lens` and `chunk_index`, cut the reassembled range bytes into the exact chunk(s) it covers.
+1. **Split by `chunk_lens`.** Using the stream's `chunk_lens` and the frame's `chunk_index`, cut the reassembled range bytes into the exact chunk(s) it covers.
 2. **Verify the resource against the root.** The `inclusion_proof` proves `resource_leaf` (= `SHA-256` of the *whole* resource ciphertext, reconstructed from all chunks in `chunk_lens` order) is included under the caller-supplied **chain-anchored `root`** ([Verification & provenance](./verification-and-provenance.md)) — the node is never the trust anchor. A client that already holds this proof (from an earlier range/peer) reuses it; the proof is the same regardless of which peer or range served the bytes.
 3. **Bind each chunk to the committed resource.** Because `chunk_lens` fixes each chunk's length and the resource leaf is `SHA-256` over the concatenation of all chunk ciphertexts in order, a chunk delivered for a given `chunk_index` is correct iff, when placed at its `chunk_lens` offset, the whole-resource hash still matches the proven `resource_leaf`. A chunk from a **bad source** yields a resource hash that does not match the proof — detected without downloading the whole file.
 4. **Decrypt.** AES-256-GCM-SIV-open each verified chunk; a wrong key/salt or corrupted bytes fails the authentication tag ([`DIG_ERR_DECRYPT_TAG`](../support/error-codes.md)).
@@ -713,7 +740,7 @@ Detecting a bad source: any of a chunk-length mismatch against `chunk_lens`, a f
    AVAILABILITY   has_root / has_capsule (§9 availability). Keep only peers that
                actually HOLD the resource; read total_length + chunk_count to plan.
 3. PLAN      — partition the resource into chunk-aligned ranges (using chunk_lens
-               from the first range frame or the availability chunk_count).
+               from the range stream's layout or the availability chunk_count).
 4. FAN OUT   — request DIFFERENT ranges from DIFFERENT holders CONCURRENTLY over the
                multiplexed stream transport (§8), respecting each peer's backpressure.
 5. VERIFY    — verify each returned range independently against the chain-anchored
@@ -729,13 +756,14 @@ Step 2 is the gate: a downloader never fans a range at a peer it has not confirm
 - **Resume.** Because each range is independently addressable and independently verifiable, an interrupted download resumes **per range** — a client re-requests only the ranges it has not yet verified, from any peer that holds the resource. No range already verified is refetched.
 - **Any source, one root.** Every range — whichever peer served it — is verified against the *same* on-chain generation root, so mixing sources never weakens integrity.
 
-### Range fetch error codes
+### Range fetch error codes {#range-errors}
 
 | Code | Name | Meaning |
 |---|---|---|
 | `-32004` | `RESOURCE_UNAVAILABLE` | This peer does not hold the resource/capsule at the requested root, **and** it could not locate any peer that does (a genuine not-found). When it CAN locate a holder it returns the [redirect](#redirect-on-miss) (`-32008`) instead. |
 | `-32007` | `RANGE_NOT_SATISFIABLE` | The requested `offset`/`length` lies outside the resource (`offset >= total_length`), or the range is otherwise unsatisfiable. |
 | `-32008` | `CONTENT_REDIRECT` | This node does not hold the content but located peers that do — see [redirect-on-miss](#redirect-on-miss). |
+| `-32009` | `RANGE_METADATA_UNREPRESENTABLE` | The range's metadata alone cannot fit a frame (an `inclusion_proof` over `MAX_INCLUSION_PROOF_B64`), so this holder has no conforming range stream for the resource and streams no frames. **Holder-fatal:** skip this holder for this range and do not count it as a transport failure. |
 
 ### 9a · Redirect-on-miss — never a silent not-found when a holder exists {#redirect-on-miss}
 
@@ -796,7 +824,7 @@ The peer network is implemented by several crates that must interoperate byte-fo
 | **Peer exchange** | `RequestPeers`→`RespondPeers` of `TimestampedPeerInfo{host, port, timestamp}` (Chia-streamable, big-endian) | that nodes discover peers from each other identically |
 | **Peer RPC** | `dig.getPeers` / `dig.announce` / `dig.getNetworkInfo` + `-32006`; `dig.getAvailability` / `dig.listInventory`; `dig.fetchRange` + `-32007`, generated into [`openrpc-node.json`](https://docs.dig.net/openrpc-node.json) | the machine surface an agent drives; CI-diffable against a live node |
 | **Availability** | `dig.getAvailability` batch per-item answers at store / root / capsule granularity (`available` + `roots`/`total_length`/`chunk_count`/`complete`) | that a downloader can confirm a peer HOLDS content (and plan ranges) before any fetch |
-| **Streaming + range** | `dig.fetchRange` streams `RangeFrame{offset,length,bytes,complete}`; first frame carries `total_length` + `chunk_lens` + `chunk_index` + `inclusion_proof`; any frame MAY carry `range_proof[]` (per-chunk proofs, v0.4.0+) + `first_chunk_index` (chunk start index); ranges are chunk-aligned | that data streams (not buffered), a single-peer range verifies against the chain-anchored root (whole-resource or per-chunk), and multi-source pieces reassemble verified — so they can't be forged |
+| **Streaming + range** | `dig.fetchRange` streams `RangeFrame{offset,length,bytes,complete}`; EVERY frame carries the fixed-size identity set `root` + `total_length` + `chunk_count` (+ `chunk_index` when chunk-aligned); the resource-scaling layout `chunk_lens` + `inclusion_proof` rides the first frame or a paged prologue once per stream, located by `chunk_lens_offset`, and is omitted entirely when the client sets `skip_layout`; ranges are chunk-aligned | that data streams (not buffered), a wrong-generation holder is detected as the first bytes arrive, a single-peer range verifies against the chain-anchored root, and multi-source pieces reassemble verified — so they can't be forged |
 | **Range integrity** | a range maps to whole chunk(s); each verifies via `chunk_lens` + the whole-resource `inclusion_proof` against the on-chain `root` (same as [merkle-proofs](./merkle-proofs.md)) | that any peer's range is independently verifiable + a bad source is detectable without the whole file |
 | **NAT ladder** | the ordered strategies DIRECT → UPnP → NAT-PMP → PCP → hole-punch (relay signalling only) → RELAYED/TURN (relay carries data), relay-data-last | that every `connect(peer)` implementation prefers direct, prefers hole-punch signalling over full relaying, and proxies the stream only as a last resort |
 | **DHT content key** | `SHA-256(tag ‖ canonical bytes)` with tags `0x01` store (`store_id`), `0x02` root/capsule (`store_id ‖ root`), `0x03` resource (`store_id ‖ root ‖ retrieval_key`); node id = `peer_id`; distance = XOR; bucket = `255 − leading_zeros` ([§4c](#dht)) | that every node derives the identical content key for the same content, and places nodes + content in one 256-bit keyspace, so a provider record announced by one implementation is found by another |
