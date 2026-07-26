@@ -1,7 +1,7 @@
 ---
 sidebar_position: 13
 title: "L7 · DIG Node peer network"
-description: "The normative node↔node protocol: mTLS peer identity (peer_id = SHA-256(TLS SPKI DER)), the two RPC tiers (mTLS-authenticated PEER/CONTROL vs anonymous PUBLIC-READ so browsers can retrieve content), the dual-mode public gateway (rpc.dig.net's mTLS front for node-class clients — the dig-store CLI, the SDK, any DIG-identity-key holder — across the full dig.local/localhost/rpc.dig.net ladder, plus its plain-HTTPS+CORS front for browsers, with an ephemeral self-signed client certificate for channel-bound anonymous reads), the ordered NAT-traversal ladder (direct → UPnP → NAT-PMP → PCP → relay-coordinated hole-punch (signalling only) → relayed/TURN transport), the relay's four roles (STUN, introducer, hole-punch signalling, relayed transport), STUN reflexive-address discovery, introducer + gossip peer discovery, PEX peer-exchange (node↔node stream + the RLY-008 relay introducer binding), the Kademlia DHT with provider records that locate which peers hold content (find_node/find_providers/add_provider/ping over a framed dig-nat mTLS stream; content-key = SHA-256(domain-tag ‖ store_id[‖root[‖retrieval_key]])), the relay RelayMessage wire (RLY-001..RLY-008), the peer RPC methods (dig.getPeers/dig.announce/dig.getNetworkInfo/dig.getAvailability/dig.listInventory/dig.fetchRange), and the relay-last-fallback invariant (prefer hole-punch signalling over full relaying)."
+description: "The normative node↔node protocol: mTLS peer identity (peer_id = SHA-256(TLS SPKI DER)), the two RPC tiers (mTLS-authenticated PEER/CONTROL vs anonymous PUBLIC-READ so browsers can retrieve content), the dual-mode public gateway (rpc.dig.net's mTLS front for node-class clients — the dig-store CLI, the SDK, any DIG-identity-key holder — across the full dig.local/localhost/rpc.dig.net ladder, plus its plain-HTTPS+CORS front for browsers, with an ephemeral self-signed client certificate for channel-bound anonymous reads), the ordered NAT-traversal ladder (direct → UPnP → NAT-PMP → PCP → relay-coordinated hole-punch (signalling only) → relayed/TURN transport), the relay's four roles (STUN, introducer, hole-punch signalling, relayed transport), STUN reflexive-address discovery, introducer + gossip peer discovery, PEX peer-exchange (node↔node stream + the RLY-008 relay introducer binding), the Kademlia DHT with provider records that locate which peers hold content (find_node/find_providers/add_provider/ping over a framed dig-nat mTLS stream; content-key = SHA-256(domain-tag ‖ store_id[‖root[‖retrieval_key]])), the real-time holdings announce (opcode 222 — the signed, batched add/remove broadcast, flooded over the gossip pool and signed with the TLS leaf key, that keeps the holder set fresh between republishes and turns a caching reader into a discoverable holder), the gossip/peer-RPC port relationship (gossip 9445 = peer 9444 + 1 — translate before dialing), the relay RelayMessage wire (RLY-001..RLY-008), the peer RPC methods (dig.getPeers/dig.announce/dig.getNetworkInfo/dig.getAvailability/dig.listInventory/dig.fetchRange), and the relay-last-fallback invariant (prefer hole-punch signalling over full relaying)."
 keywords:
   - peer network
   - peer_id
@@ -24,6 +24,10 @@ keywords:
   - Kademlia
   - provider record
   - content discovery
+  - holdings announce
+  - opcode 222
+  - capsule holder discovery
+  - find_providers
 tags:
   - dig-node
   - relay
@@ -288,14 +292,82 @@ A provider record is **soft state**, not a permanent entry, so an offline holder
 - **Announce on hold.** When a node gains content it serves, it PUTs a `ProviderRecord` (via `add_provider`) at the `k` nodes closest to that content key — binding the content key to its own `peer_id` and candidate addresses.
 - **Absolute expiry.** `expires_at` is set to `now + TTL` in absolute Unix seconds. A record at or after its `expires_at` is treated as **absent**.
 - **Republish before expiry.** The holder re-announces (a fresh record with a new `expires_at`) on an interval strictly shorter than the TTL, so its records never expire while it is online.
-- **Withdraw on removal.** A node that no longer holds content stops announcing it; the record then ages out on its TTL (no explicit delete is required).
+- **Withdraw on removal.** A node that no longer holds content stops announcing it; the record then ages out on its TTL (no explicit delete is required). A holder that wants the network to forget it **immediately** floods a signed [retract](#holdings-announce) instead of waiting for the TTL.
+- **Push the delta, don't wait for republish.** Republish alone bounds freshness by the republish interval. A holder therefore also **broadcasts every add/remove the moment it happens** ([holdings announces](#holdings-announce)), so the holder set converges in real time and a capsule is discoverable seconds after its first holder gains it.
 - **GC drops the expired.** A responder discards expired records on read and does not return them.
 - **Inbound RPC populates the routing table bidirectionally.** On **every** inbound DHT RPC, the responder folds the **mTLS-verified caller** (its `Contact`) into its own routing table — every request is evidence the caller is alive, so a node that queries you teaches you about itself. The caller identity MUST come from the authenticated transport, never from a field the caller sets.
+
+#### Real-time holdings announces — opcode 222 {#holdings-announce}
+
+Provider records ([above](#dht-wire)) are pulled: a seeker learns a holder exists when it runs `find_providers`, and a holder's records refresh on the republish interval. A **holdings announce** is the push half of the same map: a signed, batched broadcast of the content keys a peer has just **started** or **stopped** serving, flooded to the peer pool as it happens. Every receiver verifies it and folds the deltas straight into its own provider records, so `find_providers` answers from a holder set that tracks the network in real time rather than at republish granularity.
+
+**It rides the gossip layer, not the DHT wire.** An announce is a peer-pool broadcast message of type **`HoldingsAnnounce`, opcode 222**, carried over the gossip peer connections ([§4b](#discovery)) — a Plumtree eager/lazy-push flood at **bulk** priority, deduplicated by each receiver's seen-set, terminated by that dedup and by the sender only announcing a real transition. It is **not** one of the four DHT RPC methods; a peer needs no DHT stream to a holder to learn about it.
+
+:::warning Two ports, one node — translate before you dial
+A node's **gossip** listener (`DIG_GOSSIP_PORT`, default **9445**) and its **peer-RPC / DHT** listener (`DIG_PEER_PORT`, default **9444**) are different sockets on the same identity — `gossip_port = peer_port + 1`, a fixed offset. Announces arrive over the gossip port; the addresses inside them, and every address a downloader dials for [`dig.getAvailability`](#availability) / [`dig.fetchRange`](#range) or a DHT stream, are **peer-RPC** addresses. Any code path that takes a peer's gossip-pool address and uses it as a dial target for the peer RPC MUST subtract the offset first. Dialing `9445` for a peer-RPC stream reaches the gossip protocol instead and the fetch fails as a content miss.
+:::
+
+**The message.** All integers big-endian; `⟨lp⟩` marks a `u16`-length-prefixed byte string.
+
+| Field | Shape | Meaning |
+|---|---|---|
+| `provider_peer_id` | 64 lowercase hex | the holder's `peer_id`; equals `SHA-256(provider_spki)` and is **verified** against it on receive, never trusted |
+| `provider_spki` | TLS leaf `SubjectPublicKeyInfo` DER (P-256, ~91 B) | both what the `peer_id` hashes **and** the public key that verifies `signature` — no certificate and no chain are on the wire |
+| `seq` | `u64` | monotonic per holder; a higher `seq` supersedes an earlier announce |
+| `announced_at` | `u64` | Unix seconds the announce was produced |
+| `changes` | 1..**256** deltas | the batch (`MAX_CHANGES` = 256; a larger batch is rejected, not truncated) |
+| `signature` | ECDSA-P256, ASN.1 DER (~70-72 B) | the holder's signature over the signing message below |
+
+Each delta is one of two kinds:
+
+```text
+Add    = 0x01 ‖ content_key[32] ‖ addr_count(u16)
+                ‖ ( host_len(u16) ‖ host ‖ port(u16) )*
+                ‖ expires_at(u64)      — now serving content_key at these addresses
+Remove = 0x02 ‖ content_key[32]        — no longer serving content_key
+```
+
+`content_key` is the same 64-hex [content key](#dht) the DHT is keyed by (store `0x01` / capsule `0x02` / resource `0x03`), so an announce and a `find_providers` name content identically. The delta encoding above is the **canonical encoding** — deterministic, no maps or sets — and both the wire body and the signed bytes use it, so signer and verifier never diverge:
+
+```text
+wire     = peer_id⟨lp⟩ ‖ spki⟨lp⟩ ‖ seq(u64) ‖ announced_at(u64)
+           ‖ change_count(u16) ‖ canonical_encode(changes) ‖ signature⟨lp⟩
+
+signed   = "dig:holdings:v1" ‖ peer_id[32] ‖ seq(u64) ‖ announced_at(u64)
+           ‖ canonical_encode(changes)
+```
+
+The `dig:holdings:v1` domain tag is part of the signed preimage, so a holdings signature can never be replayed as a signature over any other DIG message; the version suffix makes a future preimage change an explicit, distinguishable domain. The signature is computed over the **full preimage** (ECDSA-P256 with SHA-256 internally), not over a pre-hashed digest. A truncated, over-long, or trailing-byte frame is rejected outright.
+
+**Verification is fail-closed, and it is what protects the DHT.** A receiver runs these five checks in order and ingests nothing unless all pass:
+
+1. `changes` holds at most 256 deltas.
+2. `provider_peer_id` decodes as exactly 64 hex characters.
+3. `SHA-256(provider_spki)` equals that `peer_id` — the identity is derived, never taken on the holder's word.
+4. `provider_spki` parses as a P-256 (`prime256v1`) EC public key.
+5. the signature verifies over the signing message under that key.
+
+Because the signing key is the **TLS leaf key the `peer_id` already commits to**, the announce is unforgeable standalone — no handshake, proof of possession, or certificate chain is needed, and there is no separate identity binding a third party could graft onto a copied public key. The signature is therefore the anti-poisoning gate: nobody but the holder can advertise content under the holder's `peer_id`, or point a resolver at addresses of their choosing.
+
+A holdings announce is **public discovery data addressed to every peer**, so it is signed and mTLS-carried rather than sealed to a recipient — the same treatment public consensus broadcasts get, and unlike the recipient-sealed directed peer messages.
+
+**Ingest — what a receiver does with a verified announce.**
+
+- **`Add`** → upsert a `ProviderRecord` for `(content_key, provider_peer_id)` with the announced addresses, admitted under exactly the same guards as an `add_provider` PUT: the address list is capped, `expires_at` is clamped to `min(announced expires_at, now + TTL)` so an announce cannot buy itself an unbounded lifetime, and the per-key and global provider caps still apply (an over-capacity ingest stores nothing). The holder is folded into the routing table so this node can reach it.
+- **`Remove`** → delete **only** the `(content_key, provider_peer_id)` record. A retract signed by one holder MUST NOT touch any other holder's record for the same key — one peer can never censor another peer's advertisement.
+- **A claim is a hint until the bytes verify.** The signature proves *who* announced, not that they hold anything. Advertised addresses are authenticated only as far as the announcer's `peer_id`; treat them as untrusted dial hints and never amplify traffic to them. A false "I have X" costs one failed fetch attempt, because content is merkle-verified against the [chain-anchored root](#range-integrity) before it is trusted or re-served.
+
+**When a holder announces.**
+
+- **On gaining a capsule at runtime** — the first `absent → present` transition, whichever path put it there (a cache fill after a remote read, a hosted pin, a store sync, a gap backfill): the node PUTs the provider record and floods an `Add`. This is the edge that makes the network self-scaling: a reader that caches a capsule becomes a discoverable holder of it, so popular content replicates toward wherever it is read.
+- **On losing it** — an eviction or a removal: the node removes its own local provider record immediately, stops republishing the key, and floods a `Remove`. The copies already PUT at the `k` closest peers age out on their TTL, or vanish sooner as each recipient applies the retract.
+- **On the republish interval** — the periodic re-announce that keeps a long-lived holder's records alive.
 
 #### How a node uses the DHT
 
 - **On content-want** (a user asks for `store_id`, `store_id:root`, or a specific resource): derive the matching content key, run `find_providers`, then reach each returned provider over the [NAT ladder](#nat-traversal) and fetch via [`dig.getAvailability`](#availability) + [`dig.fetchRange`](#range). The DHT is **step 1 of the [multi-source download](#multi-source)** — it finds the candidate holders the download then fans out across.
-- **On inventory-change** (the node gains or loses content it serves): `add_provider` for each new content key, and stop announcing what it no longer holds. Run republish on the configured interval.
+- **On inventory-change** (the node gains or loses content it serves): `add_provider` for each new content key and **flood the matching [holdings announce](#holdings-announce)** so peers learn immediately; on a loss, retract the local record and flood the `Remove`. Run republish on the configured interval.
+- **On receiving a holdings announce**: verify it, then apply its deltas to the local provider records ([§4c](#holdings-announce)) — this is how a node's holder map stays current between its own lookups.
 - **Bootstrap** the routing table from existing discovery — the gossip peer pool ([§4b](#discovery)) or the relay introducer ([§4a](#discovery)) — then a self-lookup (`find_node` on the node's own id) fills the table. The DHT never hard-depends on a live relay.
 
 ### 4d · PEX — peer exchange {#pex}
@@ -740,6 +812,7 @@ The peer network is implemented by several crates that must interoperate byte-fo
 | **NAT ladder** | the ordered strategies DIRECT → UPnP → NAT-PMP → PCP → hole-punch (relay signalling only) → RELAYED/TURN (relay carries data), relay-data-last | that every `connect(peer)` implementation prefers direct, prefers hole-punch signalling over full relaying, and proxies the stream only as a last resort |
 | **DHT content key** | `SHA-256(tag ‖ canonical bytes)` with tags `0x01` store (`store_id`), `0x02` root/capsule (`store_id ‖ root`), `0x03` resource (`store_id ‖ root ‖ retrieval_key`); node id = `peer_id`; distance = XOR; bucket = `255 − leading_zeros` ([§4c](#dht)) | that every node derives the identical content key for the same content, and places nodes + content in one 256-bit keyspace, so a provider record announced by one implementation is found by another |
 | **DHT RPC wire** | the four `type`-tagged methods `find_node` / `find_providers` / `add_provider` / `ping` (+ the `error` envelope), `u32`-BE length-prefixed JSON over an authenticated dig-nat mTLS stream (same framing as the relay control messages), `find_providers` always returning `closer` ([§4c](#dht-wire)) | that any node's DHT speaks the same locate-the-holders wire; `dig-nat`/`dig-dht`/`dig-node` conform |
+| **Holdings announce** | opcode **222** flooded over the gossip peer pool; wire `peer_id⟨lp⟩ ‖ spki⟨lp⟩ ‖ seq(u64) ‖ announced_at(u64) ‖ change_count(u16) ‖ canonical_encode(changes) ‖ signature⟨lp⟩` (BE, `u16` length prefixes), deltas `0x01` add (`content_key ‖ addresses ‖ expires_at`) / `0x02` remove (`content_key`), at most 256 per batch; signed `"dig:holdings:v1" ‖ peer_id[32] ‖ seq ‖ announced_at ‖ canonical_encode(changes)` with the TLS leaf key (ECDSA-P256-SHA256, ASN.1), `peer_id ≡ SHA-256(spki)` verified on receive; ingest clamps `expires_at` to `min(announced, now + TTL)` and a remove deletes only that `(content_key, provider_peer_id)` ([§4c](#holdings-announce)) | that a holder's add/retract propagates in real time and is byte-verifiable by every receiver, so the holder set converges without waiting for republish — and that no peer can advertise or retract content under another peer's identity |
 | **DHT shapes** | `Contact { peer_id:<64hex>, addresses:[{host,port,kind}] }` and `ProviderRecord { content_key, provider_peer_id, addresses, expires_at }`, `addresses[]` byte-compatible with `dig.getPeers`; provider records are TTL'd (absolute `expires_at`), republished before expiry, GC'd when stale, and every inbound RPC folds the mTLS-verified caller into the routing table | that returned contacts/records drop straight into a dial target and that provider state is soft state that ages out |
 
 A reimplementation of any peer crate conforms iff it reproduces these — the same discipline that keeps the [read path parity-locked](./conformance-and-parity.md).
