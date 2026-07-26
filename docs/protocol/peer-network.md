@@ -558,6 +558,7 @@ Alongside the standard JSON-RPC codes and the shared `-32004` (resource unavaila
 | `-32006` | `PEER_UNREACHABLE` | No connection to the named peer could be established — every [traversal strategy](#nat-traversal) (direct, UPnP/NAT-PMP/PCP mapping, relay-coordinated hole-punch, and relayed fallback) failed, or the peer is not registered on this network. |
 | `-32007` | `RANGE_NOT_SATISFIABLE` | The requested byte range lies outside the resource (`offset` ≥ its length). Returned by [`dig.fetchRange`](#range). |
 | `-32008` | `CONTENT_REDIRECT` | This node does **not** hold the requested content, but it located peers that do — a **redirect, not a not-found** ([§9a](#redirect-on-miss)). `error.data.redirect` names the holder(s). |
+| `-32009` | `RANGE_METADATA_UNREPRESENTABLE` | The metadata for a range alone cannot fit a frame, so this holder has no conforming range stream for the resource ([§9](#range-errors)). Holder-fatal, and not a transport failure. |
 
 See the full [error catalog](../support/error-codes.md).
 
@@ -759,10 +760,10 @@ Step 2 is the gate: a downloader never fans a range at a peer it has not confirm
 
 | Code | Name | Meaning |
 |---|---|---|
-| `-32009` | `RANGE_METADATA_UNREPRESENTABLE` | The range's metadata alone cannot fit a frame (an `inclusion_proof` over `MAX_INCLUSION_PROOF_B64`), so this holder has no conforming range stream for the resource and streams no frames. **Holder-fatal:** skip this holder for this range and do not count it as a transport failure. |
 | `-32004` | `RESOURCE_UNAVAILABLE` | This peer does not hold the resource/capsule at the requested root, **and** it could not locate any peer that does (a genuine not-found). When it CAN locate a holder it returns the [redirect](#redirect-on-miss) (`-32008`) instead. |
 | `-32007` | `RANGE_NOT_SATISFIABLE` | The requested `offset`/`length` lies outside the resource (`offset >= total_length`), or the range is otherwise unsatisfiable. |
 | `-32008` | `CONTENT_REDIRECT` | This node does not hold the content but located peers that do — see [redirect-on-miss](#redirect-on-miss). |
+| `-32009` | `RANGE_METADATA_UNREPRESENTABLE` | The range's metadata alone cannot fit a frame (an `inclusion_proof` over `MAX_INCLUSION_PROOF_B64`), so this holder has no conforming range stream for the resource and streams no frames. **Holder-fatal:** skip this holder for this range and do not count it as a transport failure. |
 
 ### 9a · Redirect-on-miss — never a silent not-found when a holder exists {#redirect-on-miss}
 
