@@ -75,6 +75,13 @@
     },
     {
       "surface": "dig-rpc",
+      "code": -32009,
+      "name": "RANGE_METADATA_UNREPRESENTABLE",
+      "http_or_exit": 200,
+      "description": "Range metadata unrepresentable — The range metadata ALONE cannot fit a frame — an inclusion_proof whose base64 exceeds MAX_INCLUSION_PROOF_B64 (4096) — so this holder has no conforming range stream for the resource and streams no frames. Returned by the node-profile dig.fetchRange. HOLDER-FATAL: a client skips this holder, does not re-request the range from it, and MUST NOT count it as a transport failure (counted as transport it retries a peer that can never succeed)."
+    },
+    {
+      "surface": "dig-rpc",
       "code": -32008,
       "name": "CONTENT_REDIRECT",
       "http_or_exit": 200,
@@ -485,6 +492,13 @@
         "name": "RANGE_NOT_SATISFIABLE",
         "http_or_exit": 200,
         "description": "Range not satisfiable — The requested byte range lies outside the resource (offset >= total_length) or is otherwise unsatisfiable. Returned by the node-profile dig.fetchRange when the offset/length cannot be served."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32009,
+        "name": "RANGE_METADATA_UNREPRESENTABLE",
+        "http_or_exit": 200,
+        "description": "Range metadata unrepresentable — The range metadata ALONE cannot fit a frame — an inclusion_proof whose base64 exceeds MAX_INCLUSION_PROOF_B64 (4096) — so this holder has no conforming range stream for the resource and streams no frames. Returned by the node-profile dig.fetchRange. HOLDER-FATAL: a client skips this holder, does not re-request the range from it, and MUST NOT count it as a transport failure (counted as transport it retries a peer that can never succeed)."
       },
       {
         "surface": "dig-rpc",
