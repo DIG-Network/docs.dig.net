@@ -71,6 +71,30 @@ The publish-success screen shows every way to reach it, all free:
 - **A `.dig` address** (`http://<storeId>.dig/`) — opens in *any* browser once [dig-dns](../run-a-node/universal-installer.md#browse-dig-names-directly) is installed on that device.
 - A **`*.on.dig.net`** friendly subdomain is an **optional** upgrade (a separate, paid registration) — never required to view or share what you just published.
 
+## Find the store behind a subdomain {#x-dig-store}
+
+Any `*.on.dig.net` subdomain will tell you which store it serves. A `HEAD` request on its root answers with two response headers:
+
+| Header | Value |
+|---|---|
+| `X-Dig-Store` | The 64-hex store id |
+| `X-Dig-URN` | The full `urn:dig:chia:<storeId>` address |
+
+```sh
+curl -sI https://chia-offer.on.dig.net/ | grep -i '^x-dig-'
+# X-Dig-Urn: urn:dig:chia:6ed1e80d44840735bf3c94a38f93e9a7c2e1077872681edf7c5985a14d17513f
+# X-Dig-Store: 6ed1e80d44840735bf3c94a38f93e9a7c2e1077872681edf7c5985a14d17513f
+```
+
+Both are listed in `Access-Control-Expose-Headers`, so in-browser code can read them cross-origin too:
+
+```js
+const response = await fetch('https://chia-offer.on.dig.net/', {method: 'HEAD'});
+const storeId = response.headers.get('X-Dig-Store');
+```
+
+That turns a friendly domain into a verifiable address: hand the store id to `dign open chia://<storeId>/`, or to any [dig RPC](../rpc/what-is-the-dig-rpc.md) read call, and the content is checked against the chain rather than trusted because of the domain it came from. A subdomain pinned to one root also returns `X-Dig-Root`.
+
 ## Related
 
 - [Quickstart](../quickstart.md) — the shorter end-to-end "ship a site" path (web and CLI)

@@ -56,7 +56,7 @@ Install it with the [universal installer](./universal-installer.md):
 
 ```bash
 # Linux / macOS
-curl -fsSL https://raw.githubusercontent.com/DIG-Network/dig-installer/main/install.sh | sh -s -- --with-relay
+curl -fsSL https://dig.net/install.sh | sudo sh -s -- --with-relay
 ```
 
 ```powershell

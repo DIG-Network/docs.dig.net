@@ -30,7 +30,13 @@ The node only ever stores and relays **ciphertext** keyed by hashes — configur
 
 ## Apply settings
 
-Set values in the config file or as `DIGNODE_*` environment variables (env overrides file). After changing settings, restart the service (the Windows service / `systemctl restart dig-node` / `launchctl`).
+Set values in the config file or as `DIGNODE_*` environment variables (env overrides file). After changing settings, restart the node:
+
+```sh
+dign stop && dign start
+```
+
+That works on every platform and every install route. To drive the service manager directly instead, use the id for your route — see [finding the service on your machine](./universal-installer.md#service-ids).
 
 ## Related
 

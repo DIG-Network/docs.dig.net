@@ -19,9 +19,18 @@ tags:
 
 On Ubuntu, Debian, and other Debian-family distributions, install the DIG ecosystem from the **`apt.dig.net`** repository. You get the `dig-node` service and the `dig-store` CLI as ordinary apt packages — signed, and upgraded with `apt upgrade` like anything else on the box. Installing `dig-node` sets up and **enables a systemd service** so your node starts on boot and stays running.
 
-:::note Pre-release — infrastructure being provisioned
-`apt.dig.net` is still being stood up, so these commands may not resolve yet. They are the **real, intended** flow — bookmark this page. In the meantime, use the cross-platform [universal installer](./index.md#universal-installer-any-os) or grab a binary from the [Releases page](https://github.com/DIG-Network/dig-node/releases).
-:::
+## What apt serves today {#what-apt-serves-today}
+
+Check this before you choose apt, because the repository trails the current releases:
+
+| Package | apt serves | Current release | Architectures |
+|---|---|---|---|
+| `dig-node` | 0.43.0 | 0.64.0 | `amd64` only |
+| `dig-store` | 0.17.0 | 0.19.3 | `amd64`, `arm64` |
+
+**Choose apt** when you want `dig-node` managed by your package manager on an x86-64 Debian-family box and an older node is acceptable.
+
+**Choose the [DIG Installer](./universal-installer.md)** when you want the current `dig-node`, or you are on `arm64`, or you want the `dign` and `digd` short aliases, `dig-dns`, `dig.local`, and the `chia://` scheme handler — none of which are part of these apt packages.
 
 ## 1. Add the signing key
 
@@ -45,25 +54,29 @@ echo "deb [signed-by=/usr/share/keyrings/dig.gpg] https://apt.dig.net stable mai
 sudo apt update && sudo apt install dig-node dig-store
 ```
 
-- **`dig-node`** — the headless node service (serves the [dig RPC](../rpc/what-is-the-dig-rpc.md), hosts capsules, keeps the local `.dig` cache).
-- **`dig-store`** — the CLI for creating, committing, and reading stores. Optional if you only want to serve, but usually wanted alongside.
+- **`dig-node`** — the headless node service (serves the [dig RPC](../rpc/what-is-the-dig-rpc.md), hosts capsules, keeps the local `.dig` cache). Installs `/usr/bin/dig-node`.
+- **`dig-store`** — the CLI for creating, committing, and reading stores. Installs `dig-store` plus its `digs` alias. Optional if you only want to serve, but usually wanted alongside.
 
-## 4. Start and enable the service
+## 4. Check the service
 
-Installing `dig-node` registers a **systemd** unit. Enable it (start now **and** on every boot):
-
-```sh
-sudo systemctl enable --now dig-node
-```
+Installing `dig-node` registers the **systemd** unit `dig-node.service` and **enables + starts it for you**, so it's already running and will come back on every boot. No manual enable step is needed.
 
 Check it's running and watch its logs:
 
 ```sh
-systemctl status dig-node      # is it active? when did it start?
+systemctl status dig-node     # is it active? when did it start?
 journalctl -u dig-node -f      # follow the node's logs live
 ```
 
-`systemctl status dig-node` should report `active (running)`. The node now serves the dig RPC on its local endpoint and begins hosting/caching content.
+`systemctl status` should report `active (running)`. The node now serves the dig RPC on `127.0.0.1:9778` and begins hosting/caching content.
+
+The service runs as its own unprivileged `dig-node` system account — never root — and keeps its `.dig` cache in `/var/lib/dig-node`. Change any of its settings with a drop-in:
+
+```sh
+sudo systemctl edit dig-node
+```
+
+→ [Configure dig-node](./configure.md) for the settings you can set
 
 ## What dig-node does once it's running
 
@@ -87,13 +100,15 @@ To restart after a config change, or stop the service:
 
 ```sh
 sudo systemctl restart dig-node
-sudo systemctl stop dig-node               # stop serving (does not uninstall)
-sudo systemctl disable dig-node            # don't start on boot
+sudo systemctl stop dig-node       # stop serving (does not uninstall)
+sudo systemctl disable dig-node    # don't start on boot
 ```
+
+To run a newer `dig-node` than the repository carries, use the [DIG Installer](./universal-installer.md) instead of apt — it always resolves the current release. Pick one route per machine and stay on it, so there is only ever one `dig-node` and one service to reason about.
 
 ## Other operating systems
 
-apt is the **Ubuntu/Debian-native** path. For Windows, macOS, or non-Debian Linux, use the cross-platform **[DIG Installer](./index.md#universal-installer-any-os)** (`curl … | sh`), which installs the `dig-node` and `dig-dns` services (as a Windows service / `systemd` / `launchd`) plus the `dig-store` CLI on every OS, all by default in one run. To **read** DIG content without running a node, just get the **[DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)**.
+apt is the **Ubuntu/Debian-native** path on x86-64. For Windows, macOS, `arm64` Linux, or non-Debian Linux, use the cross-platform **[DIG Installer](./universal-installer.md)**, which installs the `dig-node` and `dig-dns` services (as a Windows service / `launchd` / `systemd`) plus the `dig-store` CLI in one run. To **read** DIG content without running a node, just get the **[DIG Browser ↗](https://github.com/DIG-Network/DIG_Browser/releases)**.
 
 ## Related
 

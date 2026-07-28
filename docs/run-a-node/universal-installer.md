@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 title: Install anywhere — the universal installer
-description: "The DIG Installer — the cross-platform installer for Windows, macOS, and any Linux. One curl | sh (or irm | iex, or a direct download) installs the full DIG stack by default: the dig-store CLI plus the dig-node and dig-dns boot-start services, and registers dig.local."
+description: "The DIG Installer — the cross-platform installer for Windows, macOS, and x86-64 Linux. One elevated command installs the full DIG stack by default: the dig-store CLI plus the dig-node and dig-dns boot-start services, and registers dig.local."
 keywords:
   - DIG Installer
   - universal installer
@@ -29,25 +29,42 @@ tags:
 
 # Install anywhere — the universal installer
 
-The cross-platform path — **Windows, macOS, and any Linux**. The **DIG Installer** detects your OS and installs the full DIG stack in one run: the `dig-store` CLI, plus the `dig-node` and `dig-dns` services, both registered to start automatically on every boot. It needs no package manager.
+The cross-platform path — **Windows, macOS, and x86-64 Linux**. The **DIG Installer** detects your OS and installs the full DIG stack in one run: the `dig-store` CLI, plus the `dig-node` and `dig-dns` services, both registered to start automatically on every boot. It needs no package manager.
 
 ```sh
 # macOS / Linux
-curl -fsSL https://dig.net/install.sh | sh
+curl -fsSL https://dig.net/install.sh | sudo sh
 ```
 
 ```powershell
-# Windows (PowerShell)
+# Windows — in a PowerShell opened with "Run as administrator"
 irm https://dig.net/install.ps1 | iex
 ```
 
-This is the same self-contained `dig-installer` shipped on the [Releases page](https://github.com/DIG-Network/dig-installer/releases) — download `dig-installer-<version>-<os_arch>` and run it directly if you prefer not to pipe to a shell, or on Windows.
+### Why it needs administrator rights {#elevation}
+
+The default install registers boot-start OS services and writes into an administrator-only install root, so it requires elevation on every platform. Run it **without** elevation and it stops **before** downloading or changing anything, telling you to re-run elevated — nothing is installed and no partial state is left behind. So:
+
+- **Linux / macOS** — put `sudo` in the command, as above. The bootstrap script does not elevate itself.
+- **Windows** — open PowerShell with **Run as administrator** first. Piping to `iex` from an ordinary shell stops at the same check.
+
+### Platforms it installs on {#platforms}
+
+| OS | Architecture |
+|---|---|
+| **Linux** | `x86-64` |
+| **macOS** | Apple Silicon (`arm64`) and Intel (`x86-64`) |
+| **Windows** | `x86-64` |
+
+On `arm64` Linux, install the `dig-store` CLI from the [apt repository](./apt.md) and read content through `rpc.dig.net`; a `dig-node` build for that platform is not published yet.
+
+This is the same self-contained `dig-installer` shipped on the [Releases page](https://github.com/DIG-Network/dig-installer/releases) — download `dig-installer-<version>-<os_arch>` and run it directly (elevated) if you prefer not to pipe to a shell.
 
 Every component installs by default — `dig-store`, `dig-node`, and `dig-dns`. Skip any one of them with its `--no-<component>` flag (`--no-dig-store`, `--no-dig-node`, `--no-dig-dns`); the advanced `dig-relay` and the DIG Browser stay opt-in via `--with-relay` / `--with-browser`.
 
 ## Short aliases: `dign` and `digd` {#short-aliases}
 
-Every install also places two short aliases on your `PATH`: **`dign`** for `dig-node` and **`digd`** for `dig-dns`. Each is a real installed binary — not a shell alias — and behaves identically to its primary: the same subcommands (including every service verb — `install`/`uninstall`/`start`/`stop`/`status`/`serve`), the same flags and `--json` output, and the same exit codes. `dign --help`/`--version` reports `dign`, and `digd --help`/`--version` reports `digd`; the primaries keep reporting their own names. For example, `dign open chia://<storeId>/` and `dig-node open chia://<storeId>/` do exactly the same thing. This mirrors [`digs`](../digstore/cli/install.md), the first-class alias for `dig-store`.
+The DIG Installer also places two short aliases on your `PATH`: **`dign`** for `dig-node` and **`digd`** for `dig-dns`. They are specific to this route — neither the [apt packages](./apt.md) nor the native OS packages below carry them, so use the full `dig-node` / `dig-dns` names if you installed one of those ways. Each is a real installed binary — not a shell alias — and behaves identically to its primary: the same subcommands (including every service verb — `install`/`uninstall`/`start`/`stop`/`status`/`serve`), the same flags and `--json` output, and the same exit codes. `dign --help`/`--version` reports `dign`, and `digd --help`/`--version` reports `digd`; the primaries keep reporting their own names. For example, `dign open chia://<storeId>/` and `dig-node open chia://<storeId>/` do exactly the same thing. This mirrors [`digs`](../digstore/cli/install.md), the first-class alias for `dig-store`.
 
 ## GUI installer {#gui-installer}
 
@@ -64,26 +81,46 @@ Re-running the installer over an already-installed `dig-node` or `dig-relay` —
 
 ## Native OS packages {#native-os-packages}
 
-Under the hood, the install is a set of **native OS packages** — a Windows **`.msi`**, a macOS **`.pkg`**, and a Linux **`.deb`** for `dig-node`, and the same three for `dig-dns`. The DIG Installer above just downloads and runs the right one for your machine; you can also install a package directly with your OS's own tooling:
+`dig-node` also ships as **native OS packages** — a Windows **`.msi`**, a macOS **`.pkg`**, and a Linux **`.deb`**. Install one directly with your OS's own tooling when you'd rather not run the installer at all. Take the asset from the [dig-node Releases page](https://github.com/DIG-Network/dig-node/releases/latest):
 
 | OS | Install a package directly |
 |---|---|
-| **Windows** | Double-click `dig-node-<version>-windows-x64.msi`, or `msiexec /i dig-node-<version>-windows-x64.msi`. |
-| **macOS** | Double-click the `.pkg`, or `sudo installer -pkg dig-node-<version>.pkg -target /`. |
-| **Linux** | `sudo apt install ./dig-node-<version>.deb` — the same `.deb` the [apt repository](./apt.md) serves. |
+| **Windows** | Double-click `dig-node-<version>-windows-x64.msi`, or `msiexec /i dig-node-<version>-windows-x64.msi` from an elevated prompt. |
+| **macOS** | Double-click `dig-node-<version>-macos.pkg`, or `sudo installer -pkg dig-node-<version>-macos.pkg -target /`. |
+| **Linux** | `sudo apt install ./dig-node_<version>_amd64.deb`. |
 
-Installing a package **registers the background service and starts it immediately and on every boot** — no extra step. The services are registered under stable ids so you can find them in your OS's service manager:
+Installing a package **registers the background service and starts it immediately and on every boot** — no extra step. Each package installs only the `dig-node` binary and its service; the short aliases, `dig.local`, and `dig-dns` come with the [DIG Installer](#platforms).
 
-| Service | Id | Display name |
+### Finding the service on your machine {#service-ids}
+
+The id your service manager knows the node by depends on how you installed it, so use the row that matches your route:
+
+| How you installed | OS | Ask for it as |
 |---|---|---|
-| `dig-node` | `net.dignetwork.dig-node` | **DIG NETWORK: NODE** |
-| `dig-dns` | `net.dignetwork.dig-dns` | **DIG NETWORK: DNS** |
+| DIG Installer | Linux (systemd) | `dignetwork-dig-node`, in the **user** scope — `systemctl --user` |
+| DIG Installer | macOS (launchd) | `net.dignetwork.dig-node` |
+| DIG Installer | Windows (Services) | `net.dignetwork.dig-node` — **DIG NETWORK: NODE** |
+| `.deb` / `.pkg` / `.msi` | Linux / macOS / Windows | `net.dignetwork.dig-node` |
+| [apt repository](./apt.md) | Linux (systemd) | `dig-node` |
 
-Each runs as a Windows service / macOS LaunchDaemon / Linux systemd unit. Download the packages from the [dig-node](https://github.com/DIG-Network/dig-node/releases) and [dig-dns](https://github.com/DIG-Network/dig-dns/releases) Releases pages.
+`dig-dns` follows the same pattern with `dig-dns` in place of `dig-node` (**DIG NETWORK: DNS** on Windows). On Linux, `dig-node` reports its own id as `net.dignetwork.dig-node`, while the name to hand `systemctl` is the one in the table:
+
+```sh
+systemctl --user status dignetwork-dig-node
+journalctl --user -u dignetwork-dig-node -f
+```
+
+Because that unit lives in your user scope, it needs a logged-in session for your account. On a headless server, prefer the [apt repository](./apt.md) or the `.deb`, which both register a **system** service that runs with no session at all.
+
+Whichever route you used, the node reports on itself without you needing an id:
+
+```sh
+dign status --json
+```
 
 ## Open `chia://` links from anywhere {#chia-scheme-handler}
 
-Installing `dig-node` also registers **`chia://`** (and **`urn:`**) as an operating-system URL-scheme handler — on by default. With it registered, opening a `chia://…` or `urn:dig:chia:…` link **anywhere on your computer** — from an email, a chat, or an ordinary browser — routes it through your local dig-node, which resolves and verifies the content and opens it in your default browser. Nothing else needs to be installed for the click to work; if you also run the [DIG Browser](../browser/chia-protocol.md) or the extension, it still verifies the page.
+The DIG Installer and the native OS packages also register **`chia://`** (and **`urn:`**) as an operating-system URL-scheme handler — on by default. With it registered, opening a `chia://…` or `urn:dig:chia:…` link **anywhere on your computer** — from an email, a chat, or an ordinary browser — routes it through your local dig-node, which resolves and verifies the content and opens it in your default browser. Nothing else needs to be installed for the click to work; if you also run the [DIG Browser](../browser/chia-protocol.md) or the extension, it still verifies the page.
 
 Prefer not to register the handler? Choose the guided [GUI installer](#gui-installer) and decline it during setup.
 
@@ -108,10 +145,6 @@ dig-node open --json chia://<storeId>/
 
 The installer registers **`dig.local`** for your machine so consumers on the same host resolve your node by name (`dig.local` → `localhost`) without hard-coding a port. This is what lets the [DIG Browser](../browser/chia-protocol.md) and extension prefer a local node automatically. → [Point a consumer at your node](./point-a-consumer.md)
 
-:::note Pre-release
-The hosted installers (`apt.dig.net`, `dig.net/install.sh`) are still being provisioned. Until they're live, build from source or grab a binary from the [dig-node Releases](https://github.com/DIG-Network/dig-node/releases). The commands here are the real, intended ones.
-:::
-
 ## An always-on service, verified after install
 
 `dig-node` installs **by default** and registers as an **auto-start** service — it comes up again after a reboot with no manual step, and starts as part of installation. Skip it with `--no-dig-node`. On Linux and macOS it also **auto-restarts if it ever crashes** (Windows recovery-on-crash is still being wired up).
@@ -122,7 +155,7 @@ Once the service is started, the installer runs two checks and prints the result
 - **Health check** — the node answers a live RPC call on its configured port (default `9778`), proving the service isn't just registered but actually serving.
 
 ```sh
-dig-installer
+sudo dig-installer
 #   Registering dig-node as an OS service (port 9778):
 #     ✓ dig-node installed as an OS service and started
 #     ✓ dig.local: 127.0.0.2 dig.local → /etc/hosts
@@ -139,7 +172,7 @@ With the node up and verified, the [extension](../audiences/content-consumers.md
 systemd) alongside `dig-node`. Skip it with `--no-dig-dns`:
 
 ```sh
-curl -fsSL https://dig.net/install.sh | sh -s -- --no-dig-dns
+curl -fsSL https://dig.net/install.sh | sudo sh -s -- --no-dig-dns
 ```
 
 This lets a browser open `http://<storeId>.dig/<path>` directly: dig-dns resolves the
