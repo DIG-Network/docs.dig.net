@@ -56,7 +56,7 @@ Install it with the [universal installer](./universal-installer.md):
 
 ```bash
 # Linux / macOS
-curl -fsSL https://raw.githubusercontent.com/DIG-Network/dig-installer/main/install.sh | sh -s -- --with-relay
+curl -fsSL https://dig.net/install.sh | sudo sh -s -- --with-relay
 ```
 
 ```powershell
@@ -159,5 +159,5 @@ By default the relay speaks plain `ws://` and expects TLS to be terminated in fr
 
 - [Configure a node](./configure.md) — all node settings, including the relay
 - [Install anywhere — the universal installer](./universal-installer.md)
-- [GUI विज़ार्ड से इंस्टॉल करें](./universal-installer.md#gui-installer) — ऊपर दिए फ़्लैग्स का एक गाइडेड विकल्प
+- [Install via the GUI wizard](./universal-installer.md#gui-installer) — a guided alternative to the flags above
 - [Run a DIG node](./index.md) — what a node is and why you'd run one
