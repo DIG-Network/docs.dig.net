@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.7.2] - 2026-07-28
+
+### Documentation
+- **install:** Make every command on the install-and-run path true
+
 ## [0.7.1] - 2026-07-27
 
 ### Documentation
