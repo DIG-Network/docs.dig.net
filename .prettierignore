@@ -1,0 +1,38 @@
+# Prettier formats the CODE surface only (src/**, scripts/**, tests/**, root
+# configs) — it must NEVER touch docs content or i18n translations. Reformatting
+# 1155+ md/mdx files across 14 locales would be an enormous, unsafe diff that
+# violates the ecosystem's docs-integrity (§4.3) and i18n (§6.6) rules.
+
+# CI workflows are YAML, not part of the JS/TS code surface this gate covers
+.github/
+
+# build/tooling output
+node_modules/
+dist/
+build/
+.docusaurus/
+coverage/
+playwright-report/
+test-results/
+
+# docs content — every locale, every format
+docs/
+i18n/
+blog/
+**/*.md
+**/*.mdx
+
+# generated/static artifacts (machine specs, sitemaps, llms.txt, openrpc, etc.)
+static/
+**/knowledge-graph.json
+**/machine-specs.json
+**/openrpc*.json
+**/dht-methods.json
+**/error-codes.json
+**/llms.txt
+**/sitemap*.xml
+**/robots.txt
+
+# lockfiles + changelog (generated, never hand-formatted)
+package-lock.json
+CHANGELOG.md

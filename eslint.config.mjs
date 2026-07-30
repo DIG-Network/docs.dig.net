@@ -10,6 +10,7 @@ import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
 import jsxA11y from "eslint-plugin-jsx-a11y";
 import tseslint from "typescript-eslint";
+import prettierConfig from "eslint-config-prettier";
 
 export default tseslint.config(
   {
@@ -65,4 +66,7 @@ export default tseslint.config(
       "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
     },
   },
+  // Must stay LAST: disables ESLint's stylistic rules so it never fights
+  // Prettier's formatting opinions (§2.4a — format and lint are separate gates).
+  prettierConfig,
 );
