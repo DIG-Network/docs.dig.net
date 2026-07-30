@@ -5,15 +5,27 @@
 // (fix -> patch, feat -> minor, ! / BREAKING CHANGE -> major).
 // Enforced in CI by .github/workflows/commitlint.yml (wagoid/commitlint-github-action).
 export default {
-  extends: ['@commitlint/config-conventional'],
+  extends: ["@commitlint/config-conventional"],
   rules: {
-    'type-enum': [
+    "type-enum": [
       2,
-      'always',
-      ['feat', 'fix', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'ci', 'chore', 'revert'],
+      "always",
+      [
+        "feat",
+        "fix",
+        "docs",
+        "style",
+        "refactor",
+        "perf",
+        "test",
+        "build",
+        "ci",
+        "chore",
+        "revert",
+      ],
     ],
-    'subject-case': [0], // allow any subject casing (proper nouns, scheme literals like chia://)
-    'body-max-line-length': [0], // long bodies (URLs, logs) are fine
-    'footer-max-line-length': [0],
+    "subject-case": [0], // allow any subject casing (proper nouns, scheme literals like chia://)
+    "body-max-line-length": [0], // long bodies (URLs, logs) are fine
+    "footer-max-line-length": [0],
   },
 };

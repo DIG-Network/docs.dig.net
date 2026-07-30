@@ -13,76 +13,76 @@
  *   node:  { id, type: "concept" | "doc", title, url, [tags] }
  *   edge:  { from, to, type: "defines"|"part-of"|"relates-to"|"requires"|"see-also" }
  */
-import fs from 'node:fs';
-import path from 'node:path';
-import {fileURLToPath, pathToFileURL} from 'node:url';
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(__dirname, '..');
-const DOCS = path.join(ROOT, 'docs');
-const SITE = 'https://docs.dig.net';
+const ROOT = path.resolve(__dirname, "..");
+const DOCS = path.join(ROOT, "docs");
+const SITE = "https://docs.dig.net";
 
 // The controlled vocabulary: each tag (graph concept node) → the doc that is
 // its canonical definition. The concepts glossary `defines` every term.
 const CONCEPT_TITLES = {
-  capsule: 'Capsule',
-  store: 'Store',
-  generation: 'Generation',
-  urn: 'URN',
-  'retrieval-key': 'Retrieval key',
-  encryption: 'Encryption',
-  'merkle-proof': 'Merkle proof',
-  anchoring: 'On-chain anchoring',
-  'dig-payment': 'DIG payment',
-  'digstore-cli': 'dig-store CLI',
-  'dig-toml': 'dig.toml',
-  'create-dig-app': 'create-dig-app',
-  'deploy-action': 'The GitHub deploy Action',
-  'dig-sdk': 'DIG SDK',
-  'dig-rpc': 'The dig RPC',
-  streaming: 'Streaming',
-  'chia-protocol': 'The chia:// protocol',
-  'window-chia': 'window.chia',
-  'provider-spec': 'window.chia provider spec',
-  browser: 'DIG Browser',
-  'chip-0002': 'CHIP-0002',
-  'chip-0035': 'CHIP-0035',
-  dighub: 'DIGHUb',
+  capsule: "Capsule",
+  store: "Store",
+  generation: "Generation",
+  urn: "URN",
+  "retrieval-key": "Retrieval key",
+  encryption: "Encryption",
+  "merkle-proof": "Merkle proof",
+  anchoring: "On-chain anchoring",
+  "dig-payment": "DIG payment",
+  "digstore-cli": "dig-store CLI",
+  "dig-toml": "dig.toml",
+  "create-dig-app": "create-dig-app",
+  "deploy-action": "The GitHub deploy Action",
+  "dig-sdk": "DIG SDK",
+  "dig-rpc": "The dig RPC",
+  streaming: "Streaming",
+  "chia-protocol": "The chia:// protocol",
+  "window-chia": "window.chia",
+  "provider-spec": "window.chia provider spec",
+  browser: "DIG Browser",
+  "chip-0002": "CHIP-0002",
+  "chip-0035": "CHIP-0035",
+  dighub: "DIGHUb",
 };
 
 /** Recursively collect .md files under docs/. */
 function walk(dir) {
   const out = [];
-  for (const entry of fs.readdirSync(dir, {withFileTypes: true})) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, entry.name);
     if (entry.isDirectory()) out.push(...walk(p));
-    else if (entry.name.endsWith('.md')) out.push(p);
+    else if (entry.name.endsWith(".md")) out.push(p);
   }
   return out;
 }
 
 /** docs/rpc/methods.md -> /docs/rpc/methods ; docs/intro.md -> /docs (slug: /) */
 export function docUrlPath(absFile, frontMatter) {
-  if (frontMatter.slug === '/') return '/docs';
-  let rel = path.relative(DOCS, absFile).replace(/\\/g, '/').replace(/\.md$/, '');
-  rel = rel.replace(/\/index$/, ''); // run-a-node/index -> run-a-node
+  if (frontMatter.slug === "/") return "/docs";
+  let rel = path.relative(DOCS, absFile).replace(/\\/g, "/").replace(/\.md$/, "");
+  rel = rel.replace(/\/index$/, ""); // run-a-node/index -> run-a-node
   return `/docs/${rel}`;
 }
 
 /** Minimal frontmatter parser: title, slug, and the tags list. */
 export function parseFrontMatter(src) {
   const m = src.match(/^---\n([\s\S]*?)\n---/);
-  const fm = {tags: []};
+  const fm = { tags: [] };
   if (!m) return fm;
   const body = m[1];
   const title = body.match(/^title:\s*"?(.+?)"?\s*$/m);
-  if (title) fm.title = title[1].replace(/^"|"$/g, '');
+  if (title) fm.title = title[1].replace(/^"|"$/g, "");
   const slug = body.match(/^slug:\s*(.+?)\s*$/m);
   if (slug) fm.slug = slug[1].trim();
   const tagsBlock = body.match(/^tags:\n((?:\s*-\s*.+\n?)+)/m);
   if (tagsBlock) {
     fm.tags = tagsBlock[1]
-      .split('\n')
+      .split("\n")
       .map((l) => l.match(/^\s*-\s*(.+?)\s*$/))
       .filter(Boolean)
       .map((mm) => mm[1]);
@@ -92,13 +92,13 @@ export function parseFrontMatter(src) {
 
 /** Resolve a relative .md link from a source file into a /docs URL path. */
 export function resolveRelLink(fromFile, href) {
-  const clean = href.split('#')[0];
-  if (!clean.endsWith('.md')) return null;
+  const clean = href.split("#")[0];
+  if (!clean.endsWith(".md")) return null;
   const abs = path.resolve(path.dirname(fromFile), clean);
   if (!abs.startsWith(DOCS)) return null;
-  let rel = path.relative(DOCS, abs).replace(/\\/g, '/').replace(/\.md$/, '');
-  rel = rel.replace(/\/index$/, '');
-  if (rel === 'intro') return '/docs';
+  let rel = path.relative(DOCS, abs).replace(/\\/g, "/").replace(/\.md$/, "");
+  rel = rel.replace(/\/index$/, "");
+  if (rel === "intro") return "/docs";
   return `/docs/${rel}`;
 }
 
@@ -115,13 +115,13 @@ export function parseRelated(src, fromFile) {
 // genuine prerequisites (`requires`); every other related link is `see-also`.
 // An explicit table rather than a guess keeps the edge types deterministic.
 const REQUIRES = new Set([
-  '/docs/digstore/cli/quickstart|->|/docs/digstore/cli/install',
-  '/docs/digstore/cli/quickstart|->|/docs/digstore/cli/onchain-anchoring',
-  '/docs/digstore/cli/onchain-anchoring|->|/docs/digstore/cli/quickstart',
-  '/docs/digstore/cli/sharing|->|/docs/digstore/cli/onchain-anchoring',
+  "/docs/digstore/cli/quickstart|->|/docs/digstore/cli/install",
+  "/docs/digstore/cli/quickstart|->|/docs/digstore/cli/onchain-anchoring",
+  "/docs/digstore/cli/onchain-anchoring|->|/docs/digstore/cli/quickstart",
+  "/docs/digstore/cli/sharing|->|/docs/digstore/cli/onchain-anchoring",
 ]);
 
-const CONCEPTS_DOC = '/docs/concepts';
+const CONCEPTS_DOC = "/docs/concepts";
 
 /** Build the full knowledge graph from the docs tree. */
 function buildGraph() {
@@ -131,41 +131,41 @@ function buildGraph() {
   const edges = [];
 
   for (const file of files) {
-    const src = fs.readFileSync(file, 'utf8');
+    const src = fs.readFileSync(file, "utf8");
     const fm = parseFrontMatter(src);
     const url = docUrlPath(file, fm);
-    const title = fm.title || path.basename(file, '.md');
-    docNodes.set(url, {id: url, type: 'doc', title, url: SITE + url, tags: fm.tags});
-    docFront.set(url, {tags: fm.tags, related: parseRelated(src, file)});
+    const title = fm.title || path.basename(file, ".md");
+    docNodes.set(url, { id: url, type: "doc", title, url: SITE + url, tags: fm.tags });
+    docFront.set(url, { tags: fm.tags, related: parseRelated(src, file) });
   }
 
   // Concept nodes (one per controlled-vocabulary tag), keyed by their tag page.
   const conceptNodes = [];
   for (const [tag, title] of Object.entries(CONCEPT_TITLES)) {
     const url = `/docs/tags/${tag}`;
-    conceptNodes.push({id: `concept:${tag}`, type: 'concept', title, url: SITE + url, tag});
+    conceptNodes.push({ id: `concept:${tag}`, type: "concept", title, url: SITE + url, tag });
   }
 
   // Edge: concepts glossary `defines` every concept.
   for (const tag of Object.keys(CONCEPT_TITLES)) {
-    edges.push({from: CONCEPTS_DOC, to: `concept:${tag}`, type: 'defines'});
+    edges.push({ from: CONCEPTS_DOC, to: `concept:${tag}`, type: "defines" });
   }
 
   // Edge: each doc is `part-of` every concept it is tagged with (doc -> concept).
-  for (const [url, {tags}] of docFront) {
+  for (const [url, { tags }] of docFront) {
     for (const tag of tags) {
       if (CONCEPT_TITLES[tag]) {
-        edges.push({from: url, to: `concept:${tag}`, type: 'part-of'});
+        edges.push({ from: url, to: `concept:${tag}`, type: "part-of" });
       }
     }
   }
 
   // Edge: "## Related" links become typed doc->doc edges.
-  for (const [url, {related}] of docFront) {
+  for (const [url, { related }] of docFront) {
     for (const to of related) {
       if (to === url) continue;
       const key = `${url}|->|${to}`;
-      edges.push({from: url, to, type: REQUIRES.has(key) ? 'requires' : 'see-also'});
+      edges.push({ from: url, to, type: REQUIRES.has(key) ? "requires" : "see-also" });
     }
   }
 
@@ -179,8 +179,8 @@ function buildGraph() {
 
 function main() {
   const graph = buildGraph();
-  const outPath = path.join(ROOT, 'static', 'knowledge-graph.json');
-  fs.writeFileSync(outPath, JSON.stringify(graph, null, 2) + '\n');
+  const outPath = path.join(ROOT, "static", "knowledge-graph.json");
+  fs.writeFileSync(outPath, JSON.stringify(graph, null, 2) + "\n");
   console.log(
     `knowledge-graph.json: ${graph.nodes.length} nodes, ${graph.edges.length} edges -> ${path.relative(ROOT, outPath)}`,
   );

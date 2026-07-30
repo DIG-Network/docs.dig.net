@@ -37,7 +37,9 @@ test("locale dropdown opens and its options are reachable by keyboard", async ({
   await page.goto("/docs/quickstart");
   await page.waitForLoadState("networkidle");
 
-  const localeToggle = page.locator(".navbar__item.dropdown .navbar__link, .navbar__item.dropdown button").first();
+  const localeToggle = page
+    .locator(".navbar__item.dropdown .navbar__link, .navbar__item.dropdown button")
+    .first();
   await localeToggle.focus();
   await expect(localeToggle).toBeFocused();
 
@@ -59,7 +61,9 @@ test("prefers-reduced-motion disables transition durations", async ({ browser })
 
   const button = page.locator(".button--primary").first();
   await expect(button).toBeVisible();
-  const durationSeconds = await button.evaluate((node) => parseFloat(getComputedStyle(node).transitionDuration));
+  const durationSeconds = await button.evaluate((node) =>
+    parseFloat(getComputedStyle(node).transitionDuration),
+  );
   // custom.css forces transition-duration to 0.001ms (1e-6s) under
   // prefers-reduced-motion: reduce — assert it's effectively instant (well
   // under the un-reduced 0.16s/0.22s durations) rather than matching the

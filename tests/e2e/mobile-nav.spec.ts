@@ -10,7 +10,9 @@ import AxeBuilder from "@axe-core/playwright";
 // than the always-visible desktop sidebar aria-snapshot.spec.ts/
 // keyboard-nav.spec.ts assume.
 
-test("mobile hamburger toggle opens the slide-over sidebar with correct aria-expanded state", async ({ page }) => {
+test("mobile hamburger toggle opens the slide-over sidebar with correct aria-expanded state", async ({
+  page,
+}) => {
   await page.goto("/docs/quickstart");
   await page.waitForLoadState("networkidle");
 
@@ -38,7 +40,9 @@ test("mobile hamburger toggle opens the slide-over sidebar with correct aria-exp
   await expect(sidebar).not.toBeVisible();
 });
 
-test("axe: zero WCAG 2.2 AA violations on mobile viewport with the sidebar open", async ({ page }) => {
+test("axe: zero WCAG 2.2 AA violations on mobile viewport with the sidebar open", async ({
+  page,
+}) => {
   await page.goto("/docs/quickstart");
   await page.waitForLoadState("networkidle");
 
@@ -59,7 +63,9 @@ test("axe: zero WCAG 2.2 AA violations on mobile viewport with the sidebar open"
             .join(", ")}`,
       )
       .join("\n");
-    throw new Error(`axe found ${results.violations.length} violation(s) with mobile sidebar open:\n${summary}`);
+    throw new Error(
+      `axe found ${results.violations.length} violation(s) with mobile sidebar open:\n${summary}`,
+    );
   }
   expect(results.violations).toEqual([]);
 });

@@ -24,7 +24,9 @@ const LOCALES = [
   "hi",
 ];
 
-test("homepage (en) carries canonical, full hreflang set, and OG/Twitter tags", async ({ page }) => {
+test("homepage (en) carries canonical, full hreflang set, and OG/Twitter tags", async ({
+  page,
+}) => {
   await page.goto("/");
 
   const canonical = page.locator('link[rel="canonical"]');
@@ -44,7 +46,10 @@ test("homepage (en) carries canonical, full hreflang set, and OG/Twitter tags", 
   await expect(page.locator('meta[property="og:title"]')).toHaveCount(1);
   await expect(page.locator('meta[property="og:description"]')).toHaveCount(1);
   await expect(page.locator('meta[property="og:image"]')).toHaveCount(1);
-  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute("content", "summary_large_image");
+  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
+    "content",
+    "summary_large_image",
+  );
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "index, follow");
 });
 
@@ -62,7 +67,9 @@ test("a docs page (de) self-canonicalizes and carries the full hreflang set", as
   expect(deHref).toBe("https://docs.dig.net/de/docs/quickstart");
 
   // x-default must point at the unprefixed English URL.
-  const defaultHref = await page.locator("link[rel='alternate'][hreflang='x-default']").getAttribute("href");
+  const defaultHref = await page
+    .locator("link[rel='alternate'][hreflang='x-default']")
+    .getAttribute("href");
   expect(defaultHref).toBe("https://docs.dig.net/docs/quickstart");
 
   await expect(page.locator("html")).toHaveAttribute("lang", "de");

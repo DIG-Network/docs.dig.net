@@ -105,9 +105,15 @@ function annotateSitemap(sitemapPath, locale) {
       hreflang: code,
       href: buildAlternateUrl(logicalPath, code),
     }));
-    alternates.push({ hreflang: "x-default", href: buildAlternateUrl(logicalPath, DEFAULT_LOCALE) });
+    alternates.push({
+      hreflang: "x-default",
+      href: buildAlternateUrl(logicalPath, DEFAULT_LOCALE),
+    });
     const links = alternates
-      .map((a) => `<xhtml:link rel="alternate" hreflang="${xmlAttrEscape(a.hreflang)}" href="${xmlAttrEscape(a.href)}"/>`)
+      .map(
+        (a) =>
+          `<xhtml:link rel="alternate" hreflang="${xmlAttrEscape(a.hreflang)}" href="${xmlAttrEscape(a.href)}"/>`,
+      )
       .join("");
     return `<url>${ws}<loc>${loc}</loc>${links}`;
   });
@@ -118,7 +124,9 @@ function annotateSitemap(sitemapPath, locale) {
 
 function main() {
   if (!fs.existsSync(distDir)) {
-    console.error(`gen-hreflang-sitemaps: dist/ not found at ${distDir} — run "docusaurus build" first.`);
+    console.error(
+      `gen-hreflang-sitemaps: dist/ not found at ${distDir} — run "docusaurus build" first.`,
+    );
     process.exit(1);
   }
 
@@ -137,11 +145,15 @@ function main() {
     const count = annotateSitemap(sitemapPath, locale);
     totalFiles += 1;
     totalUrls += count;
-    console.log(`gen-hreflang-sitemaps: ${path.relative(distDir, sitemapPath)} — ${count} url(s) annotated with ${LOCALES.length + 1} alternates`);
+    console.log(
+      `gen-hreflang-sitemaps: ${path.relative(distDir, sitemapPath)} — ${count} url(s) annotated with ${LOCALES.length + 1} alternates`,
+    );
   }
 
   if (totalFiles === 0) {
-    console.error("gen-hreflang-sitemaps: no sitemap.xml found under dist/ for any configured locale.");
+    console.error(
+      "gen-hreflang-sitemaps: no sitemap.xml found under dist/ for any configured locale.",
+    );
     process.exit(1);
   }
 

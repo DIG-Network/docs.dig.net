@@ -42,7 +42,9 @@ test("locale dropdown exposes an accessible name and expands via ARIA state", as
 
   // Docusaurus's LocaleDropdown renders a <button> (dropdown__toggle-equivalent
   // navbar item) carrying the current locale's label as its accessible name.
-  const localeToggle = page.locator(".navbar__item.dropdown .navbar__link, .navbar__item.dropdown button").first();
+  const localeToggle = page
+    .locator(".navbar__item.dropdown .navbar__link, .navbar__item.dropdown button")
+    .first();
   await expect(localeToggle).toBeVisible();
   const accessibleName = await localeToggle.innerText();
   expect(accessibleName.trim().length).toBeGreaterThan(0);

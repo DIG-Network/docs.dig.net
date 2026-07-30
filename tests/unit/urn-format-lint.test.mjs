@@ -33,7 +33,8 @@ const forbiddenForms = [
     pattern: /dig:\/\/urn:dig:/,
   },
   {
-    label: "chia:// wrapping a URN (chia://urn:…) — chia:// addresses a store, it never wraps a URN",
+    label:
+      "chia:// wrapping a URN (chia://urn:…) — chia:// addresses a store, it never wraps a URN",
     pattern: /chia:\/\/urn:/,
   },
 ];

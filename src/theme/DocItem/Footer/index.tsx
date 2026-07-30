@@ -14,17 +14,17 @@
  * typed `about`/`keywords` edges that link the page to the controlled DIG
  * vocabulary so a scraper can reconstruct the concept graph.
  */
-import React, {type ReactNode} from 'react';
-import Head from '@docusaurus/Head';
-import {useDoc} from '@docusaurus/plugin-content-docs/client';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import Footer from '@theme-original/DocItem/Footer';
+import React, { type ReactNode } from "react";
+import Head from "@docusaurus/Head";
+import { useDoc } from "@docusaurus/plugin-content-docs/client";
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import Footer from "@theme-original/DocItem/Footer";
 
 // The docs site is the single `isPartOf` parent every page belongs to.
 const DOCS_SITE = {
-  '@type': 'TechArticle',
-  name: 'DIG Network Documentation',
-  url: 'https://docs.dig.net/',
+  "@type": "TechArticle",
+  name: "DIG Network Documentation",
+  url: "https://docs.dig.net/",
 } as const;
 
 function toAbsoluteUrl(siteUrl: string, permalink: string): string {
@@ -33,8 +33,8 @@ function toAbsoluteUrl(siteUrl: string, permalink: string): string {
 }
 
 export default function DocItemFooterWrapper(props: Record<string, unknown>): ReactNode {
-  const {metadata, frontMatter} = useDoc();
-  const {siteConfig} = useDocusaurusContext();
+  const { metadata, frontMatter } = useDoc();
+  const { siteConfig } = useDocusaurusContext();
 
   const keywords = ([] as string[])
     .concat((frontMatter.keywords as string[] | undefined) ?? [])
@@ -46,40 +46,39 @@ export default function DocItemFooterWrapper(props: Record<string, unknown>): Re
   // `schema_type` is a custom frontmatter field (not in DocFrontMatter), so
   // read it through an index cast. "DefinedTerm" marks the glossary/concept
   // pages; everything else is a TechArticle.
-  const isDefinedTerm =
-    (frontMatter as Record<string, unknown>).schema_type === 'DefinedTerm';
+  const isDefinedTerm = (frontMatter as Record<string, unknown>).schema_type === "DefinedTerm";
 
   // `about` turns each tag into a typed edge to a DefinedTerm node, keyed by
   // its /docs/tags page — the canonical graph node for that concept.
   const about = (metadata.tags ?? []).map((t) => ({
-    '@type': 'DefinedTerm',
+    "@type": "DefinedTerm",
     name: t.label,
     url: toAbsoluteUrl(siteConfig.url, t.permalink),
-    inDefinedTermSet: toAbsoluteUrl(siteConfig.url, '/docs/concepts'),
+    inDefinedTermSet: toAbsoluteUrl(siteConfig.url, "/docs/concepts"),
   }));
 
   const jsonLd: Record<string, unknown> = {
-    '@context': 'https://schema.org',
-    '@type': isDefinedTerm ? 'DefinedTerm' : 'TechArticle',
+    "@context": "https://schema.org",
+    "@type": isDefinedTerm ? "DefinedTerm" : "TechArticle",
     name: metadata.title,
     headline: metadata.title,
     description: metadata.description,
     url,
-    '@id': url,
-    inLanguage: 'en',
+    "@id": url,
+    inLanguage: "en",
     keywords: uniqueKeywords,
     isPartOf: DOCS_SITE,
     publisher: {
-      '@type': 'Organization',
-      name: 'DIG Network',
-      url: 'https://dig.net',
+      "@type": "Organization",
+      name: "DIG Network",
+      url: "https://dig.net",
     },
   };
   if (about.length > 0) {
     jsonLd.about = about;
   }
   if (isDefinedTerm) {
-    jsonLd.inDefinedTermSet = toAbsoluteUrl(siteConfig.url, '/docs/concepts');
+    jsonLd.inDefinedTermSet = toAbsoluteUrl(siteConfig.url, "/docs/concepts");
   }
 
   return (
