@@ -1,6 +1,6 @@
 {
   "name": "docs-dig-net",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
@@ -29,7 +29,6 @@
   },
   "dependencies": {
     "@docusaurus/core": "3.5.2",
-    "@docusaurus/plugin-client-redirects": "^3.5.2",
     "@docusaurus/preset-classic": "3.5.2",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^2.0.0",
