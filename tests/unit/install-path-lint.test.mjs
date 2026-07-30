@@ -44,8 +44,7 @@ const forbiddenForms = [
     pattern: /install\.sh\s*\|\s*sh\b/,
   },
   {
-    label:
-      "the reverse-DNS unit id on the apt page — the apt package's unit is `dig-node.service`",
+    label: "the reverse-DNS unit id on the apt page — the apt package's unit is `dig-node.service`",
     pattern: /net\.dignetwork\.dig-node/,
     onlyIn: /run-a-node[/\\]apt\.md$/,
   },
@@ -146,7 +145,8 @@ test("every locale copy of an install page matches its English source", () => {
   // apt page ended up with two different unit ids in one tree.
   const installPages = ["index.md", "universal-installer.md", "apt.md", "configure.md"];
   const localeRoot = path.join(repoRoot, "i18n");
-  const locales = fs.readdirSync(localeRoot, { withFileTypes: true })
+  const locales = fs
+    .readdirSync(localeRoot, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name);
 
@@ -155,7 +155,12 @@ test("every locale copy of an install page matches its English source", () => {
     const source = fs.readFileSync(path.join(repoRoot, "docs", "run-a-node", page), "utf8");
     for (const locale of locales) {
       const copy = path.join(
-        localeRoot, locale, "docusaurus-plugin-content-docs", "current", "run-a-node", page,
+        localeRoot,
+        locale,
+        "docusaurus-plugin-content-docs",
+        "current",
+        "run-a-node",
+        page,
       );
       if (!fs.existsSync(copy)) continue;
       if (fs.readFileSync(copy, "utf8") !== source) {

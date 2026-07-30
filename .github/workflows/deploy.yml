@@ -41,8 +41,10 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
       - run: npm ci
-      # Static gates (§2.4a): types must check and lint must be clean before we
-      # spend time on the full multi-locale build + browser suites.
+      # Static gates (§2.4a): format, types, and lint must all be clean before
+      # we spend time on the full multi-locale build + browser suites.
+      - name: format check (prettier)
+        run: npm run format:check
       - run: npm run typecheck # tsc --noEmit across the TS surface
       - run: npm run lint # eslint . — zero errors (§2.4a/§6.4)
       # onBrokenLinks/onBrokenAnchors: "throw" (docusaurus.config.ts) means this

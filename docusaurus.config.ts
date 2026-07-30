@@ -4,8 +4,7 @@ import type * as Preset from "@docusaurus/preset-classic";
 
 const config: Config = {
   title: "DIG Network",
-  tagline:
-    "A Proof-of-Stake Layer 2 on Chia — developer docs for the network and its primitives.",
+  tagline: "A Proof-of-Stake Layer 2 on Chia — developer docs for the network and its primitives.",
   favicon: "img/favicon.png",
 
   url: "https://docs.dig.net",

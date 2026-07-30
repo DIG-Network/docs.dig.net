@@ -17,8 +17,7 @@
 }
 .sectionAlt {
   background:
-    radial-gradient(800px 500px at 50% 0%, rgba(88, 0, 214, 0.16), transparent 60%),
-    #08081c;
+    radial-gradient(800px 500px at 50% 0%, rgba(88, 0, 214, 0.16), transparent 60%), #08081c;
 }
 
 .head {
@@ -53,8 +52,7 @@
   padding: 7rem 0 6rem;
   background:
     radial-gradient(1100px 620px at 22% -10%, rgba(88, 0, 214, 0.42), transparent 60%),
-    radial-gradient(900px 560px at 100% 10%, rgba(255, 0, 222, 0.22), transparent 58%),
-    #06061a;
+    radial-gradient(900px 560px at 100% 10%, rgba(255, 0, 222, 0.22), transparent 58%), #06061a;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 .heroBg {
@@ -95,7 +93,9 @@
   gap: 3rem;
   align-items: center;
 }
-.heroCopy { max-width: 620px; }
+.heroCopy {
+  max-width: 620px;
+}
 
 .pill {
   display: inline-flex;
@@ -133,7 +133,9 @@
   line-height: 1.6;
   color: #c5c1e0;
 }
-.lead strong { color: #fff; }
+.lead strong {
+  color: #fff;
+}
 
 .ctaRow {
   display: flex;
@@ -182,7 +184,15 @@
   filter: drop-shadow(0 0 26px rgba(255, 61, 245, 0.55));
   animation: float 6s ease-in-out infinite;
 }
-@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
 
 .terminal {
   width: 100%;
@@ -190,7 +200,9 @@
   border-radius: 16px;
   background: rgba(10, 8, 30, 0.82);
   border: 1px solid rgba(138, 110, 255, 0.25);
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55), 0 0 40px rgba(88, 0, 214, 0.22);
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.55),
+    0 0 40px rgba(88, 0, 214, 0.22);
   overflow: hidden;
   backdrop-filter: blur(6px);
 }
@@ -202,8 +214,15 @@
   background: rgba(255, 255, 255, 0.03);
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
-.tdot { width: 11px; height: 11px; border-radius: 50%; background: rgba(255,255,255,0.18); }
-.tdot:first-child { background: linear-gradient(135deg, #5800d6, #ff00de); }
+.tdot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+}
+.tdot:first-child {
+  background: linear-gradient(135deg, #5800d6, #ff00de);
+}
 .termBar em {
   margin-left: auto;
   font-family: "Space Grotesk", system-ui, sans-serif;
@@ -222,8 +241,14 @@
   white-space: pre;
   overflow-x: auto;
 }
-.termBody code { background: none; border: 0; color: inherit; }
-.ok { color: #38e1b0; }
+.termBody code {
+  background: none;
+  border: 0;
+  color: inherit;
+}
+.ok {
+  color: #38e1b0;
+}
 
 /* ---------------- PRIMITIVES ---------------- */
 .featureCard {
@@ -231,12 +256,13 @@
   margin: 0 auto;
   border-radius: 22px;
   padding: 2.4rem;
-  background:
-    linear-gradient(180deg, rgba(25, 18, 72, 0.6), rgba(16, 17, 50, 0.6));
+  background: linear-gradient(180deg, rgba(25, 18, 72, 0.6), rgba(16, 17, 50, 0.6));
   border: 1px solid rgba(138, 110, 255, 0.22);
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
 }
-.featureCardHead { margin-bottom: 1.8rem; }
+.featureCardHead {
+  margin-bottom: 1.8rem;
+}
 .badge {
   display: inline-block;
   font-family: "Space Grotesk", system-ui, sans-serif;
@@ -266,7 +292,10 @@
   font-weight: 600;
   color: #d6bdff;
 }
-.textLink:hover { color: #ff6bee; text-decoration: none; }
+.textLink:hover {
+  color: #ff6bee;
+  text-decoration: none;
+}
 
 .pillarGrid {
   display: grid;
@@ -278,7 +307,10 @@
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.22s ease;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.22s ease;
 }
 .pillar:hover {
   transform: translateY(-3px);
@@ -297,15 +329,26 @@
   color: #e4c7ff;
   margin-bottom: 14px;
 }
-.pillarIcon svg { width: 23px; height: 23px; }
+.pillarIcon svg {
+  width: 23px;
+  height: 23px;
+}
 .pillar h4 {
   font-family: "Space Grotesk", system-ui, sans-serif;
   font-size: 1.15rem;
   margin: 0 0 6px;
   color: #fff;
 }
-.pillar p { color: #b8b3d8; font-size: 0.95rem; line-height: 1.55; margin: 0; }
-.pillar code { background: rgba(255,255,255,0.08); border: 0; }
+.pillar p {
+  color: #b8b3d8;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  margin: 0;
+}
+.pillar code {
+  background: rgba(255, 255, 255, 0.08);
+  border: 0;
+}
 
 /* ---------------- HOW IT WORKS ---------------- */
 .steps {
@@ -337,7 +380,11 @@
   margin: 8px 0 6px;
   color: #fff;
 }
-.step p { color: #b8b3d8; margin: 0 0 14px; font-size: 0.96rem; }
+.step p {
+  color: #b8b3d8;
+  margin: 0 0 14px;
+  font-size: 0.96rem;
+}
 .stepCode {
   display: block;
   font-family: "Space Mono", ui-monospace, monospace;
@@ -357,11 +404,13 @@
   overflow: hidden;
   padding: 6rem 0;
   background:
-    radial-gradient(700px 400px at 50% 120%, rgba(255, 0, 222, 0.2), transparent 60%),
-    #0a0a20;
+    radial-gradient(700px 400px at 50% 120%, rgba(255, 0, 222, 0.2), transparent 60%), #0a0a20;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
-.ctaInner { position: relative; text-align: center; }
+.ctaInner {
+  position: relative;
+  text-align: center;
+}
 .ctaGlow {
   position: absolute;
   inset: auto 0 -60% 0;
@@ -384,13 +433,27 @@
   font-size: 1.1rem;
   margin: 0.8rem 0 0;
 }
-.ctaInner .ctaRow { justify-content: center; }
+.ctaInner .ctaRow {
+  justify-content: center;
+}
 
 /* ---------------- responsive ---------------- */
 @media screen and (max-width: 996px) {
-  .hero { padding: 4.5rem 0 3.5rem; }
-  .heroInner { grid-template-columns: 1fr; gap: 2.5rem; }
-  .heroArt { order: 2; }
-  .pillarGrid, .steps { grid-template-columns: 1fr; }
-  .section { padding: 4rem 0; }
+  .hero {
+    padding: 4.5rem 0 3.5rem;
+  }
+  .heroInner {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .heroArt {
+    order: 2;
+  }
+  .pillarGrid,
+  .steps {
+    grid-template-columns: 1fr;
+  }
+  .section {
+    padding: 4rem 0;
+  }
 }

@@ -14,9 +14,9 @@
  * `follow` is kept so links elsewhere on the page (e.g. nav) still get
  * crawled — only THIS page is excluded from the index.
  */
-import React, {type ReactNode} from 'react';
-import Head from '@docusaurus/Head';
-import NotFound from '@theme-original/NotFound';
+import React, { type ReactNode } from "react";
+import Head from "@docusaurus/Head";
+import NotFound from "@theme-original/NotFound";
 
 export default function NotFoundWrapper(props: Record<string, unknown>): ReactNode {
   return (

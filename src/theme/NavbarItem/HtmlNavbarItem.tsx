@@ -1,7 +1,7 @@
-import React from 'react';
-import clsx from 'clsx';
+import React from "react";
+import clsx from "clsx";
 
-import type {Props} from '@theme/NavbarItem/HtmlNavbarItem';
+import type { Props } from "@theme/NavbarItem/HtmlNavbarItem";
 
 // Swizzled from @docusaurus/theme-classic (eject) to fix a real WCAG 2.2 AA
 // violation (axe rule `list`, "Ensure that lists are structured correctly"):
@@ -20,17 +20,17 @@ export default function HtmlNavbarItem({
   mobile = false,
   isDropdownItem = false,
 }: Props): JSX.Element {
-  const Comp = mobile || isDropdownItem ? 'li' : 'div';
+  const Comp = mobile || isDropdownItem ? "li" : "div";
   return (
     <Comp
       className={clsx(
         {
           navbar__item: !mobile && !isDropdownItem,
-          'menu__list-item': mobile,
+          "menu__list-item": mobile,
         },
         className,
       )}
-      dangerouslySetInnerHTML={{__html: value}}
+      dangerouslySetInnerHTML={{ __html: value }}
     />
   );
 }

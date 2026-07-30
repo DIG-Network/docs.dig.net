@@ -59,7 +59,10 @@ test("virtual screen reader announces the homepage's landmark structure in order
     // navigation landmark before any page content — screen reader users
     // rely on landmark order to jump straight past repeated chrome.
     const navIndex = log.findIndex((entry) => entry.startsWith("navigation"));
-    assert.ok(navIndex >= 0, `expected a "navigation" landmark in the spoken log, got: ${JSON.stringify(log.slice(0, 10))}`);
+    assert.ok(
+      navIndex >= 0,
+      `expected a "navigation" landmark in the spoken log, got: ${JSON.stringify(log.slice(0, 10))}`,
+    );
 
     // Exactly one level-1 heading is announced (the hero title) — never
     // zero (an inaccessible/div-only title) and never more than one
@@ -69,11 +72,20 @@ test("virtual screen reader announces the homepage's landmark structure in order
     const h1Announcements = log.filter(
       (entry) => entry.startsWith("heading") && entry.includes("level 1"),
     );
-    assert.equal(h1Announcements.length, 1, `expected exactly one level-1 heading announcement, got: ${JSON.stringify(h1Announcements)}`);
+    assert.equal(
+      h1Announcements.length,
+      1,
+      `expected exactly one level-1 heading announcement, got: ${JSON.stringify(h1Announcements)}`,
+    );
 
     // A contentinfo (footer) landmark is reachable by the end of the trace.
-    const hasFooterLandmark = log.some((entry) => entry.startsWith("contentinfo") || entry.includes("end of contentinfo"));
-    assert.ok(hasFooterLandmark, `expected a "contentinfo" (footer) landmark in the spoken log, got tail: ${JSON.stringify(log.slice(-10))}`);
+    const hasFooterLandmark = log.some(
+      (entry) => entry.startsWith("contentinfo") || entry.includes("end of contentinfo"),
+    );
+    assert.ok(
+      hasFooterLandmark,
+      `expected a "contentinfo" (footer) landmark in the spoken log, got tail: ${JSON.stringify(log.slice(-10))}`,
+    );
   } finally {
     delete globalThis.window;
     delete globalThis.document;
