@@ -78,7 +78,7 @@ for (const path of ["/", "/docs/quickstart"]) {
       await page.waitForLoadState("networkidle");
       await expect(page.locator("html")).toHaveAttribute("data-theme", startScheme);
 
-      const colorModeToggle = page.locator('button[title*="Switch between dark and light mode"]');
+      const colorModeToggle = page.locator('button[aria-label*="Switch between dark and light mode"]');
       await colorModeToggle.click();
       await expect(page.locator("html")).toHaveAttribute("data-theme", otherScheme);
 
