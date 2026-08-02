@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.7.5] - 2026-08-02
+
+### Documentation
+- Dig-app recovery-phrase onboarding + DHT discovery-granularity coherence (#53)
+
 ## [0.7.4] - 2026-07-30
 
 ### Chores
