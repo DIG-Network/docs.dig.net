@@ -28,7 +28,11 @@ export default defineConfig({
     command: "npx docusaurus serve --dir dist --port 4319 --no-open",
     url: "http://127.0.0.1:4319",
     reuseExistingServer: !process.env.CI,
-    timeout: 60_000,
+    // Generous cold-start margin: `docusaurus serve` of the 14-locale/1736-URL
+    // static export takes ~15-20s locally and longer on a loaded CI runner
+    // (heavier post-#1968 dep tree); 60s occasionally timed out. 180s is ~10x
+    // the observed local start with wide headroom.
+    timeout: 180_000,
   },
   projects: [
     // Desktop: the full suite (SEO/hreflang, ARIA tree, keyboard traversal,
