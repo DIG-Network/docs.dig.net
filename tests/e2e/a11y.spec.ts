@@ -81,7 +81,15 @@ for (const path of ["/", "/docs/quickstart"]) {
       const colorModeToggle = page.locator(
         'button[aria-label*="Switch between dark and light mode"]',
       );
-      await colorModeToggle.click();
+      // Docusaurus 3.10's color-mode toggle cycles through up to three states
+      // (light / dark / system), so a single click from a system-default state
+      // may not land on the target scheme; click until the target is active.
+      for (let i = 0; i < 3; i++) {
+        if ((await page.locator("html").getAttribute("data-theme")) === otherScheme) {
+          break;
+        }
+        await colorModeToggle.click();
+      }
       await expect(page.locator("html")).toHaveAttribute("data-theme", otherScheme);
 
       await runAxe(page, `${path} (${otherScheme} mode)`);
