@@ -25,10 +25,18 @@ export default defineConfig({
     trace: "retain-on-failure",
   },
   webServer: {
-    command: "npx docusaurus serve --dir dist --port 4319 --no-open",
+    // Bind serve to 127.0.0.1 explicitly: Docusaurus 3.10 `serve` defaults to
+    // host "localhost", which on CI resolves to IPv6 ::1 while this config
+    // health-checks IPv4 127.0.0.1 — the server came up but was unreachable at
+    // the checked address, timing out. Pinning --host 127.0.0.1 matches the url.
+    command: "npx docusaurus serve --dir dist --port 4319 --host 127.0.0.1 --no-open",
     url: "http://127.0.0.1:4319",
     reuseExistingServer: !process.env.CI,
-    timeout: 60_000,
+    // Generous cold-start margin: `docusaurus serve` of the 14-locale/1736-URL
+    // static export takes ~15-20s locally and longer on a loaded CI runner
+    // (heavier post-#1968 dep tree); 60s occasionally timed out. 180s is ~10x
+    // the observed local start with wide headroom.
+    timeout: 180_000,
   },
   projects: [
     // Desktop: the full suite (SEO/hreflang, ARIA tree, keyboard traversal,
