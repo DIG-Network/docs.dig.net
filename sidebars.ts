@@ -123,6 +123,7 @@ const sidebars: SidebarsConfig = {
           link: { type: "doc", id: "audiences/content-consumers" },
           items: [
             "browser/chia-protocol",
+            "journeys/dig-app-account",
             "browser/using-window-chia",
             "browser/wallet-security",
             "run-a-node/point-a-consumer",
