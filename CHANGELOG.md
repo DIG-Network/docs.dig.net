@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.7.6] - 2026-08-02
+
+### Chores
+- **deps:** Npm-audit dependency-bump sweep — clear all crit/high (#54)
+
 ## [0.7.5] - 2026-08-02
 
 ### Documentation
