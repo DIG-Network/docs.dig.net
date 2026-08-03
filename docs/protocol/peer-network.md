@@ -631,7 +631,7 @@ Ask one peer about many items at once. The granularity of each item is inferred 
 Enumerate what a node serves — the discovery variant. This method has **two scopes**, and they live on different surfaces:
 
 - **Per-store scope** (`store_id` supplied) — list the roots the node holds for one named store. This is **peer-answerable**: a connected peer that already names a store may ask for the roots held under it, and the answer is returned in the same **canonical, access-time-independent order** as [`dig.getAvailability`](#availability)'s `roots` (ascending by root hash).
-- **Whole-inventory scope** (`store_id` omitted) — enumerate *every* store the node serves. This is **loopback-only**: it is answered only to a caller on the node's local loopback interface (the operator enumerating their own node), and is **never** answered to a network peer. A peer that omits `store_id` receives no holdings map.
+- **Whole-inventory scope** (`store_id` omitted) — enumerate *every* store the node serves. This is **loopback-only**: it is answered only to a caller on the node's local loopback interface (the operator enumerating their own node), and is **never** answered to a network peer. A peer that omits `store_id` receives [`-32601`](./dig-rpc.md#error-model) (method not found) — the whole-inventory form is not part of the peer surface, even though the per-store form is — never a holdings map.
 
 - **params:** `{ "store_id"?: "<64hex>", "limit"?: uint }` — supply `store_id` for the peer-answerable per-store roots list; omit it for the loopback-only whole-inventory list.
 - **result** (whole-inventory scope, loopback caller):
