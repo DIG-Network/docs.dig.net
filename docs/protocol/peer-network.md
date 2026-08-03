@@ -645,6 +645,8 @@ or, when `store_id` is given:
 
 Enumeration is best-effort discovery — a peer MAY cap or omit it (privacy / size); `dig.getAvailability` is the authoritative per-item check.
 
+<!-- scaffold: peer-RPC privacy contract (#2048) -->
+
 ### `dig.fetchRange`
 
 Stream a byte range of a resource or capsule from this peer.
