@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.9.0] - 2026-08-03
+
+### Documentation
+- **rpc:** Document control.wallet.balance RPC, CLI verb and -3204x errors (#1958)
+
 ## [0.8.0] - 2026-08-03
 
 ### Documentation
