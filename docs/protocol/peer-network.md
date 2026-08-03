@@ -622,30 +622,39 @@ Ask one peer about many items at once. The granularity of each item is inferred 
 
   Per-item fields (present where cheap for the peer to answer):
   - `available` (bool, always) — whether the peer holds the queried item.
-  - `roots` (store granularity) — the generation roots the peer currently holds for the store, newest-first.
+  - `roots` (store granularity) — the generation roots the peer currently holds for the store, in a **canonical order** (ascending by root hash, lexicographic over the 64-hex value) that is **independent of access time**. The order never reflects which capsules the operator read most recently, so the answer reveals only *which* roots are held, never *when* they were last used (see [Peer-RPC privacy](#peer-rpc-privacy)).
   - `total_length` + `chunk_count` (root/resource granularity) — the resource/capsule ciphertext length and its chunk count, so the caller can **plan its ranges** without a probe fetch.
   - `complete` (bool) — whether the peer holds the **full** resource/capsule (`true`) or only **part** of it (`false`); a partial holder can still serve the ranges it has.
 
 #### `dig.listInventory`
 
-Enumerate what a peer serves — the discovery variant.
+Enumerate what a node serves — the discovery variant. This method has **two scopes**, and they live on different surfaces:
 
-- **params:** `{ "store_id"?: "<64hex>", "limit"?: uint }` — omit `store_id` to list the stores the peer serves; supply it to list the roots the peer holds for that store.
-- **result:**
+- **Per-store scope** (`store_id` supplied) — list the roots the node holds for one named store. This is **peer-answerable**: a connected peer that already names a store may ask for the roots held under it, and the answer is returned in the same **canonical, access-time-independent order** as [`dig.getAvailability`](#availability)'s `roots` (ascending by root hash).
+- **Whole-inventory scope** (`store_id` omitted) — enumerate *every* store the node serves. This is **loopback-only**: it is answered only to a caller on the node's local loopback interface (the operator enumerating their own node), and is **never** answered to a network peer. A peer that omits `store_id` receives no holdings map.
+
+- **params:** `{ "store_id"?: "<64hex>", "limit"?: uint }` — supply `store_id` for the peer-answerable per-store roots list; omit it for the loopback-only whole-inventory list.
+- **result** (whole-inventory scope, loopback caller):
 
 ```json
 { "stores": ["<64hex>", "..."] }
 ```
 
-or, when `store_id` is given:
+- **result** (per-store scope, `store_id` given — peer-answerable):
 
 ```json
 { "store_id": "<64hex>", "roots": ["<64hex>", "..."] }
 ```
 
-Enumeration is best-effort discovery — a peer MAY cap or omit it (privacy / size); `dig.getAvailability` is the authoritative per-item check.
+Per-store enumeration is best-effort discovery — a node MAY cap it with `limit` or omit it (size); [`dig.getAvailability`](#availability) is the authoritative per-item check. The whole-inventory list is never best-effort *over the peer surface* — it is simply not part of it.
 
-<!-- scaffold: peer-RPC privacy contract (#2048) -->
+### Peer-RPC privacy {#peer-rpc-privacy}
+
+A node's peer RPC surface answers questions about content it holds so that downloaders can find and fetch that content. Those answers are shaped so a peer learns **what a node can serve**, and nothing about **how the operator uses it**. Two guarantees hold:
+
+1. **Held-root ordering carries no reading history.** Every list of held roots a peer can observe — `dig.getAvailability`'s store-granularity `roots` and `dig.listInventory`'s per-store `roots` — is returned in one fixed canonical order: ascending by root hash (lexicographic over the 64-hex value). Because the order is derived purely from the content identifiers, it is stable across calls and independent of when each capsule was last read or served. A peer therefore cannot infer a recency ranking — which content the operator reads, or how recently — from the order of the answer. This preserves the tiered-cache cover-caching design, where a node caches content beyond its own immediate interest precisely so its holdings do not disclose its reading behaviour; a recency-ordered answer would have leaked a total order over the operator's interests together with approximate read times, undoing that protection.
+
+2. **The full holdings map is not handed to unauthenticated peers.** Whole-inventory enumeration (`dig.listInventory` with no `store_id`) is loopback-only. Any peer can present a well-formed self-signed client certificate and become "some `peer_id`" ([§7a](#tier-map)), so authentication alone does not imply authorization to read a node's entire holdings. Restricting whole-inventory enumeration to the local loopback interface means the complete map of every store a node serves is available only to the operator running on that machine, not to an arbitrary peer for the cost of one connection and one call. Per-store availability and per-store root listing stay peer-answerable — a downloader that already knows the store it wants can still confirm a holder and plan its fetch — so content discovery is unaffected while the holdings map stays private.
 
 ### `dig.fetchRange`
 
