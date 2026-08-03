@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.11.1] - 2026-08-03
+
+### Chores
+- **test:** Fix test:unit to run on Node 22+ (#2069)
+
 ## [0.11.0] - 2026-08-03
 
 ### Documentation
