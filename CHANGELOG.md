@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.11.0] - 2026-08-03
+
+### Documentation
+- **cli-tools:** Add a DIG CLI tools overview section (#683)
+
 ## [0.10.1] - 2026-08-03
 
 ### Documentation
