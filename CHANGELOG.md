@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.8.0] - 2026-08-03
+
+### Documentation
+- **peer-rpc:** GetAvailability canonical order + listInventory loopback-only (#2048)
+
 ## [0.7.6] - 2026-08-02
 
 ### Chores
