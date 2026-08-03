@@ -1039,6 +1039,29 @@ export const rpcErrors = {
     meaning:
       "A control operation failed at runtime — distinct from bad input or an absent capability.",
   },
+  WALLET_NO_CHAIN_SOURCE: {
+    code: -32040,
+    message: "Wallet: no chain source",
+    meaning:
+      "A control.wallet.balance read had no live chain source able to answer this address. Reported instead of a fabricated 0. See https://docs.dig.net/docs/run-a-node/manage#control-wallet-balance.",
+  },
+  WALLET_NOT_SYNCED: {
+    code: -32041,
+    message: "Wallet: not synced",
+    meaning:
+      "A control.wallet.balance read could not be answered because the wallet is still syncing and no live fallback is available yet.",
+  },
+  WALLET_READ_FAILED: {
+    code: -32042,
+    message: "Wallet: read failed",
+    meaning: "A control.wallet.balance read failed at the underlying DB / chain-source layer.",
+  },
+  WALLET_RATE_LIMITED: {
+    code: -32043,
+    message: "Wallet: rate limited",
+    meaning:
+      "A control.wallet.balance read was refused because the open coinset-fallback rate limit is exhausted. Back off and retry; the cheap local-DB fast path is never rate-limited.",
+  },
 };
 
 /* ------------------------------------------------------------------ *

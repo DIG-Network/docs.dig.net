@@ -165,6 +165,34 @@
       "description": "Control error — A control operation failed at runtime — distinct from bad input or an absent capability."
     },
     {
+      "surface": "dig-rpc",
+      "code": -32040,
+      "name": "WALLET_NO_CHAIN_SOURCE",
+      "http_or_exit": 200,
+      "description": "Wallet: no chain source — A control.wallet.balance read had no live chain source able to answer this address. Reported instead of a fabricated 0. See https://docs.dig.net/docs/run-a-node/manage#control-wallet-balance."
+    },
+    {
+      "surface": "dig-rpc",
+      "code": -32041,
+      "name": "WALLET_NOT_SYNCED",
+      "http_or_exit": 200,
+      "description": "Wallet: not synced — A control.wallet.balance read could not be answered because the wallet is still syncing and no live fallback is available yet."
+    },
+    {
+      "surface": "dig-rpc",
+      "code": -32042,
+      "name": "WALLET_READ_FAILED",
+      "http_or_exit": 200,
+      "description": "Wallet: read failed — A control.wallet.balance read failed at the underlying DB / chain-source layer."
+    },
+    {
+      "surface": "dig-rpc",
+      "code": -32043,
+      "name": "WALLET_RATE_LIMITED",
+      "http_or_exit": 200,
+      "description": "Wallet: rate limited — A control.wallet.balance read was refused because the open coinset-fallback rate limit is exhausted. Back off and retry; the cheap local-DB fast path is never rate-limited."
+    },
+    {
       "surface": "digstore-cli",
       "code": "success",
       "exit": 0,
@@ -583,6 +611,34 @@
         "name": "CONTROL_ERROR",
         "http_or_exit": 200,
         "description": "Control error — A control operation failed at runtime — distinct from bad input or an absent capability."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32040,
+        "name": "WALLET_NO_CHAIN_SOURCE",
+        "http_or_exit": 200,
+        "description": "Wallet: no chain source — A control.wallet.balance read had no live chain source able to answer this address. Reported instead of a fabricated 0. See https://docs.dig.net/docs/run-a-node/manage#control-wallet-balance."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32041,
+        "name": "WALLET_NOT_SYNCED",
+        "http_or_exit": 200,
+        "description": "Wallet: not synced — A control.wallet.balance read could not be answered because the wallet is still syncing and no live fallback is available yet."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32042,
+        "name": "WALLET_READ_FAILED",
+        "http_or_exit": 200,
+        "description": "Wallet: read failed — A control.wallet.balance read failed at the underlying DB / chain-source layer."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32043,
+        "name": "WALLET_RATE_LIMITED",
+        "http_or_exit": 200,
+        "description": "Wallet: rate limited — A control.wallet.balance read was refused because the open coinset-fallback rate limit is exhausted. Back off and retry; the cheap local-DB fast path is never rate-limited."
       }
     ],
     "digstore-cli": [

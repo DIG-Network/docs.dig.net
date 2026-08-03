@@ -27,7 +27,7 @@ This catalog is also published as [`error-codes.json`](https://docs.dig.net/erro
 
 ## dig RPC (JSON-RPC)
 
-The [dig RPC](../protocol/dig-rpc.md) uses the standard [JSON-RPC 2.0](https://www.jsonrpc.org/specification) error codes plus the protocol-specific `-32004`, `-32005`, the node-profile `-32006` / `-32007` / `-32008` / `-32009`, the shell/staging codes `-32010` (upstream) and `-32011`–`-32014` (`dig.stage`), the [private-retrieval](../protocol/onion-routing.md) codes `-32020` / `-32021` / `-32022`, and the local control-plane codes `-32030` / `-32031` / `-32032`. A content **miss is never an error** — the capsule returns its own indistinguishable, non-verifying response (there is no `decoy` field on the wire), and the client discovers the miss by inclusion-proof and/or decryption failure (see [the blind host model](../protocol/blind-host-model.md)). For any well-formed body the HTTP status is `200`; the error is carried in the JSON envelope.
+The [dig RPC](../protocol/dig-rpc.md) uses the standard [JSON-RPC 2.0](https://www.jsonrpc.org/specification) error codes plus the protocol-specific `-32004`, `-32005`, the node-profile `-32006` / `-32007` / `-32008` / `-32009`, the shell/staging codes `-32010` (upstream) and `-32011`–`-32014` (`dig.stage`), the [private-retrieval](../protocol/onion-routing.md) codes `-32020` / `-32021` / `-32022`, the local control-plane codes `-32030` / `-32031` / `-32032`, and the wallet-balance read codes `-32040`–`-32043`. A content **miss is never an error** — the capsule returns its own indistinguishable, non-verifying response (there is no `decoy` field on the wire), and the client discovers the miss by inclusion-proof and/or decryption failure (see [the blind host model](../protocol/blind-host-model.md)). For any well-formed body the HTTP status is `200`; the error is carried in the JSON envelope.
 
 | Code | Meaning | What to do |
 |---|---|---|
@@ -53,6 +53,10 @@ The [dig RPC](../protocol/dig-rpc.md) uses the standard [JSON-RPC 2.0](https://w
 | `-32030` | **Unauthorized (control)** — a `control.*` method was called without a valid local control token. Control methods are loopback-only. (These codes are `-32030`+ so they never collide with the onion codes above.) | Call control methods from the local machine with the node's control token. |
 | `-32031` | **Not supported (control)** — a control operation this build/pin cannot perform (e.g. §21 whole-store sync with no loaded identity). | Ensure the required capability/identity is present, or use a build that supports it. |
 | `-32032` | **Control error** — a control operation failed at runtime (distinct from bad input or an absent capability). | Retry; check the node's logs; report if it persists. |
+| `-32040` | **Wallet: no chain source** (`WALLET_NO_CHAIN_SOURCE`) — a [`control.wallet.balance`](../run-a-node/manage.md#control-wallet-balance) read had no live chain source able to answer this address. Reported instead of a fabricated `0`. | Attach/allow a chain source (a synced local node or the coinset fallback), then retry. |
+| `-32041` | **Wallet: not synced** (`WALLET_NOT_SYNCED`) — the wallet is still syncing and no live fallback is available to answer yet. | Wait for the node to finish syncing, then retry. |
+| `-32042` | **Wallet: read failed** (`WALLET_READ_FAILED`) — the balance read failed at the underlying DB / chain-source layer. | Retry; check the node's logs; report if it persists. |
+| `-32043` | **Wallet: rate limited** (`WALLET_RATE_LIMITED`) — the open coinset-fallback rate limit is exhausted (too many arbitrary-address reads in a short window). | Back off and retry; the cheap local-DB fast path is never rate-limited. |
 
 ## dig-store CLI (exit codes) {#digstore-cli-exit-codes}
 
