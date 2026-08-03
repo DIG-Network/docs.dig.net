@@ -26,7 +26,7 @@ const sidebars: SidebarsConfig = {
       label: "Start here",
       collapsible: true,
       collapsed: false,
-      items: ["intro", "quickstart", "concepts"],
+      items: ["intro", "quickstart", "concepts", "cli-tools/index"],
     },
     {
       type: "category",
