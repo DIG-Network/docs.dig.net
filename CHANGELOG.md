@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.10.1] - 2026-08-03
+
+### Documentation
+- **readme:** Document the i18n install-page-mirror and English-only-link gotchas (#2058)
+
 ## [0.10.0] - 2026-08-03
 
 ### Documentation
