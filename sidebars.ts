@@ -107,6 +107,7 @@ const sidebars: SidebarsConfig = {
             "run-a-node/universal-installer",
             "run-a-node/dns",
             "run-a-node/point-a-consumer",
+            "run-a-node/local-https",
             "run-a-node/configure",
             "run-a-node/run-a-relay",
             "rpc/dig-remote",
