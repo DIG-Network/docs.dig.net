@@ -653,6 +653,17 @@
       ]
     },
     {
+      "id": "/docs/journeys/dig-app-account",
+      "type": "doc",
+      "title": "Set up or restore your account (DIG desktop app)",
+      "url": "https://docs.dig.net/docs/journeys/dig-app-account",
+      "tags": [
+        "dig-app",
+        "wallet",
+        "onboarding"
+      ]
+    },
+    {
       "id": "/docs/journeys/digstore-cli",
       "type": "doc",
       "title": "How do I… use the dig-store CLI?",

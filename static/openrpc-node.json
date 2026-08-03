@@ -2,7 +2,7 @@
   "openrpc": "1.2.6",
   "info": {
     "title": "dig RPC — node profile (local dig-node / in-process DIG Browser)",
-    "version": "0.7.2",
+    "version": "0.9.0",
     "description": "The NODE PROFILE: a distinct, smaller surface than the network profile. Of the byte methods it implements ONLY dig.getContent (local-first, else proxy); everything else proxies upstream or returns -32601. It ADDS node-only methods the security model depends on — chiefly dig.getAnchoredRoot (the CHIP-0035 on-chain head, the trusted root for mandatory root-pinning), dig.stage, and cache.*. Gate on dig.methods rather than assuming one uniform surface. See https://docs.dig.net/docs/protocol/dig-rpc#node-profile.",
     "license": {
       "name": "GPL-2.0",
@@ -1148,6 +1148,34 @@
       "CONTROL_ERROR": {
         "code": -32032,
         "message": "Control error",
+        "data": {
+          "type": "object"
+        }
+      },
+      "WALLET_NO_CHAIN_SOURCE": {
+        "code": -32040,
+        "message": "Wallet: no chain source",
+        "data": {
+          "type": "object"
+        }
+      },
+      "WALLET_NOT_SYNCED": {
+        "code": -32041,
+        "message": "Wallet: not synced",
+        "data": {
+          "type": "object"
+        }
+      },
+      "WALLET_READ_FAILED": {
+        "code": -32042,
+        "message": "Wallet: read failed",
+        "data": {
+          "type": "object"
+        }
+      },
+      "WALLET_RATE_LIMITED": {
+        "code": -32043,
+        "message": "Wallet: rate limited",
         "data": {
           "type": "object"
         }
