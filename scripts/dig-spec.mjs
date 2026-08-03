@@ -1054,8 +1054,7 @@ export const rpcErrors = {
   WALLET_READ_FAILED: {
     code: -32042,
     message: "Wallet: read failed",
-    meaning:
-      "A control.wallet.balance read failed at the underlying DB / chain-source layer.",
+    meaning: "A control.wallet.balance read failed at the underlying DB / chain-source layer.",
   },
   WALLET_RATE_LIMITED: {
     code: -32043,
