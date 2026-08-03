@@ -29,7 +29,7 @@ A consumer — the [DIG Browser](../browser/chia-protocol.md), the [extension](.
 Every consumer resolves its node endpoint in the same fixed order, using the first that responds:
 
 1. **An explicit override**, when the consumer has one set — always wins over the automatic steps below.
-2. **`dig.local`** — an installed local dig-node.
+2. **`dig.local`** — an installed local dig-node. A consumer that can use HTTPS prefers [`https://dig.local`](./local-https.md), falling back to plain `http://dig.local`.
 3. **`localhost`** — a dig-node on the loopback address, its default local port.
 4. **`rpc.dig.net`** — the public gateway, the final fallback when no local node answers.
 
@@ -71,6 +71,7 @@ The local cache is a set of [capsules](../concepts.md#capsule) keyed by `storeId
 ## Related
 
 - [Run a node — overview](./index.md)
+- [The `https://dig.local` endpoint](./local-https.md) — reading from your node over local HTTPS
 - [Configure dig-node](./configure.md)
 - [Manage your node](./manage.md) — the control.* admin RPCs + the My Node UI
 - [The dig-node Control Panel](./control-panel.md) — reserved cache space + LRU eviction

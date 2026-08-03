@@ -1095,6 +1095,17 @@
       ]
     },
     {
+      "id": "/docs/run-a-node/local-https",
+      "type": "doc",
+      "title": "The https://dig.local endpoint",
+      "url": "https://docs.dig.net/docs/run-a-node/local-https",
+      "tags": [
+        "dig-node",
+        "dig-rpc",
+        "browser"
+      ]
+    },
+    {
       "id": "/docs/run-a-node/manage",
       "type": "doc",
       "title": "Manage your node",
@@ -3020,6 +3031,16 @@
       "type": "part-of"
     },
     {
+      "from": "/docs/run-a-node/local-https",
+      "to": "concept:dig-rpc",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/run-a-node/local-https",
+      "to": "concept:browser",
+      "type": "part-of"
+    },
+    {
       "from": "/docs/run-a-node/manage",
       "to": "concept:dig-rpc",
       "type": "part-of"
@@ -4851,6 +4872,11 @@
     },
     {
       "from": "/docs/run-a-node/point-a-consumer",
+      "to": "/docs/run-a-node/local-https",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/point-a-consumer",
       "to": "/docs/run-a-node/configure",
       "type": "see-also"
     },
@@ -4932,6 +4958,11 @@
     {
       "from": "/docs/run-a-node/universal-installer",
       "to": "/docs/run-a-node/point-a-consumer",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/universal-installer",
+      "to": "/docs/run-a-node/local-https",
       "type": "see-also"
     },
     {
