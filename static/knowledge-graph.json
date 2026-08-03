@@ -400,6 +400,17 @@
       ]
     },
     {
+      "id": "/docs/cli-tools",
+      "type": "doc",
+      "title": "DIG CLI tools",
+      "url": "https://docs.dig.net/docs/cli-tools",
+      "tags": [
+        "digstore-cli",
+        "dig-node",
+        "dig-dns"
+      ]
+    },
+    {
       "id": "/docs/concepts",
       "type": "doc",
       "title": "Concepts & glossary",
@@ -1808,6 +1819,11 @@
     {
       "from": "/docs/chip-0035-spends-and-delegation",
       "to": "concept:deploy-action",
+      "type": "part-of"
+    },
+    {
+      "from": "/docs/cli-tools",
+      "to": "concept:digstore-cli",
       "type": "part-of"
     },
     {
