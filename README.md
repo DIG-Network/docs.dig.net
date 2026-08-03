@@ -50,6 +50,16 @@ npm run test:a11y   # Playwright: axe-core, ARIA tree, keyboard, mobile nav
 npm run test:e2e    # Playwright: full a11y/SEO suite (needs a build first)
 ```
 
+### Editing docs — three CI gotchas
+
+When editing the documentation, be aware of these three pitfalls that fail the build or the test suite:
+
+1. **Install pages are mirrored across all 14 locales and must stay byte-identical.** The four install pages under `docs/run-a-node/` — `index.md`, `universal-installer.md`, `apt.md`, `configure.md` — are materialized as byte-identical English copies in every `i18n/<locale>/docusaurus-plugin-content-docs/current/run-a-node/` tree, and `tests/unit/install-path-lint.test.mjs` fails the build if any mirror drifts. When you edit one of these four English pages, you MUST copy the change byte-for-byte into all 13 locale mirrors (same relative path under each `i18n/<locale>/…`).
+
+2. **A new English-only page needs site-absolute links.** A docs page that has no per-locale translation is served as an English fallback in every locale. Its outgoing internal links must be **site-absolute** (`/docs/run-a-node/local-https`), not relative (`./local-https.md`) — a relative link from an English-only fallback page, or a relative link *to* an English-only page from a physical locale mirror, fails the localized Docusaurus broken-link check (`onBrokenLinks: 'throw'`).
+
+3. **Run `npm run test:unit` locally before opening or finishing a PR.** The unit tests (including `install-path-lint` and other drift lints) are separate from `npm run build` — the build alone will NOT catch install-page mirror drift or other linting failures. Always run `npm run test:unit` locally in addition to `npm run build` before pushing your changes.
+
 ## Deployment
 
 Tag-triggered: pushing a `v*` tag runs `.github/workflows/deploy.yml`, which builds
