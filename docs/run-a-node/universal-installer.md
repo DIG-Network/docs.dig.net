@@ -145,7 +145,7 @@ dig-node open --json chia://<storeId>/
 
 The installer registers **`dig.local`** for your machine so consumers on the same host resolve your node by name (`dig.local` → `localhost`) without hard-coding a port. This is what lets the [DIG Browser](../browser/chia-protocol.md) and extension prefer a local node automatically. → [Point a consumer at your node](./point-a-consumer.md)
 
-On Windows the installer also trusts your node's local HTTPS certificate, so browsers reach it securely at `https://dig.local`. → [The `https://dig.local` endpoint](./local-https.md)
+On Windows the installer also trusts your node's local HTTPS certificate, so browsers reach it securely at `https://dig.local`. → [The `https://dig.local` endpoint](/docs/run-a-node/local-https)
 
 ## An always-on service, verified after install
 
@@ -209,4 +209,4 @@ Prefer the signed, `apt upgrade`-able native path: → [Install on Ubuntu/Debian
 - [Installing the CLI](../digstore/cli/install.md) — the raw `dig-store` binary on its own
 - [Configure dig-node](./configure.md) — ports, listeners, cache cap, upstream
 - [Point a consumer at your node](./point-a-consumer.md) — shared `.dig` cache
-- [The `https://dig.local` endpoint](./local-https.md) — local HTTPS and the certificate the installer trusts
+- [The `https://dig.local` endpoint](/docs/run-a-node/local-https) — local HTTPS and the certificate the installer trusts

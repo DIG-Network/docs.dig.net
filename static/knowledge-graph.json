@@ -4961,11 +4961,6 @@
       "type": "see-also"
     },
     {
-      "from": "/docs/run-a-node/universal-installer",
-      "to": "/docs/run-a-node/local-https",
-      "type": "see-also"
-    },
-    {
       "from": "/docs/sdk",
       "to": "/docs/build-a-dapp/tutorial",
       "type": "see-also"
