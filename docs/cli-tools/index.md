@@ -31,7 +31,7 @@ You do not need all three. Pick the tool for what you want to do:
 | I want to… | Tool | Start here |
 | --- | --- | --- |
 | Publish a site, app, or files to DIG | `digs` | [Install the store CLI](/docs/digstore/cli/install) |
-| Serve content and run a node | `dign` | [Run a DIG node](/docs/run-a-node/index) |
+| Serve content and run a node | `dign` | [Run a DIG node](/docs/run-a-node/) |
 | Open `.dig` addresses in a browser | `digd` | [DIG and your DNS](/docs/run-a-node/dns) |
 
 ## `digs` — the store CLI
@@ -60,7 +60,7 @@ dign open chia://<storeId>/   # open an address to confirm serving works
 dign status --json            # scriptable health signal
 ```
 
-**Deeper docs:** [run a DIG node](/docs/run-a-node/index) · [manage the service](/docs/run-a-node/manage) · [configure](/docs/run-a-node/configure)
+**Deeper docs:** [run a DIG node](/docs/run-a-node/) · [manage the service](/docs/run-a-node/manage) · [configure](/docs/run-a-node/configure)
 
 ## `digd` — the DNS helper
 
