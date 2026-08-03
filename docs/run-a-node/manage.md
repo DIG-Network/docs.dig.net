@@ -28,6 +28,9 @@ The `control.*` namespace exposes operator actions that are **not** part of the 
 
 These are admin-scoped: a remote reader hitting the public dig RPC can never call them.
 
+<!-- scaffold: control.wallet.balance reference (#1958) -->
+
+
 ## The DIG Browser Control Pane
 
 The DIG Browser ships a **Control Pane** that manages your local dig-node over the `control.*` RPCs — see its status, watch the shared cache, manage hosted stores and sync, all without the command line.
