@@ -93,7 +93,7 @@ These are the routes a node serves under `/stores/{id}` — the same surface `rp
 |---|---|
 | `GET /stores/{id}` | **StoreDescriptor** — `{ current_root, size, public_key, push_sig, tombstones[] }` |
 | `GET /stores/{id}/roots` | **RootHistory** — `{ roots: [ { generation, root, timestamp } ] }`, oldest→newest |
-| `GET\|HEAD /stores/{id}/module?root=<hex>` | Raw `.dig` module bytes; `ETag = root`, `If-None-Match` → `304`. This is the clone/pull download. |
+| `GET\|HEAD /stores/{id}/module?root=<hex>` | Raw `.dig` module bytes; `ETag = root`, `If-None-Match` → `304`. This is the clone/pull download. Serves inline up to ~5 MiB — a larger capsule returns `413` naming `dig.getCapsule` (see [Large capsules](#large-capsules-stream-in-chunks)). `HEAD` advertises the full `Content-Length`. |
 | `PUT /stores/{id}/module` | Push a new generation (self-hosted nodes). Body = module; headers below. |
 | `POST /stores/{id}/tombstone` | A signed revocation. |
 
@@ -102,6 +102,17 @@ A `PUT` push also carries the store-write headers: `X-Dig-Parent` (the root it e
 ## clone and pull
 
 A `clone` is a sequence of authenticated reads of **public ciphertext** and metadata: the descriptor (`GET /stores/{id}`), the generation history (`GET /stores/{id}/roots`), and the module bytes for each wanted generation (`GET /stores/{id}/module?root=<hex>`). A `pull` re-reads descriptor + roots and downloads only the modules you lack; an unchanged head answers `304`. Each module is verified against its on-chain `root` client-side, so the node is never trusted to have returned genuine bytes.
+
+### Large capsules stream in chunks
+
+The inline `GET /stores/{id}/module` download serves a whole capsule in one response, capped at **~5 MiB** — the public gateway serves it through a serverless tier with a ~6 MB response ceiling, so a bigger capsule can't come back in a single body. A capsule over the cap therefore returns **`413`** with a body that names the streaming method to use instead:
+
+```json
+{ "error": "capsule_too_large_for_get", "total_length": 141557760,
+  "rpc_method": "dig.getCapsule", "store_id": "5b1f…e9", "root": "9c2a…f0" }
+```
+
+Download a whole/large capsule over the [`dig.getCapsule`](./methods.md#diggetcapsule) chunk loop: request `(store_id, root, offset, length)`, follow `next_offset` until `complete`, and reassemble — see [Streaming](./streaming.md). A `HEAD /stores/{id}/module` returns the full `Content-Length`, so a client learns the size and picks its transport before pulling any bytes. `dig-store` `clone`/`pull` and the dig-node §21 client already do this automatically — they stream large capsules over `dig.getCapsule` and only use the inline `GET` for small ones.
 
 ## push: DIGHUb vs. self-hosted
 
