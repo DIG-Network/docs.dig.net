@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.11.3] - 2026-08-04
+
+### Documentation
+- **rpc,cli:** Note the publish→seed auto-cache (cache.pushCapsule) (#63)
+
 ## [0.11.2] - 2026-08-04
 
 ### Documentation
