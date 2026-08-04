@@ -84,7 +84,9 @@ Every command that reaches a node (`clone`, `pull`, `push`, reads, `serve` peers
 
 Your own node comes first: `rpc.dig.net` is an ordinary node that happens to be well known, not a privileged one, and it is only used when nothing local answers.
 
-Each tier is a cheap health probe with a short timeout, so dig-store never hangs waiting on an unreachable local node. Connections to any tier use mTLS with a client certificate derived from your identity key; `rpc.dig.net` additionally serves plain HTTPS for browsers, which can't present a client certificate. See [Point a consumer at your node](../../run-a-node/point-a-consumer.md) for the same ladder as it applies to the DIG Browser and extension.
+Each tier is a cheap health probe with a short timeout, so dig-store never hangs waiting on an unreachable local node.
+
+Today every tier is reached over plain HTTPS (loopback tiers over plain HTTP), with each request carrying your signed identity headers — that signature, not the transport, is what authenticates you. Mutual TLS with a client certificate derived from your identity key is specified for node-class clients but is **not yet wired**; when it lands, it will be layered under the same signed requests rather than replacing them. See [Point a consumer at your node](../../run-a-node/point-a-consumer.md) for the same ladder as it applies to the DIG Browser and extension.
 
 #### Setting a node per project {#per-project-node}
 
