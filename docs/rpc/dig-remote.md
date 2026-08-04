@@ -60,7 +60,7 @@ An unconfigured `origin` follows this same order, so it means *your* node by def
 
 Each tier is a cheap health probe with a short timeout, so an unreachable local node falls through quickly rather than hanging a `clone`/`pull`/`push`. See [Which node dig-store talks to](../digstore/cli/command-reference.md#which-node-digstore-talks-to) for how to set an override, and [Point a consumer at your node](../run-a-node/point-a-consumer.md) for the same ladder as it applies to the DIG Browser and extension.
 
-Connections to any of the three tiers use mTLS, presenting a client certificate derived from your identity key — the same per-request signing described below rides on top of that authenticated channel.
+Today every tier is reached over plain HTTPS (loopback tiers over plain HTTP), and the per-request signing described below is what authenticates you — not the transport. Mutual TLS with a client certificate derived from your identity key is specified for node-class clients but is **not yet wired**; when it lands, the same signed requests will ride on top of that authenticated channel rather than being replaced by it.
 
 ## Every request is signed (per-request auth)
 
