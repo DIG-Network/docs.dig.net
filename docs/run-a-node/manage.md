@@ -28,6 +28,12 @@ The `control.*` namespace exposes operator actions that are **not** part of the 
 
 These are admin-scoped: a remote reader hitting the public dig RPC can never call them.
 
+## `cache.pushCapsule` — seed content you publish {#cache-pushcapsule}
+
+After publishing a store with `digs commit`, seed your own node so it immediately serves and advertises the content. Send `cache.pushCapsule` to your node (loopback), chunked in ≤3 MiB base64 windows with fields `store_id`, `root`, `data`, `offset`, and `total_length`. Follow the returned `next_offset` until `complete: true`. Over HTTP it needs your node's control token (like other cache-management calls); the browser's in-process node needs none.
+
+**Advanced — `DIG_NODE_PUSH_OPEN=true`** lets remote authorized writers push to your node; only a caller holding the store's publisher key can (a signed request signature is required), so it stays safe against cache-poisoning. Leave it off unless you intend to accept remote seed-pushes.
+
 ## `control.wallet.balance` — read a public address's balance {#control-wallet-balance}
 
 `control.wallet.balance` returns the on-chain balance of any public address, in XCH or $DIG. Unlike the other `control.*` methods it is an **open read**: it needs only an address — no control token, no wallet seed, no signing key — because it reads a public address's balance from the chain. It is served on the node's loopback control plane.
