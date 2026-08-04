@@ -38,6 +38,10 @@ digs commit -m "v1"
 
 `commit` anchors the new root on Chia mainnet (blocks until confirmed, spends XCH), then seals the deployment, compiles the module, and writes a local **URN manifest** (`urns.json` / `urns.txt`) — your index of every shareable URN for that deployment. See [On-chain anchoring](./onchain-anchoring.md).
 
+:::tip Automatic seeding to your node
+When you publish a version with `digs commit`, your new capsule is automatically handed to your own local DIG node, so it's discoverable and reshareable on the network right away — no extra step. If your node isn't running you'll see a yellow note; your commit still succeeds and you can seed it later by starting your node.
+:::
+
 Change or override the content root anytime:
 
 ```sh
