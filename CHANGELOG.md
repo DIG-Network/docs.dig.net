@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.12.0] - 2026-08-05
+
+### Documentation
+- **cli:** The node ladder prefers your own node, and mTLS is not yet wired (#61)
+
 ## [0.11.4] - 2026-08-05
 
 ### Documentation
