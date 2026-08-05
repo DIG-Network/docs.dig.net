@@ -51,14 +51,16 @@ The owner segment never changes which bytes you fetch — content is addressed b
 
 When a `dig://` URL doesn't name a host, the CLI resolves one by trying, in order, the **first that responds**:
 
-1. **An explicitly-configured node** — the `--node <url>` flag, the `$DIG_NODE_URL` environment variable, or a stored `digs config node.url <url>` value. Sourced in that order, and this always wins over the automatic steps below.
-2. **`dig.local`** — your installed local dig-node.
-3. **`localhost`** — a dig-node on the loopback address, its default local port.
+1. **An explicitly-configured node** — the `--node <url>` flag, the `$DIG_NODE_URL` environment variable, this project's `digs config node.url --local <url>` value, or the machine-wide `digs config node.url <url>` value. Sourced in that order, and this always wins over the automatic steps below.
+2. **`dig.local`** — your installed local dig-node (`https://dig.local`, then `http://dig.local`).
+3. **`localhost`** — a dig-node on the loopback address, `http://localhost:9778` (or `$DIG_NODE_PORT`).
 4. **`rpc.dig.net`** — the public gateway, used only when no local node answers.
+
+An unconfigured `origin` follows this same order, so it means *your* node by default. Publishing (`push`, `revoke`) requires one of tiers 1–3: rather than send your content and your request signatures to a public server you never chose, it stops and tells you how to start or install a node.
 
 Each tier is a cheap health probe with a short timeout, so an unreachable local node falls through quickly rather than hanging a `clone`/`pull`/`push`. See [Which node dig-store talks to](../digstore/cli/command-reference.md#which-node-digstore-talks-to) for how to set an override, and [Point a consumer at your node](../run-a-node/point-a-consumer.md) for the same ladder as it applies to the DIG Browser and extension.
 
-Connections to any of the three tiers use mTLS, presenting a client certificate derived from your identity key — the same per-request signing described below rides on top of that authenticated channel.
+Today every tier is reached over plain HTTPS (loopback tiers over plain HTTP), and the per-request signing described below is what authenticates you — not the transport. Mutual TLS with a client certificate derived from your identity key is specified for node-class clients but is **not yet wired**; when it lands, the same signed requests will ride on top of that authenticated channel rather than being replaced by it.
 
 ## Every request is signed (per-request auth)
 

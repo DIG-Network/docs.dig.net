@@ -67,20 +67,53 @@ Set the wallet passphrase non-interactively with `DIGSTORE_PASSPHRASE`. Global c
 
 | Command | What it does |
 |---|---|
-| `digs config node.url <url>` | Persist a custom node endpoint to `~/.dig/config.toml` — every subsequent command talks to this node first, ahead of the automatic `dig.local` → `localhost` → `rpc.dig.net` resolution below. |
-| `digs config node.url --unset` | Remove the stored override; resolution falls back to the automatic ladder. |
+| `digs config node.url <url>` | Persist a custom node endpoint for this machine (`~/.dig/config.toml`) — every subsequent command talks to this node first, ahead of the automatic `dig.local` → `localhost` → `rpc.dig.net` resolution below. |
+| `digs config node.url --local <url>` | Persist a node endpoint for **this project only** (`.dig/node.toml`), so one project can use the public gateway while another uses your own node. Beats the machine-wide value. |
+| `digs config node.url [--local] --show` | Print the current value for that scope. |
+| `digs config node.url [--local] --unset` | Remove the stored override; resolution falls back to the automatic ladder. |
 | `digs config <key> [<value>]` | Get or set any config key in `~/.dig/config.toml` (`coinset_url`, `unlock_ttl`, `fee`, `node.url`). Omit `<value>` to print the current value. |
 
 ### Which node dig-store talks to {#which-node-digstore-talks-to}
 
 Every command that reaches a node (`clone`, `pull`, `push`, reads, `serve` peers, etc.) resolves the endpoint in this fixed order, using the first that responds:
 
-1. **An explicit override** — the `--node <url>` global flag, then the `$DIG_NODE_URL` environment variable, then the `node.url` value in `~/.dig/config.toml` (set via `digs config node.url <url>`). Any of these always wins over the steps below.
-2. **`dig.local`** — your installed local dig-node.
-3. **`localhost`** — a dig-node on the loopback address, its default local port.
+1. **An explicit override** — the `--node <url>` global flag, then the `$DIG_NODE_URL` environment variable, then this project's `node.url` (`.dig/node.toml`, set via `digs config node.url --local <url>`), then the machine-wide `node.url` in `~/.dig/config.toml`. Any of these always wins over the steps below.
+2. **`dig.local`** — your installed local dig-node, on `https://dig.local` then `http://dig.local`.
+3. **`localhost`** — a dig-node on the loopback address, `http://localhost:9778` (or `$DIG_NODE_PORT`).
 4. **`rpc.dig.net`** — the public gateway, the final fallback when no local node answers.
 
-Each tier is a cheap health probe with a short timeout, so dig-store never hangs waiting on an unreachable local node. Connections to any tier use mTLS with a client certificate derived from your identity key; `rpc.dig.net` additionally serves plain HTTPS for browsers, which can't present a client certificate. See [Point a consumer at your node](../../run-a-node/point-a-consumer.md) for the same ladder as it applies to the DIG Browser and extension.
+Your own node comes first: `rpc.dig.net` is an ordinary node that happens to be well known, not a privileged one, and it is only used when nothing local answers.
+
+Each tier is a cheap health probe with a short timeout, so dig-store never hangs waiting on an unreachable local node.
+
+Today every tier is reached over plain HTTPS (loopback tiers over plain HTTP), with each request carrying your signed identity headers — that signature, not the transport, is what authenticates you. Mutual TLS with a client certificate derived from your identity key is specified for node-class clients but is **not yet wired**; when it lands, it will be layered under the same signed requests rather than replacing them. See [Point a consumer at your node](../../run-a-node/point-a-consumer.md) for the same ladder as it applies to the DIG Browser and extension.
+
+#### Setting a node per project {#per-project-node}
+
+`--local` writes `.dig/node.toml` in the current project, so the setting travels with the project rather than the machine:
+
+```bash
+# this project reads through the public gateway…
+digs config node.url --local https://rpc.dig.net
+
+# …while every other project keeps using your own node
+cd ../other-project && digs config node.url --local --unset
+```
+
+Because `.dig/node.toml` can be committed and therefore arrives with a repository you clone, **digs does not use a `node.url` it did not see you set.** The first time an unfamiliar project asks for a node, digs shows you the URL and asks; if it cannot ask — a script, CI, or `--json` — it ignores the value and uses the normal ladder. Approving one project does not approve another, and if a project later changes its `node.url`, digs asks again. This matters because digs signs every request it sends to a node with your identity key.
+
+#### When no local node is running {#no-local-node}
+
+**Reading still works.** `pull`, `clone`, and `cat` fall back to `rpc.dig.net` and tell you that the read left your machine.
+
+**Publishing does not.** `push` and `revoke` sign every request with your identity key, so rather than send your content and your signatures to a server you never chose, they stop with `NO_LOCAL_NODE` (exit 19) and tell you how to check your node and where to install one:
+
+```bash
+dig-node status   # exit 0 = serving, 1 = not serving
+dig-node start    # if it is installed but stopped
+```
+
+No node yet? See [Run a node](../../run-a-node/index.md) — or, if you deliberately want a remote one for this project, `digs config node.url --local https://rpc.dig.net`.
 
 ## Stores & workspace
 

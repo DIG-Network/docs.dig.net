@@ -39,7 +39,7 @@ Either way **every byte is verified client-side against the chain**; pointing at
 
 - **DIG Browser** — the **My Node** UI lets you select the local dig-node and view its status.
 - **Extension** — set the `dig-node` host (the `server.host` setting) to your node; leave it blank to use the automatic `dig.local` → `localhost` → `rpc.dig.net` resolution. To also read wallet balances/tokens/NFTs from your node, see [Wallet data (extension)](#wallet-data-extension) below.
-- **dig-store CLI** — set an explicit override with the `--node <url>` global flag, the `$DIG_NODE_URL` environment variable, or a persisted `digs config node.url <url>`; leave all three unset to use the automatic resolution. See [Which node dig-store talks to](../digstore/cli/command-reference.md#which-node-digstore-talks-to).
+- **dig-store CLI** — set an explicit override with the `--node <url>` global flag, the `$DIG_NODE_URL` environment variable, a per-project `digs config node.url --local <url>`, or a machine-wide `digs config node.url <url>`; leave them all unset to use the automatic resolution, which prefers your own node. See [Which node dig-store talks to](../digstore/cli/command-reference.md#which-node-digstore-talks-to).
 
 ## Wallet data (extension)
 
