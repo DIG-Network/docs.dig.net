@@ -145,7 +145,7 @@ dig-node open --json chia://<storeId>/
 
 The installer registers **`dig.local`** for your machine so consumers on the same host resolve your node by name (`dig.local` → `localhost`) without hard-coding a port. This is what lets the [DIG Browser](../browser/chia-protocol.md) and extension prefer a local node automatically. → [Point a consumer at your node](./point-a-consumer.md)
 
-On Windows the installer also trusts your node's local HTTPS certificate, so browsers reach it securely at `https://dig.local`. → [The `https://dig.local` endpoint](/docs/run-a-node/local-https)
+The installer also automatically sets up local HTTPS trust: it provisions a name-constrained local certificate authority (restricted to `dig.local`, `*.dig`, and loopback only) that your browser trusts, so you can reach your node securely at `https://dig.local` with a valid certificate. Uninstalling the node removes this trusted CA cleanly. → [The `https://dig.local` endpoint](/docs/run-a-node/local-https)
 
 ## An always-on service, verified after install
 
