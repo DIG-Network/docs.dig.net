@@ -29,11 +29,11 @@ Because the endpoint lives entirely on your machine's loopback, using it needs a
 - **The same content, the same routes.** `https://dig.local` serves exactly what the plain-`http` endpoint does — the store content, the health check, and verification — so nothing about how you use your node changes.
 - **A trusted padlock, no warnings.** Once the certificate is trusted, the browser treats `https://dig.local` like any other secure site — no scary certificate warning to click through.
 
-## On Windows, the installer trusts it for you
+## The installer provisions local HTTPS trust automatically
 
-On Windows, the [DIG Installer](/docs/run-a-node/universal-installer) provisions the local certificate into the Windows trust store as part of installation, so your browsers trust `https://dig.local` automatically — there's nothing extra to do.
+When you install the DIG node via the [DIG Installer](/docs/run-a-node/universal-installer), it automatically sets up the local HTTPS certificate trust on your operating system. On **Windows**, the installer provisions the local certificate into the Windows trust store as part of installation, so your browsers trust `https://dig.local` automatically — there's nothing extra to do. On **macOS and Linux**, the endpoint is served the same way, and browsers trust it once the local certificate has been provisioned; until then HTTPS is best-effort and clients simply read over plain `http` instead (see [the fallback](#fallback) below).
 
-On macOS and Linux the endpoint is served the same way. Browsers trust it once the local certificate has been provisioned; until then HTTPS is best-effort and clients simply read over plain `http` instead (see [the fallback](#fallback) below).
+The trust that the installer establishes is **name-constrained** — the local certificate authority can only vouch for `dig.local`, `*.dig`, and your machine's loopback addresses (`127.0.0.0/8` and `::1`). This name constraint is critical to security: even if the local CA's key were ever exposed, it could never be used to impersonate any website on the public internet — its authority is confined to your machine and DIG names only. When you uninstall the DIG node, the installer removes this trusted local CA from your operating system, so the trust is completely cleaned up.
 
 ## The certificate is short-lived and self-managing
 
