@@ -1003,6 +1003,12 @@ export const rpcErrors = {
     message: "Stage: compile/IO failure",
     meaning: "dig.stage hit a compile or IO failure while building the module.",
   },
+  METADATA_TOO_LARGE: {
+    code: -32015,
+    message: "Metadata too large",
+    meaning:
+      "dig.getMetadata refused: the capsule's publisher metadata section renders larger than the 3 MiB response ceiling. The section is returned WHOLE (it cannot be paged like content) and its custom/links fields are publisher-controlled, so an oversized section is refused with this bounded error rather than returned as one very large response. A normal store's metadata is well within the ceiling.",
+  },
   ONION_CIRCUIT_UNAVAILABLE: {
     code: -32020,
     message: "Onion circuit unavailable",

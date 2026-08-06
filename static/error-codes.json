@@ -124,6 +124,13 @@
     },
     {
       "surface": "dig-rpc",
+      "code": -32015,
+      "name": "METADATA_TOO_LARGE",
+      "http_or_exit": 200,
+      "description": "Metadata too large — dig.getMetadata refused: the capsule's publisher metadata section renders larger than the 3 MiB response ceiling. The section is returned WHOLE (it cannot be paged like content) and its custom/links fields are publisher-controlled, so an oversized section is refused with this bounded error rather than returned as one very large response. A normal store's metadata is well within the ceiling."
+    },
+    {
+      "surface": "dig-rpc",
       "code": -32020,
       "name": "ONION_CIRCUIT_UNAVAILABLE",
       "http_or_exit": 200,
@@ -569,6 +576,13 @@
         "name": "STAGE_COMPILE_IO",
         "http_or_exit": 200,
         "description": "Stage: compile/IO failure — dig.stage hit a compile or IO failure while building the module."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32015,
+        "name": "METADATA_TOO_LARGE",
+        "http_or_exit": 200,
+        "description": "Metadata too large — dig.getMetadata refused: the capsule's publisher metadata section renders larger than the 3 MiB response ceiling. The section is returned WHOLE (it cannot be paged like content) and its custom/links fields are publisher-controlled, so an oversized section is refused with this bounded error rather than returned as one very large response. A normal store's metadata is well within the ceiling."
       },
       {
         "surface": "dig-rpc",

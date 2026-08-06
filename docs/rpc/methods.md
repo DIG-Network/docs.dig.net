@@ -178,7 +178,7 @@ Read the store's **metadata manifest** (name, version, description, authors, lic
   "root": "a07c…4d" }
 ```
 
-`manifest` is `null` when the module embeds no metadata; a module genuinely absent at the root yields [`-32004`](#errors) (there is no `decoy` field). **Verification:** a client compares the returned `program_hash` and `root` against the values it reads from the on-chain singleton (e.g. via its own lineage walk, or [`dig.listCapsules`](#diglistcapsules)). A mismatch means the served `.dig` is not the on-chain-anchored generation — the metadata must not be trusted.
+`manifest` is `null` when the module embeds no metadata; a module genuinely absent at the root yields [`-32004`](#errors) (there is no `decoy` field). The metadata manifest is returned **whole** (it cannot be paged like content), so a section larger than the 3 MiB response ceiling is refused with [`-32015`](../support/error-codes.md) (Metadata too large) rather than returned as one very large response — a normal store's metadata is well within it. **Verification:** a client compares the returned `program_hash` and `root` against the values it reads from the on-chain singleton (e.g. via its own lineage walk, or [`dig.listCapsules`](#diglistcapsules)). A mismatch means the served `.dig` is not the on-chain-anchored generation — the metadata must not be trusted.
 
 ---
 
