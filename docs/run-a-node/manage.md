@@ -60,7 +60,10 @@ After publishing a store with `digs commit`, seed your own node so it immediatel
 {
   "jsonrpc": "2.0",
   "id": 1,
-  "result": { "balance": 12345, "pending": 6, "synced": true, "peak_height": 42 }
+  "result": {
+    "balance": 12345, "pending": 6,
+    "source": "db", "synced": true, "peak_height": 42
+  }
 }
 ```
 
@@ -68,8 +71,18 @@ After publishing a store with `digs commit`, seed your own node so it immediatel
 |---|---|---|
 | `balance` | number (u64) | Confirmed balance in mojos, as a JSON **number** (never a string). |
 | `pending` | number (u64) | Unconfirmed/incoming balance in mojos, as a JSON **number**. |
-| `synced` | boolean | Whether the read was answered from a fully synced source. |
-| `peak_height` | number \| null | The chain height the balance reflects, or `null` when unknown. |
+| `source` | string \| null | Which source answered: `"db"` (your node's own chain copy) or `"fallback"` (a public chain service). `null` from a node too old to say. |
+| `synced` | boolean | Whether **this answer** came from a fully synced local copy. A `"fallback"` answer is always `false`. |
+| `peak_height` | number \| null | The chain height **this answer** reflects, or `null` — including for every `"fallback"` answer. |
+
+### Where the answer came from
+
+`source` tells you which of two places produced the figure:
+
+- **`"db"`** — your own node's copy of the chain. Nothing left your machine.
+- **`"fallback"`** — a public chain service your node asked on your behalf, because it could not answer from its own copy. This works, but **the address you asked about was sent to that service**. If you are on a metered or private connection, this is the field to watch.
+
+`synced` and `peak_height` always describe the source that actually answered, not your node in general. So a `"fallback"` answer reports `synced: false` and `peak_height: null` even when your node's own copy is fully caught up — because that copy is not what produced the number you are reading.
 
 A synced address holding nothing is a **success** with `balance: 0` — a zero balance is a truthful answer, never an error. When the node cannot answer truthfully it returns a distinct error (below) rather than a fabricated `0`.
 
