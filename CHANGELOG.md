@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.13.0] - 2026-08-06
+
+### Documentation
+- **protocol:** Document uniform server-side chain-anchor enforcement on dig.fetchRange (#67)
+
 ## [0.12.2] - 2026-08-06
 
 ### Documentation
