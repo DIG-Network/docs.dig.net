@@ -972,6 +972,12 @@ export const rpcErrors = {
     meaning:
       "The range metadata ALONE cannot fit a frame — an inclusion_proof whose base64 exceeds MAX_INCLUSION_PROOF_B64 (4096) — so this holder has no conforming range stream for the resource and streams no frames. Returned by the node-profile dig.fetchRange. HOLDER-FATAL: a client skips this holder, does not re-request the range from it, and MUST NOT count it as a transport failure (counted as transport it retries a peer that can never succeed).",
   },
+  CONTENT_MISS_RATE_LIMITED: {
+    code: -32003,
+    message: "Content miss rate limited",
+    meaning:
+      "The content is not held here AND this requestor is driving the miss -> DHT-lookup path too fast. A per-requestor token bucket (burst 16, refill 4/s) sits in front of the provider lookup and the proxy fetch, keyed by requestor identity (mTLS peer_id / connection IP / a shared loopback bucket); over budget the miss is refused with this code while a DIFFERENT requestor draws from its own bucket and is unaffected. A well-formed JSON-RPC error, never a silent empty success. The same budget bounds the dig.getAvailability holder-hint enrichment at one token per not-held item. Returned by the node-profile content methods (dig.getContent / dig.fetchRange) on a rate-limited miss. TRANSIENT — distinct from -32009 RANGE_METADATA_UNREPRESENTABLE (holder-fatal): back off and retry the same request rather than abandoning the holder.",
+  },
   CONTENT_REDIRECT: {
     code: -32008,
     message: "Content held elsewhere — redirect",

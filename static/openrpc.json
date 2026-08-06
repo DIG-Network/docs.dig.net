@@ -1005,6 +1005,13 @@
           "type": "object"
         }
       },
+      "CONTENT_MISS_RATE_LIMITED": {
+        "code": -32003,
+        "message": "Content miss rate limited",
+        "data": {
+          "type": "object"
+        }
+      },
       "CONTENT_REDIRECT": {
         "code": -32008,
         "message": "Content held elsewhere — redirect",
