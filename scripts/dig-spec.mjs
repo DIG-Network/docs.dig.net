@@ -1010,6 +1010,12 @@ export const rpcErrors = {
     meaning:
       "dig.getMetadata refused: the capsule's publisher metadata section renders larger than the 3 MiB response ceiling. The section is returned WHOLE (it cannot be paged like content) and its custom/links fields are publisher-controlled, so an oversized section is refused with this bounded error rather than returned as one very large response. A normal store's metadata is well within the ceiling.",
   },
+  PUSH_PENDING_LIMITED: {
+    code: -32016,
+    message: "Push pending-reassembly limit reached",
+    meaning:
+      "cache.pushCapsule refused this window: the node's in-flight pending-reassembly bound is exceeded (a per-requestor concurrent-push cap, a global concurrent-push cap, the global pending-bytes budget, or an abandoned-partial TTL). Returned by the node-profile cache.pushCapsule. Retriable once in-flight pushes complete.",
+  },
   ONION_CIRCUIT_UNAVAILABLE: {
     code: -32020,
     message: "Onion circuit unavailable",

@@ -131,6 +131,13 @@
     },
     {
       "surface": "dig-rpc",
+      "code": -32016,
+      "name": "PUSH_PENDING_LIMITED",
+      "http_or_exit": 200,
+      "description": "Push pending-reassembly limit reached — cache.pushCapsule refused this window: the node's in-flight pending-reassembly bound is exceeded (a per-requestor concurrent-push cap, a global concurrent-push cap, the global pending-bytes budget, or an abandoned-partial TTL). Returned by the node-profile cache.pushCapsule. Retriable once in-flight pushes complete."
+    },
+    {
+      "surface": "dig-rpc",
       "code": -32020,
       "name": "ONION_CIRCUIT_UNAVAILABLE",
       "http_or_exit": 200,
@@ -583,6 +590,13 @@
         "name": "METADATA_TOO_LARGE",
         "http_or_exit": 200,
         "description": "Metadata too large — dig.getMetadata refused: the capsule's publisher metadata section renders larger than the 3 MiB response ceiling. The section is returned WHOLE (it cannot be paged like content) and its custom/links fields are publisher-controlled, so an oversized section is refused with this bounded error rather than returned as one very large response. A normal store's metadata is well within the ceiling."
+      },
+      {
+        "surface": "dig-rpc",
+        "code": -32016,
+        "name": "PUSH_PENDING_LIMITED",
+        "http_or_exit": 200,
+        "description": "Push pending-reassembly limit reached — cache.pushCapsule refused this window: the node's in-flight pending-reassembly bound is exceeded (a per-requestor concurrent-push cap, a global concurrent-push cap, the global pending-bytes budget, or an abandoned-partial TTL). Returned by the node-profile cache.pushCapsule. Retriable once in-flight pushes complete."
       },
       {
         "surface": "dig-rpc",
