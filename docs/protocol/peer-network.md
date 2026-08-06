@@ -559,7 +559,7 @@ Alongside the standard JSON-RPC codes and the shared `-32004` (resource unavaila
 |---|---|---|
 | `-32006` | `PEER_UNREACHABLE` | No connection to the named peer could be established — every [traversal strategy](#nat-traversal) (direct, UPnP/NAT-PMP/PCP mapping, relay-coordinated hole-punch, and relayed fallback) failed, or the peer is not registered on this network. |
 | `-32007` | `RANGE_NOT_SATISFIABLE` | The requested byte range lies outside the resource (`offset` ≥ its length). Returned by [`dig.fetchRange`](#range). |
-| `-32008` | `CONTENT_REDIRECT` | This node does **not** hold the requested content, but it located peers that do — a **redirect, not a not-found** ([§9a](#redirect-on-miss)). `error.data.redirect` names the holder(s). |
+| `-32008` | `CONTENT_REDIRECT` | This node does **not** hold the requested content, but it located peers that do — a **redirect, not a not-found** ([§9a](#redirect-on-miss)). `error.data.redirect` names the holder(s), capped to a small bounded set. |
 | `-32009` | `RANGE_METADATA_UNREPRESENTABLE` | The metadata for a range alone cannot fit a frame, so this holder has no conforming range stream for the resource ([§9](#range-errors)). Holder-fatal, and not a transport failure. |
 
 See the full [error catalog](../support/error-codes.md).
@@ -780,7 +780,7 @@ Step 2 is the gate: a downloader never fans a range at a peer it has not confirm
 | `-32004` | `RESOURCE_UNAVAILABLE` | This peer does not hold the resource/capsule at the requested root, **and** it could not locate any peer that does (a genuine not-found). When it CAN locate a holder it returns the [redirect](#redirect-on-miss) (`-32008`) instead. |
 | `-32005` | `ROOT_NOT_ANCHORED` | [Server-side enforcement](#server-side-enforcement): this peer refused to serve because the store has no confirmed on-chain generation, the chain was unreachable, or the requested root is not the store's current on-chain root (superseded or forged). Fails closed rather than streaming an unanchored generation. |
 | `-32007` | `RANGE_NOT_SATISFIABLE` | The requested `offset`/`length` lies outside the resource (`offset >= total_length`), or the range is otherwise unsatisfiable. |
-| `-32008` | `CONTENT_REDIRECT` | This node does not hold the content but located peers that do — see [redirect-on-miss](#redirect-on-miss). |
+| `-32008` | `CONTENT_REDIRECT` | This node does not hold the content but located peers that do — see [redirect-on-miss](#redirect-on-miss). The named candidate set is capped to a small bounded list, not every known holder. |
 | `-32009` | `RANGE_METADATA_UNREPRESENTABLE` | The range's metadata alone cannot fit a frame (an `inclusion_proof` over `MAX_INCLUSION_PROOF_B64`), so this holder has no conforming range stream for the resource and streams no frames. **Holder-fatal:** skip this holder for this range and do not count it as a transport failure. |
 
 ### 9a · Redirect-on-miss — never a silent not-found when a holder exists {#redirect-on-miss}
@@ -808,11 +808,17 @@ A content read (`dig.getContent`, `dig.fetchRange`, or a peer range stream) may 
 
   Each provider's `addresses[]` is **byte-compatible with the [`dig.getPeers`](#peer-rpc) / DHT [`Contact`](#dht-wire) address shape** (`host` / `port` / `kind`), so a redirect target drops straight into a dial. The `content` object echoes the requested item at whatever granularity it was named (`store_id` [`+ root` [`+ retrieval_key`]]).
 
-- **FETCH-THROUGH (opt-in, `DIG_NODE_ON_MISS=fetch`).** Instead of redirecting, the node **pulls** the resource from the holder(s) via the [multi-source download](#multi-source) (verified against the chain-anchored root), caches it, and **serves it directly** — transparent to the caller, one round-trip, and the node now holds it. If the fetch fails the node falls back to the redirect (still never a silent 404 while a holder exists).
+  `providers` is **capped to a small bounded candidate set** — a redirect is never a full list of every peer that holds the content, only enough candidates for the caller to proceed. The node **names** holders but never dials or probes them itself: reachability is the caller's own job, over its own [NAT-traversal ladder](#nat-traversal), IPv6-first — a peer the node can reach is not necessarily one the caller can reach, and probing candidates on a caller's behalf would itself be a bandwidth-amplification vector.
+
+- **FETCH-THROUGH (opt-in, `DIG_NODE_ON_MISS=fetch`).** An operator-level setting: instead of redirecting, the node **pulls** the resource from the holder(s) via the [multi-source download](#multi-source) (verified against the chain-anchored root), caches it, and **serves it directly** — transparent to every caller, one round-trip, and the node now holds it. If the fetch fails the node falls back to the redirect (still never a silent 404 while a holder exists).
+
+- **PROXY (opt-in per request, `params.proxy`, default `false`).** A caller-level alternative to fetch-through, for a caller that cannot itself reach any named holder (e.g. NAT asymmetry): setting `proxy: true` on `dig.getContent` / `dig.fetchRange` asks THIS node to fetch the resource, over the identical chain-anchored, merkle-verified path, and return the bytes directly instead of redirecting. Automatic fetch-on-miss stays off by default — the caller opts in per request. The node serves the bytes but does **not** become a holder of the content by doing so (a proxied read never triggers reshare/backfill), so `proxy: true` cannot be used to plant attacker-chosen inventory on a node. A miss already reveals the requested content id to the node you ask; setting `proxy: true` additionally reveals to the serving holder that you wanted that resource — the same disclosure a direct read from that holder would make.
 
 **The redirect is a READ-TIER response.** It carries only what the caller needs to reach a holder — it exposes no peer/write/control surface — so it is served on both the mTLS peer/control tier and, where the read path is public ([§0](#dual-transport)), the anonymous read tier.
 
 **Bounded hops (no loops).** The redirect carries a `redirect_depth` (the number of redirects already followed) and the `max_redirects` cap. A caller **echoes `redirect_depth`** in its re-request `params`; a node that receives a request already at/over the cap answers the plain not-found instead of another redirect, so a set of nodes can never bounce a caller in a loop. A node **never redirects a caller back to itself** (its own `peer_id` is excluded from the providers).
+
+**Rate-limited per requestor.** The miss path (the DHT lookup behind a redirect, and the fetch behind `proxy: true`) is bounded by a per-requestor budget, so a single caller driving misses too fast is throttled without affecting any other caller — each requestor draws from its own allowance. An over-budget requestor's miss is refused rather than served or silently dropped; back off and retry once your allowance refills.
 
 ## 10 · The relay-last-fallback invariant {#invariant}
 

@@ -976,7 +976,7 @@ export const rpcErrors = {
     code: -32008,
     message: "Content held elsewhere — redirect",
     meaning:
-      "This node does not hold the requested content, but it located peers that do (via the DHT) — a redirect, not a not-found. error.data.redirect names the holder(s) (providers[] = peer_id + candidate addresses), the requested content, and the bounded redirect budget (redirect_depth, max_redirects). Returned by the node-profile content methods (dig.getContent / dig.fetchRange) on a local miss when a provider exists; re-request against a named provider, echoing redirect_depth.",
+      "This node does not hold the requested content, but it located peers that do (via the DHT) — a redirect, not a not-found. error.data.redirect names the holder(s) (providers[] = peer_id + candidate addresses), the requested content, and the bounded redirect budget (redirect_depth, max_redirects). The named candidate set is CAPPED at MAX_REDIRECT_PROVIDERS (a small bounded list, not every known holder); this node names holders but never dials/probes them itself — the caller reaches them over its own reachability ladder, IPv6-first. Returned by the node-profile content methods (dig.getContent / dig.fetchRange) on a local miss when a provider exists; re-request against a named provider, echoing redirect_depth. A caller with no reachable named holder MAY set proxy: true on the same request to have the node fetch the bytes on its behalf instead of redirecting.",
   },
   UPSTREAM_ERROR: {
     code: -32010,
