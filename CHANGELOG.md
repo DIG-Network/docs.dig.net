@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.14.1] - 2026-08-06
+
+### Documentation
+- **protocol:** Catalogue the -32016 PUSH_PENDING_LIMITED push-bound error (#69)
+
 ## [0.14.0] - 2026-08-06
 
 ### Documentation
