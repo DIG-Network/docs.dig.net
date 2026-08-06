@@ -2,7 +2,7 @@
   "openrpc": "1.2.6",
   "info": {
     "title": "dig RPC — node profile (local dig-node / in-process DIG Browser)",
-    "version": "0.12.1",
+    "version": "0.13.0",
     "description": "The NODE PROFILE: a distinct, smaller surface than the network profile. Of the byte methods it implements ONLY dig.getContent (local-first, else proxy); everything else proxies upstream or returns -32601. It ADDS node-only methods the security model depends on — chiefly dig.getAnchoredRoot (the CHIP-0035 on-chain head, the trusted root for mandatory root-pinning), dig.stage, and cache.*. Gate on dig.methods rather than assuming one uniform surface. See https://docs.dig.net/docs/protocol/dig-rpc#node-profile.",
     "license": {
       "name": "GPL-2.0",
@@ -483,7 +483,7 @@
     {
       "name": "dig.fetchRange",
       "summary": "Stream a byte range [offset, offset+length) of a resource or capsule (multi-source).",
-      "description": "STREAMING + BYTE-RANGE fetch: return only the requested byte range of a content resource (store_id + retrieval_key) or a whole capsule/.dig (capsule: true, identified by store_id[:root]), delivered as an ordered STREAM of RangeFrame chunks over a logical stream of the multiplexed peer transport (read incrementally with backpressure; reassemble by offset). EVERY frame carries the fixed-size identity set (root + total_length + chunk_count, plus chunk_index when chunk-aligned), and the resource-scaling layout (chunk_lens + inclusion_proof) rides the first frame or a paged prologue once per stream, so the range is INDEPENDENTLY verifiable against the capsule's chain-anchored merkle root — a downloader fans different ranges out to different peers concurrently, verifies each, retries a bad range from another source, and resumes per-range. The range is widened to whole-chunk boundaries so each returned chunk is a complete verifiable unit; length is clamped to the node window (3 MiB). NODE-PROFILE ONLY. See https://docs.dig.net/docs/protocol/peer-network#range.",
+      "description": "STREAMING + BYTE-RANGE fetch: return only the requested byte range of a content resource (store_id + retrieval_key) or a whole capsule/.dig (capsule: true, identified by store_id[:root]), delivered as an ordered STREAM of RangeFrame chunks over a logical stream of the multiplexed peer transport (read incrementally with backpressure; reassemble by offset). EVERY frame carries the fixed-size identity set (root + total_length + chunk_count, plus chunk_index when chunk-aligned), and the resource-scaling layout (chunk_lens + inclusion_proof) rides the first frame or a paged prologue once per stream, so the range is INDEPENDENTLY verifiable against the capsule's chain-anchored merkle root — a downloader fans different ranges out to different peers concurrently, verifies each, retries a bad range from another source, and resumes per-range. Before streaming a single frame the serving peer ALSO enforces the chain-anchor pin server-side (uniform with dig.getContent): a store with no confirmed on-chain generation, an unreachable chain, or a superseded/forged requested root fails closed with ROOT_NOT_ANCHORED rather than serving an unanchored generation. The range is widened to whole-chunk boundaries so each returned chunk is a complete verifiable unit; length is clamped to the node window (3 MiB). NODE-PROFILE ONLY. See https://docs.dig.net/docs/protocol/peer-network#range.",
       "paramStructure": "by-name",
       "params": [
         {
@@ -561,6 +561,9 @@
         },
         {
           "$ref": "#/components/errors/RESOURCE_UNAVAILABLE"
+        },
+        {
+          "$ref": "#/components/errors/ROOT_NOT_ANCHORED"
         },
         {
           "$ref": "#/components/errors/RANGE_NOT_SATISFIABLE"

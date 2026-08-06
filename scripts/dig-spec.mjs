@@ -854,7 +854,7 @@ export const nodeMethods = [
     name: "dig.fetchRange",
     summary: "Stream a byte range [offset, offset+length) of a resource or capsule (multi-source).",
     description:
-      "STREAMING + BYTE-RANGE fetch: return only the requested byte range of a content resource (store_id + retrieval_key) or a whole capsule/.dig (capsule: true, identified by store_id[:root]), delivered as an ordered STREAM of RangeFrame chunks over a logical stream of the multiplexed peer transport (read incrementally with backpressure; reassemble by offset). EVERY frame carries the fixed-size identity set (root + total_length + chunk_count, plus chunk_index when chunk-aligned), and the resource-scaling layout (chunk_lens + inclusion_proof) rides the first frame or a paged prologue once per stream, so the range is INDEPENDENTLY verifiable against the capsule's chain-anchored merkle root — a downloader fans different ranges out to different peers concurrently, verifies each, retries a bad range from another source, and resumes per-range. The range is widened to whole-chunk boundaries so each returned chunk is a complete verifiable unit; length is clamped to the node window (3 MiB). NODE-PROFILE ONLY. See https://docs.dig.net/docs/protocol/peer-network#range.",
+      "STREAMING + BYTE-RANGE fetch: return only the requested byte range of a content resource (store_id + retrieval_key) or a whole capsule/.dig (capsule: true, identified by store_id[:root]), delivered as an ordered STREAM of RangeFrame chunks over a logical stream of the multiplexed peer transport (read incrementally with backpressure; reassemble by offset). EVERY frame carries the fixed-size identity set (root + total_length + chunk_count, plus chunk_index when chunk-aligned), and the resource-scaling layout (chunk_lens + inclusion_proof) rides the first frame or a paged prologue once per stream, so the range is INDEPENDENTLY verifiable against the capsule's chain-anchored merkle root — a downloader fans different ranges out to different peers concurrently, verifies each, retries a bad range from another source, and resumes per-range. Before streaming a single frame the serving peer ALSO enforces the chain-anchor pin server-side (uniform with dig.getContent): a store with no confirmed on-chain generation, an unreachable chain, or a superseded/forged requested root fails closed with ROOT_NOT_ANCHORED rather than serving an unanchored generation. The range is widened to whole-chunk boundaries so each returned chunk is a complete verifiable unit; length is clamped to the node window (3 MiB). NODE-PROFILE ONLY. See https://docs.dig.net/docs/protocol/peer-network#range.",
     paramStructure: "by-name",
     params: [
       { name: "store_id", required: true, schema: { $ref: "#/components/schemas/StoreId" } },
@@ -903,6 +903,7 @@ export const nodeMethods = [
       "INVALID_PARAMS",
       "INTERNAL_ERROR",
       "RESOURCE_UNAVAILABLE",
+      "ROOT_NOT_ANCHORED",
       "RANGE_NOT_SATISFIABLE",
       "RANGE_METADATA_UNREPRESENTABLE",
     ],
@@ -951,7 +952,7 @@ export const rpcErrors = {
     code: -32005,
     message: "Root not chain-anchored",
     meaning:
-      "The requested or served generation is not the store’s current on-chain root. A content read is pinned to the CHIP-0035 singleton’s on-chain root (resolved live from the chain, never trusted from the serving node): a requested root that is not the on-chain root, an unreachable chain, or a store with no confirmed generation fails closed with this code rather than serving an unverified generation. Omit root to take the chain tip.",
+      "The requested or served generation is not the store’s current on-chain root. A content read is pinned to the CHIP-0035 singleton’s on-chain root (resolved live from the chain, never trusted from the serving node): a requested root that is not the on-chain root, an unreachable chain, or a store with no confirmed generation fails closed with this code rather than serving an unverified generation. Omit root to take the chain tip. Enforced uniformly across every serve path — dig.getContent and the node-profile dig.fetchRange peer-serve arm both fail closed with this code rather than streaming an unanchored generation.",
   },
   PEER_UNREACHABLE: {
     code: -32006,
