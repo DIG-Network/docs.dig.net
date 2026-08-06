@@ -553,7 +553,7 @@ Report this node's own network posture — its identity, reachability, candidate
 
 ### Peer RPC error codes
 
-Alongside the standard JSON-RPC codes and the shared `-32004` (resource unavailable), the peer methods add these node-profile codes:
+Alongside the standard JSON-RPC codes and the shared `-32004` (resource unavailable) and `-32005` (root not chain-anchored — enforced uniformly across every serve path, including [`dig.fetchRange`](#range); see [error codes](#range-errors)), the peer methods add these node-profile codes:
 
 | Code | Name | Meaning |
 |---|---|---|
@@ -697,7 +697,7 @@ Stream a byte range of a resource or capsule from this peer.
 
 **On EVERY frame — the fixed-size identity set.** Each of these is one scalar, so it costs the same on a three-chunk resource as on a million-chunk one:
 
-  - `root` — the generation the peer served this range from. Advisory echo (see the verification rule below).
+  - `root` — the generation the peer served this range from. Advisory echo (see the verification rule below) — it never substitutes for the peer's own anchor check, which the peer runs before it streams a single frame ([server-side enforcement](#server-side-enforcement) below).
   - `total_length` — the full resource ciphertext length, so a client can plan its ranges.
   - `chunk_count` — the number of chunks in the whole resource.
   - `chunk_index` — the index (into `chunk_lens`) of this frame's first chunk. Present when the frame's window is chunk-aligned.
@@ -729,6 +729,10 @@ A serve path splits its stream on **`MAX_RANGE_FRAME_PAYLOAD`** — never on the
 **Reserved.** `range_proof` and `first_chunk_index` are reserved frame field names. A server MUST NOT emit them and a client MUST NOT require them; range verification is the whole-resource `inclusion_proof` against the client's own pinned root.
 
 **Verification rule (normative):** Clients verify every range against their **own chain-anchored root** (the CHIP-0035 singleton's current on-chain `metadata.root_hash`), never against the frame's `root` field, which is advisory echo. Bytes not verified against the client's pinned root are unverified content and MUST NOT be treated as trusted.
+
+#### Server-side enforcement (normative) {#server-side-enforcement}
+
+The serving peer enforces the same chain-anchor pin **before it streams a single frame**: it resolves the store's on-chain root live ([Gate 3](./verification-and-provenance.md#gate-3)) and refuses to serve when the store has no confirmed on-chain generation, the chain is unreachable, or the caller names a root that is not the current on-chain root (a superseded or forged root) — failing closed with [`-32005` `ROOT_NOT_ANCHORED`](#range-errors) rather than streaming an unanchored generation. This is uniform with [`dig.getContent`](./dig-rpc.md#error-model) and the rest of the read path ([anchored-root pinning](./verification-and-provenance.md#gate-3)): no serve path in the DIG Network hands out content under a root the chain has not confirmed. It is defense-in-depth, not a substitute for client verification — the reader still re-binds every range to its own pinned root regardless of the peer's gate.
 
 ### Per-range integrity — verify a range without the whole file {#range-integrity}
 
@@ -767,13 +771,14 @@ Step 2 is the gate: a downloader never fans a range at a peer it has not confirm
 
 - **Concurrency across sources** is what makes this fast: N peers each serve a slice of the file in parallel.
 - **Resume.** Because each range is independently addressable and independently verifiable, an interrupted download resumes **per range** — a client re-requests only the ranges it has not yet verified, from any peer that holds the resource. No range already verified is refetched.
-- **Any source, one root.** Every range — whichever peer served it — is verified against the *same* on-chain generation root, so mixing sources never weakens integrity.
+- **Any source, one root.** Every range — whichever peer served it — is verified against the *same* on-chain generation root, so mixing sources never weakens integrity. Every serving peer independently enforces that same anchor pin before it streams ([server-side enforcement](#server-side-enforcement)), so a downloader fanning ranges across many holders gets the identical anchor guarantee from each of them.
 
 ### Range fetch error codes {#range-errors}
 
 | Code | Name | Meaning |
 |---|---|---|
 | `-32004` | `RESOURCE_UNAVAILABLE` | This peer does not hold the resource/capsule at the requested root, **and** it could not locate any peer that does (a genuine not-found). When it CAN locate a holder it returns the [redirect](#redirect-on-miss) (`-32008`) instead. |
+| `-32005` | `ROOT_NOT_ANCHORED` | [Server-side enforcement](#server-side-enforcement): this peer refused to serve because the store has no confirmed on-chain generation, the chain was unreachable, or the requested root is not the store's current on-chain root (superseded or forged). Fails closed rather than streaming an unanchored generation. |
 | `-32007` | `RANGE_NOT_SATISFIABLE` | The requested `offset`/`length` lies outside the resource (`offset >= total_length`), or the range is otherwise unsatisfiable. |
 | `-32008` | `CONTENT_REDIRECT` | This node does not hold the content but located peers that do — see [redirect-on-miss](#redirect-on-miss). |
 | `-32009` | `RANGE_METADATA_UNREPRESENTABLE` | The range's metadata alone cannot fit a frame (an `inclusion_proof` over `MAX_INCLUSION_PROOF_B64`), so this holder has no conforming range stream for the resource and streams no frames. **Holder-fatal:** skip this holder for this range and do not count it as a transport failure. |
