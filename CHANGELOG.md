@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.14.0] - 2026-08-06
+
+### Documentation
+- **run-a-node:** Document which source answered a wallet balance read (#68)
+
 ## [0.13.0] - 2026-08-06
 
 ### Documentation
