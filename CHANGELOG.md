@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.12.1] - 2026-08-06
+
+### Chores
+- Add .gitattributes to pin LF line endings (#2198)
+
 ## [0.12.0] - 2026-08-05
 
 ### Documentation
