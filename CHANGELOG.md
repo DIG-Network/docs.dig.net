@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.12.2] - 2026-08-06
+
+### Documentation
+- **rpc:** Catalog the dig.getMetadata response ceiling error -32015 (#66)
+
 ## [0.12.1] - 2026-08-06
 
 ### Chores
