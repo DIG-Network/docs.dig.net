@@ -231,7 +231,9 @@ See the full [error-code reference](../support/error-codes.md#dig-rpc-json-rpc).
 | Field | Type | Meaning |
 |---|---|---|
 | `peak_height` | number \| null | The chain height this node currently tracks, or `null` if this node tracks no height yet. |
-| `synced` | boolean | Whether this node's own copy of the chain is fully synced. |
+| `synced` | boolean | Whether the height above is **current** — measured against what this node's Chia peers report, not merely whether a first sync once finished. |
+
+`synced: false` does **not** mean the height is unusable. It means this node's copy of the chain has fallen behind its peers, or that it has no peer to compare against yet, so the height is real but dated. The node always tells you the height it actually has; `synced` tells you whether to trust it as the tip. If you are waiting for a transaction to confirm, treat `synced: false` as "check again shortly" rather than as an answer.
 
 `peak_height: null` means "this node doesn't yet know a height" — it is **not** a zero. Treat it as unknown, never as height `0`: every real block sits trivially above `0`, so reading `null` as `0` would make an unconfirmed transaction look buried under thousands of blocks it hasn't actually seen.
 
