@@ -351,7 +351,7 @@ Only the three `hole_punch_*` messages (steps 3, 4, 7) cross the relay — the c
 
 This section defines the relay's full `RelayMessage` wire, including its **fourth role** ([above](#the-relay-has-four-distinct-roles)): **relayed (TURN-like) transport**, in which the relay proxies **all** of a peer connection's data. This is the **high-bandwidth, last-resort** tier (strategy (f) of the [ladder](#nat-traversal)) — entered only after direct, UPnP/NAT-PMP/PCP, and the hole-punch signalling of [§5](#hole-punch) have all failed. It is a **distinct flow** from the low-bandwidth signalling roles: here the peer's bytes flow through the relay (`relay_message` / `broadcast`), whereas STUN, introducer, and hole-punch carry only control messages.
 
-The relay is a stateless rendezvous / circuit bridge speaking **JSON messages over a secure WebSocket** (`wss://`). The default endpoint is `DIG_RELAY_URL = wss://relay.dig.net:9450` (override with the `DIG_RELAY_URL` environment variable; `off` disables the reservation). It exposes a plaintext health check at `GET /health` on port `9451`.
+The relay is a stateless rendezvous / circuit bridge speaking **JSON messages over a secure WebSocket** (`wss://`). The default endpoint is `DIG_RELAY_URL = wss://relay.dig.net:443` (override with the `DIG_RELAY_URL` environment variable; `off` disables the reservation). It exposes a plaintext health check at `GET /health` on port `9451`.
 
 Every message is a JSON object with a `type` discriminator. The message family is **RLY-001..RLY-007**:
 
@@ -482,7 +482,7 @@ Report this node's own network posture — its identity, reachability, candidate
   "reflexive_addr": "203.0.113.1:9444",
   "candidate_addresses": [ "[2001:db8::7]:9444", "203.0.113.7:9444" ],
   "reachability": "direct",
-  "relay": { "url": "wss://relay.dig.net:9450", "reserved": true, "connected_peers": 42 }
+  "relay": { "url": "wss://relay.dig.net:443", "reserved": true, "connected_peers": 42 }
 }
 ```
 
