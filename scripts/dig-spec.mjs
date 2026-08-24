@@ -770,7 +770,7 @@ export const nodeMethods = [
             properties: {
               url: {
                 type: "string",
-                description: "The relay endpoint (default wss://relay.dig.net:9450).",
+                description: "The relay endpoint (default wss://relay.dig.net:443).",
               },
               reserved: {
                 type: "boolean",
