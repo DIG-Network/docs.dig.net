@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.17.0] - 2026-08-24
+
+### Documentation
+- **protocol:** Document the content-replication flywheel (#80)
+
 ## [0.16.1] - 2026-08-20
 
 ### Documentation
