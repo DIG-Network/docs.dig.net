@@ -785,6 +785,19 @@
       ]
     },
     {
+      "id": "/docs/protocol/content-replication",
+      "type": "doc",
+      "title": "L7 · Content replication (the flywheel)",
+      "url": "https://docs.dig.net/docs/protocol/content-replication",
+      "tags": [
+        "dig-node",
+        "dig-dht",
+        "dig-download",
+        "dig-store-cache",
+        "peer network"
+      ]
+    },
+    {
       "id": "/docs/protocol/cryptography",
       "type": "doc",
       "title": "L1 · Cryptography",
@@ -4197,6 +4210,36 @@
       "type": "see-also"
     },
     {
+      "from": "/docs/protocol/content-replication",
+      "to": "/docs/protocol/peer-network",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/content-replication",
+      "to": "/docs/protocol/verification-and-provenance",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/content-replication",
+      "to": "/docs/protocol/merkle-proofs",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/content-replication",
+      "to": "/docs/protocol/on-chain-anchoring",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/content-replication",
+      "to": "/docs/protocol/onion-routing",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol/content-replication",
+      "to": "/docs/protocol/dig-rpc",
+      "type": "see-also"
+    },
+    {
       "from": "/docs/protocol/cryptography",
       "to": "/docs/protocol/urn-and-addressing",
       "type": "see-also"
@@ -4539,6 +4582,11 @@
     {
       "from": "/docs/protocol-deep-dive",
       "to": "/docs/protocol/peer-network",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol-deep-dive",
+      "to": "/docs/protocol/content-replication",
       "type": "see-also"
     },
     {
