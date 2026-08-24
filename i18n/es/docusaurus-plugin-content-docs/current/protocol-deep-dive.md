@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: "Protocol: Overview"
-description: "El protocolo DIG como siete capas de abajo hacia arriba, normativas y definidas por implementación. El capsule (storeId:rootHash) es la unidad fundamental; el host es ciego y el lector verifica contra la cadena. Esta es la referencia autoritativa del protocolo."
+description: "The DIG Protocol as seven bottom-up layers, normative and implementation-defined. The capsule (storeId:rootHash) is the fundamental unit; the host is blind and the reader verifies against the chain. This is the authoritative protocol reference."
 keywords:
   - DIG protocol
   - seven-layer model
@@ -17,62 +17,64 @@ tags:
   - anchoring
 ---
 
-# Protocol: Overview {#protocol-overview}
+# Protocol: Overview
 
-Esta es la **especificación normativa** del protocolo DIG, definida como **siete capas, de abajo hacia arriba**. Cada capa nombra su **crate/archivo canónico** como referencia normativa.
+This is the **normative specification** of the DIG Protocol, defined as **seven layers, bottom-up**. Each layer names its **canonical crate/file** as the normative reference.
 
-:::info Esta es la referencia autoritativa del protocolo
-Esta sección es la fuente de verdad de lo que hace la red. Documenta el protocolo tal como se ejecuta realmente, con citas `file:line` a la implementación canónica.
+:::info This is the authoritative protocol reference
+This section is the source of truth for what the network does. It documents the protocol as it actually runs, with `file:line` citations to the canonical implementation.
 :::
 
-## La unidad fundamental: el capsule {#the-fundamental-unit-the-capsule}
+## The fundamental unit: the capsule
 
-Un concepto atraviesa todas las capas: el **[capsule](./concepts.md#capsule)** = `(store_id, root_hash)`, canónicamente `storeId:rootHash`. Un **store** es una secuencia ordenada de capsules (del más antiguo al más nuevo), uno por commit; su identidad `store_id` *es* un launcher id de singleton DataLayer CHIP-0035 en Chia. La identidad, la compilación, el precio, la recuperación, la caché y la procedencia se definen todos **por capsule**.
+One concept runs through every layer: the **[capsule](./concepts.md#capsule)** = `(store_id, root_hash)`, canonically `storeId:rootHash`. A **store** is an ordered sequence of capsules (oldest→newest), one per commit; its identity `store_id` *is* a CHIP-0035 DataLayer singleton launcher id on Chia. Identity, compilation, pricing, retrieval, caching, and provenance are all defined **per capsule**.
 
-## La tesis: host ciego, verificación del lado del cliente, raíz anclada en cadena {#the-thesis-blind-host-client-side-verify-chain-anchored-root}
+## The thesis: blind host, client-side verify, chain-anchored root
 
-- **Host ciego.** Un host solo tiene texto cifrado opaco identificado por hashes. No tiene ninguna URN ni clave, retransmite la salida propia del capsule textualmente, y no puede distinguir un acierto de un fallo. No hay campo `decoy` en el wire ni CDN — el contenido se sirve solo a través del [dig RPC](./protocol/dig-rpc.md).
-- **Verificación del lado del cliente.** Cada byte se comprueba en el dispositivo del lector contra una raíz en cadena con una prueba de inclusión merkle por recurso, y luego se autentica y descifra. La confianza nunca recae en el origen de servicio.
-- **Raíz anclada en cadena.** La raíz de confianza proviene **únicamente** del singleton CHIP-0035 en Chia (resuelto vía coinset.org), nunca de la "última" servida.
+- **Blind host.** A host holds only opaque ciphertext keyed by hashes. It holds no URN and no key, relays the capsule's own output verbatim, and cannot tell a hit from a miss. There is no `decoy` field on the wire and no CDN — content is served only through the [dig RPC](./protocol/dig-rpc.md).
+- **Client-side verify.** Every byte is checked on the reader's device against an on-chain root with a per-resource merkle inclusion proof, then authenticated-decrypted. Trust never rests on the serving origin.
+- **Chain-anchored root.** The trusted root comes **only** from the CHIP-0035 singleton on Chia (resolved via coinset.org), never from the served "latest".
 
-## Las siete capas {#the-seven-layers}
+## The seven layers
 
-| # | Capa | Qué define | Referencia canónica |
+| # | Layer | What it defines | Canonical reference |
 |---|---|---|---|
-| 0 | [Identidad y nomenclatura](./protocol/identity-and-naming.md) | store, capsule, generation; `store_id` = launcher id | `digstore-core::capsule`, `::urn` |
-| 0 | [URN y direccionamiento](./protocol/urn-and-addressing.md) | gramática `urn:dig:chia:…`; `retrieval_key` sin raíz | `digstore-core::urn`, `lib.rs` |
-| 1 | [Criptografía](./protocol/cryptography.md) | KDF HKDF; sellado AES-256-GCM-SIV | `digstore-core::crypto` |
-| 1 | [Pruebas de inclusión Merkle](./protocol/merkle-proofs.md) | hoja por recurso D5; pliegue NODE_TAG | `digstore-core::merkle` |
-| 1 | [Firmas BLS y DSTs](./protocol/bls-signatures.md) | AugScheme de Chia; cinco DSTs de rol | `digstore-crypto::bls` |
-| 2 | [Formato del capsule](./protocol/capsule-format.md) | la sección de datos DIGS (BINDING D1) | `digstore-core::datasection` |
-| 2 | [El módulo autodefendido](./protocol/self-defending-module.md) | ofuscación de tamaño fijo; el guest de servicio | `digstore-compiler`, `digstore-guest` |
-| 4 | [Anclaje en cadena](./protocol/on-chain-anchoring.md) | store = singleton; capsule = avance de raíz | `chip35_dl_coin`, `digstore-chain` |
-| 4 | [Pago y precio del CAT DIG](./protocol/dig-cat-payment.md) | por capsule, dinámico, referenciado en USD | `chip35_dl_coin::dig` |
-| 6 | [El dig RPC](./protocol/dig-rpc.md) | la interfaz de máquina (JSON-RPC 2.0) | hub `retrieval`, `dig-node` |
-| 5 | [Transporte y push §21](./protocol/transport-and-push.md) | localizador `dig://`, REST, push v1 | `digstore-remote` |
-| 7 | [Red de pares de DIG Node](./protocol/peer-network.md) | identidad de par mTLS, traversal NAT, STUN, introducer, wire de relay, RPC de par | `dig-gossip`, `dig-relay`, `dig-nat`, `dig-node` |
-| 6 | [Verificación y procedencia](./protocol/verification-and-provenance.md) | las cuatro puertas de integridad ordenadas | `digstore-core::merkle`, `dig-node` |
-| 6 | [El modelo de host ciego](./protocol/blind-host-model.md) | ceguera del proveedor; resolver; plano de control `/v1` | hub `retrieval`/`resolver`/`api` |
-| — | [Conformidad y paridad](./protocol/conformance-and-parity.md) | la disciplina de paridad entre implementaciones | goldens congelados, diff de OpenRPC |
+| 0 | [Identity & naming](./protocol/identity-and-naming.md) | store, capsule, generation; `store_id` = launcher id | `digstore-core::capsule`, `::urn` |
+| 0 | [URN & addressing](./protocol/urn-and-addressing.md) | `urn:dig:chia:…` grammar; rootless `retrieval_key` | `digstore-core::urn`, `lib.rs` |
+| 1 | [Cryptography](./protocol/cryptography.md) | HKDF KDF; AES-256-GCM-SIV seal | `digstore-core::crypto` |
+| 1 | [Merkle inclusion proofs](./protocol/merkle-proofs.md) | D5 per-resource leaf; NODE_TAG fold | `digstore-core::merkle` |
+| 1 | [BLS signatures & DSTs](./protocol/bls-signatures.md) | Chia AugScheme; five role DSTs | `digstore-crypto::bls` |
+| 2 | [Capsule format](./protocol/capsule-format.md) | the DIGS data section (BINDING D1) | `digstore-core::datasection` |
+| 2 | [The self-defending module](./protocol/self-defending-module.md) | fixed-size obfuscation; the serving guest | `digstore-compiler`, `digstore-guest` |
+| 4 | [On-chain anchoring](./protocol/on-chain-anchoring.md) | store = singleton; capsule = root-advance | `chip35_dl_coin`, `digstore-chain` |
+| 4 | [DIG CAT payment & pricing](./protocol/dig-cat-payment.md) | per-capsule, dynamic, USD-pegged | `chip35_dl_coin::dig` |
+| 6 | [The dig RPC](./protocol/dig-rpc.md) | the machine interface (JSON-RPC 2.0) | hub `retrieval`, `dig-node` |
+| 5 | [§21 transport & push](./protocol/transport-and-push.md) | `dig://` locator, REST, push v1 | `digstore-remote` |
+| 7 | [DIG Node peer network](./protocol/peer-network.md) | mTLS peer identity, NAT traversal, STUN, introducer, relay wire, peer RPC | `dig-gossip`, `dig-relay`, `dig-nat`, `dig-node` |
+| 7 | [Content replication (the flywheel)](./protocol/content-replication.md) | discover holders, verify, cache, announce — every read makes a holder | `dig-dht`, `dig-download`, `dig-store-cache`, `dig-node` |
+| 6 | [Verification & provenance](./protocol/verification-and-provenance.md) | the four ordered integrity gates | `digstore-core::merkle`, `dig-node` |
+| 6 | [The blind host model](./protocol/blind-host-model.md) | provider-blindness; resolver; `/v1` control plane | hub `retrieval`/`resolver`/`api` |
+| — | [Conformance & parity](./protocol/conformance-and-parity.md) | the cross-impl parity discipline | frozen goldens, OpenRPC diff |
 
-(Las capas 3 y el transporte §21 se entrelazan con la vía de lectura; la tabla las agrupa donde un lector las encuentra. La numeración completa de capas se da en cada página.)
+(Layers 3 and the §21 transport interleave with the read path; the table groups them where a reader meets them. The full layer numbering is given on each page.)
 
-## Cómo fluye un capsule a través de las capas {#how-a-capsule-flows-through-the-layers}
+## How a capsule flows through the layers
 
-Un publicador **fragmenta + cifra** (L1) el contenido en un **formato de capsule** (L2) que se **autosirve** (L3), lo **ancla** en cadena (L4) y lo **envía** sobre el transporte §21 (L5). Cualquier cliente lo **lee** a través del dig RPC y lo **verifica** contra la raíz anclada en cadena enteramente del lado del cliente (L6). Cada constante criptográfica tiene **una** definición compartida entre el productor, el host y el verificador — el [invariante de paridad C8](./protocol/conformance-and-parity.md).
+A publisher **chunks + encrypts** (L1) content into a **capsule format** (L2) that **self-serves** (L3), **anchors** it on-chain (L4), and **pushes** it over §21 transport (L5). Any client **reads** it through the dig RPC and **verifies** it against the chain-anchored root entirely client-side (L6). Every cryptographic constant has **one** definition shared across producer, host, and verifier — the [C8 parity invariant](./protocol/conformance-and-parity.md).
 
-## Terminología {#terminology}
+## Terminology
 
-- **`chia://`** — la dirección de **contenido** de la red (lo que abre un navegador).
-- **`dig://`** — el localizador de **transporte** §21 (plano de CLI/pares) *y* el esquema de página interno del DIG Browser — dos usos distintos, nunca la dirección de contenido.
-- **`urn:dig:`** — el espacio de nombres URN del que ambos derivan.
-- **store / capsule** — la identidad y su generation inmutable.
-- **$DIG** — el CAT pagado por capsule; **dig-store** — el formato del store.
+- **`chia://`** — the network **content** address (what a browser opens).
+- **`dig://`** — the §21 **transport** locator (CLI/peer plane) *and* the DIG Browser's internal page scheme — two distinct uses, never the content address.
+- **`urn:dig:`** — the URN namespace both derive from.
+- **store / capsule** — the identity and its immutable generation.
+- **$DIG** — the CAT paid per capsule; **dig-store** — the store format.
 
-## Relacionado {#related}
+## Related
 
-- [Conceptos y glosario](./concepts.md) — cada entidad definida una vez
-- [Identidad y nomenclatura](./protocol/identity-and-naming.md) — Capa 0, donde empieza la especificación
-- [El dig RPC](./protocol/dig-rpc.md) — la interfaz de máquina del protocolo
-- [Red de pares de DIG Node](./protocol/peer-network.md) — cómo los nodos se encuentran y se alcanzan entre sí (mTLS, traversal NAT, relay)
-- [Conformidad y paridad](./protocol/conformance-and-parity.md) — la disciplina de paridad entre implementaciones
+- [Concepts & glossary](./concepts.md) — every entity defined once
+- [Identity & naming](./protocol/identity-and-naming.md) — Layer 0, where the spec begins
+- [The dig RPC](./protocol/dig-rpc.md) — the protocol's machine interface
+- [DIG Node peer network](./protocol/peer-network.md) — how nodes find + reach each other (mTLS, NAT traversal, relay)
+- [Content replication (the flywheel)](./protocol/content-replication.md) — how content spreads to wherever it is read
+- [Conformance & parity](./protocol/conformance-and-parity.md) — the cross-impl parity discipline

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: "Protocol: Overview"
-description: "DIG 協定以由下而上的七個層級呈現，兼具規範性與實作定義。capsule（storeId:rootHash）是最基本的單位；主機是盲目的，讀取端則對照鏈上狀態進行驗證。這是權威的協定參考文件。"
+description: "The DIG Protocol as seven bottom-up layers, normative and implementation-defined. The capsule (storeId:rootHash) is the fundamental unit; the host is blind and the reader verifies against the chain. This is the authoritative protocol reference."
 keywords:
   - DIG protocol
   - seven-layer model
@@ -17,62 +17,64 @@ tags:
   - anchoring
 ---
 
-# Protocol: Overview {#protocol-overview}
+# Protocol: Overview
 
-這是 DIG 協定的**規範性規格**，以由下而上的**七個層級**定義。每個層級都以其**規範性 crate／檔案**作為權威參考。
+This is the **normative specification** of the DIG Protocol, defined as **seven layers, bottom-up**. Each layer names its **canonical crate/file** as the normative reference.
 
-:::info 這是權威的協定參考文件
-本章節是這個網路實際運作方式的權威來源。它會以指向規範性實作的 `file:line` 引用方式，記錄協定實際運行的樣貌。
+:::info This is the authoritative protocol reference
+This section is the source of truth for what the network does. It documents the protocol as it actually runs, with `file:line` citations to the canonical implementation.
 :::
 
-## 最基本的單位：capsule {#the-fundamental-unit-the-capsule}
+## The fundamental unit: the capsule
 
-有一個概念貫穿每一個層級：**[capsule](./concepts.md#capsule)** = `(store_id, root_hash)`，規範表示為 `storeId:rootHash`。**store** 是一連串按時間排序（由舊到新）的 capsule 序列，每次提交產生一個；其身分識別碼 `store_id` *即是* Chia 上一個 CHIP-0035 DataLayer 單例的 launcher id。身分、編譯、定價、取回、快取與來源證明，全部都是**依 capsule 為單位**定義的。
+One concept runs through every layer: the **[capsule](./concepts.md#capsule)** = `(store_id, root_hash)`, canonically `storeId:rootHash`. A **store** is an ordered sequence of capsules (oldest→newest), one per commit; its identity `store_id` *is* a CHIP-0035 DataLayer singleton launcher id on Chia. Identity, compilation, pricing, retrieval, caching, and provenance are all defined **per capsule**.
 
-## 核心論點：主機盲目、用戶端驗證、鏈上錨定的 root {#the-thesis-blind-host-client-side-verify-chain-anchored-root}
+## The thesis: blind host, client-side verify, chain-anchored root
 
-- **主機盲目。** 主機只持有以雜湊值為鍵的不透明密文。它不持有 URN 也不持有金鑰，僅原樣轉發 capsule 自身的輸出，且無法判斷是命中還是未命中。傳輸中並沒有 `decoy` 欄位，也沒有 CDN——DIG 上的內容僅透過 [dig RPC](./protocol/dig-rpc.md) 提供服務。
-- **用戶端驗證。** 每一個位元組都會在讀取端裝置上，依照鏈上 root 搭配逐資源的 merkle 納入證明進行檢查，然後才進行帶驗證的解密。信任永遠不會建立在服務來源之上。
-- **鏈上錨定的 root。** 受信任的 root **只**來自 Chia 上的 CHIP-0035 單例（透過 coinset.org 解析），絕不會來自伺服端提供的「最新版本」。
+- **Blind host.** A host holds only opaque ciphertext keyed by hashes. It holds no URN and no key, relays the capsule's own output verbatim, and cannot tell a hit from a miss. There is no `decoy` field on the wire and no CDN — content is served only through the [dig RPC](./protocol/dig-rpc.md).
+- **Client-side verify.** Every byte is checked on the reader's device against an on-chain root with a per-resource merkle inclusion proof, then authenticated-decrypted. Trust never rests on the serving origin.
+- **Chain-anchored root.** The trusted root comes **only** from the CHIP-0035 singleton on Chia (resolved via coinset.org), never from the served "latest".
 
-## 七個層級 {#the-seven-layers}
+## The seven layers
 
-| # | 層級 | 定義內容 | 規範性參考 |
+| # | Layer | What it defines | Canonical reference |
 |---|---|---|---|
-| 0 | [身分與命名](./protocol/identity-and-naming.md) | store、capsule、generation；`store_id` = launcher id | `digstore-core::capsule`、`::urn` |
-| 0 | [URN 與定址](./protocol/urn-and-addressing.md) | `urn:dig:chia:…` 語法；不含 root 的 `retrieval_key` | `digstore-core::urn`、`lib.rs` |
-| 1 | [密碼學](./protocol/cryptography.md) | HKDF 金鑰衍生函式；AES-256-GCM-SIV 封裝 | `digstore-core::crypto` |
-| 1 | [Merkle 納入證明](./protocol/merkle-proofs.md) | D5 逐資源葉節點；NODE_TAG 折算 | `digstore-core::merkle` |
-| 1 | [BLS 簽章與 DST](./protocol/bls-signatures.md) | Chia AugScheme；五種角色 DST | `digstore-crypto::bls` |
-| 2 | [capsule 格式](./protocol/capsule-format.md) | DIGS 資料段（BINDING D1） | `digstore-core::datasection` |
-| 2 | [自我保護模組](./protocol/self-defending-module.md) | 固定大小混淆處理；提供服務的 guest | `digstore-compiler`、`digstore-guest` |
-| 4 | [鏈上錨定](./protocol/on-chain-anchoring.md) | store = 單例；capsule = root 推進 | `chip35_dl_coin`、`digstore-chain` |
-| 4 | [DIG CAT 付款與定價](./protocol/dig-cat-payment.md) | 依 capsule 計價、動態、以美元計價 | `chip35_dl_coin::dig` |
-| 6 | [dig RPC](./protocol/dig-rpc.md) | 機器介面（JSON-RPC 2.0） | hub `retrieval`、`dig-node` |
-| 5 | [§21 傳輸與推送](./protocol/transport-and-push.md) | `dig://` 定位器、REST、推送 v1 | `digstore-remote` |
-| 7 | [DIG 節點對等網路](./protocol/peer-network.md) | mTLS 對等身分、NAT 穿越、STUN、介紹者（introducer）、中繼傳輸協定、對等 RPC | `dig-gossip`、`dig-relay`、`dig-nat`、`dig-node` |
-| 6 | [驗證與來源證明](./protocol/verification-and-provenance.md) | 四道有序的完整性關卡 | `digstore-core::merkle`、`dig-node` |
-| 6 | [盲目主機模型](./protocol/blind-host-model.md) | 對提供者的盲目性；解析器；`/v1` 控制平面 | hub `retrieval`／`resolver`／`api` |
-| — | [一致性與對等驗證](./protocol/conformance-and-parity.md) | 跨實作的一致性紀律 | 固定的黃金測資、OpenRPC diff |
+| 0 | [Identity & naming](./protocol/identity-and-naming.md) | store, capsule, generation; `store_id` = launcher id | `digstore-core::capsule`, `::urn` |
+| 0 | [URN & addressing](./protocol/urn-and-addressing.md) | `urn:dig:chia:…` grammar; rootless `retrieval_key` | `digstore-core::urn`, `lib.rs` |
+| 1 | [Cryptography](./protocol/cryptography.md) | HKDF KDF; AES-256-GCM-SIV seal | `digstore-core::crypto` |
+| 1 | [Merkle inclusion proofs](./protocol/merkle-proofs.md) | D5 per-resource leaf; NODE_TAG fold | `digstore-core::merkle` |
+| 1 | [BLS signatures & DSTs](./protocol/bls-signatures.md) | Chia AugScheme; five role DSTs | `digstore-crypto::bls` |
+| 2 | [Capsule format](./protocol/capsule-format.md) | the DIGS data section (BINDING D1) | `digstore-core::datasection` |
+| 2 | [The self-defending module](./protocol/self-defending-module.md) | fixed-size obfuscation; the serving guest | `digstore-compiler`, `digstore-guest` |
+| 4 | [On-chain anchoring](./protocol/on-chain-anchoring.md) | store = singleton; capsule = root-advance | `chip35_dl_coin`, `digstore-chain` |
+| 4 | [DIG CAT payment & pricing](./protocol/dig-cat-payment.md) | per-capsule, dynamic, USD-pegged | `chip35_dl_coin::dig` |
+| 6 | [The dig RPC](./protocol/dig-rpc.md) | the machine interface (JSON-RPC 2.0) | hub `retrieval`, `dig-node` |
+| 5 | [§21 transport & push](./protocol/transport-and-push.md) | `dig://` locator, REST, push v1 | `digstore-remote` |
+| 7 | [DIG Node peer network](./protocol/peer-network.md) | mTLS peer identity, NAT traversal, STUN, introducer, relay wire, peer RPC | `dig-gossip`, `dig-relay`, `dig-nat`, `dig-node` |
+| 7 | [Content replication (the flywheel)](./protocol/content-replication.md) | discover holders, verify, cache, announce — every read makes a holder | `dig-dht`, `dig-download`, `dig-store-cache`, `dig-node` |
+| 6 | [Verification & provenance](./protocol/verification-and-provenance.md) | the four ordered integrity gates | `digstore-core::merkle`, `dig-node` |
+| 6 | [The blind host model](./protocol/blind-host-model.md) | provider-blindness; resolver; `/v1` control plane | hub `retrieval`/`resolver`/`api` |
+| — | [Conformance & parity](./protocol/conformance-and-parity.md) | the cross-impl parity discipline | frozen goldens, OpenRPC diff |
 
-（第 3 層與 §21 傳輸與讀取路徑相互交錯；此表格依讀者實際接觸到的位置分組。完整的層級編號則列於各頁面之中。）
+(Layers 3 and the §21 transport interleave with the read path; the table groups them where a reader meets them. The full layer numbering is given on each page.)
 
-## capsule 如何流經各層級 {#how-a-capsule-flows-through-the-layers}
+## How a capsule flows through the layers
 
-發布者將內容進行**分塊加密**（L1），封裝成一個**capsule 格式**（L2），使其能夠**自我提供服務**（L3），將其**錨定**至鏈上（L4），並透過 §21 傳輸協定**推送**出去（L5）。任何用戶端都能透過 dig RPC **讀取**它，並完全在用戶端對照鏈上錨定的 root **驗證**它（L6）。每一個密碼學常數在生產者、主機與驗證者之間都只有**唯一**一份定義——這就是 [C8 一致性不變量](./protocol/conformance-and-parity.md)。
+A publisher **chunks + encrypts** (L1) content into a **capsule format** (L2) that **self-serves** (L3), **anchors** it on-chain (L4), and **pushes** it over §21 transport (L5). Any client **reads** it through the dig RPC and **verifies** it against the chain-anchored root entirely client-side (L6). Every cryptographic constant has **one** definition shared across producer, host, and verifier — the [C8 parity invariant](./protocol/conformance-and-parity.md).
 
-## 術語 {#terminology}
+## Terminology
 
-- **`chia://`**——網路的**內容**地址（瀏覽器開啟的對象）。
-- **`dig://`**——§21 的**傳輸**定位器（CLI／對等網路層面），*同時*也是 DIG Browser 內部的頁面配置方案——兩種用途各自獨立，都不是內容地址。
-- **`urn:dig:`**——上述兩者共同衍生出的 URN 命名空間。
-- **store／capsule**——身分識別碼及其不可變的世代（generation）。
-- **$DIG**——每個 capsule 需支付的 CAT；**dig-store**——store 格式本身。
+- **`chia://`** — the network **content** address (what a browser opens).
+- **`dig://`** — the §21 **transport** locator (CLI/peer plane) *and* the DIG Browser's internal page scheme — two distinct uses, never the content address.
+- **`urn:dig:`** — the URN namespace both derive from.
+- **store / capsule** — the identity and its immutable generation.
+- **$DIG** — the CAT paid per capsule; **dig-store** — the store format.
 
-## 相關文件 {#related}
+## Related
 
-- [概念與詞彙表](./concepts.md)——每個實體僅定義一次
-- [身分與命名](./protocol/identity-and-naming.md)——第 0 層，規格由此開始
-- [dig RPC](./protocol/dig-rpc.md)——協定的機器介面
-- [DIG 節點對等網路](./protocol/peer-network.md)——節點如何找到並連接彼此（mTLS、NAT 穿越、中繼）
-- [一致性與對等驗證](./protocol/conformance-and-parity.md)——跨實作的一致性紀律
+- [Concepts & glossary](./concepts.md) — every entity defined once
+- [Identity & naming](./protocol/identity-and-naming.md) — Layer 0, where the spec begins
+- [The dig RPC](./protocol/dig-rpc.md) — the protocol's machine interface
+- [DIG Node peer network](./protocol/peer-network.md) — how nodes find + reach each other (mTLS, NAT traversal, relay)
+- [Content replication (the flywheel)](./protocol/content-replication.md) — how content spreads to wherever it is read
+- [Conformance & parity](./protocol/conformance-and-parity.md) — the cross-impl parity discipline
