@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
-title: "Protocol: Overview"
-description: "The DIG Protocol as seven bottom-up layers, normative and implementation-defined. The capsule (storeId:rootHash) is the fundamental unit; the host is blind and the reader verifies against the chain. This is the authoritative protocol reference."
+title: "Protokol: Genel Bakış"
+description: "Normatif ve uygulamaya bağlı olarak yedi alttan üste katman şeklinde DIG Protokolü. capsule (storeId:rootHash) temel birimdir; host kördür ve okuyucu zincire karşı doğrular. Bu, yetkili protokol referansıdır."
 keywords:
   - DIG protocol
   - seven-layer model
@@ -17,64 +17,64 @@ tags:
   - anchoring
 ---
 
-# Protocol: Overview
+# Protokol: Genel Bakış {#protocol-overview}
 
-This is the **normative specification** of the DIG Protocol, defined as **seven layers, bottom-up**. Each layer names its **canonical crate/file** as the normative reference.
+Bu, DIG Protokolünün **normatif şartnamesidir**, alttan üste **yedi katman** olarak tanımlanmıştır. Her katman, normatif referans olarak kendi **kanonik crate/dosyasını** adlandırır.
 
-:::info This is the authoritative protocol reference
-This section is the source of truth for what the network does. It documents the protocol as it actually runs, with `file:line` citations to the canonical implementation.
+:::info Bu, yetkili protokol referansıdır
+Bu bölüm, ağın ne yaptığının kaynağıdır. Protokolü, kanonik uygulamaya `dosya:satır` alıntılarıyla fiilen çalıştığı şekliyle belgeler.
 :::
 
-## The fundamental unit: the capsule
+## Temel birim: capsule {#the-fundamental-unit-the-capsule}
 
-One concept runs through every layer: the **[capsule](./concepts.md#capsule)** = `(store_id, root_hash)`, canonically `storeId:rootHash`. A **store** is an ordered sequence of capsules (oldest→newest), one per commit; its identity `store_id` *is* a CHIP-0035 DataLayer singleton launcher id on Chia. Identity, compilation, pricing, retrieval, caching, and provenance are all defined **per capsule**.
+Her katmanda geçen bir kavram var: **[capsule](./concepts.md#capsule)** = `(store_id, root_hash)`, kanonik olarak `storeId:rootHash`. Bir **store**, capsule'lerin sıralı bir dizisidir (eskiden yeniye), her commit için bir tane; kimliği `store_id`, Chia üzerinde bir CHIP-0035 DataLayer singleton başlatıcı (launcher) id'sinin *ta kendisidir*. Kimlik, derleme, fiyatlandırma, alma, önbellekleme ve köken kanıtının hepsi **capsule başına** tanımlanır.
 
-## The thesis: blind host, client-side verify, chain-anchored root
+## Tez: kör host, istemci tarafında doğrulama, zincire sabitlenmiş kök {#the-thesis-blind-host-client-side-verify-chain-anchored-root}
 
-- **Blind host.** A host holds only opaque ciphertext keyed by hashes. It holds no URN and no key, relays the capsule's own output verbatim, and cannot tell a hit from a miss. There is no `decoy` field on the wire and no CDN — content is served only through the [dig RPC](./protocol/dig-rpc.md).
-- **Client-side verify.** Every byte is checked on the reader's device against an on-chain root with a per-resource merkle inclusion proof, then authenticated-decrypted. Trust never rests on the serving origin.
-- **Chain-anchored root.** The trusted root comes **only** from the CHIP-0035 singleton on Chia (resolved via coinset.org), never from the served "latest".
+- **Kör host.** Bir host yalnızca karmalarla anahtarlanmış opak şifreli metin tutar. Ne URN ne de anahtar tutar, capsule'ün kendi çıktısını olduğu gibi aktarır ve bir isabeti bir kaçırmadan ayırt edemez. Tel üzerinde bir `decoy` alanı ve bir CDN yoktur — içerik yalnızca [dig RPC](./protocol/dig-rpc.md) üzerinden sunulur.
+- **İstemci tarafında doğrulama.** Her bayt, okuyucunun cihazında, kaynak-başına bir merkle dahil etme kanıtıyla zincir üzeri bir köke karşı kontrol edilir, ardından kimlik doğrulamalı olarak şifresi çözülür. Güven asla sunum kaynağına dayanmaz.
+- **Zincire sabitlenmiş kök.** Güvenilen kök **yalnızca** Chia üzerindeki CHIP-0035 singleton'ından gelir (coinset.org üzerinden çözülür), asla sunulan "en son"dan değil.
 
-## The seven layers
+## Yedi katman {#the-seven-layers}
 
-| # | Layer | What it defines | Canonical reference |
+| # | Katman | Tanımladığı şey | Kanonik referans |
 |---|---|---|---|
-| 0 | [Identity & naming](./protocol/identity-and-naming.md) | store, capsule, generation; `store_id` = launcher id | `digstore-core::capsule`, `::urn` |
-| 0 | [URN & addressing](./protocol/urn-and-addressing.md) | `urn:dig:chia:…` grammar; rootless `retrieval_key` | `digstore-core::urn`, `lib.rs` |
-| 1 | [Cryptography](./protocol/cryptography.md) | HKDF KDF; AES-256-GCM-SIV seal | `digstore-core::crypto` |
-| 1 | [Merkle inclusion proofs](./protocol/merkle-proofs.md) | D5 per-resource leaf; NODE_TAG fold | `digstore-core::merkle` |
-| 1 | [BLS signatures & DSTs](./protocol/bls-signatures.md) | Chia AugScheme; five role DSTs | `digstore-crypto::bls` |
-| 2 | [Capsule format](./protocol/capsule-format.md) | the DIGS data section (BINDING D1) | `digstore-core::datasection` |
-| 2 | [The self-defending module](./protocol/self-defending-module.md) | fixed-size obfuscation; the serving guest | `digstore-compiler`, `digstore-guest` |
-| 4 | [On-chain anchoring](./protocol/on-chain-anchoring.md) | store = singleton; capsule = root-advance | `chip35_dl_coin`, `digstore-chain` |
-| 4 | [DIG CAT payment & pricing](./protocol/dig-cat-payment.md) | per-capsule, dynamic, USD-pegged | `chip35_dl_coin::dig` |
-| 6 | [The dig RPC](./protocol/dig-rpc.md) | the machine interface (JSON-RPC 2.0) | hub `retrieval`, `dig-node` |
-| 5 | [§21 transport & push](./protocol/transport-and-push.md) | `dig://` locator, REST, push v1 | `digstore-remote` |
-| 7 | [DIG Node peer network](./protocol/peer-network.md) | mTLS peer identity, NAT traversal, STUN, introducer, relay wire, peer RPC | `dig-gossip`, `dig-relay`, `dig-nat`, `dig-node` |
-| 7 | [Content replication (the flywheel)](./protocol/content-replication.md) | discover holders, verify, cache, announce — every read makes a holder | `dig-dht`, `dig-download`, `dig-store-cache`, `dig-node` |
-| 6 | [Verification & provenance](./protocol/verification-and-provenance.md) | the four ordered integrity gates | `digstore-core::merkle`, `dig-node` |
-| 6 | [The blind host model](./protocol/blind-host-model.md) | provider-blindness; resolver; `/v1` control plane | hub `retrieval`/`resolver`/`api` |
-| — | [Conformance & parity](./protocol/conformance-and-parity.md) | the cross-impl parity discipline | frozen goldens, OpenRPC diff |
+| 0 | [Kimlik & adlandırma](./protocol/identity-and-naming.md) | store, capsule, generation; `store_id` = başlatıcı id | `digstore-core::capsule`, `::urn` |
+| 0 | [URN & adresleme](./protocol/urn-and-addressing.md) | `urn:dig:chia:…` grameri; köksüz `retrieval_key` | `digstore-core::urn`, `lib.rs` |
+| 1 | [Kriptografi](./protocol/cryptography.md) | HKDF KDF; AES-256-GCM-SIV mühürleme | `digstore-core::crypto` |
+| 1 | [Merkle dahil etme kanıtları](./protocol/merkle-proofs.md) | D5 kaynak-başına yaprak; NODE_TAG katlama | `digstore-core::merkle` |
+| 1 | [BLS imzaları & DST'ler](./protocol/bls-signatures.md) | Chia AugScheme; beş rol DST'si | `digstore-crypto::bls` |
+| 2 | [capsule formatı](./protocol/capsule-format.md) | DIGS veri bölümü (BINDING D1) | `digstore-core::datasection` |
+| 2 | [Kendini savunan modül](./protocol/self-defending-module.md) | sabit boyutlu gizleme; sunum guest'i | `digstore-compiler`, `digstore-guest` |
+| 4 | [Zincir üzeri sabitleme](./protocol/on-chain-anchoring.md) | store = singleton; capsule = kök-ilerletme | `chip35_dl_coin`, `digstore-chain` |
+| 4 | [DIG CAT ödemesi & fiyatlandırma](./protocol/dig-cat-payment.md) | capsule başına, dinamik, USD-endeksli | `chip35_dl_coin::dig` |
+| 6 | [dig RPC](./protocol/dig-rpc.md) | makine arayüzü (JSON-RPC 2.0) | hub `retrieval`, `dig-node` |
+| 5 | [§21 aktarım & push](./protocol/transport-and-push.md) | `dig://` konumlandırıcı, REST, push v1 | `digstore-remote` |
+| 7 | [DIG Node eş ağı](./protocol/peer-network.md) | mTLS eş kimliği, NAT geçişi, STUN, tanıtıcı (introducer), relay teli, eş RPC'si | `dig-gossip`, `dig-relay`, `dig-nat`, `dig-node` |
+| 7 | [İçerik çoğaltma (volan)](./protocol/content-replication) | tutucuları bul, doğrula, önbelleğe al, duyur — her okuma yeni bir tutucu yaratır | `dig-dht`, `dig-download`, `dig-store-cache`, `dig-node` |
+| 6 | [Doğrulama & köken kanıtı](./protocol/verification-and-provenance.md) | dört sıralı bütünlük geçidi | `digstore-core::merkle`, `dig-node` |
+| 6 | [Kör host modeli](./protocol/blind-host-model.md) | sağlayıcı-körlüğü; çözücü; `/v1` kontrol düzlemi | hub `retrieval`/`resolver`/`api` |
+| — | [Uygunluk & eşitlik](./protocol/conformance-and-parity.md) | çapraz-uygulama eşitlik disiplini | dondurulmuş goldenlar, OpenRPC diff'i |
 
-(Layers 3 and the §21 transport interleave with the read path; the table groups them where a reader meets them. The full layer numbering is given on each page.)
+(3. katman ve §21 aktarımı okuma yoluyla iç içe geçer; tablo bunları bir okuyucunun onlarla karşılaştığı yerde gruplar. Tam katman numaralandırması her sayfada verilmiştir.)
 
-## How a capsule flows through the layers
+## Bir capsule katmanlardan nasıl akar {#how-a-capsule-flows-through-the-layers}
 
-A publisher **chunks + encrypts** (L1) content into a **capsule format** (L2) that **self-serves** (L3), **anchors** it on-chain (L4), and **pushes** it over §21 transport (L5). Any client **reads** it through the dig RPC and **verifies** it against the chain-anchored root entirely client-side (L6). Every cryptographic constant has **one** definition shared across producer, host, and verifier — the [C8 parity invariant](./protocol/conformance-and-parity.md).
+Bir yayıncı içeriği **parçalar + şifreler** (K1) bir **capsule formatına** (K2) dönüştürür, bu da **kendini sunar** (K3), zincir üzerinde **sabitlenir** (K4) ve §21 aktarımı üzerinden **push edilir** (K5). Herhangi bir istemci, onu dig RPC üzerinden **okur** ve tamamen istemci tarafında zincire sabitlenmiş köke karşı **doğrular** (K6). Her kriptografik sabit, üretici, host ve doğrulayıcı arasında paylaşılan **tek** bir tanıma sahiptir — [C8 eşitlik değişmezi](./protocol/conformance-and-parity.md).
 
-## Terminology
+## Terminoloji {#terminology}
 
-- **`chia://`** — the network **content** address (what a browser opens).
-- **`dig://`** — the §21 **transport** locator (CLI/peer plane) *and* the DIG Browser's internal page scheme — two distinct uses, never the content address.
-- **`urn:dig:`** — the URN namespace both derive from.
-- **store / capsule** — the identity and its immutable generation.
-- **$DIG** — the CAT paid per capsule; **dig-store** — the store format.
+- **`chia://`** — ağın **içerik** adresi (bir tarayıcının açtığı şey).
+- **`dig://`** — §21 **aktarım** konumlandırıcısı (CLI/eş düzlemi) *ve* DIG Browser'ın dahili sayfa şeması — iki ayrı kullanım, asla içerik adresi değil.
+- **`urn:dig:`** — her ikisinin de türediği URN ad alanı.
+- **store / capsule** — kimlik ve onun değişmez generation'ı.
+- **$DIG** — capsule başına ödenen CAT; **dig-store** — store formatı.
 
-## Related
+## İlgili {#related}
 
-- [Concepts & glossary](./concepts.md) — every entity defined once
-- [Identity & naming](./protocol/identity-and-naming.md) — Layer 0, where the spec begins
-- [The dig RPC](./protocol/dig-rpc.md) — the protocol's machine interface
-- [DIG Node peer network](./protocol/peer-network.md) — how nodes find + reach each other (mTLS, NAT traversal, relay)
-- [Content replication (the flywheel)](./protocol/content-replication.md) — how content spreads to wherever it is read
-- [Conformance & parity](./protocol/conformance-and-parity.md) — the cross-impl parity discipline
+- [Kavramlar & sözlük](./concepts.md) — bir kez tanımlanan her varlık
+- [Kimlik & adlandırma](./protocol/identity-and-naming.md) — şartnamenin başladığı Katman 0
+- [dig RPC](./protocol/dig-rpc.md) — protokolün makine arayüzü
+- [DIG Node eş ağı](./protocol/peer-network.md) — düğümlerin birbirini nasıl bulup ulaştığı (mTLS, NAT geçişi, relay)
+- [İçerik çoğaltma (volan)](./protocol/content-replication) — içeriğin okunduğu yere nasıl yayıldığı
+- [Uygunluk & eşitlik](./protocol/conformance-and-parity.md) — çapraz-uygulama eşitlik disiplini

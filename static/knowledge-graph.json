@@ -4210,36 +4210,6 @@
       "type": "see-also"
     },
     {
-      "from": "/docs/protocol/content-replication",
-      "to": "/docs/protocol/peer-network",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/protocol/content-replication",
-      "to": "/docs/protocol/verification-and-provenance",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/protocol/content-replication",
-      "to": "/docs/protocol/merkle-proofs",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/protocol/content-replication",
-      "to": "/docs/protocol/on-chain-anchoring",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/protocol/content-replication",
-      "to": "/docs/protocol/onion-routing",
-      "type": "see-also"
-    },
-    {
-      "from": "/docs/protocol/content-replication",
-      "to": "/docs/protocol/dig-rpc",
-      "type": "see-also"
-    },
-    {
       "from": "/docs/protocol/cryptography",
       "to": "/docs/protocol/urn-and-addressing",
       "type": "see-also"

@@ -28,7 +28,7 @@ tags:
 
 # Layer 7 · Content replication — the flywheel
 
-> **Canonical references:** `dig-node` (the composition root that wires the loop), `dig-dht` (the Kademlia provider DHT and `find_providers`), `dig-gossip` (the signed holdings-announce wire, opcode 222), `dig-download` (the multi-source, merkle-verified fetch), `dig-store-cache` (the bounded on-disk capsule cache), and `dig-store` (the `.dig` capsule format). This page is the ecosystem-wide spec for **how content spreads**; the [peer network](./peer-network.md) is the transport it rides, and [verification & provenance](./verification-and-provenance.md) is the integrity gate every stage defers to.
+> **Canonical references:** `dig-node` (the composition root that wires the loop), `dig-dht` (the Kademlia provider DHT and `find_providers`), `dig-gossip` (the signed holdings-announce wire, opcode 222), `dig-download` (the multi-source, merkle-verified fetch), `dig-store-cache` (the bounded on-disk capsule cache), and `dig-store` (the `.dig` capsule format). This page is the ecosystem-wide spec for **how content spreads**; the [peer network](./peer-network) is the transport it rides, and [verification & provenance](./verification-and-provenance) is the integrity gate every stage defers to.
 
 DIG has **no origin server and no CDN**. A capsule is available because some set of nodes holds it, and that set is not curated by anyone — it grows wherever the content is actually read. This page specifies that mechanism.
 
@@ -49,7 +49,7 @@ Two properties make the loop safe rather than a rumour mill, and both are enforc
 
 A node opens mutually-authenticated links to peers before it can discover or fetch anything. Peer identity is the hash of the TLS public key — `peer_id = SHA-256(TLS SubjectPublicKeyInfo DER)` — and the dial follows the ordered NAT-traversal ladder, preferring a direct path and relaying only as a last resort.
 
-This stage is specified in full on the [peer network](./peer-network.md) page. Everything below rides that same authenticated transport; there is no unauthenticated discovery or fetch traffic.
+This stage is specified in full on the [peer network](./peer-network) page. Everything below rides that same authenticated transport; there is no unauthenticated discovery or fetch traffic.
 
 ## Stage 2 · Discover — who holds this capsule
 
@@ -57,7 +57,7 @@ Discovery answers one question: **which peers hold content key X?** It has two h
 
 ### 2a · The provider DHT — durable, network-wide
 
-`dig-dht` is a Kademlia DHT whose values are **provider records**: "peer P holds content key K, reachable at these addresses, until `expires_at`". The content key is derived from the store id, generation root, and (for a resource) the retrieval key — the derivation and the four DHT methods are specified under [the DHT](./peer-network.md#dht).
+`dig-dht` is a Kademlia DHT whose values are **provider records**: "peer P holds content key K, reachable at these addresses, until `expires_at`". The content key is derived from the store id, generation root, and (for a resource) the retrieval key — the derivation and the four DHT methods are specified under [the DHT](./peer-network#dht).
 
 `find_providers(content)` is a **distributed iterative lookup**: the node queries the α closest contacts it knows, recurses toward peers closer to the key, converges on the k closest, and returns the union of the holder records it collected. A locally-held record is a fast path, never the whole answer.
 
@@ -70,7 +70,7 @@ Two properties are load-bearing:
 
 The DHT alone converges only as fast as the next PUT and the next TTL. `dig-gossip` **opcode 222, `HoldingsAnnounce`**, adds the real-time half: a **signed, batched** statement of add/remove deltas to a peer's holdings, flooded across the gossip pool, which upserts and removes provider records at receiving nodes within seconds.
 
-The announce is signed with the announcer's TLS leaf key over the `dig:holdings:v1` preimage, and acceptance is **fail-closed**. The wire contract — the preimage, the batch cap, and the five acceptance checks — is normative and specified on the [peer network](./peer-network.md) page.
+The announce is signed with the announcer's TLS leaf key over the `dig:holdings:v1` preimage, and acceptance is **fail-closed**. The wire contract — the preimage, the batch cap, and the five acceptance checks — is normative and specified on the [peer network](./peer-network) page.
 
 Because an inbound announce mutates another node's view of who holds what, the ingress is guarded over threat *classes* rather than individual attacks:
 
@@ -99,7 +99,7 @@ They have different trust and topology properties. A statement about one is not 
 
 ## Stage 3 · Fetch and verify
 
-With a holder set in hand, `dig-download` fetches the content — from **multiple sources** where they exist, by byte range, resumable — and verifies as it goes. The [client-to-node resolution ladder](../run-a-node/point-a-consumer.md) governs which node a client asks in the first place; this stage governs what happens once bytes are moving.
+With a holder set in hand, `dig-download` fetches the content — from **multiple sources** where they exist, by byte range, resumable — and verifies as it goes. The [client-to-node resolution ladder](../run-a-node/point-a-consumer) governs which node a client asks in the first place; this stage governs what happens once bytes are moving.
 
 Verification is not a post-hoc check on the assembled result:
 
@@ -108,7 +108,7 @@ Verification is not a post-hoc check on the assembled result:
 - **A whole capsule self-verifies on install.** A capsule fetch carries no per-resource proof; its integrity comes from the capsule format's own structure.
 - **The root is anchored on chain.** A generation is only ever *served as current* when its root equals the chain-anchored tip. The worst a stale or attacker-chosen root can achieve is caching a real but **older** generation — never fabricated content.
 
-**Verified is not the same as safe.** A capsule that verifies is exactly the bytes its publisher committed; it is still content from a stranger, and it is treated as untrusted input by everything that renders or executes it. Integrity is a statement about authorship, not about intent — see [the self-defending module](./self-defending-module.md) for how served content is confined.
+**Verified is not the same as safe.** A capsule that verifies is exactly the bytes its publisher committed; it is still content from a stranger, and it is treated as untrusted input by everything that renders or executes it. Integrity is a statement about authorship, not about intent — see [the self-defending module](./self-defending-module) for how served content is confined.
 
 ## Stage 4 · Cache — keep what you fetched
 
@@ -167,9 +167,9 @@ An implementation conforms to this layer when all of the following hold:
 
 ## Related
 
-- [DIG Node peer network](./peer-network.md) — the transport, the DHT wire, and the holdings-announce byte contract
-- [Verification & provenance](./verification-and-provenance.md) — the ordered integrity gates every fetch defers to
-- [Merkle inclusion proofs](./merkle-proofs.md) — the proof format the range verifier folds
-- [On-chain anchoring](./on-chain-anchoring.md) — where the chain-anchored root comes from
-- [Private retrieval (onion routing)](./onion-routing.md) — reading without revealing what you read
-- [The dig RPC](./dig-rpc.md) — the availability, inventory, and range-fetch methods this layer uses
+- [DIG Node peer network](./peer-network) — the transport, the DHT wire, and the holdings-announce byte contract
+- [Verification & provenance](./verification-and-provenance) — the ordered integrity gates every fetch defers to
+- [Merkle inclusion proofs](./merkle-proofs) — the proof format the range verifier folds
+- [On-chain anchoring](./on-chain-anchoring) — where the chain-anchored root comes from
+- [Private retrieval (onion routing)](./onion-routing) — reading without revealing what you read
+- [The dig RPC](./dig-rpc) — the availability, inventory, and range-fetch methods this layer uses

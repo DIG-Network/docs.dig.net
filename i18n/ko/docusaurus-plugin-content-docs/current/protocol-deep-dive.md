@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: "Protocol: Overview"
-description: "The DIG Protocol as seven bottom-up layers, normative and implementation-defined. The capsule (storeId:rootHash) is the fundamental unit; the host is blind and the reader verifies against the chain. This is the authoritative protocol reference."
+description: "DIG 프로토콜을 하위에서 상위로 이어지는 7개 레이어로 정리한 규범적/구현 정의 문서. capsule(storeId:rootHash)이 기본 단위이며, 호스트는 내용을 알지 못하고 리더가 체인을 기준으로 검증합니다. 이 문서가 권위 있는 프로토콜 레퍼런스입니다."
 keywords:
   - DIG protocol
   - seven-layer model
@@ -17,64 +17,64 @@ tags:
   - anchoring
 ---
 
-# Protocol: Overview
+# Protocol: Overview {#protocol-overview}
 
-This is the **normative specification** of the DIG Protocol, defined as **seven layers, bottom-up**. Each layer names its **canonical crate/file** as the normative reference.
+이 문서는 DIG 프로토콜의 **규범적 명세(normative specification)**이며, 하위에서 상위로 이어지는 **7개 레이어**로 정의됩니다. 각 레이어는 자신의 **정규 크레이트/파일**을 규범적 참조로 명시합니다.
 
-:::info This is the authoritative protocol reference
-This section is the source of truth for what the network does. It documents the protocol as it actually runs, with `file:line` citations to the canonical implementation.
+:::info 이 문서가 권위 있는 프로토콜 레퍼런스입니다
+이 섹션은 네트워크가 실제로 무엇을 하는지에 대한 진실의 원천(source of truth)입니다. 실제로 동작하는 프로토콜을 정규 구현에 대한 `file:line` 인용과 함께 문서화합니다.
 :::
 
-## The fundamental unit: the capsule
+## 기본 단위: capsule {#the-fundamental-unit-the-capsule}
 
-One concept runs through every layer: the **[capsule](./concepts.md#capsule)** = `(store_id, root_hash)`, canonically `storeId:rootHash`. A **store** is an ordered sequence of capsules (oldest→newest), one per commit; its identity `store_id` *is* a CHIP-0035 DataLayer singleton launcher id on Chia. Identity, compilation, pricing, retrieval, caching, and provenance are all defined **per capsule**.
+모든 레이어를 관통하는 하나의 개념이 있습니다. 바로 **[capsule](./concepts.md#capsule)** = `(store_id, root_hash)`이며, 정규 표기로는 `storeId:rootHash`입니다. **store**는 커밋마다 하나씩 생성되는 capsule들의 순서 있는 시퀀스(오래된 것 → 최신 것)이며, 그 식별자인 `store_id`는 Chia 상의 CHIP-0035 DataLayer 싱글톤 launcher id *그 자체*입니다. 식별(identity), 컴파일, 가격 책정, 검색(retrieval), 캐싱, 출처 증명(provenance)은 모두 **capsule 단위**로 정의됩니다.
 
-## The thesis: blind host, client-side verify, chain-anchored root
+## 핵심 명제: 내용을 모르는 호스트, 클라이언트 측 검증, 체인에 고정된 root {#the-thesis-blind-host-client-side-verify-chain-anchored-root}
 
-- **Blind host.** A host holds only opaque ciphertext keyed by hashes. It holds no URN and no key, relays the capsule's own output verbatim, and cannot tell a hit from a miss. There is no `decoy` field on the wire and no CDN — content is served only through the [dig RPC](./protocol/dig-rpc.md).
-- **Client-side verify.** Every byte is checked on the reader's device against an on-chain root with a per-resource merkle inclusion proof, then authenticated-decrypted. Trust never rests on the serving origin.
-- **Chain-anchored root.** The trusted root comes **only** from the CHIP-0035 singleton on Chia (resolved via coinset.org), never from the served "latest".
+- **내용을 모르는 호스트(Blind host).** 호스트는 해시로 키가 매겨진 불투명한 암호문만 보관합니다. URN도 키도 갖고 있지 않으며, capsule 자체의 출력을 그대로 중계할 뿐 히트인지 미스인지도 구분하지 못합니다. 와이어에는 `decoy` 필드가 없으며 CDN도 없습니다 — 콘텐츠는 오직 [dig RPC](./protocol/dig-rpc.md)를 통해서만 제공됩니다.
+- **클라이언트 측 검증(Client-side verify).** 모든 바이트는 리소스별 머클 포함 증명(merkle inclusion proof)을 사용해 리더의 기기에서 온체인 root와 대조 검증된 후, 인증 복호화(authenticated-decrypt)됩니다. 신뢰는 결코 서빙하는 origin에 의존하지 않습니다.
+- **체인에 고정된 root(Chain-anchored root).** 신뢰할 수 있는 root는 **오직** Chia 상의 CHIP-0035 싱글톤(coinset.org를 통해 확인)에서만 오며, 서빙된 "최신본"에서 오지 않습니다.
 
-## The seven layers
+## 7개 레이어 {#the-seven-layers}
 
-| # | Layer | What it defines | Canonical reference |
+| # | 레이어 | 정의하는 내용 | 정규 참조 |
 |---|---|---|---|
-| 0 | [Identity & naming](./protocol/identity-and-naming.md) | store, capsule, generation; `store_id` = launcher id | `digstore-core::capsule`, `::urn` |
-| 0 | [URN & addressing](./protocol/urn-and-addressing.md) | `urn:dig:chia:…` grammar; rootless `retrieval_key` | `digstore-core::urn`, `lib.rs` |
-| 1 | [Cryptography](./protocol/cryptography.md) | HKDF KDF; AES-256-GCM-SIV seal | `digstore-core::crypto` |
-| 1 | [Merkle inclusion proofs](./protocol/merkle-proofs.md) | D5 per-resource leaf; NODE_TAG fold | `digstore-core::merkle` |
-| 1 | [BLS signatures & DSTs](./protocol/bls-signatures.md) | Chia AugScheme; five role DSTs | `digstore-crypto::bls` |
-| 2 | [Capsule format](./protocol/capsule-format.md) | the DIGS data section (BINDING D1) | `digstore-core::datasection` |
-| 2 | [The self-defending module](./protocol/self-defending-module.md) | fixed-size obfuscation; the serving guest | `digstore-compiler`, `digstore-guest` |
-| 4 | [On-chain anchoring](./protocol/on-chain-anchoring.md) | store = singleton; capsule = root-advance | `chip35_dl_coin`, `digstore-chain` |
-| 4 | [DIG CAT payment & pricing](./protocol/dig-cat-payment.md) | per-capsule, dynamic, USD-pegged | `chip35_dl_coin::dig` |
-| 6 | [The dig RPC](./protocol/dig-rpc.md) | the machine interface (JSON-RPC 2.0) | hub `retrieval`, `dig-node` |
-| 5 | [§21 transport & push](./protocol/transport-and-push.md) | `dig://` locator, REST, push v1 | `digstore-remote` |
-| 7 | [DIG Node peer network](./protocol/peer-network.md) | mTLS peer identity, NAT traversal, STUN, introducer, relay wire, peer RPC | `dig-gossip`, `dig-relay`, `dig-nat`, `dig-node` |
-| 7 | [Content replication (the flywheel)](./protocol/content-replication.md) | discover holders, verify, cache, announce — every read makes a holder | `dig-dht`, `dig-download`, `dig-store-cache`, `dig-node` |
-| 6 | [Verification & provenance](./protocol/verification-and-provenance.md) | the four ordered integrity gates | `digstore-core::merkle`, `dig-node` |
-| 6 | [The blind host model](./protocol/blind-host-model.md) | provider-blindness; resolver; `/v1` control plane | hub `retrieval`/`resolver`/`api` |
-| — | [Conformance & parity](./protocol/conformance-and-parity.md) | the cross-impl parity discipline | frozen goldens, OpenRPC diff |
+| 0 | [식별 및 네이밍](./protocol/identity-and-naming.md) | store, capsule, generation; `store_id` = launcher id | `digstore-core::capsule`, `::urn` |
+| 0 | [URN 및 주소 지정](./protocol/urn-and-addressing.md) | `urn:dig:chia:…` 문법; root가 없는 `retrieval_key` | `digstore-core::urn`, `lib.rs` |
+| 1 | [암호화](./protocol/cryptography.md) | HKDF KDF; AES-256-GCM-SIV 봉인 | `digstore-core::crypto` |
+| 1 | [머클 포함 증명](./protocol/merkle-proofs.md) | D5 리소스별 리프; NODE_TAG 폴드 | `digstore-core::merkle` |
+| 1 | [BLS 서명 및 DST](./protocol/bls-signatures.md) | Chia AugScheme; 5개 역할별 DST | `digstore-crypto::bls` |
+| 2 | [capsule 포맷](./protocol/capsule-format.md) | DIGS 데이터 섹션(BINDING D1) | `digstore-core::datasection` |
+| 2 | [자기 방어 모듈](./protocol/self-defending-module.md) | 고정 크기 난독화; 서빙 게스트 | `digstore-compiler`, `digstore-guest` |
+| 4 | [온체인 앵커링](./protocol/on-chain-anchoring.md) | store = 싱글톤; capsule = root 전진 | `chip35_dl_coin`, `digstore-chain` |
+| 4 | [DIG CAT 결제 및 가격 책정](./protocol/dig-cat-payment.md) | capsule 단위, 동적, USD 연동 | `chip35_dl_coin::dig` |
+| 6 | [dig RPC](./protocol/dig-rpc.md) | 머신 인터페이스(JSON-RPC 2.0) | hub `retrieval`, `dig-node` |
+| 5 | [§21 전송 및 push](./protocol/transport-and-push.md) | `dig://` 로케이터, REST, push v1 | `digstore-remote` |
+| 7 | [DIG 노드 피어 네트워크](./protocol/peer-network.md) | mTLS 피어 식별, NAT 통과, STUN, introducer, relay wire, 피어 RPC | `dig-gossip`, `dig-relay`, `dig-nat`, `dig-node` |
+| 7 | [콘텐츠 복제(플라이휠)](./protocol/content-replication) | 보유자 발견, 검증, 캐시, 공지 — 모든 읽기가 새로운 보유자를 만든다 | `dig-dht`, `dig-download`, `dig-store-cache`, `dig-node` |
+| 6 | [검증 및 출처 증명](./protocol/verification-and-provenance.md) | 4단계 순차 무결성 게이트 | `digstore-core::merkle`, `dig-node` |
+| 6 | [내용을 모르는 호스트 모델](./protocol/blind-host-model.md) | 프로바이더 블라인드성; 리졸버; `/v1` 컨트롤 플레인 | hub `retrieval`/`resolver`/`api` |
+| — | [정합성 및 패리티](./protocol/conformance-and-parity.md) | 구현 간 패리티 규율 | 고정된 골든 데이터, OpenRPC diff |
 
-(Layers 3 and the §21 transport interleave with the read path; the table groups them where a reader meets them. The full layer numbering is given on each page.)
+(레이어 3과 §21 전송은 읽기 경로와 서로 얽혀 있습니다. 표는 리더가 이를 마주치는 지점을 기준으로 그룹화한 것입니다. 전체 레이어 번호 체계는 각 페이지에 명시되어 있습니다.)
 
-## How a capsule flows through the layers
+## capsule이 레이어를 거쳐 흘러가는 과정 {#how-a-capsule-flows-through-the-layers}
 
-A publisher **chunks + encrypts** (L1) content into a **capsule format** (L2) that **self-serves** (L3), **anchors** it on-chain (L4), and **pushes** it over §21 transport (L5). Any client **reads** it through the dig RPC and **verifies** it against the chain-anchored root entirely client-side (L6). Every cryptographic constant has **one** definition shared across producer, host, and verifier — the [C8 parity invariant](./protocol/conformance-and-parity.md).
+퍼블리셔는 콘텐츠를 **청크로 나누고 암호화**(L1)하여 **capsule 포맷**(L2)으로 만들고, 이는 **스스로를 서빙**(L3)하며, **온체인 앵커링**(L4)을 거쳐, **§21 전송**(L5)으로 push됩니다. 클라이언트는 dig RPC를 통해 이를 **읽고**, 체인에 고정된 root를 기준으로 전적으로 클라이언트 측에서 **검증**합니다(L6). 모든 암호학적 상수는 producer, host, verifier가 공유하는 **단 하나**의 정의를 가집니다 — 이것이 [C8 패리티 불변식](./protocol/conformance-and-parity.md)입니다.
 
-## Terminology
+## 용어 {#terminology}
 
-- **`chia://`** — the network **content** address (what a browser opens).
-- **`dig://`** — the §21 **transport** locator (CLI/peer plane) *and* the DIG Browser's internal page scheme — two distinct uses, never the content address.
-- **`urn:dig:`** — the URN namespace both derive from.
-- **store / capsule** — the identity and its immutable generation.
-- **$DIG** — the CAT paid per capsule; **dig-store** — the store format.
+- **`chia://`** — 네트워크의 **콘텐츠** 주소(브라우저가 여는 대상).
+- **`dig://`** — §21 **전송** 로케이터(CLI/피어 플레인)이자 DIG Browser의 내부 페이지 스킴 — 서로 다른 두 가지 용도이며, 결코 콘텐츠 주소가 아닙니다.
+- **`urn:dig:`** — 두 스킴이 모두 파생되는 URN 네임스페이스.
+- **store / capsule** — 식별자와 그 불변의 세대(generation).
+- **$DIG** — capsule마다 지불되는 CAT; **dig-store** — store 포맷.
 
-## Related
+## 관련 문서 {#related}
 
-- [Concepts & glossary](./concepts.md) — every entity defined once
-- [Identity & naming](./protocol/identity-and-naming.md) — Layer 0, where the spec begins
-- [The dig RPC](./protocol/dig-rpc.md) — the protocol's machine interface
-- [DIG Node peer network](./protocol/peer-network.md) — how nodes find + reach each other (mTLS, NAT traversal, relay)
-- [Content replication (the flywheel)](./protocol/content-replication.md) — how content spreads to wherever it is read
-- [Conformance & parity](./protocol/conformance-and-parity.md) — the cross-impl parity discipline
+- [개념 및 용어집](./concepts.md) — 모든 개체를 한 번씩 정의
+- [식별 및 네이밍](./protocol/identity-and-naming.md) — 명세가 시작되는 레이어 0
+- [dig RPC](./protocol/dig-rpc.md) — 프로토콜의 머신 인터페이스
+- [DIG 노드 피어 네트워크](./protocol/peer-network.md) — 노드들이 서로를 찾고 연결하는 방법(mTLS, NAT 통과, relay)
+- [콘텐츠 복제(플라이휠)](./protocol/content-replication) — 콘텐츠가 읽히는 곳으로 어떻게 퍼지는가
+- [정합성 및 패리티](./protocol/conformance-and-parity.md) — 구현 간 패리티 규율

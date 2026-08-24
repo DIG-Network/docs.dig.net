@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: "Protocol: Overview"
-description: "The DIG Protocol as seven bottom-up layers, normative and implementation-defined. The capsule (storeId:rootHash) is the fundamental unit; the host is blind and the reader verifies against the chain. This is the authoritative protocol reference."
+description: "Giao thức DIG được mô tả dưới dạng bảy lớp từ dưới lên trên, vừa chuẩn tắc vừa tùy triển khai xác định. Capsule (storeId:rootHash) là đơn vị nền tảng; host thì ẩn danh và người đọc xác minh dựa trên chuỗi. Đây là tài liệu tham chiếu giao thức có thẩm quyền."
 keywords:
   - DIG protocol
   - seven-layer model
@@ -17,64 +17,64 @@ tags:
   - anchoring
 ---
 
-# Protocol: Overview
+# Protocol: Overview {#protocol-overview}
 
-This is the **normative specification** of the DIG Protocol, defined as **seven layers, bottom-up**. Each layer names its **canonical crate/file** as the normative reference.
+Đây là **đặc tả chuẩn tắc** của DIG Protocol, được định nghĩa dưới dạng **bảy lớp, từ dưới lên trên**. Mỗi lớp nêu tên **crate/file chuẩn tắc** của nó làm tham chiếu chuẩn.
 
-:::info This is the authoritative protocol reference
-This section is the source of truth for what the network does. It documents the protocol as it actually runs, with `file:line` citations to the canonical implementation.
+:::info Đây là tài liệu tham chiếu giao thức có thẩm quyền
+Mục này là nguồn sự thật cho những gì mạng lưới thực sự làm. Nó ghi lại giao thức đúng như cách nó thực sự chạy, với trích dẫn `file:line` đến bản triển khai chuẩn tắc.
 :::
 
-## The fundamental unit: the capsule
+## Đơn vị nền tảng: capsule {#the-fundamental-unit-the-capsule}
 
-One concept runs through every layer: the **[capsule](./concepts.md#capsule)** = `(store_id, root_hash)`, canonically `storeId:rootHash`. A **store** is an ordered sequence of capsules (oldest→newest), one per commit; its identity `store_id` *is* a CHIP-0035 DataLayer singleton launcher id on Chia. Identity, compilation, pricing, retrieval, caching, and provenance are all defined **per capsule**.
+Một khái niệm xuyên suốt mọi lớp: **[capsule](./concepts.md#capsule)** = `(store_id, root_hash)`, viết theo dạng chuẩn là `storeId:rootHash`. Một **store** là một chuỗi capsule có thứ tự (cũ→mới), mỗi capsule ứng với một lần commit; danh tính `store_id` của nó *chính là* một launcher id singleton DataLayer CHIP-0035 trên Chia. Danh tính, biên dịch, định giá, truy xuất, lưu đệm, và nguồn gốc đều được định nghĩa **theo từng capsule**.
 
-## The thesis: blind host, client-side verify, chain-anchored root
+## Luận điểm cốt lõi: host ẩn danh, xác minh phía client, root neo trên chuỗi {#the-thesis-blind-host-client-side-verify-chain-anchored-root}
 
-- **Blind host.** A host holds only opaque ciphertext keyed by hashes. It holds no URN and no key, relays the capsule's own output verbatim, and cannot tell a hit from a miss. There is no `decoy` field on the wire and no CDN — content is served only through the [dig RPC](./protocol/dig-rpc.md).
-- **Client-side verify.** Every byte is checked on the reader's device against an on-chain root with a per-resource merkle inclusion proof, then authenticated-decrypted. Trust never rests on the serving origin.
-- **Chain-anchored root.** The trusted root comes **only** from the CHIP-0035 singleton on Chia (resolved via coinset.org), never from the served "latest".
+- **Host ẩn danh.** Một host chỉ giữ ciphertext không rõ nghĩa theo khóa hash. Nó không giữ URN và không giữ khóa, chuyển tiếp đầu ra của chính capsule y nguyên, và không thể phân biệt hit với miss. Không có trường `decoy` nào trên wire và không có CDN — nội dung chỉ được phục vụ qua [dig RPC](./protocol/dig-rpc.md).
+- **Xác minh phía client.** Mọi byte đều được kiểm tra trên thiết bị của người đọc dựa trên một root on-chain bằng một bằng chứng bao gồm merkle theo từng tài nguyên, sau đó được giải mã có xác thực. Sự tin tưởng không bao giờ dựa vào nguồn gốc phục vụ.
+- **Root neo trên chuỗi.** Root đáng tin cậy chỉ đến **duy nhất** từ singleton CHIP-0035 trên Chia (được phân giải qua coinset.org), không bao giờ từ "latest" được phục vụ.
 
-## The seven layers
+## Bảy lớp {#the-seven-layers}
 
-| # | Layer | What it defines | Canonical reference |
+| # | Lớp | Nó định nghĩa gì | Tham chiếu chuẩn tắc |
 |---|---|---|---|
-| 0 | [Identity & naming](./protocol/identity-and-naming.md) | store, capsule, generation; `store_id` = launcher id | `digstore-core::capsule`, `::urn` |
-| 0 | [URN & addressing](./protocol/urn-and-addressing.md) | `urn:dig:chia:…` grammar; rootless `retrieval_key` | `digstore-core::urn`, `lib.rs` |
-| 1 | [Cryptography](./protocol/cryptography.md) | HKDF KDF; AES-256-GCM-SIV seal | `digstore-core::crypto` |
-| 1 | [Merkle inclusion proofs](./protocol/merkle-proofs.md) | D5 per-resource leaf; NODE_TAG fold | `digstore-core::merkle` |
-| 1 | [BLS signatures & DSTs](./protocol/bls-signatures.md) | Chia AugScheme; five role DSTs | `digstore-crypto::bls` |
-| 2 | [Capsule format](./protocol/capsule-format.md) | the DIGS data section (BINDING D1) | `digstore-core::datasection` |
-| 2 | [The self-defending module](./protocol/self-defending-module.md) | fixed-size obfuscation; the serving guest | `digstore-compiler`, `digstore-guest` |
-| 4 | [On-chain anchoring](./protocol/on-chain-anchoring.md) | store = singleton; capsule = root-advance | `chip35_dl_coin`, `digstore-chain` |
-| 4 | [DIG CAT payment & pricing](./protocol/dig-cat-payment.md) | per-capsule, dynamic, USD-pegged | `chip35_dl_coin::dig` |
-| 6 | [The dig RPC](./protocol/dig-rpc.md) | the machine interface (JSON-RPC 2.0) | hub `retrieval`, `dig-node` |
-| 5 | [§21 transport & push](./protocol/transport-and-push.md) | `dig://` locator, REST, push v1 | `digstore-remote` |
-| 7 | [DIG Node peer network](./protocol/peer-network.md) | mTLS peer identity, NAT traversal, STUN, introducer, relay wire, peer RPC | `dig-gossip`, `dig-relay`, `dig-nat`, `dig-node` |
-| 7 | [Content replication (the flywheel)](./protocol/content-replication.md) | discover holders, verify, cache, announce — every read makes a holder | `dig-dht`, `dig-download`, `dig-store-cache`, `dig-node` |
-| 6 | [Verification & provenance](./protocol/verification-and-provenance.md) | the four ordered integrity gates | `digstore-core::merkle`, `dig-node` |
-| 6 | [The blind host model](./protocol/blind-host-model.md) | provider-blindness; resolver; `/v1` control plane | hub `retrieval`/`resolver`/`api` |
-| — | [Conformance & parity](./protocol/conformance-and-parity.md) | the cross-impl parity discipline | frozen goldens, OpenRPC diff |
+| 0 | [Danh tính & định danh](./protocol/identity-and-naming.md) | store, capsule, generation; `store_id` = launcher id | `digstore-core::capsule`, `::urn` |
+| 0 | [URN & định địa chỉ](./protocol/urn-and-addressing.md) | ngữ pháp `urn:dig:chia:…`; `retrieval_key` không phụ thuộc root | `digstore-core::urn`, `lib.rs` |
+| 1 | [Mật mã học](./protocol/cryptography.md) | KDF HKDF; niêm phong AES-256-GCM-SIV | `digstore-core::crypto` |
+| 1 | [Bằng chứng bao gồm Merkle](./protocol/merkle-proofs.md) | lá per-resource D5; gấp NODE_TAG | `digstore-core::merkle` |
+| 1 | [Chữ ký BLS & DST](./protocol/bls-signatures.md) | AugScheme của Chia; năm DST theo vai trò | `digstore-crypto::bls` |
+| 2 | [Định dạng Capsule](./protocol/capsule-format.md) | phần dữ liệu DIGS (BINDING D1) | `digstore-core::datasection` |
+| 2 | [Module tự bảo vệ](./protocol/self-defending-module.md) | làm rối kích thước cố định; guest phục vụ | `digstore-compiler`, `digstore-guest` |
+| 4 | [Neo on-chain](./protocol/on-chain-anchoring.md) | store = singleton; capsule = tiến root | `chip35_dl_coin`, `digstore-chain` |
+| 4 | [Thanh toán & định giá DIG CAT](./protocol/dig-cat-payment.md) | theo capsule, động, neo theo USD | `chip35_dl_coin::dig` |
+| 6 | [dig RPC](./protocol/dig-rpc.md) | giao diện máy (JSON-RPC 2.0) | hub `retrieval`, `dig-node` |
+| 5 | [Vận chuyển & đẩy §21](./protocol/transport-and-push.md) | locator `dig://`, REST, push v1 | `digstore-remote` |
+| 7 | [Mạng peer DIG Node](./protocol/peer-network.md) | danh tính peer mTLS, xuyên NAT, STUN, introducer, wire relay, RPC peer | `dig-gossip`, `dig-relay`, `dig-nat`, `dig-node` |
+| 7 | [Nhân bản nội dung (bánh đà)](./protocol/content-replication) | tìm bên nắm giữ, xác minh, lưu đệm, thông báo — mỗi lần đọc tạo ra một bên nắm giữ mới | `dig-dht`, `dig-download`, `dig-store-cache`, `dig-node` |
+| 6 | [Xác minh & nguồn gốc](./protocol/verification-and-provenance.md) | bốn cổng toàn vẹn theo thứ tự | `digstore-core::merkle`, `dig-node` |
+| 6 | [Mô hình host ẩn danh](./protocol/blind-host-model.md) | tính ẩn danh nhà cung cấp; resolver; control plane `/v1` | hub `retrieval`/`resolver`/`api` |
+| — | [Tuân thủ & tương đương](./protocol/conformance-and-parity.md) | kỷ luật tương đương xuyên bản triển khai | golden đông cứng, diff OpenRPC |
 
-(Layers 3 and the §21 transport interleave with the read path; the table groups them where a reader meets them. The full layer numbering is given on each page.)
+(Các lớp 3 và vận chuyển §21 đan xen với đường đọc; bảng này nhóm chúng ở nơi người đọc gặp chúng. Đánh số lớp đầy đủ được đưa ra trên mỗi trang.)
 
-## How a capsule flows through the layers
+## Một capsule đi qua các lớp như thế nào {#how-a-capsule-flows-through-the-layers}
 
-A publisher **chunks + encrypts** (L1) content into a **capsule format** (L2) that **self-serves** (L3), **anchors** it on-chain (L4), and **pushes** it over §21 transport (L5). Any client **reads** it through the dig RPC and **verifies** it against the chain-anchored root entirely client-side (L6). Every cryptographic constant has **one** definition shared across producer, host, and verifier — the [C8 parity invariant](./protocol/conformance-and-parity.md).
+Một người xuất bản **chia chunk + mã hóa** (L1) nội dung thành một **định dạng capsule** (L2) **tự phục vụ** (L3), **neo** nó on-chain (L4), và **đẩy** nó qua vận chuyển §21 (L5). Bất kỳ client nào cũng **đọc** nó qua dig RPC và **xác minh** nó dựa trên root neo trên chuỗi hoàn toàn ở phía client (L6). Mỗi hằng số mật mã học có **một** định nghĩa duy nhất được chia sẻ giữa người tạo, host, và người xác minh — [bất biến tương đương C8](./protocol/conformance-and-parity.md).
 
-## Terminology
+## Thuật ngữ {#terminology}
 
-- **`chia://`** — the network **content** address (what a browser opens).
-- **`dig://`** — the §21 **transport** locator (CLI/peer plane) *and* the DIG Browser's internal page scheme — two distinct uses, never the content address.
-- **`urn:dig:`** — the URN namespace both derive from.
-- **store / capsule** — the identity and its immutable generation.
-- **$DIG** — the CAT paid per capsule; **dig-store** — the store format.
+- **`chia://`** — địa chỉ **nội dung** của mạng lưới (những gì một trình duyệt mở).
+- **`dig://`** — locator **vận chuyển** §21 (mặt phẳng CLI/peer) *và* lược đồ trang nội bộ của DIG Browser — hai công dụng riêng biệt, không bao giờ là địa chỉ nội dung.
+- **`urn:dig:`** — không gian tên URN mà cả hai đều bắt nguồn từ.
+- **store / capsule** — danh tính và generation bất biến của nó.
+- **$DIG** — CAT được trả theo mỗi capsule; **dig-store** — định dạng store.
 
-## Related
+## Liên quan {#related}
 
-- [Concepts & glossary](./concepts.md) — every entity defined once
-- [Identity & naming](./protocol/identity-and-naming.md) — Layer 0, where the spec begins
-- [The dig RPC](./protocol/dig-rpc.md) — the protocol's machine interface
-- [DIG Node peer network](./protocol/peer-network.md) — how nodes find + reach each other (mTLS, NAT traversal, relay)
-- [Content replication (the flywheel)](./protocol/content-replication.md) — how content spreads to wherever it is read
-- [Conformance & parity](./protocol/conformance-and-parity.md) — the cross-impl parity discipline
+- [Khái niệm & thuật ngữ](./concepts.md) — mọi thực thể được định nghĩa một lần
+- [Danh tính & định danh](./protocol/identity-and-naming.md) — Lớp 0, nơi đặc tả bắt đầu
+- [dig RPC](./protocol/dig-rpc.md) — giao diện máy của giao thức
+- [Mạng peer DIG Node](./protocol/peer-network.md) — cách các node tìm + tiếp cận nhau (mTLS, xuyên NAT, relay)
+- [Nhân bản nội dung (bánh đà)](./protocol/content-replication) — cách nội dung lan đến nơi nó được đọc
+- [Tuân thủ & tương đương](./protocol/conformance-and-parity.md) — kỷ luật tương đương xuyên bản triển khai
