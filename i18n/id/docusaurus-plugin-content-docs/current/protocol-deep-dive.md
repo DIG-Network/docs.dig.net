@@ -51,6 +51,7 @@ Satu konsep mengalir melalui setiap lapisan: **[capsule](./concepts.md#capsule)*
 | 6 | [The dig RPC](./protocol/dig-rpc.md) | Antarmuka mesin (JSON-RPC 2.0) | hub `retrieval`, `dig-node` |
 | 5 | [§21 transport & push](./protocol/transport-and-push.md) | Locator `dig://`, REST, push v1 | `digstore-remote` |
 | 7 | [DIG Node peer network](./protocol/peer-network.md) | Identitas peer mTLS, NAT traversal, STUN, introducer, wire relay, RPC peer | `dig-gossip`, `dig-relay`, `dig-nat`, `dig-node` |
+| 7 | [Replikasi konten (roda gila)](./protocol/content-replication) | temukan pemegang, verifikasi, cache, umumkan — setiap pembacaan menciptakan pemegang baru | `dig-dht`, `dig-download`, `dig-store-cache`, `dig-node` |
 | 6 | [Verification & provenance](./protocol/verification-and-provenance.md) | Empat gerbang integritas berurutan | `digstore-core::merkle`, `dig-node` |
 | 6 | [The blind host model](./protocol/blind-host-model.md) | Provider-blindness; resolver; control plane `/v1` | hub `retrieval`/`resolver`/`api` |
 | — | [Conformance & parity](./protocol/conformance-and-parity.md) | Disiplin paritas lintas-implementasi | golden yang dibekukan, diff OpenRPC |
@@ -75,4 +76,5 @@ Seorang penerbit **melakukan chunking + enkripsi** (L1) konten menjadi sebuah **
 - [Identity & naming](./protocol/identity-and-naming.md) — Lapisan 0, tempat spesifikasi dimulai
 - [The dig RPC](./protocol/dig-rpc.md) — antarmuka mesin protokolnya
 - [DIG Node peer network](./protocol/peer-network.md) — bagaimana node saling menemukan + menjangkau (mTLS, NAT traversal, relay)
+- [Replikasi konten (roda gila)](./protocol/content-replication) — bagaimana konten menyebar ke tempat ia dibaca
 - [Conformance & parity](./protocol/conformance-and-parity.md) — disiplin paritas lintas-implementasi

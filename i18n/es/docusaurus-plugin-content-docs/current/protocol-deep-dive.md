@@ -51,6 +51,7 @@ Un concepto atraviesa todas las capas: el **[capsule](./concepts.md#capsule)** =
 | 6 | [El dig RPC](./protocol/dig-rpc.md) | la interfaz de máquina (JSON-RPC 2.0) | hub `retrieval`, `dig-node` |
 | 5 | [Transporte y push §21](./protocol/transport-and-push.md) | localizador `dig://`, REST, push v1 | `digstore-remote` |
 | 7 | [Red de pares de DIG Node](./protocol/peer-network.md) | identidad de par mTLS, traversal NAT, STUN, introducer, wire de relay, RPC de par | `dig-gossip`, `dig-relay`, `dig-nat`, `dig-node` |
+| 7 | [Replicación de contenido (el volante de inercia)](./protocol/content-replication) | descubrir poseedores, verificar, almacenar en caché, anunciar — cada lectura crea un poseedor | `dig-dht`, `dig-download`, `dig-store-cache`, `dig-node` |
 | 6 | [Verificación y procedencia](./protocol/verification-and-provenance.md) | las cuatro puertas de integridad ordenadas | `digstore-core::merkle`, `dig-node` |
 | 6 | [El modelo de host ciego](./protocol/blind-host-model.md) | ceguera del proveedor; resolver; plano de control `/v1` | hub `retrieval`/`resolver`/`api` |
 | — | [Conformidad y paridad](./protocol/conformance-and-parity.md) | la disciplina de paridad entre implementaciones | goldens congelados, diff de OpenRPC |
@@ -75,4 +76,5 @@ Un publicador **fragmenta + cifra** (L1) el contenido en un **formato de capsule
 - [Identidad y nomenclatura](./protocol/identity-and-naming.md) — Capa 0, donde empieza la especificación
 - [El dig RPC](./protocol/dig-rpc.md) — la interfaz de máquina del protocolo
 - [Red de pares de DIG Node](./protocol/peer-network.md) — cómo los nodos se encuentran y se alcanzan entre sí (mTLS, traversal NAT, relay)
+- [Replicación de contenido (el volante de inercia)](./protocol/content-replication) — cómo el contenido se propaga hasta donde se lee
 - [Conformidad y paridad](./protocol/conformance-and-parity.md) — la disciplina de paridad entre implementaciones

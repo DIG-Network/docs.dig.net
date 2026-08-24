@@ -51,6 +51,7 @@ Một khái niệm xuyên suốt mọi lớp: **[capsule](./concepts.md#capsule)
 | 6 | [dig RPC](./protocol/dig-rpc.md) | giao diện máy (JSON-RPC 2.0) | hub `retrieval`, `dig-node` |
 | 5 | [Vận chuyển & đẩy §21](./protocol/transport-and-push.md) | locator `dig://`, REST, push v1 | `digstore-remote` |
 | 7 | [Mạng peer DIG Node](./protocol/peer-network.md) | danh tính peer mTLS, xuyên NAT, STUN, introducer, wire relay, RPC peer | `dig-gossip`, `dig-relay`, `dig-nat`, `dig-node` |
+| 7 | [Nhân bản nội dung (bánh đà)](./protocol/content-replication) | tìm bên nắm giữ, xác minh, lưu đệm, thông báo — mỗi lần đọc tạo ra một bên nắm giữ mới | `dig-dht`, `dig-download`, `dig-store-cache`, `dig-node` |
 | 6 | [Xác minh & nguồn gốc](./protocol/verification-and-provenance.md) | bốn cổng toàn vẹn theo thứ tự | `digstore-core::merkle`, `dig-node` |
 | 6 | [Mô hình host ẩn danh](./protocol/blind-host-model.md) | tính ẩn danh nhà cung cấp; resolver; control plane `/v1` | hub `retrieval`/`resolver`/`api` |
 | — | [Tuân thủ & tương đương](./protocol/conformance-and-parity.md) | kỷ luật tương đương xuyên bản triển khai | golden đông cứng, diff OpenRPC |
@@ -75,4 +76,5 @@ Một người xuất bản **chia chunk + mã hóa** (L1) nội dung thành m�
 - [Danh tính & định danh](./protocol/identity-and-naming.md) — Lớp 0, nơi đặc tả bắt đầu
 - [dig RPC](./protocol/dig-rpc.md) — giao diện máy của giao thức
 - [Mạng peer DIG Node](./protocol/peer-network.md) — cách các node tìm + tiếp cận nhau (mTLS, xuyên NAT, relay)
+- [Nhân bản nội dung (bánh đà)](./protocol/content-replication) — cách nội dung lan đến nơi nó được đọc
 - [Tuân thủ & tương đương](./protocol/conformance-and-parity.md) — kỷ luật tương đương xuyên bản triển khai

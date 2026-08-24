@@ -51,6 +51,7 @@ tags:
 | 6 | [The dig RPC](./protocol/dig-rpc.md) | मशीन इंटरफेस (JSON-RPC 2.0) | hub `retrieval`, `dig-node` |
 | 5 | [§21 transport & push](./protocol/transport-and-push.md) | `dig://` locator, REST, push v1 | `digstore-remote` |
 | 7 | [DIG Node peer network](./protocol/peer-network.md) | mTLS peer identity, NAT traversal, STUN, introducer, relay wire, peer RPC | `dig-gossip`, `dig-relay`, `dig-nat`, `dig-node` |
+| 7 | [कंटेंट प्रतिकृति (फ्लाईव्हील)](./protocol/content-replication) | धारक खोजें, सत्यापित करें, कैश करें, घोषित करें — हर पठन एक नया धारक बनाता है | `dig-dht`, `dig-download`, `dig-store-cache`, `dig-node` |
 | 6 | [Verification & provenance](./protocol/verification-and-provenance.md) | चार क्रमबद्ध integrity gates | `digstore-core::merkle`, `dig-node` |
 | 6 | [The blind host model](./protocol/blind-host-model.md) | provider-blindness; resolver; `/v1` कंट्रोल प्लेन | hub `retrieval`/`resolver`/`api` |
 | — | [Conformance & parity](./protocol/conformance-and-parity.md) | क्रॉस-implementation parity अनुशासन | frozen goldens, OpenRPC diff |
@@ -75,4 +76,5 @@ tags:
 - [Identity & naming](./protocol/identity-and-naming.md) — Layer 0, जहां स्पेक शुरू होता है
 - [The dig RPC](./protocol/dig-rpc.md) — प्रोटोकॉल का मशीन इंटरफेस
 - [DIG Node peer network](./protocol/peer-network.md) — nodes एक-दूसरे को कैसे खोजते + पहुंचते हैं (mTLS, NAT traversal, relay)
+- [कंटेंट प्रतिकृति (फ्लाईव्हील)](./protocol/content-replication) — सामग्री वहाँ कैसे फैलती है जहाँ उसे पढ़ा जाता है
 - [Conformance & parity](./protocol/conformance-and-parity.md) — क्रॉस-implementation parity अनुशासन

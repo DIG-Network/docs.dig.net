@@ -51,6 +51,7 @@ tags:
 | 6 | [dig RPC](./protocol/dig-rpc.md) | машинный интерфейс (JSON-RPC 2.0) | hub `retrieval`, `dig-node` |
 | 5 | [Транспорт §21 и push](./protocol/transport-and-push.md) | локатор `dig://`, REST, push v1 | `digstore-remote` |
 | 7 | [Одноранговая сеть DIG Node](./protocol/peer-network.md) | mTLS-идентичность узла, обход NAT, STUN, интродьюсер, релейный протокол, peer RPC | `dig-gossip`, `dig-relay`, `dig-nat`, `dig-node` |
+| 7 | [Репликация контента (маховик)](./protocol/content-replication) | найти держателей, проверить, закэшировать, объявить — каждое чтение создаёт держателя | `dig-dht`, `dig-download`, `dig-store-cache`, `dig-node` |
 | 6 | [Верификация и происхождение](./protocol/verification-and-provenance.md) | четыре упорядоченных шлюза целостности | `digstore-core::merkle`, `dig-node` |
 | 6 | [Модель слепого хоста](./protocol/blind-host-model.md) | слепота провайдера; резолвер; плоскость управления `/v1` | hub `retrieval`/`resolver`/`api` |
 | — | [Соответствие и паритет](./protocol/conformance-and-parity.md) | дисциплина паритета между реализациями | замороженные golden-файлы, диф OpenRPC |
@@ -75,4 +76,5 @@ tags:
 - [Идентичность и именование](./protocol/identity-and-naming.md) — Слой 0, с которого начинается спецификация
 - [dig RPC](./protocol/dig-rpc.md) — машинный интерфейс протокола
 - [Одноранговая сеть DIG Node](./protocol/peer-network.md) — как узлы находят и достигают друг друга (mTLS, обход NAT, релей)
+- [Репликация контента (маховик)](./protocol/content-replication) — как контент распространяется туда, где его читают
 - [Соответствие и паритет](./protocol/conformance-and-parity.md) — дисциплина паритета между реализациями

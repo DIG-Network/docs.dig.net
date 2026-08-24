@@ -51,6 +51,7 @@ Un concept traverse chaque couche : la **[capsule](./concepts.md#capsule)** = `(
 | 6 | [Le dig RPC](./protocol/dig-rpc.md) | l'interface machine (JSON-RPC 2.0) | hub `retrieval`, `dig-node` |
 | 5 | [Transport et push §21](./protocol/transport-and-push.md) | localisateur `dig://`, REST, push v1 | `digstore-remote` |
 | 7 | [Réseau de pairs DIG Node](./protocol/peer-network.md) | identité de pair mTLS, traversée NAT, STUN, introducteur, fil de relais, RPC de pair | `dig-gossip`, `dig-relay`, `dig-nat`, `dig-node` |
+| 7 | [Réplication du contenu (le volant d'inertie)](./protocol/content-replication) | découvrir les détenteurs, vérifier, mettre en cache, annoncer — chaque lecture crée un détenteur | `dig-dht`, `dig-download`, `dig-store-cache`, `dig-node` |
 | 6 | [Vérification et provenance](./protocol/verification-and-provenance.md) | les quatre portes d'intégrité ordonnées | `digstore-core::merkle`, `dig-node` |
 | 6 | [Le modèle d'hébergeur aveugle](./protocol/blind-host-model.md) | cécité du fournisseur ; résolveur ; plan de contrôle `/v1` | hub `retrieval`/`resolver`/`api` |
 | — | [Conformité et parité](./protocol/conformance-and-parity.md) | la discipline de parité inter-implémentations | goldens figés, diff OpenRPC |
@@ -75,4 +76,5 @@ Un éditeur **découpe + chiffre** (L1) le contenu dans un **format de capsule**
 - [Identité et nommage](./protocol/identity-and-naming.md) — Couche 0, où la spécification commence
 - [Le dig RPC](./protocol/dig-rpc.md) — l'interface machine du protocole
 - [Réseau de pairs DIG Node](./protocol/peer-network.md) — comment les nœuds se trouvent et s'atteignent (mTLS, traversée NAT, relais)
+- [Réplication du contenu (le volant d'inertie)](./protocol/content-replication) — comment le contenu se propage là où il est lu
 - [Conformité et parité](./protocol/conformance-and-parity.md) — la discipline de parité inter-implémentations

@@ -51,6 +51,7 @@ tags:
 | 6 | [dig RPC](./protocol/dig-rpc.md) | 机器接口（JSON-RPC 2.0） | hub `retrieval`、`dig-node` |
 | 5 | [§21 传输与推送](./protocol/transport-and-push.md) | `dig://` 定位符、REST、push v1 | `digstore-remote` |
 | 7 | [DIG 节点对等网络](./protocol/peer-network.md) | mTLS 对等身份、NAT 穿透、STUN、introducer、中继协议、对等 RPC | `dig-gossip`、`dig-relay`、`dig-nat`、`dig-node` |
+| 7 | [内容复制（飞轮）](./protocol/content-replication) | 发现持有者、验证、缓存、公告 —— 每一次读取都会产生一个新的持有者 | `dig-dht`, `dig-download`, `dig-store-cache`, `dig-node` |
 | 6 | [验证与溯源](./protocol/verification-and-provenance.md) | 四道有序的完整性关卡 | `digstore-core::merkle`、`dig-node` |
 | 6 | [盲态主机模型](./protocol/blind-host-model.md) | 提供者匿名性；解析器；`/v1` 控制平面 | hub `retrieval`/`resolver`/`api` |
 | — | [一致性与对等实现](./protocol/conformance-and-parity.md) | 跨实现的一致性纪律 | 固定的黄金基准数据、OpenRPC diff |
@@ -75,4 +76,5 @@ tags:
 - [身份与命名](./protocol/identity-and-naming.md) —— 第 0 层，规范文档的起点
 - [dig RPC](./protocol/dig-rpc.md) —— 协议的机器接口
 - [DIG 节点对等网络](./protocol/peer-network.md) —— 节点如何互相发现和连接（mTLS、NAT 穿透、中继）
+- [内容复制（飞轮）](./protocol/content-replication) — 内容如何扩散到被读取的地方
 - [一致性与对等实现](./protocol/conformance-and-parity.md) —— 跨实现的一致性纪律

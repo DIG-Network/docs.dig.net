@@ -51,6 +51,7 @@ tags:
 | 6 | [dig RPC](./protocol/dig-rpc.md) | マシンインターフェース（JSON-RPC 2.0） | hub `retrieval`、`dig-node` |
 | 5 | [§21トランスポートとプッシュ](./protocol/transport-and-push.md) | `dig://`ロケーター、REST、pushバージョン1 | `digstore-remote` |
 | 7 | [DIG Nodeピアネットワーク](./protocol/peer-network.md) | mTLSピアアイデンティティ、NATトラバーサル、STUN、イントロデューサー、リレーワイヤー、ピアRPC | `dig-gossip`、`dig-relay`、`dig-nat`、`dig-node` |
+| 7 | [コンテンツ複製（フライホイール）](./protocol/content-replication) | 保持者の発見、検証、キャッシュ、アナウンス — 読み取りごとに新たな保持者が生まれる | `dig-dht`, `dig-download`, `dig-store-cache`, `dig-node` |
 | 6 | [検証と来歴](./protocol/verification-and-provenance.md) | 4つの順序付き完全性ゲート | `digstore-core::merkle`、`dig-node` |
 | 6 | [盲目ホストモデル](./protocol/blind-host-model.md) | プロバイダーの非公開性；リゾルバー；`/v1`制御プレーン | hub `retrieval`/`resolver`/`api` |
 | — | [準拠性とパリティ](./protocol/conformance-and-parity.md) | 実装間のパリティ規律 | 凍結されたゴールデン、OpenRPC差分 |
@@ -75,4 +76,5 @@ tags:
 - [アイデンティティと命名](./protocol/identity-and-naming.md) — 層0、仕様が始まる場所
 - [dig RPC](./protocol/dig-rpc.md) — プロトコルのマシンインターフェース
 - [DIG Nodeピアネットワーク](./protocol/peer-network.md) — ノード同士がどう見つけ合い、到達し合うか（mTLS、NATトラバーサル、リレー）
+- [コンテンツ複製（フライホイール）](./protocol/content-replication) — コンテンツが読まれる場所へどう広がるか
 - [準拠性とパリティ](./protocol/conformance-and-parity.md) — 実装間のパリティ規律

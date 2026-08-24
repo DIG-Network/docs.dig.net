@@ -51,6 +51,7 @@ Her katmanda geçen bir kavram var: **[capsule](./concepts.md#capsule)** = `(sto
 | 6 | [dig RPC](./protocol/dig-rpc.md) | makine arayüzü (JSON-RPC 2.0) | hub `retrieval`, `dig-node` |
 | 5 | [§21 aktarım & push](./protocol/transport-and-push.md) | `dig://` konumlandırıcı, REST, push v1 | `digstore-remote` |
 | 7 | [DIG Node eş ağı](./protocol/peer-network.md) | mTLS eş kimliği, NAT geçişi, STUN, tanıtıcı (introducer), relay teli, eş RPC'si | `dig-gossip`, `dig-relay`, `dig-nat`, `dig-node` |
+| 7 | [İçerik çoğaltma (volan)](./protocol/content-replication) | tutucuları bul, doğrula, önbelleğe al, duyur — her okuma yeni bir tutucu yaratır | `dig-dht`, `dig-download`, `dig-store-cache`, `dig-node` |
 | 6 | [Doğrulama & köken kanıtı](./protocol/verification-and-provenance.md) | dört sıralı bütünlük geçidi | `digstore-core::merkle`, `dig-node` |
 | 6 | [Kör host modeli](./protocol/blind-host-model.md) | sağlayıcı-körlüğü; çözücü; `/v1` kontrol düzlemi | hub `retrieval`/`resolver`/`api` |
 | — | [Uygunluk & eşitlik](./protocol/conformance-and-parity.md) | çapraz-uygulama eşitlik disiplini | dondurulmuş goldenlar, OpenRPC diff'i |
@@ -75,4 +76,5 @@ Bir yayıncı içeriği **parçalar + şifreler** (K1) bir **capsule formatına*
 - [Kimlik & adlandırma](./protocol/identity-and-naming.md) — şartnamenin başladığı Katman 0
 - [dig RPC](./protocol/dig-rpc.md) — protokolün makine arayüzü
 - [DIG Node eş ağı](./protocol/peer-network.md) — düğümlerin birbirini nasıl bulup ulaştığı (mTLS, NAT geçişi, relay)
+- [İçerik çoğaltma (volan)](./protocol/content-replication) — içeriğin okunduğu yere nasıl yayıldığı
 - [Uygunluk & eşitlik](./protocol/conformance-and-parity.md) — çapraz-uygulama eşitlik disiplini

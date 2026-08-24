@@ -51,6 +51,7 @@ tags:
 | 6 | [dig RPC](./protocol/dig-rpc.md) | 머신 인터페이스(JSON-RPC 2.0) | hub `retrieval`, `dig-node` |
 | 5 | [§21 전송 및 push](./protocol/transport-and-push.md) | `dig://` 로케이터, REST, push v1 | `digstore-remote` |
 | 7 | [DIG 노드 피어 네트워크](./protocol/peer-network.md) | mTLS 피어 식별, NAT 통과, STUN, introducer, relay wire, 피어 RPC | `dig-gossip`, `dig-relay`, `dig-nat`, `dig-node` |
+| 7 | [콘텐츠 복제(플라이휠)](./protocol/content-replication) | 보유자 발견, 검증, 캐시, 공지 — 모든 읽기가 새로운 보유자를 만든다 | `dig-dht`, `dig-download`, `dig-store-cache`, `dig-node` |
 | 6 | [검증 및 출처 증명](./protocol/verification-and-provenance.md) | 4단계 순차 무결성 게이트 | `digstore-core::merkle`, `dig-node` |
 | 6 | [내용을 모르는 호스트 모델](./protocol/blind-host-model.md) | 프로바이더 블라인드성; 리졸버; `/v1` 컨트롤 플레인 | hub `retrieval`/`resolver`/`api` |
 | — | [정합성 및 패리티](./protocol/conformance-and-parity.md) | 구현 간 패리티 규율 | 고정된 골든 데이터, OpenRPC diff |
@@ -75,4 +76,5 @@ tags:
 - [식별 및 네이밍](./protocol/identity-and-naming.md) — 명세가 시작되는 레이어 0
 - [dig RPC](./protocol/dig-rpc.md) — 프로토콜의 머신 인터페이스
 - [DIG 노드 피어 네트워크](./protocol/peer-network.md) — 노드들이 서로를 찾고 연결하는 방법(mTLS, NAT 통과, relay)
+- [콘텐츠 복제(플라이휠)](./protocol/content-replication) — 콘텐츠가 읽히는 곳으로 어떻게 퍼지는가
 - [정합성 및 패리티](./protocol/conformance-and-parity.md) — 구현 간 패리티 규율

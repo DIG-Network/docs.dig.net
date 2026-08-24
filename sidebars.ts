@@ -173,6 +173,7 @@ const sidebars: SidebarsConfig = {
         "protocol/dig-rpc",
         "protocol/transport-and-push",
         "protocol/peer-network",
+        "protocol/content-replication",
         "protocol/onion-routing",
         "protocol/verification-and-provenance",
         "protocol/blind-host-model",

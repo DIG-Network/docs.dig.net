@@ -63,6 +63,7 @@ capsule** definiert.
 | 6 | [The dig RPC](./protocol/dig-rpc.md) | die Maschinenschnittstelle (JSON-RPC 2.0) | hub `retrieval`, `dig-node` |
 | 5 | [§21 transport & push](./protocol/transport-and-push.md) | `dig://`-Locator, REST, Push v1 | `digstore-remote` |
 | 7 | [DIG Node peer network](./protocol/peer-network.md) | mTLS-Peer-Identität, NAT-Traversal, STUN, Introducer, Relay-Wire, Peer-RPC | `dig-gossip`, `dig-relay`, `dig-nat`, `dig-node` |
+| 7 | [Content-Replikation (das Schwungrad)](./protocol/content-replication) | Halter finden, verifizieren, cachen, ankündigen — jeder Lesevorgang erzeugt einen neuen Halter | `dig-dht`, `dig-download`, `dig-store-cache`, `dig-node` |
 | 6 | [Verification & provenance](./protocol/verification-and-provenance.md) | die vier geordneten Integritäts-Gates | `digstore-core::merkle`, `dig-node` |
 | 6 | [The blind host model](./protocol/blind-host-model.md) | Provider-Blindheit; Resolver; `/v1`-Control-Plane | hub `retrieval`/`resolver`/`api` |
 | — | [Conformance & parity](./protocol/conformance-and-parity.md) | die Cross-Implementierungs-Paritätsdisziplin | eingefrorene Goldens, OpenRPC-Diff |
@@ -93,4 +94,5 @@ Definition, geteilt über Produzent, Host und Verifizierer hinweg — die [C8-Pa
 - [Identity & naming](./protocol/identity-and-naming.md) — Schicht 0, wo die Spezifikation beginnt
 - [The dig RPC](./protocol/dig-rpc.md) — die Maschinenschnittstelle des Protokolls
 - [DIG Node peer network](./protocol/peer-network.md) — wie Nodes einander finden + erreichen (mTLS, NAT-Traversal, Relay)
+- [Content-Replikation (das Schwungrad)](./protocol/content-replication) — wie sich Inhalte dorthin verbreiten, wo sie gelesen werden
 - [Conformance & parity](./protocol/conformance-and-parity.md) — die Cross-Implementierungs-Paritätsdisziplin

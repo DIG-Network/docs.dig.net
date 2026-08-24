@@ -785,6 +785,19 @@
       ]
     },
     {
+      "id": "/docs/protocol/content-replication",
+      "type": "doc",
+      "title": "L7 · Content replication (the flywheel)",
+      "url": "https://docs.dig.net/docs/protocol/content-replication",
+      "tags": [
+        "dig-node",
+        "dig-dht",
+        "dig-download",
+        "dig-store-cache",
+        "peer network"
+      ]
+    },
+    {
       "id": "/docs/protocol/cryptography",
       "type": "doc",
       "title": "L1 · Cryptography",
@@ -4539,6 +4552,11 @@
     {
       "from": "/docs/protocol-deep-dive",
       "to": "/docs/protocol/peer-network",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/protocol-deep-dive",
+      "to": "/docs/protocol/content-replication",
       "type": "see-also"
     },
     {

@@ -51,6 +51,7 @@ tags:
 | 6 | [dig RPC](./protocol/dig-rpc.md) | 機器介面（JSON-RPC 2.0） | hub `retrieval`、`dig-node` |
 | 5 | [§21 傳輸與推送](./protocol/transport-and-push.md) | `dig://` 定位器、REST、推送 v1 | `digstore-remote` |
 | 7 | [DIG 節點對等網路](./protocol/peer-network.md) | mTLS 對等身分、NAT 穿越、STUN、介紹者（introducer）、中繼傳輸協定、對等 RPC | `dig-gossip`、`dig-relay`、`dig-nat`、`dig-node` |
+| 7 | [內容複製（飛輪）](./protocol/content-replication) | 發現持有者、驗證、快取、公告 —— 每一次讀取都會產生一個新的持有者 | `dig-dht`, `dig-download`, `dig-store-cache`, `dig-node` |
 | 6 | [驗證與來源證明](./protocol/verification-and-provenance.md) | 四道有序的完整性關卡 | `digstore-core::merkle`、`dig-node` |
 | 6 | [盲目主機模型](./protocol/blind-host-model.md) | 對提供者的盲目性；解析器；`/v1` 控制平面 | hub `retrieval`／`resolver`／`api` |
 | — | [一致性與對等驗證](./protocol/conformance-and-parity.md) | 跨實作的一致性紀律 | 固定的黃金測資、OpenRPC diff |
@@ -75,4 +76,5 @@ tags:
 - [身分與命名](./protocol/identity-and-naming.md)——第 0 層，規格由此開始
 - [dig RPC](./protocol/dig-rpc.md)——協定的機器介面
 - [DIG 節點對等網路](./protocol/peer-network.md)——節點如何找到並連接彼此（mTLS、NAT 穿越、中繼）
+- [內容複製（飛輪）](./protocol/content-replication) — 內容如何擴散到被讀取的地方
 - [一致性與對等驗證](./protocol/conformance-and-parity.md)——跨實作的一致性紀律
