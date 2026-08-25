@@ -54,29 +54,82 @@ echo "deb [signed-by=/usr/share/keyrings/dig.gpg] https://apt.dig.net stable mai
 sudo apt update && sudo apt install dig-node dig-store
 ```
 
-- **`dig-node`** — the headless node service (serves the [dig RPC](../rpc/what-is-the-dig-rpc.md), hosts capsules, keeps the local `.dig` cache). Installs `/usr/bin/dig-node`.
+- **`dig-node`** — the headless node service (serves the [dig RPC](../rpc/what-is-the-dig-rpc.md), hosts capsules, keeps the local `.dig` cache). Installs `/usr/bin/dig-node` plus its shorter `dign` alias — the two are interchangeable, so `dign capsule fetch <store> <root>` and `dig-node capsule fetch <store> <root>` are the same command. (Note the `n`: `dig` on its own is the unrelated DNS lookup tool that ships with Ubuntu.)
 - **`dig-store`** — the CLI for creating, committing, and reading stores. Installs `dig-store` plus its `digs` alias. Optional if you only want to serve, but usually wanted alongside.
 
 ## 4. Check the service
 
-Installing `dig-node` registers the **systemd** unit `dig-node.service` and **enables + starts it for you**, so it's already running and will come back on every boot. No manual enable step is needed.
+Installing `dig-node` registers the **systemd** unit `net.dignetwork.dig-node.service` and
+**enables + starts it for you**, so it's already running and will come back on every boot. No manual
+enable step is needed.
 
 Check it's running and watch its logs:
 
 ```sh
-systemctl status dig-node     # is it active? when did it start?
-journalctl -u dig-node -f      # follow the node's logs live
+systemctl status net.dignetwork.dig-node     # is it active? when did it start?
+journalctl -u net.dignetwork.dig-node -f     # follow the node's logs live
 ```
 
 `systemctl status` should report `active (running)`. The node now serves the dig RPC on `127.0.0.1:9778` and begins hosting/caching content.
 
-The service runs as its own unprivileged `dig-node` system account — never root — and keeps its `.dig` cache in `/var/lib/dig-node`. Change any of its settings with a drop-in:
+The service runs as **root** and keeps its `.dig` cache in `/var/lib/dig-node`, which is
+root-owned and `0700` so its control token is not readable by other users on the machine. That is
+why a non-root operator drives the node with `sudo` — for example `sudo dig-node pair`, which the
+CLI itself suggests when it needs it.
+
+Change any of its settings either in `/etc/dig-node/dig-node.env` (the file the unit reads) or with
+a systemd drop-in:
 
 ```sh
-sudo systemctl edit dig-node
+sudoedit /etc/dig-node/dig-node.env
+sudo systemctl restart net.dignetwork.dig-node
+
+# or, for unit-level settings:
+sudo systemctl edit net.dignetwork.dig-node
 ```
 
 → [Configure dig-node](./configure.md) for the settings you can set
+
+## Installing without joining the network first
+
+By default the node starts the moment it is installed and finds peers on its own, which is what you
+want on an ordinary machine. If you are building a **private or isolated network**, that default
+gives you no way in: between the install finishing and your configuration landing, the node has
+already joined the public network and announced itself there.
+
+To install without that happening, create a marker file **before** you install:
+
+```sh
+sudo mkdir -p /etc/dig-node
+sudo touch /etc/dig-node/no-autostart
+sudo apt install dig-node
+```
+
+The package installs and registers the service as usual but leaves it **stopped**. Configure it,
+then start it yourself:
+
+```sh
+sudo tee /etc/dig-node/dig-node.env >/dev/null <<'EOF'
+DIG_BOOTSTRAP_PEERS=off
+DIG_RELAY_URL=off
+EOF
+
+sudo rm /etc/dig-node/no-autostart
+sudo systemctl enable --now net.dignetwork.dig-node
+```
+
+`DIG_BOOTSTRAP_PEERS` takes a comma-separated list of `peer_id@host:port` entries — the peers of
+your own network. Write `off` when the node should dial nobody at all.
+
+:::caution Write `off`, not an empty value
+`DIG_BOOTSTRAP_PEERS=off` and `DIG_BOOTSTRAP_PEERS=` mean the same thing to the node, but only `off`
+survives every tool that might carry the setting to it. An empty value can arrive as *unset*, and an
+unset value means "use the default public peers" — so the node quietly joins the public network
+while looking configured. `off` cannot be misread that way.
+:::
+
+Remember to remove the marker once you are set up, or a later reinstall will also leave the node
+stopped.
 
 ## What dig-node does once it's running
 
@@ -99,9 +152,9 @@ sudo apt update && sudo apt upgrade        # picks up new dig-node / dig-store r
 To restart after a config change, or stop the service:
 
 ```sh
-sudo systemctl restart dig-node
-sudo systemctl stop dig-node       # stop serving (does not uninstall)
-sudo systemctl disable dig-node    # don't start on boot
+sudo systemctl restart net.dignetwork.dig-node
+sudo systemctl stop net.dignetwork.dig-node       # stop serving (does not uninstall)
+sudo systemctl disable net.dignetwork.dig-node    # don't start on boot
 ```
 
 To run a newer `dig-node` than the repository carries, use the [DIG Installer](./universal-installer.md) instead of apt — it always resolves the current release. Pick one route per machine and stay on it, so there is only ever one `dig-node` and one service to reason about.
