@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.17.2] - 2026-09-06
+
+### Documentation
+- **deploy-action:** Update reference from @v1 to @v0 (#84)
+
 ## [0.17.1] - 2026-08-24
 
 ### Bug Fixes
