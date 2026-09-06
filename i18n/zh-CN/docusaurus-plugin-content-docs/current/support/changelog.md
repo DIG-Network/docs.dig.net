@@ -44,7 +44,7 @@ This is the starting point the changelog tracks forward from.
 
 - **Free pre-publish loop:** `digs new <template>` (scaffold), `digs dev` (local preview on the real `chia://` read path with an injected `window.chia` shim), and `digs doctor` (preflight) — all free, no chain, no spend. Also scaffold from npm with [`npm create dig-app`](../build-a-dapp/scaffold.md).
 - **Single-shot deploy:** `digs deploy` (build → stage → advance the on-chain root → publish), non-interactive and CI-safe; `commit --dry-run` previews cost without spending.
-- **CI deploy:** the [GitHub Action](../digstore/cli/deploy-from-github-actions.md) (`uses: DIG-Network/deploy-action@v1`, requires dig-store ≥ `v0.6.0`) — git-push-to-deploy with **free per-PR previews** and a PR comment + GitHub deployment status. **Keyless** by default (GitHub OIDC → a store-scoped session, no long-lived hub secret); a revocable `writer-key` advances the on-chain root and a dedicated funding wallet pays the fee, all driven from a committable [`dig.toml`](../digstore/cli/configuration.md).
+- **CI deploy:** the [GitHub Action](../digstore/cli/deploy-from-github-actions.md) (`uses: DIG-Network/deploy-action@v0`, requires dig-store ≥ `v0.6.0`) — git-push-to-deploy with **free per-PR previews** and a PR comment + GitHub deployment status. **Keyless** by default (GitHub OIDC → a store-scoped session, no long-lived hub secret); a revocable `writer-key` advances the on-chain root and a dedicated funding wallet pays the fee, all driven from a committable [`dig.toml`](../digstore/cli/configuration.md).
 - **Distinct exit codes** per error kind for scripting/CI — see [Error codes](./error-codes.md#digstore-cli-exit-codes).
 
 ### dig RPC
