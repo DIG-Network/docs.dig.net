@@ -72,7 +72,7 @@ jobs:
 
       - name: Deploy to DIG
         id: dig
-        uses: DIG-Network/deploy-action@v1   # pin to @v1 once released (a commit SHA until then)
+        uses: DIG-Network/deploy-action@v0
         with:
           directory: dist
           digstore-version: v0.6.0           # PIN for reproducible CI
@@ -220,7 +220,7 @@ On a fresh checkout `digs deploy` reconstructs the store locally from the deploy
 
 ## Versioning
 
-Reference the Action as `DIG-Network/deploy-action@v1` for the latest compatible v1.x release; pin to an exact tag (`@v1.2.3`) or a commit SHA for byte-for-byte reproducibility. Always **pin `digstore-version`** to a release tag (≥ `v0.6.0`) so the CLI doesn't move under you.
+Reference the Action as `DIG-Network/deploy-action@v0` — the pre-1.0 `0.x` line where minor releases MAY change inputs; pin to an exact tag (`@v0.2.7`) or a commit SHA for byte-for-byte reproducibility. Always **pin `digstore-version`** to a release tag (≥ `v0.6.0`) so the CLI doesn't move under you.
 
 :::note Pre-release
 The Action is built and tested but **not yet tagged `@v1`** — a human gates the first release. Until then, pin to a commit SHA.
