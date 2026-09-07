@@ -4,6 +4,11 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.17.3] - 2026-09-07
+
+### Documentation
+- **journeys:** Dig-app tray + wallet journeys (#1852) (#85)
+
 ## [0.17.2] - 2026-09-06
 
 ### Documentation
