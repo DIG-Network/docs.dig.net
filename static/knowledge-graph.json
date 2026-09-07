@@ -675,6 +675,27 @@
       ]
     },
     {
+      "id": "/docs/journeys/dig-app-tray",
+      "type": "doc",
+      "title": "Using the DIG tray app",
+      "url": "https://docs.dig.net/docs/journeys/dig-app-tray",
+      "tags": [
+        "dig-app",
+        "onboarding"
+      ]
+    },
+    {
+      "id": "/docs/journeys/dig-app-wallet",
+      "type": "doc",
+      "title": "Using the DIG wallet",
+      "url": "https://docs.dig.net/docs/journeys/dig-app-wallet",
+      "tags": [
+        "dig-app",
+        "wallet",
+        "onboarding"
+      ]
+    },
+    {
       "id": "/docs/journeys/digstore-cli",
       "type": "doc",
       "title": "How do I… use the dig-store CLI?",
