@@ -125,6 +125,8 @@ const sidebars: SidebarsConfig = {
           items: [
             "browser/chia-protocol",
             "journeys/dig-app-account",
+            "journeys/dig-app-tray",
+            "journeys/dig-app-wallet",
             "browser/using-window-chia",
             "browser/wallet-security",
             "run-a-node/point-a-consumer",
