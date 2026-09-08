@@ -26,3 +26,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .dig
+
+# gitnexus writes agent-tooling files into the repository it indexes. They are
+# development-loop private and must never be tracked here.
+# CLAUDE.md is intentionally NOT ignored: this repo authors its own operating notes.
+# Always run `gitnexus analyze --skip-agents-md` here.
+/AGENTS.md
+/.claude/skills/gitnexus/
+/.claude/skills/generated/
+/.gitnexus/
