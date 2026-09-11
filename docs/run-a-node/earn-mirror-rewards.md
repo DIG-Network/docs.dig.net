@@ -81,4 +81,4 @@ signal — don't assume "not paid yet" is always benign without checking.
 
 - [Fund a reward distributor](../audiences/reward-funders.md) — the funder's side of this same
   distributor
-- [Run a DIG node](./index.md)
+- [Run a DIG node](/docs/run-a-node)

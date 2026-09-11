@@ -113,4 +113,4 @@ timing to avoid losing it.
 
 - [Earn rewards for mirroring](../run-a-node/earn-mirror-rewards.md) — the peer's side of this same
   distributor
-- [Run a DIG node](../run-a-node/index.md)
+- [Run a DIG node](/docs/run-a-node)
