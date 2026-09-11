@@ -35,8 +35,11 @@ Your node's claim loop runs on its own cadence, independent of the distributor: 
 same minute and self-congest (`dig-rewards-coin` `SPEC.md` §8.6, tag `v0.4.0`).
 
 **If your accrued amount is below the payout floor, the claim is skipped, not failed.** The floor is
-**1,000 base units = 1.000 $DIG** (`SPEC.md` §8.3, `v0.4.0`) — high enough that a claim's on-chain
-fee never exceeds what it's claiming, low enough that ordinary mirroring clears it daily. A skipped
+**1,000 base units = 1.000 $DIG** (`SPEC.md` §8.3, `v0.4.0`). Nothing compares that to a fee: the
+threshold is in $DIG base units, an on-chain fee is in XCH mojos, and your node has no rate between
+the two — so "the fee is smaller than the claim" is not computed anywhere. 1 $DIG was chosen as above
+any *plausible* fee, and small enough that a mirror earning at the §6.5 funding floor clears it daily
+(`SPEC.md` §8.3 clauses 1-2, `v0.4.0`); a mirror earning below that funding floor clears it less often. A skipped
 claim is not an error and nothing is lost: your accrual keeps building toward the next attempt.
 
 There is no computable floor in $DIG terms that also accounts for the on-chain fee in mojos — those
@@ -63,7 +66,12 @@ it's the only way to notice you've been re-admitted.
 
 A missing payout can mean several benign things — you're below the payout floor this cycle, your
 entry hasn't landed yet, or you're between challenges. **It can also mean something is actually
-wrong** — a networking problem, a challenge you're failing without knowing it, or eviction. Your
+wrong** — a networking problem, a challenge you're failing without knowing it, or eviction. Holding no
+entry does not tell you which of these it is: an entry you were evicted from and an entry that was
+never added look identical on chain, because `RemoveEntry` spends the slot and leaves no marker
+behind, and nothing may present a guess between them as an accounting fact (`SPEC.md` §12.5 clause 7,
+`v0.4.0`). Your own past `InitiatePayout` spends are the only on-chain evidence of your own claim
+history. Your
 node's own status surface is where to check, because a list of ordinary reasons is not a substitute
 for knowing whether one of them is actually the failure: if your `dig-node` reports a real problem
 (a chain-source outage, a cycle deadline miss, a stopped claim loop), treat that report as the

@@ -25,7 +25,7 @@ tags:
 ## The mental model
 
 A reward distributor is an on-chain, `Managed`-type CHIP-0051 coin
-(`dig-rewards-coin` [0.4.0](https://crates.io/crates/dig-rewards-coin)) that a funder launches and
+(`dig-rewards-coin` [0.4.1](https://crates.io/crates/dig-rewards-coin)) that a funder launches and
 commits $DIG to, so that peers who mirror the funder's store are paid automatically for passing
 periodic challenges. **The distributor pays itself** — payouts are permissionless spends any
 eligible peer can build once admitted — so the funder is not in the path of an individual payment.

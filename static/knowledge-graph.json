@@ -217,6 +217,13 @@
       ]
     },
     {
+      "id": "/docs/audiences/reward-funders",
+      "type": "doc",
+      "title": "reward-funders",
+      "url": "https://docs.dig.net/docs/audiences/reward-funders",
+      "tags": []
+    },
+    {
       "id": "/docs/audiences/troubleshooting",
       "type": "doc",
       "title": "Troubleshooting — get unstuck",
@@ -1127,6 +1134,13 @@
         "dig-dns",
         "privacy"
       ]
+    },
+    {
+      "id": "/docs/run-a-node/earn-mirror-rewards",
+      "type": "doc",
+      "title": "earn-mirror-rewards",
+      "url": "https://docs.dig.net/docs/run-a-node/earn-mirror-rewards",
+      "tags": []
     },
     {
       "id": "/docs/run-a-node",
@@ -3271,6 +3285,16 @@
       "type": "part-of"
     },
     {
+      "from": "/docs/audiences/reward-funders",
+      "to": "/docs/run-a-node/earn-mirror-rewards",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/audiences/reward-funders",
+      "to": "/docs/run-a-node",
+      "type": "see-also"
+    },
+    {
       "from": "/docs/automation/deploy-keys",
       "to": "/docs/digstore/cli/deploy-from-github-actions",
       "type": "see-also"
@@ -4851,6 +4875,16 @@
       "type": "see-also"
     },
     {
+      "from": "/docs/run-a-node/earn-mirror-rewards",
+      "to": "/docs/audiences/reward-funders",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node/earn-mirror-rewards",
+      "to": "/docs/run-a-node",
+      "type": "see-also"
+    },
+    {
       "from": "/docs/run-a-node",
       "to": "/docs/run-a-node/apt",
       "type": "see-also"
@@ -4888,6 +4922,11 @@
     {
       "from": "/docs/run-a-node",
       "to": "/docs/run-a-node/control-panel",
+      "type": "see-also"
+    },
+    {
+      "from": "/docs/run-a-node",
+      "to": "/docs/run-a-node/earn-mirror-rewards",
       "type": "see-also"
     },
     {
