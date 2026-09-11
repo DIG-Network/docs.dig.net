@@ -98,6 +98,7 @@ You don't need a node. Get the **[DIG Browser ↗](https://github.com/DIG-Networ
 - [Self-host a remote origin](../rpc/dig-remote.md) — `digs serve` + dig:// clone/pull/push
 - [Manage your node](./manage.md) — the control.* admin RPCs + the My Node UI
 - [The dig-node Control Panel](./control-panel.md) — run your node from the DIG extension: live status, reserved cache space (LRU), and — once paired — upstream/hosted stores/sync/peers
+- [Earn rewards for mirroring](/docs/run-a-node/earn-mirror-rewards) — get paid automatically for mirroring a store whose funder runs a reward distributor
 - [Using the public network RPC](../rpc/public-network-rpc.md) — the dig RPC your node speaks, and operating a node on the network
 - [Installing the CLI](../digstore/cli/install.md) — `dig-store` on its own (publishing, not serving)
 
