@@ -4,6 +4,14 @@ All notable changes to this project are documented here.
 This project adheres to [Semantic Versioning](https://semver.org) and
 [Conventional Commits](https://www.conventionalcommits.org).
 
+## [0.17.4] - 2026-09-11
+
+### Documentation
+- **rewards:** Reward-distributor pages for funders and mirroring peers (#87)
+
+### Chores
+- Ignore gitnexus-generated agent files
+
 ## [0.17.3] - 2026-09-07
 
 ### Documentation
