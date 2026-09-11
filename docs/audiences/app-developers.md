@@ -112,6 +112,11 @@ Your store is reachable by its [URN](../concepts.md#urn) / [`chia://`](../browse
 
 ---
 
+## Want your store mirrored more widely?
+
+If you want other operators to help serve your store, you can fund a **reward distributor** that
+pays mirrors automatically. See [Fund a reward distributor](./reward-funders.md).
+
 ## Go deeper: the protocol
 
 The plain-language model above is all you need to ship. When you want the full design:

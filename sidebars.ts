@@ -114,7 +114,16 @@ const sidebars: SidebarsConfig = {
             "rpc/conformance",
             "run-a-node/manage",
             "run-a-node/control-panel",
+            "run-a-node/earn-mirror-rewards",
           ],
+        },
+        {
+          type: "category",
+          label: "Reward funders",
+          collapsible: true,
+          collapsed: true,
+          link: { type: "doc", id: "audiences/reward-funders" },
+          items: ["audiences/reward-funders"],
         },
         {
           type: "category",
